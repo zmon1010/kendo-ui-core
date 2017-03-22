@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Value { get; set; }
 
+        public DateInputMessagesSettings Messages { get; } = new DateInputMessagesSettings();
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -42,6 +44,12 @@ namespace Kendo.Mvc.UI
             if (Value.HasValue)
             {
                 settings["value"] = Value;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
             }
 
             return settings;

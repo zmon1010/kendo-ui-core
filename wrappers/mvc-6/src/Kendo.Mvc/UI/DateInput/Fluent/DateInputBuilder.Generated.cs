@@ -49,6 +49,19 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public DateInputBuilder Messages(Action<DateInputMessagesSettingsBuilder> configurator)
+        {
+
+            Container.Messages.DateInput = Container;
+            configurator(new DateInputMessagesSettingsBuilder(Container.Messages));
+
+            return this;
+        }
+
 
         
         /// <summary>

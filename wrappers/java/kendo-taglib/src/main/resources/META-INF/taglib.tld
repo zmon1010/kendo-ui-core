@@ -13139,6 +13139,64 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
+    <tag>
+        <description>The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.</description>
+        <name>dateInput-messages</name>
+        <tag-class>com.kendoui.taglib.dateinput.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The placeholder for the day of the month part.</description>
+            <name>day</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the AM/PM part.</description>
+            <name>dayperiod</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the hours part.</description>
+            <name>hour</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the minutes part.</description>
+            <name>minute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the months part.</description>
+            <name>month</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the seconds part.</description>
+            <name>second</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the day of the week part.</description>
+            <name>weekday</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the years part.</description>
+            <name>year</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
 
     <tag>
         <description>Fires when the selected date is changed</description>

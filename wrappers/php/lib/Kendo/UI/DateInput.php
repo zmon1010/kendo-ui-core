@@ -49,6 +49,15 @@ class DateInput extends \Kendo\UI\Widget {
     }
 
     /**
+    * The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.
+    * @param \Kendo\UI\DateInputMessages|array $value
+    * @return \Kendo\UI\DateInput
+    */
+    public function messages($value) {
+        return $this->setProperty('messages', $value);
+    }
+
+    /**
     * Sets the change event of the DateInput.
     * Fires when the selected date is changed
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

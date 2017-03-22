@@ -62,6 +62,60 @@ Represents the Kendo UI DateInput widget. Inherits from [Widget](/api/javascript
     });
     </script>
 
+### messages `Object`
+
+The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.
+
+#### Example - customize column menu messages
+
+    <input id="dateinput" />
+    <script>
+    $("#dateinput").kendoDateInput({
+        messages:{
+            "year": "year",
+            "month": "month",
+            "day": "day",
+            "weekday": "day of the week",
+            "hour": "hours",
+            "minute": "minutes",
+            "second": "seconds",
+            "dayperiod": "AM/PM"
+        }
+    });
+    </script>
+
+### messages.year `String` *(default: "year")*
+
+The placeholder for the years part.
+
+### messages.month `String` *(default: "month")*
+
+The placeholder for the months part.
+
+### messages.day `String` *(default: "day")*
+
+The placeholder for the day of the month part.
+
+### messages.weekday `String` *(default: "day of the week")*
+
+The placeholder for the day of the week part.
+
+### messages.hour `String` *(default: "hours")*
+
+The placeholder for the hours part.
+
+### messages.minute `String` *(default: "minutes")*
+
+The placeholder for the minutes part.
+
+### messages.second `String` *(default: "seconds")*
+
+The placeholder for the seconds part.
+
+### messages.dayperiod `String` *(default: "AM/PM")*
+
+The placeholder for the AM/PM part.
+
 ## Fields
 
 ### options `Object`

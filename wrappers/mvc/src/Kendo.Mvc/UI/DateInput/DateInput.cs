@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
             this.urlGenerator = urlGenerator;
 //>> Initialization
         
+            Messages = new DateInputMessagesSettings();
+                
         //<< Initialization
         }
 
@@ -31,6 +33,12 @@ namespace Kendo.Mvc.UI
         public DateTime? Min { get; set; }
         
         public DateTime? Value { get; set; }
+        
+        public DateInputMessagesSettings Messages
+        {
+            get;
+            set;
+        }
         
         //<< Fields
 
@@ -60,6 +68,11 @@ namespace Kendo.Mvc.UI
                 json["value"] = Value;
             }
                 
+            var messages = Messages.ToJson();
+            if (messages.Any())
+            {
+                json["messages"] = messages;
+            }
         //<< Serialization
 
             writer.Write(Initializer.Initialize(Selector, "DateInput", json));

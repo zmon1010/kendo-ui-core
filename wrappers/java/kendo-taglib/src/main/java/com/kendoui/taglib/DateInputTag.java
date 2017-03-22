@@ -52,6 +52,10 @@ public class DateInputTag extends WidgetTag /* interfaces *//* interfaces */ {
         return "dateInput";
     }
 
+    public void setMessages(com.kendoui.taglib.dateinput.MessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }

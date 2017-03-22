@@ -29,6 +29,7 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public DateTime? Value { get; set; }
 
+        public DateInputMessagesSettingsTagHelper Messages { get; set; }
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
@@ -51,6 +52,16 @@ namespace Kendo.Mvc.TagHelpers
             if (Value.HasValue)
             {
                 settings["value"] = Value;
+            }
+
+            if (Messages != null)
+            {
+                var messages = Messages.Serialize();
+
+                if (messages.Any())
+                {
+                    settings["messages"] = messages;
+                }
             }
 
             return settings;

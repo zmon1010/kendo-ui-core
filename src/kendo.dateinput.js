@@ -77,6 +77,16 @@ var __meta__ = { // jshint ignore:line
             format: "",
             min: new Date(1900, 0, 1),
             max: new Date(2099, 11, 31),
+            messages: {
+                "year": "year",
+                "month": "month",
+                "day": "day",
+                "weekday": "day of the week",
+                "hour": "hours",
+                "minute": "minutes",
+                "second": "seconds",
+                "dayperiod": "AM/PM"
+            }
         },
 
         events: [
@@ -139,13 +149,13 @@ var __meta__ = { // jshint ignore:line
                 value = null;
             }
 
-            this._dateTime = new customDateTime(value, this.options.format, this.options.culture);
+            this._dateTime = new customDateTime(value, this.options.format, this.options.culture, this.options.messages);
 
             this._updateElementValue();
         },
 
         _updateElementValue: function () {
-            var stringAndFromat = this._dateTime.toPair(this.options.format, this.options.culture);
+            var stringAndFromat = this._dateTime.toPair(this.options.format, this.options.culture, this.options.messages);
             this.element.val(stringAndFromat[0]);
             this._oldText = stringAndFromat[0];
             this._format = stringAndFromat[1];
@@ -381,11 +391,12 @@ var __meta__ = { // jshint ignore:line
 
     ui.plugin(DateInput);
 
-    var customDateTime = function (initDate, initFormat, initCulture) {
+    var customDateTime = function (initDate, initFormat, initCulture, initMessages) {
 
         var value = null;
         var year = true, month = true, date = true, hours = true, minutes = true, seconds = true, milliseconds = true;
         var typedMonthPart = "";
+        var placeholders = {};
 
         //TODO: rewrite pad method
         var zeros = ["", "0", "00", "000", "0000"];
@@ -407,27 +418,28 @@ var __meta__ = { // jshint ignore:line
             var result;
 
             switch (match) {
-                case ("d"): result = date ? value.getDate() : match; break;
-                case ("dd"): result = date ? pad(value.getDate()) : match; break;
-                case ("ddd"): result = date ? days.namesAbbr[value.getDay()] : "EEE"; break;
-                case ("dddd"): result = date ? days.names[value.getDay()] : "EEEE"; break;
+                case ("d"): result = date ? value.getDate() : placeholders.day; break;
+                case ("dd"): result = date ? pad(value.getDate()) : placeholders.day; break;
+                case ("ddd"): result = date && month && year ? days.namesAbbr[value.getDay()] : placeholders.weekday; break;
+                case ("dddd"): result = date && month && year ? days.names[value.getDay()] : placeholders.weekday; break;
 
-                case ("M"): result = month ? value.getMonth() + 1 : match; break;
-                case ("MM"): result = month ? pad(value.getMonth() + 1) : match; break;
-                case ("MMM"): result = month ? months.namesAbbr[value.getMonth()] : match; break;
-                case ("MMMM"): result = month ? months.names[value.getMonth()] : match; break;
+                case ("M"): result = month ? value.getMonth() + 1 : placeholders.month; break;
+                case ("MM"): result = month ? pad(value.getMonth() + 1) : placeholders.month; break;
+                case ("MMM"): result = month ? months.namesAbbr[value.getMonth()] : placeholders.month; break;
+                case ("MMMM"): result = month ? months.names[value.getMonth()] : placeholders.month; break;
 
-                case ("yy"): result = year ? pad(value.getFullYear() % 100) : match; break;
-                case ("yyyy"): result = year ? pad(value.getFullYear(), 4) : match; break;
+                case ("yy"): result = year ? pad(value.getFullYear() % 100) : placeholders.year; break;
+                case ("yyyy"): result = year ? pad(value.getFullYear(), 4) : placeholders.year; break;
 
-                case ("h"): result = hours ? value.getHours() % 12 || 12 : match; break;
-                case ("hh"): result = hours ? pad(value.getHours() % 12 || 12) : match; break;
-                case ("H"): result = hours ? value.getHours() : match; break;
-                case ("HH"): result = hours ? pad(value.getHours()) : match; break;
-                case ("m"): result = minutes ? value.getMinutes() : match; break;
-                case ("mm"): result = minutes ? pad(value.getMinutes()) : match; break;
-                case ("s"): result = seconds ? value.getSeconds() : match; break;
-                case ("ss"): result = seconds ? pad(value.getSeconds()) : match; break;
+                case ("h"): result = hours ? value.getHours() % 12 || 12 : placeholders.hour; break;
+                case ("hh"): result = hours ? pad(value.getHours() % 12 || 12) : placeholders.hour; break;
+                case ("H"): result = hours ? value.getHours() : placeholders.hour; break;
+                case ("HH"): result = hours ? pad(value.getHours()) : placeholders.hour; break;
+
+                case ("m"): result = minutes ? value.getMinutes() : placeholders.minute; break;
+                case ("mm"): result = minutes ? pad(value.getMinutes()) : placeholders.minute; break;
+                case ("s"): result = seconds ? value.getSeconds() : placeholders.second; break;
+                case ("ss"): result = seconds ? pad(value.getSeconds()) : placeholders.second; break;
                 case ("f"): result = milliseconds ? math.floor(value.getMilliseconds() / 100) : milliseconds; break;
                 case ("ff"):
                     result = value.getMilliseconds();
@@ -437,7 +449,7 @@ var __meta__ = { // jshint ignore:line
                     result = milliseconds ? pad(result) : match;
                     break;
                 case ("fff"): result = milliseconds ? pad(value.getMilliseconds(), 3) : match; break;
-                case ("tt"): result = hours ? (value.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]) : match; break;
+                case ("tt"): result = hours ? (value.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]) : placeholders.dayperiod; break;
                 case ("zzz"):
                     mins = value.getTimezoneOffset();
                     sign = mins < 0;
@@ -635,7 +647,7 @@ var __meta__ = { // jshint ignore:line
             value = newValue;
         };
 
-        this.toPair = function (format, culture) {
+        this.toPair = function (format, culture , messages) {
             if (!format) {
                 return ["", ""];
             }
@@ -644,6 +656,7 @@ var __meta__ = { // jshint ignore:line
             format = calendar.patterns[format] || format;
             days = calendar.days;
             months = calendar.months;
+            placeholders = messages;
             return [
                 format.replace(dateFormatRegExp, generateMatcher(false)),
                 format.replace(dateFormatRegExp, generateMatcher(true))
@@ -657,7 +670,7 @@ var __meta__ = { // jshint ignore:line
         
         if (!initDate) {
             value = new Date();
-            var sampleFormat = this.toPair(initFormat, initCulture)[1];
+            var sampleFormat = this.toPair(initFormat, initCulture, initMessages)[1];
             for (var i = 0; i < sampleFormat.length; i++) {
                 setExisting(sampleFormat[i], false);
             }
