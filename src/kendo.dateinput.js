@@ -151,6 +151,7 @@ var __meta__ = { // jshint ignore:line
             this._dateTime = new customDateTime(value, this.options.format, this.options.culture, this.options.messages);
 
             this._updateElementValue();
+            this._oldValue = value;
         },
 
         _updateElementValue: function () {
@@ -227,9 +228,11 @@ var __meta__ = { // jshint ignore:line
                 value = that.value();
             }
 
-            if (value !== that._oldValue) {
+            if (that._oldValue && value && value.getTime() !== that._oldValue.getTime() ||
+                that._oldValue && !value ||
+                !that._oldValue && value
+            ) {
                 that._oldValue = value;
-
                 that.trigger(CHANGE);
                 that.element.trigger(CHANGE);
             }
