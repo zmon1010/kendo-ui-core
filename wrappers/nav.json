@@ -545,13 +545,11 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows Telerik DateInput basic features to select dates and times in $FRAMEWORK application."
-                },
-                "new": true
+                }
             },
             {
                 "text": "Events",
                 "url": "dateinput/events",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Attach an event to $FRAMEWORK DateInput | $FRAMEWORK Demos"
                 },
@@ -562,7 +560,6 @@
             {
                 "text": "API",
                 "url": "dateinput/api",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "API $FRAMEWORK Dateinput example"
                 },
@@ -571,12 +568,10 @@
                 }
             },
             {
-                "new": true,
                 "text": "Globalization",
                 "url": "dateinput/globalization"
             },
             {
-                "new": true,
                 "text": "RTL support",
                 "url": "dateinput/right-to-left-support",
                 "title": {
@@ -587,7 +582,6 @@
                 }
             },
             {
-                "new": true,
                 "text": "Keyboard navigation",
                 "url": "dateinput/keyboard-navigation",
                 "title": {
@@ -605,8 +599,7 @@
                 },
                 "packages": [
                     "mvc-core"
-                ],
-                "new": true
+                ]
             }
         ],
         "category": "Editors"
