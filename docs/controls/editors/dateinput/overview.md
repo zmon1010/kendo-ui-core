@@ -70,6 +70,25 @@ DateInput can be seamlessly used with a DatePicker widget. You just need to enab
     });
     </script>
 
+## Localization
+
+DateInput enables you to modify the text that is displayed in the placeholders based on your requirements.
+
+###### Example
+ 
+    <input id="dateinput" />
+
+    <script>
+    $("#dateinput").kendoDateInput({
+        format: "dd / MMMM / yyyy",
+        messages:{
+            month:"____",
+            year:"____",
+            day:"__",
+            }
+    }); 
+    </script>
+
 
 
 ## See Also
