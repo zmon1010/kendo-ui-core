@@ -944,7 +944,11 @@ declare namespace kendo.data {
         model?: any;
     }
 
-    interface DataSourceSchemaWithOptionsModel extends DataSourceSchema {
+    interface DataSourceSchemaWithTimezone extends DataSourceSchema {
+		timezone?: String;
+	}
+
+	interface DataSourceSchemaWithOptionsModel extends DataSourceSchema {
         model?: DataSourceSchemaModel;
     }
 
