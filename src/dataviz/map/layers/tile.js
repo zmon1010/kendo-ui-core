@@ -285,7 +285,7 @@
         },
 
         createElement: function() {
-            this.element = $("<img style='position: absolute; display: block;' />")
+            this.element = $("<img style='position: absolute; display: block;' alt='' />")
                             .css({ width: this.options.size, height: this.options.size })
                             .on("error", proxy(function(e) {
                                 if (this.errorUrl()) {

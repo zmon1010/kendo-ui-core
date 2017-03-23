@@ -492,6 +492,15 @@
             ok(tile.visible);
         });
 
+        test("should render alt attribute for accessibility", function() {
+            tile = createImageTile();
+
+            var altAttr = tile.element.attr("alt");
+            var hasAltAttr = typeof altAttr !== typeof undefined && altAttr !== false;
+
+            ok(hasAltAttr);
+        });
+
     })();
 
     baseLayerTests("Tile Layer", TileLayer);

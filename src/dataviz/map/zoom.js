@@ -11,7 +11,7 @@
     // Helper functions =======================================================
     function button(dir, iconClass) {
        return kendo.format(
-           '<button class="k-button k-zoom-{0}" title="zoom-{0}"><span class="k-icon {1}"></span></button>',
+           '<button class="k-button k-zoom-{0}" title="zoom-{0}" aria-label="zoom-{0}"><span class="k-icon {1}"></span></button>',
            dir, iconClass);
     }
 

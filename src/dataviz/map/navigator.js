@@ -13,7 +13,7 @@
     // Helper functions =======================================================
     function button(dir) {
        return kendo.format(
-           '<button class="k-button k-navigator-{0}">' +
+           '<button class="k-button k-navigator-{0}" aria-label="move {0}">' +
                '<span class="k-icon k-i-arrow-60-{0}"/>' +
            '</button>', dir);
     }

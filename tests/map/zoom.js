@@ -116,4 +116,11 @@
 
         keydown(parent, kendo.keys.NUMPAD_PLUS);
     });
+
+    test("zoom buttons have aria-label", function() {
+        dom = $("<div>").kendoZoomControl();
+
+        equal(dom.find("button.k-zoom-in").attr("aria-label"), "zoom-in");
+        equal(dom.find("button.k-zoom-out").attr("aria-label"), "zoom-out");
+    });
 })();

@@ -181,4 +181,12 @@
         keydown(parent, kendo.keys.UP);
     });
 
+    test("navigation buttons have aria-label", function() {
+        dom = $("<div>").kendoNavigator();
+
+        equal(dom.find("button.k-navigator-up").attr("aria-label"), "move up");
+        equal(dom.find("button.k-navigator-right").attr("aria-label"), "move right");
+        equal(dom.find("button.k-navigator-down").attr("aria-label"), "move down");
+        equal(dom.find("button.k-navigator-left").attr("aria-label"), "move left");
+    });
 })();
