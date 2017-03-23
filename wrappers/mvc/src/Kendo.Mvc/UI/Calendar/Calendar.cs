@@ -18,6 +18,7 @@ namespace Kendo.Mvc.UI
         {
             this.urlGenerator = urlGenerator;
 
+            Messages = new CalendarMessagesSettings();
             MonthTemplate = new MonthTemplate();
 
             SelectionSettings = new CalendarSelectionSettings();
@@ -73,6 +74,12 @@ namespace Kendo.Mvc.UI
         }
 
         public DateTime? Min
+        {
+            get;
+            set;
+        }
+
+        public CalendarMessagesSettings Messages
         {
             get;
             set;
@@ -136,6 +143,12 @@ namespace Kendo.Mvc.UI
             if (Min.HasValue)
             {
                 options["min"] = Min;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                options["messages"] = messages;
             }
 
             if (Max.HasValue)

@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Max { get; set; }
 
+        public CalendarMessagesSettings Messages { get; } = new CalendarMessagesSettings();
+
         public DateTime? Min { get; set; }
 
         public bool? WeekNumber { get; set; }
@@ -56,6 +58,12 @@ namespace Kendo.Mvc.UI
             if (Max.HasValue)
             {
                 settings["max"] = Max;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
             }
 
             if (Min.HasValue)

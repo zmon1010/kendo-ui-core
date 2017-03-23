@@ -60,6 +60,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Allows localization of the strings that are used in the widget.
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public CalendarBuilder Messages(Action<CalendarMessagesSettingsBuilder> configurator)
+        {
+
+            Container.Messages.Calendar = Container;
+            configurator(new CalendarMessagesSettingsBuilder(Container.Messages));
+
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the minimum date, which the calendar can show.
         /// </summary>
         /// <param name="value">The value for Min</param>

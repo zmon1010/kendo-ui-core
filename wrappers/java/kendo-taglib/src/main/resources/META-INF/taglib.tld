@@ -691,6 +691,23 @@ The following settings are available for the start value:</description>
     </tag>
 
     <tag>
+        <description>Allows localization of the strings that are used in the widget.</description>
+        <name>calendar-messages</name>
+        <tag-class>com.kendoui.taglib.calendar.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Allows customization of the week column header text. Set the value to make the widget compliant with web accessibility standards.</description>
+            <name>weekColumnHeader</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Templates for the cells rendered in "month" view.</description>
         <name>calendar-month</name>
         <tag-class>com.kendoui.taglib.calendar.MonthTag</tag-class>

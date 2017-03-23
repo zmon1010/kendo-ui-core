@@ -76,6 +76,15 @@ settings are available for the depth value:
     }
 
     /**
+    * Allows localization of the strings that are used in the widget.
+    * @param \Kendo\UI\CalendarMessages|array $value
+    * @return \Kendo\UI\Calendar
+    */
+    public function messages($value) {
+        return $this->setProperty('messages', $value);
+    }
+
+    /**
     * Specifies the minimum date, which the calendar can show.
     * @param date $value
     * @return \Kendo\UI\Calendar
