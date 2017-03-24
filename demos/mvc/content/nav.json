@@ -89,7 +89,6 @@
       {
         "text": "Customizing templates",
         "url": "autocomplete/template",
-        "new": "true",
         "title": {
           "kendo-ui": "Templates customization in Kendo UI AutoComplete",
           "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
@@ -102,7 +101,6 @@
       {
         "text": "Add new item",
         "url": "autocomplete/addnewitem",
-        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI AutoComplete",
           "aspnet-mvc": "Add new item in ASP.NET MVC AutoComplete"
@@ -789,7 +787,6 @@
       {
         "text": "Customizing templates",
         "url": "combobox/template",
-        "new": "true",
         "title": {
           "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
           "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
@@ -814,7 +811,6 @@
       {
         "text": "Add new item",
         "url": "combobox/addnewitem",
-        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI ComboBox",
           "aspnet-mvc": "Add new item in ASP.NET MVC ComboBox"
@@ -1379,7 +1375,6 @@
       {
         "text": "Customizing templates",
         "url": "dropdownlist/template",
-        "new": "true",
         "title": {
           "kendo-ui": "Customize items in Kendo UI DropDownList component",
           "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
@@ -1404,7 +1399,6 @@
       {
         "text": "Add new item",
         "url": "dropdownlist/addnewitem",
-        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI DropDownList",
           "aspnet-mvc": "Add new item in ASP.NET MVC DropDownList"
@@ -1937,7 +1931,6 @@
       {
         "text": "Immutable Elements",
         "url": "editor/immutable-elements",
-        "new": "true",
         "title": {
           "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
           "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -3878,7 +3871,6 @@
       {
         "text": "Customizing templates",
         "url": "multiselect/template",
-        "new": "true",
         "title": {
           "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
           "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
@@ -3891,7 +3883,6 @@
       {
         "text": "Add new item",
         "url": "multiselect/addnewitem",
-        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI MultiSelect",
           "aspnet-mvc": "Add new item in ASP.NET MVC MultiSelect"
@@ -6873,7 +6864,6 @@
          ],
          "text": "Filter TreeView in dialog",
          "url": "treeview/filter-treeview-in-dialog",
-         "new":  "true",
          "title": {
             "kendo-ui": "Filtering Kendo UI TreeView with checkboxes nested in a dialog"
          },
@@ -7090,7 +7080,6 @@
       {
         "text": "Custom Drop Zone",
         "url": "upload/customdropzone",
-        "new": "true",
         "title": {
           "kendo-ui": "Custom drop zone demo for File Upload | Kendo UI Upload Demo",
           "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
@@ -7103,7 +7092,6 @@
       {
         "text": "Validation",
         "url": "upload/validation",
-        "new": "true",
         "title": {
           "kendo-ui": "Validation demo for File Upload | Kendo UI Upload Demo",
           "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
