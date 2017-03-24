@@ -60,7 +60,8 @@
                 checkChildren: true
             },
             dataSource: myDataSource,
-            check: onCheck
+            check: onCheck,
+          	expand: onExpand
         });
 
         $(document).ready(function () {
@@ -179,6 +180,12 @@
             getCheckedNodes(treeView.dataSource.view(), checkedNodes);
             setMessage(checkedNodes.length);
         }
+		
+		function onExpand(e) {
+          if($("#filterText").val() == "") {
+            $(e.node).find("li").show();
+          }
+        }
 
         function setMessage(checkedNodes) {
             var message;
@@ -214,6 +221,14 @@
 			}
             else {
                 $("#treeview .k-group").find("li").show();
+								var nodes = $("#treeview > .k-group > li");
+  
+                $.each( nodes, function( i, val ) {
+                  if(nodes[i].getAttribute("data-expanded") == null) {
+                    $(nodes[i]).find("li").hide();
+                  }
+                });
+
                 $(".selectAll").css("visibility", "visible");
             }
         });
