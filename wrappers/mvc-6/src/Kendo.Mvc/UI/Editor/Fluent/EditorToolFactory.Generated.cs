@@ -325,6 +325,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         public EditorToolFactory TableEditing()
         {
+            AddTool("tableWizard");
             AddTool("addColumnLeft");
             AddTool("addColumnRight");
             AddTool("addRowAbove");
