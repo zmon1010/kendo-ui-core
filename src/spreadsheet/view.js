@@ -727,8 +727,8 @@
                 if (!pane) {
                     object = { type: "outside" };
                 } else {
-                    var row = pane._grid.rows.index(y, this.scroller.scrollTop);
-                    var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
+                    var row = pane._grid.rows.indexVisible(y, this.scroller.scrollTop);
+                    var column = pane._grid.columns.indexVisible(x, this.scroller.scrollLeft);
 
                     var type = "cell";
                     var ref = new CellRef(row, column);
