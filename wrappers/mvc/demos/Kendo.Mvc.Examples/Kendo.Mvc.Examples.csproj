@@ -1022,6 +1022,7 @@
     <Content Include="Views\dropdownlist\clientfiltering.cshtml" />
     <Content Include="Views\gantt\api.cshtml" />
     <Content Include="Views\gantt\events.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.ascx" />
     <Content Include="Views\treemap\index.cshtml" />
     <Content Include="Content\dataviz\Black\markers.png" />
     <Content Include="Content\dataviz\Black\markers_2x.png" />
@@ -2998,6 +2999,7 @@
     <Content Include="Views\datetimepicker\week_column.cshtml" />
     <Content Include="Views\grid\editing_remote_validation.cshtml" />
     <Content Include="Views\menu\menu_bind_attributes.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
