@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (WeekColumnHeader?.HasValue() == true)
+            if (WeekColumnHeader != null && WeekColumnHeader.HasValue())
             {
                 settings["weekColumnHeader"] = WeekColumnHeader;
             }
