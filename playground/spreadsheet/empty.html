@@ -87,6 +87,10 @@
               .borderRight({ size: 1, color: borderColor })
               .borderBottom({ size: 1, color: borderColor })
               .borderLeft({ size: 1, color: borderColor });
+
+         sheet.range("O:O, 20:20").value("something");
+         sheet.hideColumn(14);
+         sheet.hideRow(19);
      }, { recalc: true });
     </script>
   </body>
