@@ -536,15 +536,14 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.TableEditing();
 
-            items.Count.ShouldEqual(8);
-            items[0].Name.ShouldEqual("tableWizard");
-            items[1].Name.ShouldEqual("addColumnLeft");
-            items[2].Name.ShouldEqual("addColumnRight");
-            items[3].Name.ShouldEqual("addRowAbove");
-            items[4].Name.ShouldEqual("addRowBelow");
-            items[5].Name.ShouldEqual("createTable");
-            items[6].Name.ShouldEqual("deleteColumn");
-            items[7].Name.ShouldEqual("deleteRow");
+            items.Count.ShouldEqual(7);
+            items[0].Name.ShouldEqual("addColumnLeft");
+            items[1].Name.ShouldEqual("addColumnRight");
+            items[2].Name.ShouldEqual("addRowAbove");
+            items[3].Name.ShouldEqual("addRowBelow");
+            items[4].Name.ShouldEqual("createTable");
+            items[5].Name.ShouldEqual("deleteColumn");
+            items[6].Name.ShouldEqual("deleteRow");
         }
 
         [Fact]

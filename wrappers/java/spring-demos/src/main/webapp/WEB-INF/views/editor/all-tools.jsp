@@ -29,7 +29,6 @@
         <kendo:editor-tool name="subscript" />
         <kendo:editor-tool name="superscript" />
 
-        <kendo:editor-tool name="tableWizard" />
         <kendo:editor-tool name="createTable" />
         <kendo:editor-tool name="addRowAbove" />
         <kendo:editor-tool name="addRowBelow" />
