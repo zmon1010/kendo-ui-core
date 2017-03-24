@@ -7748,6 +7748,17 @@ function doCounters(a, f, def) {
     }
 }
 
+function updateCounters(style) {
+    var counterReset = getPropertyValue(style, "counter-reset");
+    if (counterReset) {
+        doCounters(splitProperty(counterReset, /^\s+/), resetCounter, 0);
+    }
+    var counterIncrement = getPropertyValue(style, "counter-increment");
+    if (counterIncrement) {
+        doCounters(splitProperty(counterIncrement, /^\s+/), incCounter, 1);
+    }
+}
+
 function parseColor$1(str, css) {
     var color = kendo.parseColor(str, true);
     if (color) {
@@ -8263,6 +8274,7 @@ function _renderWithPseudoElements(element, group) {
     var fake = [];
     function pseudo(kind, place) {
         var style = getComputedStyle(element, kind);
+        updateCounters(style);
         if (style.content && style.content != "normal" && style.content != "none" && style.width != "0px") {
             var psel = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
             psel.style.cssText = getCssText(style);
@@ -9725,15 +9737,7 @@ function groupInStackingContext(element, group, zIndex) {
 function renderElement(element, container) {
     var style = getComputedStyle(element);
 
-    var counterReset = getPropertyValue(style, "counter-reset");
-    if (counterReset) {
-        doCounters(splitProperty(counterReset, /^\s+/), resetCounter, 0);
-    }
-
-    var counterIncrement = getPropertyValue(style, "counter-increment");
-    if (counterIncrement) {
-        doCounters(splitProperty(counterIncrement, /^\s+/), incCounter, 1);
-    }
+    updateCounters(style);
 
     if (/^(style|script|link|meta|iframe|svg|col|colgroup)$/i.test(element.tagName)) {
         return;
