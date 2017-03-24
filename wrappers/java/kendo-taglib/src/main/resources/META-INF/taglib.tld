@@ -32423,7 +32423,7 @@ increase and decrease buttons of a Slider.</description>
         <description>Configuration of the Slider tooltip.</description>
         <name>slider-tooltip</name>
         <tag-class>com.kendoui.taglib.slider.TooltipTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>Disables (false) or enables (true) the tooltip of
@@ -32450,6 +32450,12 @@ tick labels.The slider widget supports precision of up-to 10 digits after the de
     </tag>
 
 
+    <tag>
+        <description>Template of the tooltip. The following variables are passed by the Slider and are ready to be used inside the template:</description>
+        <name>slider-tooltip-template</name>
+        <tag-class>com.kendoui.taglib.slider.TooltipTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fires when the slider value changes as a result of selecting a new value with the drag handle, buttons or keyboard.</description>

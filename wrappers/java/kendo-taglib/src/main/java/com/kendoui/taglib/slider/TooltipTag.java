@@ -50,6 +50,10 @@ public class TooltipTag extends BaseTag /* interfaces *//* interfaces */ {
         return "slider-tooltip";
     }
 
+    public void setTemplate(TooltipTemplateFunctionTag value) {
+        setEvent("template", value.getBody());
+    }
+
     public boolean getEnabled() {
         return (Boolean)getProperty("enabled");
     }
