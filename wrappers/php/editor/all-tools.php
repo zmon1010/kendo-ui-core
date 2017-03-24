@@ -15,7 +15,7 @@ require_once '../lib/Kendo/Autoload.php';
         "insertUnorderedList", "insertOrderedList", "indent", "outdent",
         "createLink", "unlink", "insertImage",
         "subscript", "superscript",
-        "createTable", "addRowAbove", "addRowBelow", "addColumnLeft", "addColumnRight", "deleteRow", "deleteColumn",
+        "tableWizard", "createTable", "addRowAbove", "addRowBelow", "addColumnLeft", "addColumnRight", "deleteRow", "deleteColumn",
         "viewHtml",
         "formatting",
         "fontName",

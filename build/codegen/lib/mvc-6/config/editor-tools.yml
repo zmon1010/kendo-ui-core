@@ -92,6 +92,9 @@
   :overload: colorPicker
 
 # table editing
+- :name: TableWizard
+  :overload: tableEditing
+
 - :name: AddColumnLeft
   :overload: tableEditing
 
