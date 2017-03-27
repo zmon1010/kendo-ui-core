@@ -66,13 +66,13 @@
         });
 
         test("renders default shape style", function() {
-            ok(marker.element.hasClass("k-marker-pin"));
+            ok(marker.element.hasClass("k-i-marker-pin"));
         });
 
         test("renders custom shape style", function() {
             marker = new Marker({ shape: "pin" });
             marker.addTo(layer);
-            ok(marker.element.hasClass("k-marker-pin"));
+            ok(marker.element.hasClass("k-i-marker-pin"));
         });
 
         test("renders no title by default", function() {
