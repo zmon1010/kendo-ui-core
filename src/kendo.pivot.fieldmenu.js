@@ -13,12 +13,14 @@ var __meta__ = { // jshint ignore:line
 
 /*jshint eqnull: true*/
 (function($, undefined) {
-    var kendo = window.kendo,
-        ui = kendo.ui,
-        MENU = "kendoContextMenu",
-        proxy = $.proxy,
-        NS = ".kendoPivotFieldMenu",
-        Widget = ui.Widget;
+    var kendo = window.kendo;
+    var ui = kendo.ui;
+    var MENU = "kendoContextMenu";
+    var proxy = $.proxy;
+    var NS = ".kendoPivotFieldMenu";
+    var Widget = ui.Widget;
+    var FILTER_ITEM = "k-filter-item";
+    var ARIA_LABEL = "aria-label";
 
     var PivotFieldMenu = Widget.extend({
         init: function(element, options) {
@@ -89,12 +91,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         _initFilterForm: function() {
-            var filterForm = this.menu.element.find(".k-filter-item");
+            var filterForm = this.menu.element.find("." + FILTER_ITEM);
             var filterProxy = proxy(this._filter, this);
 
             this._filterOperator = new kendo.ui.DropDownList(filterForm.find("select"));
             this._filterValue = filterForm.find(".k-textbox");
-
+            this._updateFilterAriaLabel();
 
             filterForm
                 .on("submit" + NS, filterProxy)
@@ -173,6 +175,14 @@ var __meta__ = { // jshint ignore:line
 
             that.dataSource.filter(filter);
             that.menu.close();
+        },
+
+        _updateFilterAriaLabel: function () {
+            var filterForm = this.menu.element.find("." + FILTER_ITEM);
+            var selectedOperator = this._filterOperator.value();
+            var selectedOperatorName = this.options.messages.operators[selectedOperator];
+
+            filterForm.find("select").attr(ARIA_LABEL, selectedOperatorName);
         },
 
         _reset: function(e) {
@@ -362,6 +372,8 @@ var __meta__ = { // jshint ignore:line
                 this._sort("asc");
             } else if (item.hasClass("k-sort-desc")) {
                 this._sort("desc");
+            } else if (item.hasClass(FILTER_ITEM)) {
+                this._updateFilterAriaLabel();
             }
         },
 
@@ -472,7 +484,7 @@ var __meta__ = { // jshint ignore:line
                             '<option value="#=op#">#=messages.operators[op]#</option>' +
                         '#}#'+
                     '</select>'+
-                    '<input class="k-textbox" type="text" />'+
+                    '<input class="k-textbox" type="text" ' + ARIA_LABEL + '="#=messages.filter#" />'+
                     '<div>'+
                     '<a class="k-button k-primary k-button-filter" href="\\#">#=messages.filter#</a>'+
                     '<a class="k-button k-button-clear" href="\\#">#=messages.clear#</a>'+
@@ -507,7 +519,7 @@ var __meta__ = { // jshint ignore:line
                             '</span>'+
                         '</li>'+
                         '<li class="k-separator"></li>'+
-                        '<li class="k-item k-filter-item">'+
+                        '<li class="k-item ' + FILTER_ITEM + '">'+
                             '<span class="k-link">'+
                                 '<span class="k-icon k-i-filter"></span>'+
                                 '${messages.filterFields}'+

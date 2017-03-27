@@ -1082,4 +1082,35 @@
         ok(!fieldmenu.treeView);
         ok(!fieldmenu.includeWindow);
     });
+
+    test("accesibility fieldmenu filter value input has aria label", function() {
+         var fieldmenu = createMenu();
+
+         equal(fieldmenu._filterValue.attr("aria-label"), "Filter");
+    });
+
+    test("accesibility fieldmenu filter value input has aria label", function() {
+         var fieldmenu = createMenu();
+
+         equal(fieldmenu._filterValue.attr("aria-label"), "Filter");
+    });
+
+    test("accesibility fieldmenu filter options has initial aria label", function() {
+         var fieldmenu = createMenu();
+         var filterForm = fieldmenu.menu.element.find(".k-filter-item");
+         var select = filterForm.find("select");
+
+         equal(select.attr("aria-label"), "Contains");
+    });
+
+    test("accesibility fieldmenu filter options changes its aria label", function() {
+         var fieldmenu = createMenu();
+         var filterForm = fieldmenu.menu.element.find(".k-filter-item");
+         var select = filterForm.find("select");
+
+         select.data("kendoDropDownList").value("endswith");
+         fieldmenu._select({ item: filterForm });
+
+         equal(select.attr("aria-label"), "Ends with");
+    });
 })();
