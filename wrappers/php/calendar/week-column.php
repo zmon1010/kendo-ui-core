@@ -7,8 +7,12 @@ require_once '../lib/Kendo/Autoload.php';
     <h4>Pick a date</h4>
 <?php
 $calendar = new \Kendo\UI\Calendar('calendar');
+$messages = new \Kendo\UI\CalendarMessages('calendarMessages');
+$messages -> weekColumnHeader('Wk');
 
-$calendar->weekNumber(true);
+$calendar->weekNumber(true)
+		 ->messages($messages);
+
 
 echo $calendar->render();
 ?>
