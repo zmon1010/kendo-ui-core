@@ -1550,7 +1550,8 @@ var __meta__ = { // jshint ignore:line
                     excel: defaultCommands.excel.text,
                     pdf: defaultCommands.pdf.text
                 },
-                noRecords: NORECORDS
+                noRecords: NORECORDS,
+                expandCollapseColumnHeader: ""
             }
         },
 
@@ -6700,8 +6701,7 @@ var __meta__ = { // jshint ignore:line
                    for (idx = 0; idx < rows.length; idx++) {
                        html += "<tr>";
                        if (hasDetails) {
-                           // an empty <th> is not 508 compliant and it should have some text content
-                           html += '<th class="k-hierarchy-cell" scope="col" style="visibility: hidden;">.</th>';
+                           html += '<th class="k-hierarchy-cell" scope="col">' + that.options.messages.expandCollapseColumnHeader + '</th>';
                        }
                        html += that._createHeaderCells(rows[idx].cells, rows[idx].rowSpan);
                        html += "</tr>";
@@ -7164,8 +7164,7 @@ var __meta__ = { // jshint ignore:line
                 });
 
             if(groups > length) {
-                // an empty <th> is not 508 compliant and it should have some text content
-                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header" scope="col" style="visibility: hidden;">.</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
+                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header" scope="col">' + that.options.messages.expandCollapseColumnHeader + '</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
                 if (that.element.is(":visible")) {
                     rows.find("th.k-group-cell").hide();
                 }

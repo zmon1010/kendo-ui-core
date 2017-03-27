@@ -192,7 +192,8 @@
         equal(grid.table.find(".k-grid-delete").attr("role"), "button");
     });
 
-    test("Grid with details th should not be empty", function() {
+    test("Grid with details th should be empty if expand/collapse header text is not set", function() {
+        var headerText = "E/C";
         var grid = new Grid(table, {
             detailTemplate: kendo.template("<p>details</p>"),
             dataSource: [ { foo: "foo", bar: "bar" } ],
@@ -200,12 +201,26 @@
         });
 
         var firstTh = grid.wrapper.find("th:first");
-        equal(firstTh.css("visibility"), "hidden");
-        notEqual(firstTh.text().trim(), "");
+        equal(firstTh.text().trim(), "");
+    });
+
+    test("Grid with details th should not be empty if expand/collapse header text is set", function() {
+        var headerText = "E/C";
+        var grid = new Grid(table, {
+            detailTemplate: kendo.template("<p>details</p>"),
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            columns: [ "foo" ],
+            messages: {
+                expandCollapseColumnHeader: headerText
+            }
+        });
+
+        var firstTh = grid.wrapper.find("th:first");
+        equal(firstTh.text().trim(), headerText);
     });
 
 
-    test("Grid with grouping th should not be empty", function() {
+    test("Grid with grouping th should be empty if expand/collapse header text is not set", function() {
         var grid = new Grid(table, {
             dataSource: [ { foo: "foo", bar: "bar" } ],
             columns: [ "foo" ]
@@ -214,8 +229,23 @@
         grid.dataSource.group({ field: "foo" });
 
         var firstTh = grid.wrapper.find("th:first");
-        equal(firstTh.css("visibility"), "hidden");
-        notEqual(firstTh.text().trim(), "");
+        equal(firstTh.text().trim(), "");
+    });
+
+    test("Grid with grouping th should not be empty if expand/collapse header text is set", function() {
+        var headerText = "E/C";
+        var grid = new Grid(table, {
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            columns: [ "foo" ],
+            messages: {
+                expandCollapseColumnHeader: headerText
+            }
+        });
+
+        grid.dataSource.group({ field: "foo" });
+
+        var firstTh = grid.wrapper.find("th:first");
+        equal(firstTh.text().trim(), headerText);
     });
 
 })();
