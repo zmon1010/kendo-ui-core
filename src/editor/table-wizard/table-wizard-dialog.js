@@ -97,205 +97,207 @@ var accessibilityAlignmentDropDownSettings = {
 };
 
 var dialogTemplate =
-    '<div class="k-editor-dialog k-editor-table-wizard-dialog k-action-window k-edit-form-container k-popup-edit-form">' +
-        '<div id="k-table-wizard-tabs" class="k-root-tabs">' +
-            '<ul>' +
-                '<li class="k-state-active">#= messages.tableTab #</li>' +
-                '<li>#= messages.cellTab #</li>' +
-                '<li>#= messages.accessibilityTab #</li>' +
-            '</ul>' +
-            '<div id="k-table-properties">' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-width">#= messages.width #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-width" />' +
-                    '<input id="k-editor-table-width-type" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-height">#= messages.height #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-height" />' +
-                    '<input id="k-editor-table-height-type" />' +
+    '<div class="k-editor-dialog k-editor-table-wizard-dialog k-action-window k-popup-edit-form">' +
+        '<div class="k-edit-form-container">' +
+            '<div id="k-table-wizard-tabs" class="k-root-tabs">' +
+                '<ul>' +
+                    '<li class="k-state-active">#= messages.tableTab #</li>' +
+                    '<li>#= messages.cellTab #</li>' +
+                    '<li>#= messages.accessibilityTab #</li>' +
+                '</ul>' +
+                '<div id="k-table-properties">' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-width">#= messages.width #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-width" />' +
+                        '<input id="k-editor-table-width-type" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-height">#= messages.height #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-height" />' +
+                        '<input id="k-editor-table-height-type" />' +
+                    '</div>' +
+
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-columns">#= messages.columns #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-columns" />' +
+                    '</div>' +
+
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-rows">#= messages.rows #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-rows" />' +
+                    '</div>' +
+
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-cell-spacing">#= messages.cellSpacing #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-cell-spacing" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-cell-padding">#= messages.cellPadding #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-cell-padding" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-alignment">#= messages.alignment #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-table-alignment" class="k-align" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-bg">#= messages.background #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-table-bg" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-css-class">#= messages.cssClass #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-css-class" class="k-input k-textbox" type="text" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-id">#= messages.id #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-id" class="k-input k-textbox" type="text" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-border-width">#= messages.border #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-border-width" />' +
+                        '<input id="k-editor-border-color" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-border-style">#= messages.borderStyle #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-border-style" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">&nbsp;</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-collapse-borders" type="checkbox" class="k-checkbox" />' +
+                        '<label for="k-editor-collapse-borders" class="k-checkbox-label">#= messages.collapseBorders #</label>' +
+                    '</div>' +
                 '</div>' +
 
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-columns">#= messages.columns #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-columns" />' +
+                '<div id="k-cell-properties">' +
+
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-selectAllCells" type="checkbox" class="k-checkbox" />' +
+                        '<label for="k-editor-selectAllCells" class="k-checkbox-label">#= messages.selectAllCells #</label>' +
+                    '</div>' +
+
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-width">#= messages.width #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-cell-width" />' +
+                        '<input id="k-editor-cell-width-type" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-height">#= messages.height #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-cell-height" />' +
+                        '<input id="k-editor-cell-height-type" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-cell-margin">#= messages.cellMargin #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-cell-margin" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-cells-padding">#= messages.cellPadding #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-table-cells-padding" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-alignment">#= messages.alignment #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cell-alignment" class="k-align" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-bg">#= messages.background #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cell-bg" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-css-class">#= messages.cssClass #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cell-css-class" class="k-input k-textbox" type="text" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-id">#= messages.id #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cell-id" class="k-input k-textbox" type="text" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-border-width">#= messages.border #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="numeric" id="k-editor-cell-border-width" />' +
+                        '<input id="k-editor-cell-border-color" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-cell-border-style">#= messages.borderStyle #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cell-border-style" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">&nbsp;</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-wrap-text" type="checkbox" class="k-checkbox" />' +
+                        '<label for="k-editor-wrap-text" class="k-checkbox-label">#= messages.wrapText #</label>' +
+                    '</div>' +
                 '</div>' +
 
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-rows">#= messages.rows #</label>' +
+                '<div id="k-accessibility-properties">' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-table-caption">#= messages.caption #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-table-caption" class="k-input k-textbox" type="text" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-accessibility-alignment">#= messages.alignment #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-accessibility-alignment" class="k-align" />' +
+                    '</div>' +
+                    '<div class="k-edit-label">' +
+                        '<label for="k-editor-accessibility-summary">#= messages.summary #</label>' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<textarea id="k-editor-accessibility-summary" class="k-input k-textbox"></textarea>' +
+                    '</div>' +
+                    '<div class="k-edit-label">&nbsp;</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input id="k-editor-cells-headers" type="checkbox" class="k-checkbox" />' +
+                        '<label for="k-editor-cells-headers" class="k-checkbox-label">#= messages.associateCellsWithHeaders #</label>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-rows" />' +
                 '</div>' +
-
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-cell-spacing">#= messages.cellSpacing #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-cell-spacing" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-cell-padding">#= messages.cellPadding #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-cell-padding" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-alignment">#= messages.alignment #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-table-alignment" class="k-align" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-bg">#= messages.background #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-table-bg" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-css-class">#= messages.cssClass #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-css-class" class="k-input k-textbox" type="text" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-id">#= messages.id #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-id" class="k-input k-textbox" type="text" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-border-width">#= messages.border #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-border-width" />' +
-                    '<input id="k-editor-border-color" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-border-style">#= messages.borderStyle #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-border-style" />' +
-                '</div>' +
-                '<div class="k-edit-label">&nbsp;</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-collapse-borders" type="checkbox" class="k-checkbox" />' +
-                    '<label for="k-editor-collapse-borders" class="k-checkbox-label">#= messages.collapseBorders #</label>' +
-                '</div>' +
+                '<div class="k-edit-buttons k-state-default">' +
+                '<button class="k-button k-primary k-dialog-ok">#= messages.dialogOk #</button>' +
+                '<button class="k-button k-dialog-close">#= messages.dialogCancel #</button>' +
             '</div>' +
-
-            '<div id="k-cell-properties">' +
-
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-selectAllCells" type="checkbox" class="k-checkbox" />' +
-                    '<label for="k-editor-selectAllCells" class="k-checkbox-label">#= messages.selectAllCells #</label>' +
-                '</div>' +
-
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-width">#= messages.width #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-cell-width" />' +
-                    '<input id="k-editor-cell-width-type" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-height">#= messages.height #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-cell-height" />' +
-                    '<input id="k-editor-cell-height-type" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-cell-margin">#= messages.cellMargin #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-cell-margin" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-cells-padding">#= messages.cellPadding #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-table-cells-padding" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-alignment">#= messages.alignment #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cell-alignment" class="k-align" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-bg">#= messages.background #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cell-bg" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-css-class">#= messages.cssClass #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cell-css-class" class="k-input k-textbox" type="text" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-id">#= messages.id #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cell-id" class="k-input k-textbox" type="text" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-border-width">#= messages.border #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input type="numeric" id="k-editor-cell-border-width" />' +
-                    '<input id="k-editor-cell-border-color" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-cell-border-style">#= messages.borderStyle #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cell-border-style" />' +
-                '</div>' +
-                '<div class="k-edit-label">&nbsp;</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-wrap-text" type="checkbox" class="k-checkbox" />' +
-                    '<label for="k-editor-wrap-text" class="k-checkbox-label">#= messages.wrapText #</label>' +
-                '</div>' +
-            '</div>' +
-
-            '<div id="k-accessibility-properties">' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-table-caption">#= messages.caption #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-table-caption" class="k-input k-textbox" type="text" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-accessibility-alignment">#= messages.alignment #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-accessibility-alignment" class="k-align" />' +
-                '</div>' +
-                '<div class="k-edit-label">' +
-                    '<label for="k-editor-accessibility-summary">#= messages.summary #</label>' +
-                '</div>' +
-                '<div class="k-edit-field">' +
-                    '<textarea id="k-editor-accessibility-summary" class="k-input k-textbox"></textarea>' +
-                '</div>' +
-                '<div class="k-edit-label">&nbsp;</div>' +
-                '<div class="k-edit-field">' +
-                    '<input id="k-editor-cells-headers" type="checkbox" class="k-checkbox" />' +
-                    '<label for="k-editor-cells-headers" class="k-checkbox-label">#= messages.associateCellsWithHeaders #</label>' +
-                '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="k-edit-buttons k-state-default">' +
-            '<button class="k-button k-primary k-dialog-ok">#= messages.dialogOk #</button>' +
-            '<button class="k-button k-dialog-close">#= messages.dialogCancel #</button>' +
         '</div>' +
     '</div>';
 

@@ -217,7 +217,7 @@
         },
         dialog: function() {
             if (!this._dialog) {
-                this._dialog = $("<div class='k-spreadsheet-window k-action-window' />")
+                this._dialog = $("<div class='k-spreadsheet-window k-action-window k-popup-edit-form' />")
                     .addClass(this.options.className || "")
                     .append(kendo.template(this.options.template)({
                         messages: kendo.spreadsheet.messages.dialogs || MESSAGES,
@@ -419,32 +419,36 @@
         options: {
             className: "k-spreadsheet-format-cells",
             template:
-                "<div class='k-root-tabs' data-role='tabstrip' " +
-                     "data-text-field='name' " +
-                     "data-bind='source: categories, value: categoryFilter' " +
-                     "data-animation='false' />" +
+                "<div class='k-edit-form-container'>" +
 
-                "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
+                    "<div class='k-root-tabs' data-role='tabstrip' " +
+                        "data-text-field='name' " +
+                        "data-bind='source: categories, value: categoryFilter' " +
+                        "data-animation='false' />" +
 
-                "<script type='text/x-kendo-template' id='format-item-template'>" +
-                    "\\#: data.name \\#" +
-                "</script>" +
+                    "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
 
-                "<select data-role='dropdownlist' class='k-format-filter' " +
-                    "data-text-field='description' " +
-                    "data-value-field='value.name' " +
-                    "data-bind='visible: showCurrencyFilter, value: currency, source: currencies' />" +
+                    "<script type='text/x-kendo-template' id='format-item-template'>" +
+                        "\\#: data.name \\#" +
+                    "</script>" +
 
-                "<ul data-role='staticlist' tabindex='0' " +
-                    "class='k-list k-reset' " +
-                    "data-template='format-item-template' " +
-                    "data-value-primitive='true' " +
-                    "data-value-field='value' " +
-                    "data-bind='source: formats, value: format' />" +
+                    "<select data-role='dropdownlist' class='k-format-filter' " +
+                        "data-text-field='description' " +
+                        "data-value-field='value.name' " +
+                        "data-bind='visible: showCurrencyFilter, value: currency, source: currencies' />" +
 
-                "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>#: messages.apply #</button>" +
-                    "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
+                    "<ul data-role='staticlist' tabindex='0' " +
+                        "class='k-list k-reset' " +
+                        "data-template='format-item-template' " +
+                        "data-value-primitive='true' " +
+                        "data-value-field='value' " +
+                        "data-bind='source: formats, value: format' />" +
+
+                    "<div class='k-action-buttons'>" +
+                        "<button class='k-button k-primary' data-bind='click: apply'>#: messages.apply #</button>" +
+                        "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
+                    "</div>"+
+
                 "</div>"
         },
         _generateFormats: function() {

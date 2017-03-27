@@ -29,7 +29,7 @@ var ViewHtmlCommand = Command.extend({
             dialog = $(kendo.template(ViewHtmlCommand.template)(messages)).appendTo(document.body),
             textarea = ".k-editor-textarea",
             content;
-        
+
         options.serialization.immutables = editor.immutables;
         content = ViewHtmlCommand.indent(editor.value());
         options.serialization.immutables = undefined;
@@ -75,11 +75,13 @@ var ViewHtmlCommand = Command.extend({
 });
 
 extend(ViewHtmlCommand, {
-    template: "<div class='k-editor-dialog k-popup-edit-form k-edit-form-container k-viewhtml-dialog'>" +
-                "<textarea class='k-editor-textarea k-input'></textarea>" +
-                "<div class='k-edit-buttons k-state-default'>" +
-                    "<button class='k-dialog-update k-button k-primary'>#: dialogUpdate #</button>" +
-                    "<button class='k-dialog-close k-button'>#: dialogCancel #</button>" +
+    template: "<div class='k-editor-dialog k-popup-edit-form k-viewhtml-dialog'>" +
+                "<div class='k-edit-form-container'></div>" +
+                    "<textarea class='k-editor-textarea k-input'></textarea>" +
+                    "<div class='k-edit-buttons k-state-default'>" +
+                        "<button class='k-dialog-update k-button k-primary'>#: dialogUpdate #</button>" +
+                        "<button class='k-dialog-close k-button'>#: dialogCancel #</button>" +
+                    "</div>" +
                 "</div>" +
             "</div>",
     indent: function(content) {

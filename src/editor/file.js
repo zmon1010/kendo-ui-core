@@ -63,31 +63,33 @@ var FileCommand = Command.extend({
 
     _dialogTemplate: function(showBrowser) {
         return kendo.template(
-            '<div class="k-editor-dialog k-popup-edit-form k-edit-form-container">' +
-                '# if (showBrowser) { #' +
-                    '<div class="k-filebrowser"></div>' +
-                '# } #' +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-file-url">#: messages.fileWebAddress #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-file-url">' +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-file-text">#: messages.fileText #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-file-text">' +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-file-title">#: messages.fileTitle #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-file-title">' +
-                "</div>" +
-                '<div class="k-edit-buttons k-state-default">' +
-                    '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
-                    '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+            '<div class="k-editor-dialog k-popup-edit-form">' +
+                '<div class="k-edit-form-container">' +
+                    '# if (showBrowser) { #' +
+                        '<div class="k-filebrowser"></div>' +
+                    '# } #' +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-file-url">#: messages.fileWebAddress #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-file-url">' +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-file-text">#: messages.fileText #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-file-text">' +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-file-title">#: messages.fileTitle #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-file-title">' +
+                    "</div>" +
+                    '<div class="k-edit-buttons k-state-default">' +
+                        '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
+                        '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+                    '</div>' +
                 '</div>' +
             '</div>'
         )({
@@ -120,7 +122,7 @@ var FileCommand = Command.extend({
                 visible: false,
                 resizable: showBrowser
             };
-    
+
         this.expandImmutablesIn(range);
 
         function apply(e) {

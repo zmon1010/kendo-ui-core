@@ -77,37 +77,39 @@ var ImageCommand = Command.extend({
 
     _dialogTemplate: function(showBrowser) {
         return kendo.template(
-            '<div class="k-editor-dialog k-popup-edit-form k-edit-form-container">' +
-                '# if (showBrowser) { #' +
-                    '<div class="k-filebrowser k-imagebrowser"></div>' +
-                '# } #' +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-image-url">#: messages.imageWebAddress #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-image-url">' +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-image-title">#: messages.imageAltText #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-image-title">' +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-image-width">#: messages.imageWidth #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-image-width">' +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    '<label for="k-editor-image-height">#: messages.imageHeight #</label>' +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    '<input type="text" class="k-input k-textbox" id="k-editor-image-height">' +
-                "</div>" +
-                '<div class="k-edit-buttons k-state-default">' +
-                    '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
-                    '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+            '<div class="k-editor-dialog k-popup-edit-form">' +
+                '<div class="k-edit-form-container">' +
+                    '# if (showBrowser) { #' +
+                        '<div class="k-filebrowser k-imagebrowser"></div>' +
+                    '# } #' +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-image-url">#: messages.imageWebAddress #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-image-url">' +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-image-title">#: messages.imageAltText #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-image-title">' +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-image-width">#: messages.imageWidth #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-image-width">' +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        '<label for="k-editor-image-height">#: messages.imageHeight #</label>' +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        '<input type="text" class="k-input k-textbox" id="k-editor-image-height">' +
+                    "</div>" +
+                    '<div class="k-edit-buttons k-state-default">' +
+                        '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
+                        '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+                    '</div>' +
                 '</div>' +
             '</div>'
         )({
@@ -210,7 +212,7 @@ var ImageCommand = Command.extend({
             .find(KEDITORIMAGEWIDTH).val(imageWidth).end()
             .find(KEDITORIMAGEHEIGHT).val(imageHeight).end()
             .data("kendoWindow");
-        
+
         if (showBrowser) {
             this._imageBrowser = new kendo.ui.ImageBrowser(
                 dialog.element.find(".k-imagebrowser"),

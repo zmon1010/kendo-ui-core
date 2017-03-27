@@ -117,33 +117,35 @@ var LinkCommand = Command.extend({
 
     _dialogTemplate: function() {
         return kendo.template(
-            '<div class="k-editor-dialog k-popup-edit-form k-edit-form-container">' +
-                "<div class='k-edit-label'>" +
-                    "<label for='k-editor-link-url'>#: messages.linkWebAddress #</label>" +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    "<input type='text' class='k-input k-textbox' id='k-editor-link-url'>" +
-                "</div>" +
-                "<div class='k-edit-label k-editor-link-text-row'>" +
-                    "<label for='k-editor-link-text'>#: messages.linkText #</label>" +
-                "</div>" +
-                "<div class='k-edit-field k-editor-link-text-row'>" +
-                    "<input type='text' class='k-input k-textbox' id='k-editor-link-text'>" +
-                "</div>" +
-                "<div class='k-edit-label'>" +
-                    "<label for='k-editor-link-title'>#: messages.linkToolTip #</label>" +
-                "</div>" +
-                "<div class='k-edit-field'>" +
-                    "<input type='text' class='k-input k-textbox' id='k-editor-link-title'>" +
-                "</div>" +
-                "<div class='k-edit-label'></div>" +
-                "<div class='k-edit-field'>" +
-                    "<input type='checkbox' class='k-checkbox' id='k-editor-link-target'>" +
-                    "<label for='k-editor-link-target' class='k-checkbox-label'>#: messages.linkOpenInNewWindow #</label>" +
-                "</div>" +
-                "<div class='k-edit-buttons k-state-default'>" +
-                    '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
-                    '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+            '<div class="k-editor-dialog k-popup-edit-form">' +
+                '<div class="k-edit-form-container">' +
+                    "<div class='k-edit-label'>" +
+                        "<label for='k-editor-link-url'>#: messages.linkWebAddress #</label>" +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        "<input type='text' class='k-input k-textbox' id='k-editor-link-url'>" +
+                    "</div>" +
+                    "<div class='k-edit-label k-editor-link-text-row'>" +
+                        "<label for='k-editor-link-text'>#: messages.linkText #</label>" +
+                    "</div>" +
+                    "<div class='k-edit-field k-editor-link-text-row'>" +
+                        "<input type='text' class='k-input k-textbox' id='k-editor-link-text'>" +
+                    "</div>" +
+                    "<div class='k-edit-label'>" +
+                        "<label for='k-editor-link-title'>#: messages.linkToolTip #</label>" +
+                    "</div>" +
+                    "<div class='k-edit-field'>" +
+                        "<input type='text' class='k-input k-textbox' id='k-editor-link-title'>" +
+                    "</div>" +
+                    "<div class='k-edit-label'></div>" +
+                    "<div class='k-edit-field'>" +
+                        "<input type='checkbox' class='k-checkbox' id='k-editor-link-target'>" +
+                        "<label for='k-editor-link-target' class='k-checkbox-label'>#: messages.linkOpenInNewWindow #</label>" +
+                    "</div>" +
+                    "<div class='k-edit-buttons k-state-default'>" +
+                        '<button class="k-dialog-insert k-button k-primary">#: messages.dialogInsert #</button>' +
+                        '<button class="k-dialog-close k-button">#: messages.dialogCancel #</button>' +
+                    "</div>" +
                 "</div>" +
             "</div>"
         )({
