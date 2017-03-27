@@ -2048,6 +2048,7 @@
   {
     "text": "Grid",
     "name": "grid",
+    "updated": "true",
     "pro": "true",
     "api": { "all": "web/grid" },
     "documentation": {
@@ -2651,6 +2652,7 @@
           "kendo-ui": "Toolbar template demo for Kendo UI HTML5 Grid control",
           "aspnet-mvc": "Toolbar templates for Telerik ASP.NET MVC Grid"
         },
+        "updated": "true",
         "meta": {
           "kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
           "aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."

@@ -21,6 +21,9 @@ namespace Kendo.Extensions
             if (example.New) {
                 className += "new-example";
             }
+            if (example.Updated) {
+                className += "updated-example";
+            }
 
             var routeData = html.ViewContext.RouteData;
             var currentAction = routeData.Values["section"];
@@ -47,6 +50,11 @@ namespace Kendo.Extensions
             if (example.New)
             {
                 link.Append("<span class=\"new-widget\"></span>");
+            }
+
+            if (example.Updated)
+            {
+                link.Append("<span class=\"updated-widget\"></span>");
             }
 
             link.Append(example.Text).Append("</a>");
@@ -105,7 +113,7 @@ namespace Kendo.Extensions
 
             var pro = widget.Pro && product == "online";
 
-            if (pro && (widget.New || widget.Beta)) {
+            if (pro && (widget.New || widget.Beta || widget.Updated)) {
                 className = "multiple-tags";
             }
 
@@ -134,6 +142,11 @@ namespace Kendo.Extensions
             if (widget.New)
             {
                 link.Append("<span class=\"new-widget\"></span>");
+            }
+
+            if (widget.Updated)
+            {
+                link.Append("<span class=\"updated-widget\"></span>");
             }
 
             link.Append("</a>");

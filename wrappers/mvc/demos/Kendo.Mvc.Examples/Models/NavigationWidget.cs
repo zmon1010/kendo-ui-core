@@ -12,6 +12,7 @@ namespace Kendo.Mvc.Examples.Models
         public string SpriteCssClass { get; set; }
         public bool Expanded { get; set; }
         public bool New { get; set; }
+        public bool Updated { get; set; }
         public bool Beta { get; set; }
         public IDictionary<string, string> Documentation { get; set; }
         public IDictionary<string, string> Forum { get; set; }
