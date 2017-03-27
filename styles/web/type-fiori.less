@@ -3324,3 +3324,12 @@ div.k-window.k-state-focused
     right: auto;
     left: 2.2em;
 }
+
+.k-maskedtextbox input.k-state-invalid {
+    border-color: @input-validation-error;
+    color: @input-validation-error;
+
+    + .k-i-warning {
+        color: @input-validation-error;
+    }
+}
