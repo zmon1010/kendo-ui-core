@@ -22,7 +22,12 @@ var __meta__ = { // jshint ignore:line
     var objectToString = {}.toString;
 
     var INPUT_EVENT_NAME = (kendo.support.propertyChangeEvent ? "propertychange.kendoDateInput input" : "input") + ns;
+
     var STATEDISABLED = "k-state-disabled";
+    var STATEDEFAULT = "k-state-default";
+    var STATEFOCUSED = "k-state-focused";
+    var STATEHOVER = "k-state-hover";
+
     var DISABLED = "disabled";
     var READONLY = "readonly";
     var CHANGE = "change";
@@ -40,11 +45,17 @@ var __meta__ = { // jshint ignore:line
             options.format = kendo._extractFormat(options.format || kendo.getCulture(options.culture).calendars.standard.patterns.d);
 
             element = that.element;
-            DOMElement = element[0];
-            that.wrapper = element;
-            that._form();
+            var insidePicker = ((element.parent().attr("class") || "").indexOf("k-picker-wrap") >= 0);
+            if (insidePicker) {
+                that.wrapper = element;
+            } else {
+                //that.wrapper = element.wrap("<span class='k-date-wrap k-state-default'></span>").parent();
+                //that.wrapper.wrap("<span class='k-widget k-dateinput'></span>");
+                that.wrapper = element.wrap("<span class='k-widget k-dateinput'></span>").parent();
+            }
 
-            var insidePicker = that.element.attr("Class");
+            DOMElement = element[0];
+            that._form();
 
             that.element
                 .addClass(insidePicker ? " " : "k-textbox")
@@ -199,19 +210,23 @@ var __meta__ = { // jshint ignore:line
             var element = that.element;
             var disable = options.disable;
             var readonly = options.readonly;
+            var wrapper = that.wrapper;
 
             that._unbindInput();
 
             if (!readonly && !disable) {
-                element.removeAttr(DISABLED)
-                    .removeAttr(READONLY)
+                wrapper.addClass(STATEDEFAULT)
                     .removeClass(STATEDISABLED);
+
+                element.removeAttr(DISABLED)
+                    .removeAttr(READONLY);
 
                 that._bindInput();
             } else {
+                wrapper.addClass(STATEDISABLED)
+                    .removeClass(STATEDEFAULT);
                 element.attr(DISABLED, disable)
-                    .attr(READONLY, readonly)
-                    .toggleClass(STATEDISABLED, disable);
+                    .attr(READONLY, readonly);
             }
         },
 
