@@ -1024,6 +1024,21 @@
           "kendo-ui": "See how Kendo UI DateInput component supports Localization and Globalization.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports Localization and Globalization."
         }
+      },
+      {
+        "text": "AngularJS",
+        "url": "dateinput/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI DateInput"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI DateInput"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       }
     ],
     "category": "Editors"

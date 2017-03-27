@@ -218,7 +218,9 @@ var __meta__ = { // jshint ignore:line
 
         _change: function () {
             var that = this;
+            var oldValue = that._oldValue;
             var value = that.value();
+
             if (value && that.min() && value < that.min()) {
                 that.value(that.min());
                 value = that.value();
@@ -228,9 +230,9 @@ var __meta__ = { // jshint ignore:line
                 value = that.value();
             }
 
-            if (that._oldValue && value && value.getTime() !== that._oldValue.getTime() ||
-                that._oldValue && !value ||
-                !that._oldValue && value
+            if (oldValue && value && value.getTime() !== oldValue.getTime() ||
+                oldValue && !value ||
+                !oldValue && value
             ) {
                 that._oldValue = value;
                 that.trigger(CHANGE);
@@ -268,8 +270,10 @@ var __meta__ = { // jshint ignore:line
                 this._selectSegment(diff[0][0]);
 
                 //android fix
-                var that = this, difSym = diff[0][0];
-                setTimeout(function () { that._selectSegment(difSym); });
+                if (!navigationOnly) {
+                    var that = this, difSym = diff[0][0];
+                    setTimeout(function () { that._selectSegment(difSym); });
+                }
             }
             if (navigationOnly) {
                 var newEvent = { keyCode: 39, preventDefault: function () { } };
