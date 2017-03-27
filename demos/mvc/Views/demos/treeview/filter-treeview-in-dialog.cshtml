@@ -61,7 +61,7 @@
             },
             dataSource: myDataSource,
             check: onCheck,
-          	expand: onExpand
+            expand: onExpand
         });
 
         $(document).ready(function () {
@@ -180,11 +180,11 @@
             getCheckedNodes(treeView.dataSource.view(), checkedNodes);
             setMessage(checkedNodes.length);
         }
-		
-		function onExpand(e) {
-          if($("#filterText").val() == "") {
-            $(e.node).find("li").show();
-          }
+
+        function onExpand(e) {
+            if ($("#filterText").val() == "") {
+                $(e.node).find("li").show();
+            }
         }
 
         function setMessage(checkedNodes) {
@@ -203,30 +203,32 @@
         $("#filterText").keyup(function (e) {
             var filterText = $(this).val();
 
-			if (filterText !== "") {
-				$(".selectAll").css("visibility", "hidden");
+            if (filterText !== "") {
+                $(".selectAll").css("visibility", "hidden");
 
-				$("#treeview .k-group .k-group .k-in").closest("li").hide();
-				$("#treeview .k-group").closest("li").hide();
-				$("#treeview .k-group .k-group .k-in:contains(" + filterText + ")").each(function () {
-					$(this).parents("ul, li").each(function () {
-						$(this).show();
-					});
-				});
-				$("#treeview .k-group .k-in:contains(" + filterText + ")").each(function () {
-					$(this).parents("ul, li").each(function () {
-						$(this).show();
-					});
-				});
-			}
+                $("#treeview .k-group .k-group .k-in").closest("li").hide();
+                $("#treeview .k-group").closest("li").hide();
+                $("#treeview .k-group .k-group .k-in:contains(" + filterText + ")").each(function () {
+                    $(this).parents("ul, li").each(function () {
+                        var treeView = $("#treeview").data("kendoTreeView");
+                        treeView.expand($(this).parents("li"));
+                        $(this).show();
+                    });
+                });
+                $("#treeview .k-group .k-in:contains(" + filterText + ")").each(function () {
+                    $(this).parents("ul, li").each(function () {
+                        $(this).show();
+                    });
+                });
+            }
             else {
                 $("#treeview .k-group").find("li").show();
-								var nodes = $("#treeview > .k-group > li");
-  
-                $.each( nodes, function( i, val ) {
-                  if(nodes[i].getAttribute("data-expanded") == null) {
-                    $(nodes[i]).find("li").hide();
-                  }
+                var nodes = $("#treeview > .k-group > li");
+
+                $.each(nodes, function (i, val) {
+                    if (nodes[i].getAttribute("data-expanded") == null) {
+                        $(nodes[i]).find("li").hide();
+                    }
                 });
 
                 $(".selectAll").css("visibility", "visible");
