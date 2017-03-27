@@ -11,9 +11,11 @@
         .Pageable(pageable => pageable.ButtonCount(5))
         .Selectable(selectable => selectable
             .Mode(GridSelectionMode.Multiple))
+        .PersistSelection(true)                
         .Navigatable()
         .DataSource(dataSource => dataSource
-            .Ajax()
+            .Ajax()                
+            .Model(m=>m.Id("OrderID"))
             .PageSize(6)
             .Read(read => read.Action("Orders_Read", "Grid"))
          )

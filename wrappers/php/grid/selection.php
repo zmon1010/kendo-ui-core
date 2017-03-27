@@ -40,7 +40,8 @@ $frieghtField->type('number');
 $orderDateField = new \Kendo\Data\DataSourceSchemaModelField('OrderDate');
 $orderDateField->type('date');
 
-$model->addField($shipCountryField)
+$model->id('OrderID')
+      ->addField($shipCountryField)
       ->addField($frieghtField)
       ->addField($orderDateField);
 
@@ -82,7 +83,8 @@ $grid->addColumn($shipCountry, $freight, $orderDate)
      ->scrollable(false)
      ->selectable('row multiple')
      ->sortable(true)
-     ->pageable(true);
+     ->pageable(true)
+	 ->persistSelection(true);
 
 echo $grid->render();
 ?>

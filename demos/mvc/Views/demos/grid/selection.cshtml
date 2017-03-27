@@ -17,13 +17,19 @@
                     $("#rowSelection").kendoGrid({
                         dataSource: {
                             data: orders,
-                            pageSize: 6
+                            pageSize: 6,
+                            schema: {
+                                model: {
+                                   id: "OrderID"
+                                }
+                            }
                         },
                         selectable: "multiple",
                         pageable: {
                             buttonCount: 5
                         },
                         scrollable: false,
+                        persistSelection: true,
                         navigatable: true,
                         columns: [
                             {

@@ -9,7 +9,7 @@
 <demo:header />
   <div class="demo-section k-content wide">
         <h4>Grid with multiple row selection enabled</h4>
-        <kendo:grid name="rowSelection" selectable="multiple" scrollable="false" navigatable="true">
+        <kendo:grid name="rowSelection" selectable="multiple" scrollable="false" navigatable="true" persistSelection="true">
 	    	<kendo:grid-pageable buttonCount="5" />	    	    
 	        <kendo:grid-columns>
 	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
@@ -24,7 +24,7 @@
 	                </kendo:dataSource-transport-parameterMap>              
 	            </kendo:dataSource-transport>
 	            <kendo:dataSource-schema data="data" total="total" groups="data">
-	                    <kendo:dataSource-schema-model>
+	                    <kendo:dataSource-schema-model id="orderId">
 	                        <kendo:dataSource-schema-model-fields>
 	                            <kendo:dataSource-schema-model-field name="orderId" type="number" />
 	                            <kendo:dataSource-schema-model-field name="freight" type="number" />
