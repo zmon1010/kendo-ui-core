@@ -1687,6 +1687,7 @@
             {
                 "text": "Toolbar template",
                 "url": "grid/toolbar-template",
+				"updated": true,
                 "title": {
                     "aspnet-mvc": "Toolbar templates for Telerik $FRAMEWORK Grid"
                 },

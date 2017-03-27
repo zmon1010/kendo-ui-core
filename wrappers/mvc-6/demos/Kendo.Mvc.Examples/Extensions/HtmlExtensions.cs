@@ -22,6 +22,11 @@ namespace Kendo.Mvc.Examples.Extensions
                 className += "new-example";
             }
 
+            if (example.Updated)
+            {
+                className += "updated-example";
+            }
+
             var routeData = html.ViewContext.RouteData;
             var currentAction = routeData.Values["action"].ToString().ToLower().Replace("_", "-");
             var currentController = routeData.Values["controller"].ToString().ToLower().Replace("_", "-");
@@ -45,6 +50,11 @@ namespace Kendo.Mvc.Examples.Extensions
             if (example.New)
             {
                 link.Append("<span class=\"new-widget\"></span>");
+            }
+
+            if (example.Updated)
+            {
+                link.Append("<span class=\"updated-widget\"></span>");
             }
 
             link.Append(example.Text).Append("</a>");
@@ -95,6 +105,11 @@ namespace Kendo.Mvc.Examples.Extensions
             if (widget.New)
             {
                 link.Append("<span class=\"new-widget\"></span>");
+            }
+
+            if (widget.Updated)
+            {
+                link.Append("<span class=\"updated-widget\"></span>");
             }
 
             link.Append("</a>");

@@ -1808,6 +1808,7 @@ ul.keyboard-legend li a {
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
        only screen and (min-device-pixel-ratio: 2) {
     .new-widget,
+    .updated-widget,
     .beta-widget,
     .pro-widget {
         background-image: url('tags@2x.png');
@@ -2195,6 +2196,7 @@ a.footer-links:hover,
 }
 
 .new-widget,
+.updated-widget,
 .beta-widget,
 .pro-widget
 {
@@ -2208,6 +2210,7 @@ a.footer-links:hover,
 }
 
 #widgets-all .new-widget,
+#widgets-all .updated-widget,
 #widgets-all .beta-widget
 {
     position: relative;
@@ -2217,14 +2220,17 @@ a.footer-links:hover,
 }
 
 .new-widget { background-position: 100% -9px; }
+.updated-widget { background-position: 100% -27px; }
 .beta-widget { background-position: 100% 0; }
 .pro-widget { background-position: 100% -18px; }
 
 #widgets-all .new-widget { width: 18px; background-position: -19px -9px; }
+#widgets-all .updated-widget { width: 37px; background-position: 0px -27px; }
 #widgets-all .beta-widget { width: 21px; background-position: -16px 0; }
 
 .multiple-tags .pro-widget { top: 5px; }
 .multiple-tags .beta-widget,
+.multiple-tags .updated-widget,
 .multiple-tags .new-widget { top: 14px; }
 
 #overview .pro-widget {

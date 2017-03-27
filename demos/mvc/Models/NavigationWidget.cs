@@ -13,6 +13,7 @@ namespace Kendo.Models
         public bool Tablet { get; set; }
         public bool Expanded { get; set; }
         public bool New { get; set; }
+        public bool Updated { get; set; }
         public bool Beta { get; set; }
         public bool Pro { get; set; }
         public bool Mobile { get; set; }
