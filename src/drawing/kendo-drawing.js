@@ -6186,7 +6186,7 @@ var Surface$3 = Surface.extend({
         });
 
         var promise = createPromise();
-        promiseAll(loadingStates).then(function () {
+        var resolveDataURL = function () {
             root._invalidate();
 
             try {
@@ -6195,9 +6195,9 @@ var Surface$3 = Surface.extend({
             } catch (e) {
                 promise.reject(e);
             }
-        }, function (e) {
-            promise.reject(e);
-        });
+        };
+
+        promiseAll(loadingStates).then(resolveDataURL, resolveDataURL);
 
         return promise;
     },
