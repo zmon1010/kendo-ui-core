@@ -21,7 +21,7 @@ var __meta__ = { // jshint ignore:line
     var proxy = $.proxy;
     var objectToString = {}.toString;
 
-    var INPUT_EVENT_NAME = (kendo.support.propertyChangeEvent ? "propertychange" : "input") + ns;
+    var INPUT_EVENT_NAME = (kendo.support.propertyChangeEvent ? "propertychange.kendoDateInput input" : "input") + ns;
     var STATEDISABLED = "k-state-disabled";
     var DISABLED = "disabled";
     var READONLY = "readonly";
@@ -182,8 +182,7 @@ var __meta__ = { // jshint ignore:line
                 .on("paste" + ns, proxy(that._paste, that))
                 .on(INPUT_EVENT_NAME, proxy(that._input, that))
                 .on("mouseup" + ns, proxy(that._mouseUp, that))
-                .on("mousewheel" + ns, proxy(that._scroll, that));
-
+                .on("DOMMouseScroll" + ns + " mousewheel" + ns, proxy(that._scroll, that));
         },
 
         _unbindInput: function () {
@@ -192,7 +191,7 @@ var __meta__ = { // jshint ignore:line
                 .off("paste" + ns)
                 .off(INPUT_EVENT_NAME)
                 .off("mouseup" + ns)
-                .off("mousewheel" + ns);
+                .off("DOMMouseScroll" + ns + " mousewheel" + ns);
         },
 
         _editable: function (options) {
@@ -360,6 +359,15 @@ var __meta__ = { // jshint ignore:line
                     this._selectSegment(symbol);
                 }
             }
+            if (kendo.support.browser.msie && kendo.support.browser.version < 10) {
+                var keycode = e.keyCode ? e.keyCode : e.which;
+                if (keycode === 8 || keycode === 46) {
+                    var that = this;
+                    setTimeout(function () {
+                        that._input();
+                    }, 0);
+                }
+            }
         },
 
         _selectNearestSegment: function () {
@@ -523,7 +531,7 @@ var __meta__ = { // jshint ignore:line
         };
 
         this.modifyPart = function (symbol, offset) {
-            var newValue = new Date(value);
+            var newValue = new Date((value && value.getTime) ? value.getTime() : value);
             switch (symbol) {
                 case "y": newValue.setFullYear(newValue.getFullYear() + offset); break;
                 case "M":
@@ -555,7 +563,7 @@ var __meta__ = { // jshint ignore:line
                 setExisting(symbol, false);
                 return;
             }
-            var newValue = new Date(value);
+            var newValue = new Date((value && value.getTime) ? value.getTime() : value);
             switch (symbol) {
                 case "d":
                     var newDate = (date ? newValue.getDate() * 10 : 0) + parseInt(currentChar, 10);
@@ -694,7 +702,7 @@ var __meta__ = { // jshint ignore:line
 
         this.getDateObject = function () {
             return (year && month && date && hours && minutes && seconds && milliseconds) ?
-                new Date(value) : null;
+                new Date(value.getTime()) : null;
         };
         
         if (!initDate) {
@@ -704,7 +712,7 @@ var __meta__ = { // jshint ignore:line
                 setExisting(sampleFormat[i], false);
             }
         } else {
-            value = new Date(initDate);
+            value = new Date(initDate.getTime());
         }
     }
 
