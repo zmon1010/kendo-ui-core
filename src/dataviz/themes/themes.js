@@ -3746,7 +3746,7 @@
         var TEXT = "#656565";
         var INACTIVE_SHAPE = "#bdbdbd";
         var AXIS = "rgba(0, 0, 0, .04)";
-        var SERIES = ["ff6358", "#ffd246", "#78d237", "#28b4c8", "#2d73f5", "#aa46be"];
+        var SERIES = ["#ff6358", "#ffd246", "#78d237", "#28b4c8", "#2d73f5", "#aa46be"];
         var SERIES_LIGHT = ["#ffd9dc", "#ffeced", "#cceef3", "#e6f8fb", "#fff2da", "#fff7e8"];
         var PRIMARY = SERIES[0];
         var DIAGRAM_HOVER = WHITE;
@@ -3982,9 +3982,6 @@
                 colors: fuse(SERIES, SERIES_LIGHT)
             }
         });
-
-        themes.sass = themes["bootstrap-v4"];
-
     })();
 
     function fuse(arr1, arr2) {

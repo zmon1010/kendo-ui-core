@@ -334,7 +334,7 @@
 
         _getThemeOptions: function(userOptions) {
             var themeName = (userOptions || {}).theme;
-            if (themeName === "sass" || themeName === "default-v2") {
+            if (themeName === "sass" || themeName === "default-v2" || themeName === "bootstrap-v4") {
                 return dataviz.autoTheme().chart;
             }
 
