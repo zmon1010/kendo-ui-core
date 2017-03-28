@@ -57,6 +57,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("commands", value);
     }
 
+    public java.lang.String getExpandCollapseColumnHeader() {
+        return (java.lang.String)getProperty("expandCollapseColumnHeader");
+    }
+
+    public void setExpandCollapseColumnHeader(java.lang.String value) {
+        setProperty("expandCollapseColumnHeader", value);
+    }
+
     public java.lang.String getNoRecords() {
         return (java.lang.String)getProperty("noRecords");
     }

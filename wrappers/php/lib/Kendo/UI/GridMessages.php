@@ -23,6 +23,15 @@ class GridMessages extends \Kendo\SerializableObject {
         return $this->setProperty('noRecords', $value);
     }
 
+    /**
+    * Allows customization of the text in column header for expand/collapse columns. Set the value to make the widget compliant with web accessibility standards.
+    * @param string $value
+    * @return \Kendo\UI\GridMessages
+    */
+    public function expandCollapseColumnHeader($value) {
+        return $this->setProperty('expandCollapseColumnHeader', $value);
+    }
+
 //<< Properties
 }
 

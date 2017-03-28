@@ -24253,6 +24253,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>Allows customization of the text in column header for expand/collapse columns. Set the value to make the widget compliant with web accessibility standards.</description>
+            <name>expandCollapseColumnHeader</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Defines the text of the "noRecords" option that is rendered when no records are available in current view. The "noRecords" options should be set to true.</description>
             <name>noRecords</name>
             <rtexprvalue>true</rtexprvalue>
