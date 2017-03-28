@@ -27,6 +27,7 @@ var __meta__ = { // jshint ignore:line
     var STATEDEFAULT = "k-state-default";
     var STATEFOCUSED = "k-state-focused";
     var STATEHOVER = "k-state-hover";
+    var STATEINVALID = "k-state-invalid";
 
     var DISABLED = "disabled";
     var READONLY = "readonly";
@@ -47,12 +48,13 @@ var __meta__ = { // jshint ignore:line
             element = that.element;
             var insidePicker = ((element.parent().attr("class") || "").indexOf("k-picker-wrap") >= 0);
             if (insidePicker) {
-                that.wrapper = element;
+                that.wrapper = element.parent();
             } else {
                 //that.wrapper = element.wrap("<span class='k-date-wrap k-state-default'></span>").parent();
                 //that.wrapper.wrap("<span class='k-widget k-dateinput'></span>");
                 that.wrapper = element.wrap("<span class='k-widget k-dateinput'></span>").parent();
             }
+            $("<span class='k-icon k-i-warning'></span>").insertAfter(element);
 
             DOMElement = element[0];
             that._form();
@@ -260,6 +262,8 @@ var __meta__ = { // jshint ignore:line
             var value = element.value;
             var options = that.options;
 
+            var blinkInvalid = false;
+
             if (kendo._activeElement() !== element) {
                 return;
             }
@@ -275,7 +279,8 @@ var __meta__ = { // jshint ignore:line
             var navigationOnly = (diff.length === 1 && diff[0][1] === " ");
             if (!navigationOnly) {
                 for (var i = 0; i < diff.length; i++) {
-                    this._dateTime.parsePart(diff[i][0], diff[i][1]);
+                    var valid = this._dateTime.parsePart(diff[i][0], diff[i][1]);
+                    blinkInvalid = blinkInvalid || !valid;
                 }
             }
             this._updateElementValue();
@@ -292,6 +297,12 @@ var __meta__ = { // jshint ignore:line
             if (navigationOnly) {
                 var newEvent = { keyCode: 39, preventDefault: function () { } };
                 this._keydown(newEvent);
+            }
+            if (blinkInvalid) {
+                clearTimeout(that._blinkInvalidTimeout);
+                var stateInvalid = STATEINVALID;
+                that.wrapper.addClass(STATEINVALID);
+                that._blinkInvalidTimeout = setTimeout(function () { that.wrapper.removeClass(stateInvalid) }, 100);
             }
         },
 
@@ -576,7 +587,7 @@ var __meta__ = { // jshint ignore:line
         this.parsePart = function (symbol, currentChar) {
             if (!currentChar) {
                 setExisting(symbol, false);
-                return;
+                return true;
             }
             var newValue = new Date((value && value.getTime) ? value.getTime() : value);
             switch (symbol) {
@@ -623,12 +634,12 @@ var __meta__ = { // jshint ignore:line
                                     newValue.setMonth(i);
                                     month = true;
                                     value = newValue;
-                                    return;
+                                    return true;
                                 }
                             }
                             typedMonthPart = typedMonthPart.substring(1, typedMonthPart.length);
                         }
-
+                        return false;
                     }
                     break;
                 case "y":
@@ -688,7 +699,7 @@ var __meta__ = { // jshint ignore:line
                                 calendar.PM[0].toLowerCase().indexOf(typedDayPeriodPart) === 0 && newValue.getHours() < 12) {
                                 newValue.setHours((newValue.getHours() + 12) % 24);
                                 value = newValue;
-                                return;
+                                return true;
                             }
                             typedDayPeriodPart = typedDayPeriodPart.substring(1, typedDayPeriodPart.length);
                         }
@@ -697,6 +708,7 @@ var __meta__ = { // jshint ignore:line
                 default: break;
             }
             value = newValue;
+            return true;
         };
 
         this.toPair = function (format, culture , messages) {
