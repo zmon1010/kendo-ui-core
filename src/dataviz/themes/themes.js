@@ -3869,7 +3869,7 @@
         var TEXT = "#292b2c";
         var INACTIVE_SHAPE = "#bdbdbd";
         var AXIS = "rgba(0, 0, 0, .04)";
-        var SERIES = ["#0275d8", "#ffd246", "#78d237", "#28b4c8", "#2d73f5", "#aa46be"];
+        var SERIES = ["#0275d8", "#5bc0de", "#5cb85c", "#f0ad4e", "#e67d4a", "#d9534f"];
         var SERIES_LIGHT = ["#ffd9dc", "#ffeced", "#cceef3", "#e6f8fb", "#fff2da", "#fff7e8"];
         var PRIMARY = SERIES[0];
         var DIAGRAM_HOVER = WHITE;
