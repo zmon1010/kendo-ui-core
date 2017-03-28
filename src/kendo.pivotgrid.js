@@ -79,6 +79,8 @@ var __meta__ = { // jshint ignore:line
                                 '</td>' +
                             '</tr>' +
                         '</table>';
+        var AXIS_ROWS = "rows";
+        var AXIS_COLUMNS = "columns";
 
     function normalizeMeasures(measure) {
         var descriptor = typeof measure === "string" ? [{ name: measure }] : measure;
@@ -4019,7 +4021,8 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
-            columnBuilder.measures = that._axisMeasures("columns");
+            columnBuilder.measures = that._axisMeasures(AXIS_COLUMNS);
+            rowBuilder.measures = that._axisMeasures(AXIS_ROWS);
 
             that.columnsHeaderTree.render(columnBuilder.build(columns));
             that.rowsHeaderTree.render(rowBuilder.build(rows));
@@ -4032,7 +4035,7 @@ var __meta__ = { // jshint ignore:line
 
             rowAxis = {
                 indexes: rowBuilder._indexes,
-                measures: this._axisMeasures("rows"),
+                measures: rowBuilder.measures,
                 metadata: rowBuilder.metadata
             };
 
@@ -4872,7 +4875,10 @@ var __meta__ = { // jshint ignore:line
             var idx = 0;
 
             for (; idx < length; idx++) {
-                this.rows.push(this._buildRow(rowIndexes[idx]));
+                var rowIndex = rowIndexes[idx];
+                if (rowIndex) {
+                    this.rows.push(this._buildRow(rowIndex));
+                }
             }
         },
 

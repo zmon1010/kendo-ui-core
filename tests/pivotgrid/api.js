@@ -301,6 +301,30 @@
         equal(headerTable.find("tr").length, 2);
     });
 
+    test("PivotGrid content builder calls _buildRow only for row indexes with value", function() {
+        var tuples = [
+            { members: [ { name: "level 0", levelNum: "0", hasChildren: true, children: [] }] },
+            { members: [ { name: "level 0_1", levelNum: "1", hasChildren: true, parentName: "level 0", children: [] }] },
+            { members: [ { name: "level 0_2", levelNum: "1", parentName: "level 0", children: [] }] },
+            { members: [ { name: "level 0_3", levelNum: "1", parentName: "level 0", children: [] }] },
+            { members: [ { name: "level 1_1", levelNum: "2", parentName: "level 0_1", children: [] }] }
+        ];
+
+        var dataSource = createDataSource(tuples);
+
+        var pivotgrid = createPivot({ dataSource: dataSource });
+        pivotgrid.contentTree = { render: function() {} };
+
+        var contentBuilder = pivotgrid._contentBuilder;
+        contentBuilder.rowIndexes = [];
+        contentBuilder.rowIndexes[5] = { };
+        contentBuilder._buildRow = spy();
+
+        pivotgrid.refresh();
+
+        equal(contentBuilder._buildRow.calls, 1);
+    });
+
     module("PivotGrid expand rows", {
         setup: function() {
             kendo.ns = "kendo-";
