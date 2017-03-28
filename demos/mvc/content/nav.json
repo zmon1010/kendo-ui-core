@@ -2048,7 +2048,6 @@
   {
     "text": "Grid",
     "name": "grid",
-    "updated": "true",
     "pro": "true",
     "api": { "all": "web/grid" },
     "documentation": {
