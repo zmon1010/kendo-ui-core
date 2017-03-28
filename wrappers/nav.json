@@ -1617,6 +1617,7 @@
             {
                 "text": "Selection",
                 "url": "grid/selection",
+				"updated": "true",
                 "title": {
                     "aspnet-mvc": "Multiple row and cell selection in Telerik Grid for $FRAMEWORK"
                 },
@@ -1624,7 +1625,7 @@
                     "aspnet-mvc": "This demo illustrates how you can use Telerik $FRAMEWORK grid with multiple row or cell selection enabled."
                 },
                 "description": {
-                    "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
+                    "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>As of <strong>R2 2017</strong> you can persist the row selection after data operations by setting the <strong>PersistSelection</strong> property to <strong>true</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
                 }
             },
             {
