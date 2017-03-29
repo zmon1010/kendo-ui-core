@@ -29,7 +29,7 @@ namespace Kendo
                 "AsyncUpload",
                 "upload/{action}",
                 new { controller = "Upload" },
-                new { action = "(save|remove|submit)" }
+                new { action = "(save|chunksave|remove|submit)" }
             );
 
             routes.MapRoute(

@@ -4,6 +4,8 @@
     uploadInstance,
     _supportsFormData,
     validJSON = "{\"status\":\"OK\"}",
+    validChunkJSON = "{\"fileUid\":\"someUID\",\"uploaded\":false}",
+    validUploadedChunkJSON = "{\"fileUid\":\"someUID\",\"uploaded\":true}",
     errorResponse = "ERROR!",
     lastFormData;
 
@@ -493,6 +495,528 @@ test("clicking remove should not remove original file input if some related file
 var noAutoConfig = { async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;', autoUpload: false } };
 asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemove, errorResponse);
 
+    module("Upload / FormDataUpload / chunkSize = 1000", {
+        setup: function() {
+            moduleSetup();
+        },
+        teardown: moduleTeardown
+    });
+
+    test("success event increases chunk index", function() {
+        var response = null;
+        var uploadInstance = createUpload({ 
+        async: {
+            saveUrl:"javascript:;",
+            removeUrl:"/removeAction",
+            autoUpload: false,
+            chunkSize:1000
+            },
+            success:function(e) {
+                response = e.response;
+            }
+        });
+         uploadInstance._module.temp_getCurrentChunk = uploadInstance._module._getCurrentChunk;
+        uploadInstance._module._getCurrentChunk = function(file){return file};
+        uploadInstance._module.metaData["someUID"] = {chunkIndex:1};
+        simulateUploadWithResponse(validChunkJSON);
+        uploadInstance._module._getCurrentChunk = uploadInstance._module.temp_getCurrentChunk;
+        equal(uploadInstance._module.metaData["someUID"].chunkIndex, 2);
+    });
+
+        test("success event resets chunk index", function() {
+        var response = null;
+        var uploadInstance = createUpload({ 
+        async: {
+            saveUrl:"javascript:;",
+            removeUrl:"/removeAction",
+            autoUpload: false,
+            concurrent:false,
+            chunkSize:1000
+            },
+            success:function(e) {
+                response = e.response;
+            }
+        });
+        simulateFileSelect();
+        simulateFileSelect();
+        uploadInstance._module.temp_getCurrentChunk = uploadInstance._module._getCurrentChunk;
+        uploadInstance._module._getCurrentChunk = function(file){return file};
+        uploadInstance._module.metaData["someUID"] = {chunkIndex:1};
+        simulateUploadWithResponse(validUploadedChunkJSON);
+        uploadInstance._module._getCurrentChunk = uploadInstance._module.temp_getCurrentChunk;
+        equal(uploadInstance._module.metaData["someUID"].chunkIndex, 0);
+    });
+
+  test("prepareChunk is  called when chunkSize is set and autoUpload is false", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: false,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" } }]);
+            });
+
+            return fileEntries;
+        };
+        var prepareChunk = stub(uploadInstance._module, "prepareChunk");
+        simulateFileSelect();
+        uploadInstance._module.onSaveSelected();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(prepareChunk.calls("prepareChunk"), 1);
+    });
+
+ test("performUpload is called two times when chunkSize and concurent are set and autoUpload is false", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: false,
+                concurrent: true,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            fileEntries.push(this.enqueueFiles(files)[0]);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }}]);
+            });
+
+            return fileEntries;
+        };
+        var performUpload = stub(uploadInstance._module, "performUpload");
+        simulateFileSelect();
+        uploadInstance._module.onSaveSelected();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(performUpload.calls("performUpload"), 2);
+    });
+
+ test("performUpload is  called when chunkSize and concurent are set and autoUpload is false", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: false,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            fileEntries.push(this.enqueueFiles(files)[0]);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }}]);
+            });
+
+            return fileEntries;
+        };
+        var performUpload = stub(uploadInstance._module, "performUpload");
+        simulateFileSelect();
+        uploadInstance._module.onSaveSelected();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(performUpload.calls("performUpload"), 1);
+    });
+
+    test("prepareChunk is  called when chunkSize is set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" } }]);
+            });
+
+            return fileEntries;
+        };
+        var prepareChunk = stub(uploadInstance._module, "prepareChunk");
+        simulateFileSelect();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(prepareChunk.calls("prepareChunk"), 1);
+    });
+
+ test("performUpload is called two times when chunkSize and concurent are set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                concurrent: true,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            fileEntries.push(this.enqueueFiles(files)[0]);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }}]);
+            });
+
+            return fileEntries;
+        };
+        var performUpload = stub(uploadInstance._module, "performUpload");
+        simulateFileSelect();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(performUpload.calls("performUpload"), 2);
+    });
+
+ test("performUpload is  called when chunkSize and concurent are set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }
+        });
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            fileEntries.push(this.enqueueFiles(files)[0]);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }}]);
+            });
+
+            return fileEntries;
+        };
+        var performUpload = stub(uploadInstance._module, "performUpload");
+        simulateFileSelect();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(performUpload.calls("performUpload"), 1);
+    });
+
+    test("pause event is triggered on click", function() {
+        var flag = false;
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        },
+        pause:
+            function(e) {
+                flag = true;
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" } }]);
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        
+        equal(flag, true);
+    });
+
+    test("pause message appears when one or more files are paused", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }});
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" } }]);
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
+       
+        uploadInstance._updateHeaderUploadStatus();
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+
+        equal(uploadInstance.wrapper.find(".k-upload-status").find(".k-i-pause").length, 1);
+    });
+
+      test("resume event is triggered on click", function() {
+        var flag = false;
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        },
+        resume:
+            function(e) {
+                flag = true;
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
+        $(".k-i-play", uploadInstance.wrapper).trigger("click");
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(flag, true);
+    });
+
+      test("_hideUploadProgress is not called when chunkSize is set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }
+        });
+
+        var hideUploadProgress = stub(uploadInstance, "_hideUploadProgress");
+        uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
+
+        equal(hideUploadProgress.calls("_hideUploadProgress"), 0);
+    });
+
+     test("_clearFileAction is not called when skipClear is true", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }
+        });
+
+        var clearFileAction = stub(uploadInstance, "_clearFileAction");
+        uploadInstance._fileAction({target:{}}, "sometext", true);
+
+        equal(clearFileAction.calls("_clearFileAction"), 0);
+    });
+
+      test("_retryAfter is called when retryAfter is set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                retryAfter:300,
+                chunkSize:1000
+        }
+        });
+
+        var retryAfter = stub(uploadInstance, "_retryAfter");
+        uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
+
+        equal(retryAfter.calls("_retryAfter"), 1);
+    });
+
+      test("_retryAfter is not called when retryAfter is not set", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+        }
+        });
+
+        var retryAfter = stub(uploadInstance, "_retryAfter");
+        uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
+
+        equal(retryAfter.calls("_retryAfter"), 0);
+    });
+
+    test("onCancel adds canceled uid", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+                $(this).data("request", { abort: function(){}});
+                $(this).data("uid", "someuid");
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+
+        uploadInstance._module.onCancel({target:uploadInstance.wrapper.find(".k-file")})
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(uploadInstance._module.cancelled["someuid"], true);
+    });
+
+        test("onPause adds paused uid", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+                $(this).data("request", { abort: function(){}});
+                $(this).data("uid", "someuid");
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+
+        uploadInstance._module.onPause({target:uploadInstance.wrapper.find(".k-file")})
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(uploadInstance._module.paused["someuid"], true);
+    });
+
+        test("onResume removes paused uid", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+                $(this).data("request", { abort: function(){}});
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+        var fileEntry = uploadInstance.wrapper.find(".k-file");
+
+        uploadInstance._module.prepareChunk(fileEntry);
+        uploadInstance._module.onPause({target:fileEntry});
+
+        uploadInstance._module.onResume({target:fileEntry});
+
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(uploadInstance._module.paused[fileEntry.data("files")[0].uid], undefined);
+    });
+
+            test("onRetry removes paused uid", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+                $(this).data("request", { abort: function(){}});
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+        var fileEntry = uploadInstance.wrapper.find(".k-file");
+
+        uploadInstance._module.prepareChunk(fileEntry);
+        uploadInstance._module.onPause({target:fileEntry});
+
+        uploadInstance._module.onRetry({target:fileEntry});
+
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(uploadInstance._module.paused[fileEntry.data("files")[0].uid], undefined);
+    });
+
+        test("_getCurrentChunk is called when file is selected", function() {
+        uploadInstance = createUpload({
+           async: {
+                saveUrl:"javascript:;",
+                removeUrl:"/removeAction",
+                autoUpload: true,
+                chunkSize:1000
+            }
+        });
+
+        uploadInstance._module._prepareUpload = uploadInstance._module.prepareUpload;
+        uploadInstance._module.prepareUpload = function(sourceElement, files) {
+            var fileEntries = this.enqueueFiles(files);
+            $.each(fileEntries, function() {
+                $(this).data("files", [{ rawFile: { name: "someFile", type: "zip", size: "2000" }, uid:$(this).data("uid") }]);
+                $(this).data("request", { abort: function(){}});
+            });
+
+            return fileEntries;
+        };
+
+        simulateFileSelect();
+
+        var _getCurrentChunk = stub(uploadInstance._module, "_getCurrentChunk");
+        uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
+
+        uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
+        equal(_getCurrentChunk.calls("_getCurrentChunk"), 0);
+        equal(0,0);
+    });
     // -----------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------
     module("Upload / FormDataUpload / Events", {
@@ -1031,7 +1555,7 @@ test("initial file entries have progress-bar with 0% width", function(){
 });
 
 test("k-upload-pct text is '100%'  for each initially rendered file entry", function(){
-    equal($(".k-upload-pct:first", uploadInstance.wrapper).text(), "100%");
+    equal($(".k-upload-pct:first", uploadInstance.wrapper).text(), "");
 });
 
 // -----------------------------------------------------------------------------------

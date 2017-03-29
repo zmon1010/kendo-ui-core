@@ -4467,7 +4467,17 @@
                     "aspnet-mvc": "This example shows the async upload functionality of $FRAMEWORK Upload control."
                 }
             },
-          {
+            {
+                "text": "Chunk Upload",
+                "url": "upload/chunkupload",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Chunk Upload Example"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the chunk upload functionality of $FRAMEWORK Upload control."
+                }
+            },
+            {
             "text": "Custom Drop Zone",
             "url": "upload/customdropzone",
             "title": {

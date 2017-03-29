@@ -24,6 +24,8 @@ var __meta__ = { // jshint ignore:line
         COMPLETE = "complete",
         CANCEL = "cancel",
         CLEAR = "clear",
+        PAUSE = "pause",
+        RESUME = "resume",
         PROGRESS = "progress",
         REMOVE = "remove",
         VALIDATIONERRORS = "validationErrors",
@@ -105,7 +107,9 @@ var __meta__ = { // jshint ignore:line
             CANCEL,
             CLEAR,
             PROGRESS,
-            REMOVE
+            REMOVE,
+            PAUSE,
+            RESUME
         ],
 
         options: {
@@ -116,6 +120,8 @@ var __meta__ = { // jshint ignore:line
             template: "",
             files: [],
             async: {
+                retryAfter: 0,
+                maxRetries: 1,
                 removeVerb: "POST",
                 autoUpload: true,
                 withCredentials: true,
@@ -126,6 +132,8 @@ var __meta__ = { // jshint ignore:line
                 "cancel": "Cancel",
                 "retry": "Retry",
                 "remove": "Remove",
+                "pause": "Pause",
+                "resume": "Resume",
                 "clearSelectedFiles": "Clear",
                 "uploadSelectedFiles": "Upload",
                 "dropFilesHere": "Drop files here to upload",
@@ -134,6 +142,7 @@ var __meta__ = { // jshint ignore:line
                 "statusWarning": "warning",
                 "statusFailed": "failed",
                 "headerStatusUploading": "Uploading...",
+                "headerStatusPaused": "Paused",
                 "headerStatusUploaded": "Done",
                 "invalidMaxFileSize": "File size too large.",
                 "invalidMinFileSize": "File size too small.",
@@ -195,7 +204,14 @@ var __meta__ = { // jshint ignore:line
 
             Widget.fn.destroy.call(that);
         },
-
+        pause: function(fileEntry){
+            this._module.onPause({ target: $(fileEntry, this.wrapper) });
+            fileEntry.find(".k-i-pause").removeClass("k-i-pause").addClass("k-i-play");
+        },
+        resume: function(fileEntry){
+            this._module.onResume({ target: $(fileEntry, this.wrapper) });
+            fileEntry.find(".k-i-play").removeClass("k-i-play").addClass("k-i-pause");
+        },
         upload: function() {
             var that = this;
 
@@ -434,10 +450,6 @@ var __meta__ = { // jshint ignore:line
                 var fileEntry = that._enqueueFile(currentFile.name, { fileNames: [ currentFile ] });
                 fileEntry.addClass("k-file-success").data("files", [ files[idx] ]);
 
-                if (!that.options.template) {
-                    $(".k-upload-status", fileEntry).prepend("<span class='k-upload-pct'>100%</span>");
-                }
-
                 if (that._supportsRemove()){
                     that._fileAction(fileEntry, REMOVE);
                 }
@@ -629,18 +641,20 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _fileAction: function(fileElement, actionKey) {
-            var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry" };
-            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload"};
+        _fileAction: function(fileElement, actionKey, skipClear) {
+            var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry", pause: "k-i-pause"};
+            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload-sm", pause: "k-i-pause"};
 
             if (!classDictionary.hasOwnProperty(actionKey)) {
                 return;
             }
-
-            this._clearFileAction(fileElement);
-
+            if(!skipClear){
+                this._clearFileAction(fileElement);
+            }
             if (!this.options.template) {
-                fileElement.find(".k-upload-status .k-upload-action").remove();
+                if(!skipClear){
+                    fileElement.find(".k-upload-status .k-upload-action").remove();
+                }
                 fileElement.find(".k-upload-status").append(
                     this._renderAction(classDictionary[actionKey], this.localization[actionKey], iconsClassDictionary[actionKey])
                 );
@@ -718,7 +732,14 @@ var __meta__ = { // jshint ignore:line
                     that._module.onCancel({ target: $(fileEntry, that.wrapper) });
                     that._checkAllComplete();
                     that._updateHeaderUploadStatus();
-                } else if (icon.hasClass("k-i-retry")) {
+                } else if (icon.hasClass("k-i-pause")) {
+                    that.trigger(PAUSE, eventArgs);
+                    that.pause(fileEntry);
+                    that._updateHeaderUploadStatus();
+                } else if (icon.hasClass("k-i-play")) {
+                    that.trigger(RESUME, eventArgs);
+                    that.resume(fileEntry);
+                }else if (icon.hasClass("k-i-retry")) {
                     $(".k-i-warning", fileEntry).remove();
                     $(".k-progress", fileEntry).finish().show();
                     that._module.onRetry({ target: $(fileEntry, that.wrapper) });
@@ -764,7 +785,11 @@ var __meta__ = { // jshint ignore:line
                     $(".k-upload-status", e.target).prepend("<span class='k-upload-pct'></span>");
                 }
 
-                $(".k-upload-pct", e.target).text(percentComplete + "%");
+                if(percentComplete !== 100){
+                    $(".k-upload-pct", e.target).text(percentComplete + "%");
+                }else{
+                     $(".k-upload-pct", e.target).remove();
+                }
                 $(".k-progress", e.target).width(percentComplete + "%");
             } else {
                 $(".k-progress", e.target).width(percentComplete + "%");
@@ -820,18 +845,43 @@ var __meta__ = { // jshint ignore:line
 
             logToConsole("Server response: " + xhr.responseText);
 
-            that._hideUploadProgress(fileEntry);
+            if(!this.options.async.chunkSize){
+                that._hideUploadProgress(fileEntry);
+            }
 
-            that._checkAllComplete();
+           that._checkAllComplete();
+
+            if(this.options.async.retryAfter){
+               this._retryAfter(fileEntry);
+            }
         },
+        _retryAfter: function(fileEntry){
+            var that = this;
+            var retries = this._module.retries;
 
+            if(!retries[fileEntry.data("uid")]){
+                retries[fileEntry.data("uid")] = 1;
+            }
+
+            if(retries[fileEntry.data("uid")] <= this.options.async.maxRetries){
+                retries[fileEntry.data("uid")]++;
+                setTimeout(function(){
+                    that._module.performUpload(fileEntry);
+                },this.options.async.retryAfter);
+            }else{
+                retries[fileEntry.data("uid")] = 0;
+            }
+        },
         _setUploadErrorState: function(fileEntry) {
             var that = this;
             var uploadPercentage = $('.k-upload-pct', fileEntry);
 
             that._fileState(fileEntry, "failed");
             fileEntry.removeClass('k-file-progress').addClass('k-file-error');
-            $('.k-progress', fileEntry).width("100%");
+
+            if(!this.options.async.chunkSize){
+                $('.k-progress', fileEntry).width("100%");
+            }
 
             if (uploadPercentage.length > 0) {
                 uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-i-warning');
@@ -841,6 +891,7 @@ var __meta__ = { // jshint ignore:line
 
             this._updateHeaderUploadStatus();
             this._fileAction(fileEntry, "retry");
+            this._fileAction(fileEntry, REMOVE, true);
         },
 
         _hideUploadProgress: function(fileEntry) {
@@ -903,9 +954,19 @@ var __meta__ = { // jshint ignore:line
             var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
+            var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play");
             var failedUploads, headerUploadStatusIcon;
 
-            if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
+            if(currentlyPaused.length && 
+            (currentlyPaused.length === currentlyUploading.length || !that.options.async.concurrent)){
+                headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
+                                .removeClass()
+                                .addClass("k-icon")
+                                .addClass("k-i-pause");
+
+                headerUploadStatus.html(headerUploadStatusIcon)
+                                  .append(that.localization.headerStatusPaused);
+            }else if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
                 failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
@@ -1403,6 +1464,11 @@ var __meta__ = { // jshint ignore:line
         this.name = "formDataUploadModule";
         this.element = upload.wrapper;
         this.upload = upload;
+        this.position = {};
+        this.metaData = {};
+        this.cancelled = {};
+        this.paused = {};
+        this.retries = {};
     };
 
     formDataUploadModule.prototype = {
@@ -1413,12 +1479,20 @@ var __meta__ = { // jshint ignore:line
             var fileEntries = this.prepareUpload(sourceElement, files);
             var hasValidationErrors;
 
-            $.each(fileEntries, function() {
+            $.each(fileEntries, function(index) {
                 hasValidationErrors = upload._filesContainValidationErrors($(this.data("fileNames")));
 
                 if (upload.options.async.autoUpload) {
                     if(!hasValidationErrors) {
-                        module.performUpload(this);
+                        if(upload.options.async.chunkSize){
+                            module.prepareChunk(this);
+
+                            if(upload.options.async.concurrent || index === 0){
+                                module.performUpload(this);
+                            }
+                        }else{
+                            module.performUpload(this);
+                        }
                     } else {
                         upload._fileAction(this, REMOVE);
                         upload._showHeaderUploadStatus(false);
@@ -1494,7 +1568,12 @@ var __meta__ = { // jshint ignore:line
                 };
 
             if (!upload.trigger(UPLOAD, e)) {
-                upload._fileAction(fileEntry, CANCEL);
+                if(fileEntry.find(".k-i-cancel").length === 0){
+                    if(upload.options.async.chunkSize){
+                        upload._fileAction(fileEntry, PAUSE);
+                    }
+                    upload._fileAction(fileEntry, CANCEL, true);
+                }
                 upload._hideUploadButton();
                 upload._showHeaderUploadStatus(true);
 
@@ -1522,25 +1601,60 @@ var __meta__ = { // jshint ignore:line
             var module = this;
             var upload = module.upload;
 
-            $(".k-file", this.element).each(function() {
+            $(".k-file", this.element).each(function(index) {
                 var fileEntry = $(this);
                 var started = isFileUploadStarted(fileEntry);
                 var hasValidationErrors = upload._filesContainValidationErrors(fileEntry.data("fileNames"));
 
                 if (!started && !hasValidationErrors) {
-                    module.performUpload(fileEntry);
-                }
+                    if(upload.options.async.chunkSize){
+                        module.prepareChunk(fileEntry);
+
+                        if(upload.options.async.concurrent || index === 0){
+                            module.performUpload(fileEntry);
+                        }
+                        }else{
+                            module.performUpload(fileEntry);
+                        }
+                     }
             });
         },
 
         onCancel: function(e) {
             var fileEntry = getFileEntry(e);
+
+            if(this.upload.options.async.chunkSize){
+                this.cancelled[fileEntry.data("uid")] = true;
+            }
             this.stopUploadRequest(fileEntry);
             this.removeFileEntry(fileEntry);
         },
 
+        onPause: function(e) {
+            var fileEntry = getFileEntry(e);
+
+            if(this.upload.options.async.chunkSize){
+                this.paused[fileEntry.data("uid")] = true;
+            }
+        },
+
+        onResume: function(e) {
+            var fileEntry = getFileEntry(e);
+
+            if(this.upload.options.async.chunkSize){
+                delete this.paused[fileEntry.data("uid")];
+                this._prepareNextChunk(fileEntry.data("uid"));
+                this.performUpload(fileEntry);
+            }
+        },
+
         onRetry: function(e) {
             var fileEntry = getFileEntry(e);
+
+            if(this.upload.options.async.chunkSize){
+                delete this.paused[fileEntry.data("uid")];
+            }
+
             this.performUpload(fileEntry);
         },
 
@@ -1593,15 +1707,30 @@ var __meta__ = { // jshint ignore:line
         },
 
         populateFormData: function(data, files) {
-            var upload = this.upload,
-                i,
-                length = files.length;
+            var chunk;
+            var i;
+            var length = files.length;
+            var uid;
+            var upload = this.upload;
 
-            for (i = 0; i < length; i++) {
+            if(upload.options.async.chunkSize){
+                 uid = files[0].uid;
+                 chunk = this._getCurrentChunk(files[0].rawFile, uid);
+
                 data.append(
                     upload.options.async.saveField || upload.name,
-                    files[i].rawFile
+                    chunk
                 );
+
+                var serializedMetaData = JSON.stringify(this.metaData[uid]);
+                data.append("metadata", serializedMetaData);
+            }else{
+                 for (i = 0; i < length; i++) {
+                    data.append(
+                        upload.options.async.saveField || upload.name,
+                        files[i].rawFile
+                    );
+                 }
             }
 
             return data;
@@ -1615,13 +1744,34 @@ var __meta__ = { // jshint ignore:line
                 module.upload._onUploadError({ target : $(fileEntry, module.upload.wrapper) }, xhr);
             }
 
+            function parseSuccess(jsonResult) {
+                var batch = module.upload.options.async.batch;
+                var chunkSize = module.upload.options.async.chunkSize;
+                var concurrent = module.upload.options.async.concurrent;
+                var fileUid = jsonResult.fileUid;
+
+                if(module.paused[fileUid] || module.cancelled[fileUid]){
+                    return;
+                }
+
+                if(chunkSize && !batch && !jsonResult.uploaded){
+                    module._prepareNextChunk(fileUid); 
+                    module.performUpload(fileEntry);
+                }else if(chunkSize && !batch && !concurrent && fileEntry.next().length > 0) {
+                        module._resetChunkIndex(fileUid);
+                        module.upload._onUploadSuccess({ target : $(fileEntry, module.upload.wrapper) }, jsonResult, xhr);
+
+                        module.performUpload(fileEntry.next());
+                }else{
+                    module.upload._onFileProgress({ target : $(fileEntry, module.upload.wrapper) }, 100);
+                    module.upload._onUploadSuccess({ target : $(fileEntry, module.upload.wrapper) }, jsonResult, xhr);
+                    module.cleanupFileEntry(fileEntry);
+                }
+            }
+
             if (xhr.status >= 200 && xhr.status <= 299) {
                 tryParseJSON(xhr.responseText,
-                    function(jsonResult) {
-                        module.upload._onFileProgress({ target : $(fileEntry, module.upload.wrapper) }, 100);
-                        module.upload._onUploadSuccess({ target : $(fileEntry, module.upload.wrapper) }, jsonResult, xhr);
-                        module.cleanupFileEntry(fileEntry);
-                    },
+                    parseSuccess,
                     raiseError
                 );
             } else {
@@ -1659,11 +1809,67 @@ var __meta__ = { // jshint ignore:line
 
         onRequestProgress: function(e, fileEntry) {
             var percentComplete = Math.round(e.loaded * 100 / e.total);
+            var fileUid = fileEntry.data("uid");
+            var fileMetaData;
+
+            if(this.upload.options.async.chunkSize){
+                fileMetaData = this.metaData[fileUid];
+                percentComplete = fileMetaData.totalChunks ? Math.round((fileMetaData.chunkIndex/fileMetaData.totalChunks)*100):100;
+            }
             this.upload._onFileProgress({ target : $(fileEntry, this.upload.wrapper) }, percentComplete);
         },
 
         stopUploadRequest: function(fileEntry) {
             fileEntry.data("request").abort();
+        },
+
+        prepareChunk: function (fileEntry) {
+            var file = fileEntry.data("files")[0].rawFile;
+            var uid = fileEntry.data("files")[0].uid;
+            var chunkSize  = this.upload.options.async.chunkSize;
+            this.position[uid] = 0;
+
+            this.metaData[uid] = {
+                chunkIndex: 0,
+                contentType: file.type,
+                fileName: file.name,
+                totalFileSize: file.size,
+                totalChunks: Math.ceil(file.size / chunkSize),
+                uploadUid: uid
+            };
+        },
+
+        _prepareNextChunk: function(uid){
+            this.metaData[uid].chunkIndex++;
+        },
+
+        _resetChunkIndex: function(uid){
+            this.metaData[uid].chunkIndex = 0;
+        },
+
+        _getCurrentChunk: function (file, uid) {
+            var oldPosition = this.position[uid];
+            var methodToInvoke;
+
+            this.position[uid] += this.upload.options.async.chunkSize;
+
+            if (!!(methodToInvoke = this._getChunker(file))){
+                return file[methodToInvoke](oldPosition, this.position[uid]);
+            }else{
+                return file;
+            }
+        },
+
+        _getChunker: function (file) {
+            if (file.slice) {
+                return "slice";
+            }else if (file.mozSlice) {
+                return "mozSlice";
+            }else if (file.webkitSlice) {
+                    return "webkitSlice";
+            }else {
+                return null;
+            }
         }
     };
 

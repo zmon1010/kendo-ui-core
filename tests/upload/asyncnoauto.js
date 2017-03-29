@@ -90,7 +90,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         });
 
         simulateFileSelect();
-        simulateRemoveClick();
+        simulateRemoveClick(1);
         equal($(".k-upload-selected", uploadInstance.wrapper).length, 0);
     });
 
@@ -101,7 +101,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         });
 
         simulateFileSelect();
-        simulateRemoveClick();
+        simulateRemoveClick(1);
         equal($(".k-clear-selected", uploadInstance.wrapper).length, 0);
     });
 

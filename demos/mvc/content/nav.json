@@ -7079,6 +7079,19 @@
           "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
         }
       },
+	    {
+        "text": "Chunk Upload",
+        "url": "upload/chunkupload",
+        "new": "true",
+        "title": {
+          "kendo-ui": "jQuery Chunk File Upload Example | Kendo UI Upload Demo",
+          "aspnet-mvc": "ASP.NET MVC Chunk File Upload Example"
+        },
+        "meta": {
+          "kendo-ui": "This example shows the chunk upload functionality of Kendo UI Upload control.",
+          "aspnet-mvc": "This example shows the chunk upload functionality of ASP.NET MVC Upload control."
+        }
+      },
       {
         "text": "Custom Drop Zone",
         "url": "upload/customdropzone",

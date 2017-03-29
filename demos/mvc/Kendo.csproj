@@ -66,6 +66,7 @@
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>bin\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -1264,6 +1265,7 @@
     <Content Include="Views\demos\panelbar\templates.cshtml" />
     <Content Include="Views\demos\panelbar\angular.cshtml" />
     <Content Include="Views\demos\menu\menu-bind-attributes.cshtml" />
+    <Content Include="Views\demos\upload\chunkupload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

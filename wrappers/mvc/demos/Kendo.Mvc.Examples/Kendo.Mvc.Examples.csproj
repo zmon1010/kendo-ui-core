@@ -272,6 +272,7 @@
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
     <Compile Include="Controllers\SpreadStreamProcessing\IndexController.cs" />
+    <Compile Include="Controllers\Upload\ChunkUploadController.cs" />
     <Compile Include="Controllers\Upload\CustomDropZoneController.cs" />
     <Compile Include="Controllers\Upload\ValidationController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
@@ -2999,6 +3000,7 @@
     <Content Include="Views\datetimepicker\week_column.cshtml" />
     <Content Include="Views\grid\editing_remote_validation.cshtml" />
     <Content Include="Views\menu\menu_bind_attributes.cshtml" />
+    <Content Include="Views\upload\chunkupload.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
   </ItemGroup>
   <ItemGroup>
