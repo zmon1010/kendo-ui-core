@@ -23,7 +23,6 @@
             "fontsize",
             "createlink",
             "unlink",
-            "autolink",
             "addcolumnleft",
             "addcolumnright",
             "addrowabove",
