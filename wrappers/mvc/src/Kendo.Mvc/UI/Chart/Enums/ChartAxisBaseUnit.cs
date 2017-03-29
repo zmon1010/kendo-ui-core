@@ -6,6 +6,11 @@ namespace Kendo.Mvc.UI
     public enum ChartAxisBaseUnit
     {
         /// <summary>
+        /// Milliseconds
+        /// </summary>
+        Milliseconds,
+
+        /// <summary>
         /// Seconds
         /// </summary>
         Seconds,
