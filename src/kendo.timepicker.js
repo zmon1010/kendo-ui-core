@@ -811,6 +811,9 @@ var __meta__ = { // jshint ignore:line
 
             if (timeView.popup.visible() || e.altKey) {
                 timeView.move(e);
+                if (that._dateInput && e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
+                }
             } else if (key === keys.ENTER && value !== that._oldText) {
                 that._change(value);
             } else {

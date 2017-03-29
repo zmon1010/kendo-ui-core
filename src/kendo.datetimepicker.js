@@ -507,7 +507,7 @@ var __meta__ = { // jshint ignore:line
                 timeView = that.timeView,
                 value = that.element.val(),
                 isDateViewVisible = dateView.popup.visible();
-
+            var stopPropagation = that._dateInput && e.stopImmediatePropagation;
             if (e.altKey && e.keyCode === kendo.keys.DOWN) {
                 that.toggle(isDateViewVisible ? "time" : "date");
             } else if (isDateViewVisible) {
@@ -519,6 +519,10 @@ var __meta__ = { // jshint ignore:line
                 that._change(value);
             } else {
                 that._typing = true;
+                stopPropagation = false;
+            }
+            if (stopPropagation) {
+                e.stopImmediatePropagation();
             }
         },
 

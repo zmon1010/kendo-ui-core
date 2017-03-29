@@ -340,11 +340,6 @@ var __meta__ = { // jshint ignore:line
                     "aria-expanded": false,
                     "aria-owns": that.dateView._dateViewID
                 });
-
-            if (options.dateInput) {
-                that._dateInput = new ui.DateInput(element, options);
-            }
-
             that._reset();
             that._template();
 
@@ -353,6 +348,10 @@ var __meta__ = { // jshint ignore:line
                 that.enable(false);
             } else {
                 that.readonly(element.is("[readonly]"));
+            }
+
+            if (options.dateInput) {
+                that._dateInput = new ui.DateInput(element, options);
             }
 
             that._old = that._update(options.value || that.element.val());
@@ -570,6 +569,8 @@ var __meta__ = { // jshint ignore:line
 
                 if (!handled) {
                     that._typing = true;
+                } else if (that._dateInput && e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
                 }
             }
         },
