@@ -14,6 +14,15 @@ namespace Kendo.Mvc.UI.Fluent
         /// Allows customization of the week column header text. Set the value to make the widget compliant with web accessibility standards.
         /// </summary>
         /// <param name="value">The value for WeekColumnHeader</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Calendar()
+        ///             .Name("calendar")
+        ///             .WeekNumber(true)
+        ///             .Messages(m => m.WeekColumnHeader("W"))
+        /// %&gt;
+        /// </code>
+        /// </example>
         public CalendarMessagesSettingsBuilder WeekColumnHeader(string value)
         {
             Container.WeekColumnHeader = value;
