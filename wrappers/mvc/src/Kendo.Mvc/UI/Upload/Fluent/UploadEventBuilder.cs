@@ -197,6 +197,96 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the inline handler of the Pause client-side event
+        /// </summary>
+        /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Upload()
+        ///            .Name("Upload")
+        ///            .Events(events => events.Pause(
+        ///                 @&lt;text&gt;
+        ///                 function(e) {
+        ///                     //event handling code
+        ///                 }
+        ///                 &lt;/text&gt;
+        ///            ))
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Pause(Func<object, object> inlineCodeBlock)
+        {
+            Handler("pause", inlineCodeBlock);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the Pause client-side event.
+        /// </summary>
+        /// <param name="onErrorHandlerName">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Events(events => events.Pause("onPause"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Pause(string onPauseHandlerName)
+        {
+            Handler("pause", onPauseHandlerName);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the inline handler of the Resume client-side event
+        /// </summary>
+        /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Upload()
+        ///            .Name("Upload")
+        ///            .Events(events => events.Resume(
+        ///                 @&lt;text&gt;
+        ///                 function(e) {
+        ///                     //event handling code
+        ///                 }
+        ///                 &lt;/text&gt;
+        ///            ))
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Resume(Func<object, object> inlineCodeBlock)
+        {
+            Handler("resume", inlineCodeBlock);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the Resume client-side event.
+        /// </summary>
+        /// <param name="onErrorHandlerName">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Events(events => events.Resume("onResume"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Resume(string onResumeHandlerName)
+        {
+            Handler("resume", onResumeHandlerName);
+
+            return this;
+        }
+
+        /// <summary>
         /// Defines the inline handler of the Complete client-side event
         /// </summary>
         /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>

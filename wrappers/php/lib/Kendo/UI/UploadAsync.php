@@ -26,6 +26,49 @@ Files selected one after the other will be uploaded in separate requests.
     }
 
     /**
+    * When the property is set the selected files will be uploaded chunk by chunk with the declared size. 
+Each request sends a separate file blob and additional string metadata to the server. 
+This metadata is a stringified JSON and contains chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties that
+allow validating and combining the file on the server side. The response also returns a JSON object with uploaded and fileUid properties
+that notifies the client which should be the next chunk.
+    * @param float $value
+    * @return \Kendo\UI\UploadAsync
+    */
+    public function chunkSize($value) {
+        return $this->setProperty('chunkSize', $value);
+    }
+
+    /**
+    * By default the selected files are uploaded one after another. When set to 'true' all 
+the selected files start uploading simultaneously.
+(The property is available when the async.chunkSize is set.)
+    * @param boolean $value
+    * @return \Kendo\UI\UploadAsync
+    */
+    public function concurrent($value) {
+        return $this->setProperty('concurrent', $value);
+    }
+
+    /**
+    * It sets the number of attempts that will be performed if an upload is failing.
+The property is only used when the async.retryAfter property is also defined.
+    * @param float $value
+    * @return \Kendo\UI\UploadAsync
+    */
+    public function maxRetries($value) {
+        return $this->setProperty('maxRetries', $value);
+    }
+
+    /**
+    * If the property is set the failed upload request will be repeated after the declared amount of ticks.
+    * @param float $value
+    * @return \Kendo\UI\UploadAsync
+    */
+    public function retryAfter($value) {
+        return $this->setProperty('retryAfter', $value);
+    }
+
+    /**
     * The name of the form field submitted to the Remove URL.
     * @param string $value
     * @return \Kendo\UI\UploadAsync

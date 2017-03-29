@@ -56,6 +56,33 @@ namespace Kendo.Mvc.UI
         public bool? Batch { get; set; }
 
         /// <summary>
+        /// When the property is set the selected files will be uploaded chunk by chunk with the declared size. 
+        /// Each request sends a separate file blob and additional string metadata to the server. 
+        /// This metadata is a stringified JSON and contains chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties that
+        /// allow validating and combining the file on the server side. The response also returns a JSON object with uploaded and fileUid properties
+        /// that notifies the client which should be the next chunk.
+        /// </summary>
+        public double? ChunkSize { get; set; }
+
+        /// <summary>
+        /// By default the selected files are uploaded one after another. When set to 'true' all 
+        /// the selected files start uploading simultaneously.
+        /// (The property is available when the async.chunkSize is set.)
+        /// </summary>
+        public bool? Concurrent { get; set; }
+
+        /// <summary>
+        /// It sets the number of attempts that will be performed if an upload is failing.
+        /// The property is only used when the async.retryAfter property is also defined.
+        /// </summary>
+        public double? MaxRetries { get; set; }
+
+        /// <summary>
+        /// If the property is set the failed upload request will be repeated after the declared amount of ticks.
+        /// </summary>
+        public double? RetryAfter { get; set; }
+
+        /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests
         /// </summary>
         public bool? WithCredentials { get; set; }
@@ -79,6 +106,10 @@ namespace Kendo.Mvc.UI
                     .Add("removeField", RemoveField, () => RemoveField.HasValue())
                     .Add("autoUpload", AutoUpload, () => AutoUpload.HasValue)
                     .Add("batch", Batch, () => Batch.HasValue)
+                    .Add("chunkSize", ChunkSize, () => ChunkSize.HasValue)
+                    .Add("concurrent", Concurrent, () => Concurrent.HasValue)
+                    .Add("maxRetries", MaxRetries, () => MaxRetries.HasValue)
+                    .Add("retryAfter", RetryAfter, () => RetryAfter.HasValue)
                     .Add("withCredentials", WithCredentials, () => WithCredentials.HasValue);
 
                 if (Remove.HasValue())

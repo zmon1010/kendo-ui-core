@@ -30,10 +30,22 @@ namespace Kendo.Mvc.TagHelpers
         public string OnError { get; set; }
 
         /// <summary>
+        /// Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the pause event.</param>
+        public string OnPause { get; set; }
+
+        /// <summary>
         /// Fires when upload progress data is available.Note: The progress event fires only when the upload is in\n\t\t/// async mode.Note: The progress event is not fired in IE.\n\t\t/// See Supported Browsers
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the progress event.</param>
         public string OnProgress { get; set; }
+
+        /// <summary>
+        /// Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the resume event.</param>
+        public string OnResume { get; set; }
 
         /// <summary>
         /// Fires when an uploaded file is about to be removed.\n\t\t/// Cancelling the event will prevent the remove.
@@ -84,9 +96,19 @@ namespace Kendo.Mvc.TagHelpers
                 settings["error"] = CreateHandler(OnError);
             }
 
+            if (OnPause?.HasValue() == true)
+            {
+                settings["pause"] = CreateHandler(OnPause);
+            }
+
             if (OnProgress?.HasValue() == true)
             {
                 settings["progress"] = CreateHandler(OnProgress);
+            }
+
+            if (OnResume?.HasValue() == true)
+            {
+                settings["resume"] = CreateHandler(OnResume);
             }
 
             if (OnRemove?.HasValue() == true)

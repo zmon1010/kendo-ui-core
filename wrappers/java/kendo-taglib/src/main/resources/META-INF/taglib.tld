@@ -47919,10 +47919,20 @@ async mode.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when upload progress data is available.Note: The progress event fires only when the upload is in
 async mode.Note: The progress event is not fired in IE.
 See Supported Browsers</description>
             <name>progress</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.</description>
+            <name>resume</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -47974,6 +47984,31 @@ Files selected one after the other will be uploaded in separate requests.</descr
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>When the property is set the selected files will be uploaded chunk by chunk with the declared size. 
+Each request sends a separate file blob and additional string metadata to the server. 
+This metadata is a stringified JSON and contains chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties that
+allow validating and combining the file on the server side. The response also returns a JSON object with uploaded and fileUid properties
+that notifies the client which should be the next chunk.</description>
+            <name>chunkSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>By default the selected files are uploaded one after another. When set to 'true' all 
+the selected files start uploading simultaneously.
+(The property is available when the async.chunkSize is set.)</description>
+            <name>concurrent</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>It sets the number of attempts that will be performed if an upload is failing.
+The property is only used when the async.retryAfter property is also defined.</description>
+            <name>maxRetries</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The name of the form field submitted to the Remove URL.</description>
             <name>removeField</name>
             <rtexprvalue>true</rtexprvalue>
@@ -47991,6 +48026,12 @@ requests containing one or more "fileNames" fields specifying the files to be de
             <name>removeVerb</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If the property is set the failed upload request will be repeated after the declared amount of ticks.</description>
+            <name>retryAfter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The name of the form field submitted to the save URL. The default value is the input name.</description>
@@ -48209,11 +48250,23 @@ async mode.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.</description>
+        <name>upload-pause</name>
+        <tag-class>com.kendoui.taglib.upload.PauseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fires when upload progress data is available.Note: The progress event fires only when the upload is in
 async mode.Note: The progress event is not fired in IE.
 See Supported Browsers</description>
         <name>upload-progress</name>
         <tag-class>com.kendoui.taglib.upload.ProgressFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.</description>
+        <name>upload-resume</name>
+        <tag-class>com.kendoui.taglib.upload.ResumeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

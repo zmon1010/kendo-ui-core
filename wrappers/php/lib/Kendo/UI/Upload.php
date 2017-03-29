@@ -186,6 +186,20 @@ async mode.
     }
 
     /**
+    * Sets the pause event of the Upload.
+    * Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Upload
+    */
+    public function pause($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('pause', $value);
+    }
+
+    /**
     * Sets the progress event of the Upload.
     * Fires when upload progress data is available.Note: The progress event fires only when the upload is in
 async mode.Note: The progress event is not fired in IE.
@@ -199,6 +213,20 @@ See Supported Browsers
         }
 
         return $this->setProperty('progress', $value);
+    }
+
+    /**
+    * Sets the resume event of the Upload.
+    * Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Upload
+    */
+    public function resume($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('resume', $value);
     }
 
     /**

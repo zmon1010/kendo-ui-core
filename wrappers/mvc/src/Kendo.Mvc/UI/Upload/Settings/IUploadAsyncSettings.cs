@@ -35,6 +35,26 @@ namespace Kendo.Mvc.UI
         bool? Batch { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating the chunk size
+        /// </summary>
+        double? ChunkSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the chunks are uploaded simultaneously
+        /// </summary>
+        bool? Concurrent { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating how much retries will be performed when the upload fails
+        /// </summary>
+        double? MaxRetries { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating after how many ticks the upload will be retried
+        /// </summary>
+        double? RetryAfter { get; set; }
+
+        /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests
         /// </summary>
         bool? WithCredentials { get; set; }

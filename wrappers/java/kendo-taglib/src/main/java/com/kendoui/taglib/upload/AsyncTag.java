@@ -66,6 +66,30 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("batch", value);
     }
 
+    public float getChunkSize() {
+        return (Float)getProperty("chunkSize");
+    }
+
+    public void setChunkSize(float value) {
+        setProperty("chunkSize", value);
+    }
+
+    public boolean getConcurrent() {
+        return (Boolean)getProperty("concurrent");
+    }
+
+    public void setConcurrent(boolean value) {
+        setProperty("concurrent", value);
+    }
+
+    public float getMaxRetries() {
+        return (Float)getProperty("maxRetries");
+    }
+
+    public void setMaxRetries(float value) {
+        setProperty("maxRetries", value);
+    }
+
     public java.lang.String getRemoveField() {
         return (java.lang.String)getProperty("removeField");
     }
@@ -88,6 +112,14 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
 
     public void setRemoveVerb(java.lang.String value) {
         setProperty("removeVerb", value);
+    }
+
+    public float getRetryAfter() {
+        return (Float)getProperty("retryAfter");
+    }
+
+    public void setRetryAfter(float value) {
+        setProperty("retryAfter", value);
     }
 
     public java.lang.String getSaveField() {

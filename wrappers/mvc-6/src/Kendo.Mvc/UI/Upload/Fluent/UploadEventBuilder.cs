@@ -102,6 +102,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the pause event.</param>
+        public UploadEventBuilder Pause(string handler)
+        {
+            Handler("pause", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public UploadEventBuilder Pause(Func<object, object> handler)
+        {
+            Handler("pause", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fires when upload progress data is available.Note: The progress event fires only when the upload is in\n\t\t/// async mode.Note: The progress event is not fired in IE.\n\t\t/// See Supported Browsers
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the progress event.</param>
@@ -119,6 +141,28 @@ namespace Kendo.Mvc.UI.Fluent
         public UploadEventBuilder Progress(Func<object, object> handler)
         {
             Handler("progress", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the resume event.</param>
+        public UploadEventBuilder Resume(string handler)
+        {
+            Handler("resume", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public UploadEventBuilder Resume(Func<object, object> handler)
+        {
+            Handler("resume", handler);
 
             return this;
         }

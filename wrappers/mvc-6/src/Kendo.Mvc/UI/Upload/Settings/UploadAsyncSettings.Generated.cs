@@ -15,6 +15,14 @@ namespace Kendo.Mvc.UI
 
         public bool? Batch { get; set; }
 
+        public double? ChunkSize { get; set; }
+
+        public bool? Concurrent { get; set; }
+
+        public double? MaxRetries { get; set; }
+
+        public double? RetryAfter { get; set; }
+
         public string RemoveField { get; set; }
 
         public string RemoveUrl { get; set; }
@@ -42,6 +50,26 @@ namespace Kendo.Mvc.UI
             if (Batch.HasValue)
             {
                 settings["batch"] = Batch;
+            }
+
+            if (ChunkSize.HasValue)
+            {
+                settings["chunkSize"] = ChunkSize;
+            }
+
+            if (Concurrent.HasValue)
+            {
+                settings["concurrent"] = Concurrent;
+            }
+
+            if (MaxRetries.HasValue)
+            {
+                settings["maxRetries"] = MaxRetries;
+            }
+
+            if (RetryAfter.HasValue)
+            {
+                settings["retryAfter"] = RetryAfter;
             }
 
             if (RemoveField?.HasValue() == true)

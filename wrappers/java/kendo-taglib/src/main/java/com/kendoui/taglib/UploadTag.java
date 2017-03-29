@@ -88,12 +88,20 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("error", value.getBody());
     }
 
+    public void setPause(PauseFunctionTag value) {
+        setEvent("pause", value.getBody());
+    }
+
     public void setProgress(ProgressFunctionTag value) {
         setEvent("progress", value.getBody());
     }
 
     public void setRemove(RemoveFunctionTag value) {
         setEvent("remove", value.getBody());
+    }
+
+    public void setResume(ResumeFunctionTag value) {
+        setEvent("resume", value.getBody());
     }
 
     public void setSelect(SelectFunctionTag value) {
@@ -196,6 +204,18 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("error", new Function(value));
     }
 
+    public String getPause() {
+        Function property = ((Function)getProperty("pause"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPause(String value) {
+        setProperty("pause", new Function(value));
+    }
+
     public String getProgress() {
         Function property = ((Function)getProperty("progress"));
         if (property != null) {
@@ -218,6 +238,18 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setRemove(String value) {
         setProperty("remove", new Function(value));
+    }
+
+    public String getResume() {
+        Function property = ((Function)getProperty("resume"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setResume(String value) {
+        setProperty("resume", new Function(value));
     }
 
     public String getSelect() {
