@@ -60,24 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 <div class="demo-section k-content">
-<div id="example">
-    <div>
-        <div class="demo-section k-content">
-            <input name="files" id="files" type="file" />
-        </div>
-    </div>
-    <script>
-                $(document).ready(function() {
-                    $("#files").kendoUpload({
-                        async: {
-                            chunkSize: 11000,// bytes
-                            saveUrl: 'chunkupload.php?type=chunksave',
-                            removeUrl: 'async.php?type=remove',
-                            autoUpload: true
-                        }
-                    });
-                });
-    </script>
-</div>
+<?php
+$upload = new \Kendo\UI\Upload('files[]');
+$upload->async(array(
+        'saveUrl' => 'chunkupload.php?type=chunksave',
+        'removeUrl' => 'async.php?type=remove',
+        'autoUpload' => true,
+        'removeField' => 'fileNames[]',
+        'chunkSize' => 1100
+       ));
+
+echo $upload->render();
+?>
 </div>
 <?php require_once '../include/footer.php'; ?>

@@ -59,6 +59,63 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+         /// When the property is set the selected files will be uploaded chunk by chunk with the declared size. 
+        /// Each request sends a separate file blob and additional string metadata to the server. 
+        /// This metadata is a stringified JSON and contains chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties that
+        /// allow validating and combining the file on the server side. The response also returns a JSON object with uploaded and fileUid properties
+        /// that notifies the client which should be the next chunk.
+         /// </summary>
+         /// <param name="value">The value for ChunkSize</param>
+         public UploadAsyncSettingsBuilder ChunkSize(double value)
+         {
+             settings.ChunkSize = value;
+             return this;
+         }
+ 
+         /// <summary>
+         /// By default the selected files are uploaded one after another. When set to 'true' all 
+         /// the selected files start uploading simultaneously.
+         /// (The property is available when the async.chunkSize is set.)
+         /// </summary>
+         /// <param name="value">The value for Concurrent</param>
+         public UploadAsyncSettingsBuilder Concurrent(bool value)
+         {
+             settings.Concurrent = value;
+             return this;
+         }
+ 
+         /// <summary>
+         /// By default the selected files are uploaded one after another. When set to 'true' all 
+         /// the selected files start uploading simultaneously.
+         /// (The property is available when the async.chunkSize is set.)
+         /// </summary>
+         public UploadAsyncSettingsBuilder Concurrent()
+         {
+             settings.Concurrent = true;
+             return this;
+         }
+ 
+         /// <summary>
+         /// It sets the number of attempts that will be performed if an upload is failing.
+         /// The property is only used when the async.retryAfter property is also defined.
+         /// </summary>
+         /// <param name="value">The value for MaxRetries</param>
+         public UploadAsyncSettingsBuilder MaxRetries(double value)
+         {
+             settings.MaxRetries = value;
+             return this;
+         }
+ 
+         /// <summary>
+         /// If the property is set the failed upload request will be repeated after the declared amount of ticks.
+         /// </summary>
+         /// <param name="value">The value for RetryAfter</param>
+         public UploadAsyncSettingsBuilder RetryAfter(double value)
+         {
+             settings.RetryAfter = value;
+             return this;
+         }
+
         /// <summary>
         /// Sets the action, controller and route values for the save operation
         /// </summary>
