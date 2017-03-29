@@ -41,18 +41,24 @@ var __meta__ = { // jshint ignore:line
             var DOMElement;
 
             Widget.fn.init.call(that, element, options);
+            element = that.element;
 
             options = that.options;
             options.format = kendo._extractFormat(options.format || kendo.getCulture(options.culture).calendars.standard.patterns.d);
-
-            element = that.element;
+            options.min = kendo.parseDate(element.attr("min")) || kendo.parseDate(options.min);
+            options.max = kendo.parseDate(element.attr("max")) || kendo.parseDate(options.max);
+            
             var insidePicker = ((element.parent().attr("class") || "").indexOf("k-picker-wrap") >= 0);
             if (insidePicker) {
                 that.wrapper = element.parent();
             } else {
-                //that.wrapper = element.wrap("<span class='k-date-wrap k-state-default'></span>").parent();
-                //that.wrapper.wrap("<span class='k-widget k-dateinput'></span>");
                 that.wrapper = element.wrap("<span class='k-widget k-dateinput'></span>").parent();
+                that.wrapper.addClass(element[0].className);
+                that.wrapper[0].style.cssText = element[0].style.cssText;
+                element.css({
+                    width: "100%",
+                    height: element[0].style.height
+                });
             }
             $("<span class='k-icon k-i-warning'></span>").insertAfter(element);
 
@@ -69,6 +75,12 @@ var __meta__ = { // jshint ignore:line
                     var value = element.val();
                     that._change();
                 });
+
+            try {
+                element[0].setAttribute("type", "text");
+            } catch (e) {
+                element[0].type = "text";
+            }
 
             var disabled = element.is("[disabled]") || $(that.element).parents("fieldset").is(':disabled');
 
