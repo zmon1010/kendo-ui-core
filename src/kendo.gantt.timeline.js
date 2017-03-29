@@ -53,8 +53,8 @@ var __meta__ = { // jshint ignore:line
                                    '<div class="#=styles.tooltipContent#">#=text#%</div>' +
                                    '<div class="#=styles.tooltipCallout#" style="left:13px;"></div>' +
                               '</div>');
-    var TASK_TOOLTIP_TEMPLATE = kendo.template('<div class="#=styles.taskDetails#">' +
-                                    '<strong>#=task.title#</strong>' +
+    var TASK_TOOLTIP_TEMPLATE = kendo.template('<div class="#=kendo.htmlEncode(styles.taskDetails)#">' +
+                                    '<strong>#=kendo.htmlEncode(task.title)#</strong>' +
                                     '<div class="#=styles.taskDetailsPercent#">#=kendo.toString(task.percentComplete, "p0")#</div>' +
                                     '<ul class="#=styles.reset#">' +
                                         '<li>#=messages.start#: #=kendo.toString(task.start, "h:mm tt ddd, MMM d")#</li>' +
@@ -1507,7 +1507,7 @@ var __meta__ = { // jshint ignore:line
             var monthSpan;
             var endMonth;
             var slots = [];
-           
+
             start = new Date(start);
             end = new Date(end);
 
