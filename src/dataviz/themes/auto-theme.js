@@ -75,6 +75,7 @@
             mapColor("chart.axisDefaults.notes.icon.border.color", "chart-notes-border");
             mapColor("chart.axisDefaults.notes.line.color", "chart-notes-lines");
             mapColor("chart.axisDefaults.title.color", "normal-text-color");
+            mapColor('chart.chartArea.background', 'background');
             mapColor("chart.legend.inactiveItems.labels.color", "chart-inactive");
             mapColor("chart.legend.inactiveItems.markers.color", "chart-inactive");
             mapColor("chart.legend.labels.color", "normal-text-color");
