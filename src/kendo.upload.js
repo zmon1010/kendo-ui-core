@@ -1478,6 +1478,7 @@ var __meta__ = { // jshint ignore:line
             var sourceElement = $(e.target);
             var fileEntries = this.prepareUpload(sourceElement, files);
             var hasValidationErrors;
+            var prev;
 
             $.each(fileEntries, function(index) {
                 hasValidationErrors = upload._filesContainValidationErrors($(this.data("fileNames")));
@@ -1486,8 +1487,10 @@ var __meta__ = { // jshint ignore:line
                     if(!hasValidationErrors) {
                         if(upload.options.async.chunkSize){
                             module.prepareChunk(this);
+                            prev = this.prev();
 
-                            if(upload.options.async.concurrent || index === 0){
+                            if(upload.options.async.concurrent || (index === 0 && !prev.length) ||
+                             (index === 0 && prev.hasClass("k-file-success") || prev.hasClass("k-file-error"))){
                                 module.performUpload(this);
                             }
                         }else{
@@ -1502,6 +1505,7 @@ var __meta__ = { // jshint ignore:line
 
                     if(!hasValidationErrors) {
                         upload._showUploadButton();
+                        this.addClass("k-toupload");
                     } else {
                         upload._updateHeaderUploadStatus();
                     }
@@ -1572,9 +1576,13 @@ var __meta__ = { // jshint ignore:line
                     if(upload.options.async.chunkSize){
                         upload._fileAction(fileEntry, PAUSE);
                     }
-                    upload._fileAction(fileEntry, CANCEL, true);
+                    upload._fileAction(fileEntry, CANCEL, upload.options.async.chunkSize);
                 }
-                upload._hideUploadButton();
+
+                if(!upload.wrapper.find(".k-toupload").length){
+                    upload._hideUploadButton();
+                }
+
                 upload._showHeaderUploadStatus(true);
 
                 if (e.formData) {
@@ -1601,7 +1609,7 @@ var __meta__ = { // jshint ignore:line
             var module = this;
             var upload = module.upload;
 
-            $(".k-file", this.element).filter(function() {
+            $(".k-toupload", this.element).filter(function() {
                 var fileEntry = $(this);
                 var started = isFileUploadStarted(fileEntry);
                 var hasValidationErrors = upload._filesContainValidationErrors(fileEntry.data("fileNames"));
@@ -1609,11 +1617,14 @@ var __meta__ = { // jshint ignore:line
                 return !started && !hasValidationErrors;
             }).each(function(index) {
                 var fileEntry = $(this);
+                var prevEntry = fileEntry.prev();
 
+                fileEntry.removeClass("k-toupload");
                 if(upload.options.async.chunkSize){
                     module.prepareChunk(fileEntry);
 
-                    if(upload.options.async.concurrent || index === 0){
+                    if(upload.options.async.concurrent || (index === 0 && !prevEntry.length) ||
+                        (index === 0 && prevEntry.hasClass("k-file-success") || prevEntry.hasClass("k-file-error"))){
                         module.performUpload(fileEntry);
                     }
                 }else{
@@ -1759,7 +1770,7 @@ var __meta__ = { // jshint ignore:line
                 if(chunkSize && !batch && !jsonResult.uploaded){
                     module._prepareNextChunk(fileUid); 
                     module.performUpload(fileEntry);
-                }else if(chunkSize && !batch && !concurrent && fileEntry.next().length > 0) {
+                }else if(chunkSize && !batch && !concurrent && fileEntry.next().length && !fileEntry.next().hasClass("k-toupload")) {
                         module._resetChunkIndex(fileUid);
                         module.upload._onUploadSuccess({ target : $(fileEntry, module.upload.wrapper) }, jsonResult, xhr);
 

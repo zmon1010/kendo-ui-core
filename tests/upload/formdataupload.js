@@ -544,7 +544,7 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         uploadInstance._module.metaData["someUID"] = {chunkIndex:1};
         simulateUploadWithResponse(validUploadedChunkJSON);
         uploadInstance._module._getCurrentChunk = uploadInstance._module.temp_getCurrentChunk;
-        equal(uploadInstance._module.metaData["someUID"].chunkIndex, 0);
+        equal(uploadInstance._module.metaData["someUID"].chunkIndex, 1);
     });
 
   test("prepareChunk is  called when chunkSize is set and autoUpload is false", function() {
