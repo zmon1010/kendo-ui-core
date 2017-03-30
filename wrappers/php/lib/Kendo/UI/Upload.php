@@ -187,7 +187,7 @@ async mode.
 
     /**
     * Sets the pause event of the Upload.
-    * Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+    * Triggered when the files are cleared by clicking the Pause button. The button is visible if chunksize is set.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -201,9 +201,7 @@ async mode.
 
     /**
     * Sets the progress event of the Upload.
-    * Fires when upload progress data is available.Note: The progress event fires only when the upload is in
-async mode.Note: The progress event is not fired in IE.
-See Supported Browsers
+    * Fires when the data about the progress of the upload is available.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -217,7 +215,7 @@ See Supported Browsers
 
     /**
     * Sets the resume event of the Upload.
-    * Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+    * Fires when the files are resumed through clicking the Resume button. The button is visible if chunksize is set and the file upload is paused.The following example demonstrates how to wire up an event handler that is triggered when a user resumes a selected file.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -231,8 +229,7 @@ See Supported Browsers
 
     /**
     * Sets the remove event of the Upload.
-    * Fires when an uploaded file is about to be removed.
-Cancelling the event will prevent the remove.
+    * Fires when an uploaded file is about to be removed. If the event is canceled, the remove operation is prevented.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */

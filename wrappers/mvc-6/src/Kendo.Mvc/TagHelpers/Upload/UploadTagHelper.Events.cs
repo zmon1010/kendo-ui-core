@@ -30,25 +30,25 @@ namespace Kendo.Mvc.TagHelpers
         public string OnError { get; set; }
 
         /// <summary>
-        /// Triggered when files are cleared by clicking on the "Pause" button that is visible if chunksize is set.
+        /// Triggered when the files are cleared by clicking the Pause button. The button is visible if chunksize is set.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the pause event.</param>
         public string OnPause { get; set; }
 
         /// <summary>
-        /// Fires when upload progress data is available.Note: The progress event fires only when the upload is in\n\t\t/// async mode.Note: The progress event is not fired in IE.\n\t\t/// See Supported Browsers
+        /// Fires when the data about the progress of the upload is available.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the progress event.</param>
         public string OnProgress { get; set; }
 
         /// <summary>
-        /// Triggered when files are resumed by clicking on the "Resume" button that is visible if chunksize is set and a file upload is paused.
+        /// Fires when the files are resumed through clicking the Resume button. The button is visible if chunksize is set and the file upload is paused.The following example demonstrates how to wire up an event handler that is triggered when a user resumes a selected file.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the resume event.</param>
         public string OnResume { get; set; }
 
         /// <summary>
-        /// Fires when an uploaded file is about to be removed.\n\t\t/// Cancelling the event will prevent the remove.
+        /// Fires when an uploaded file is about to be removed. If the event is canceled, the remove operation is prevented.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public string OnRemove { get; set; }

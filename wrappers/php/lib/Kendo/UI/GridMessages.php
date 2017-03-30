@@ -24,7 +24,7 @@ class GridMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Allows customization of the text in column header for expand/collapse columns. Set the value to make the widget compliant with web accessibility standards.
+    * Allows the customization of the text in the column header for the expand or collapse columns. Sets the value to make the widget compliant with the web accessibility standards.
     * @param string $value
     * @return \Kendo\UI\GridMessages
     */
