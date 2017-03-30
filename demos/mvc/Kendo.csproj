@@ -1272,6 +1272,14 @@
     <Content Include="Views\demos\dateinput\mvvm.cshtml" />
     <Content Include="Views\demos\dateinput\right-to-left-support.cshtml" />
     <Content Include="Views\demos\dateinput\events.cshtml" />
+    <Content Include="Views\demos\toolbar\angular.cshtml" />
+    <Content Include="Views\demos\toolbar\api.cshtml" />
+    <Content Include="Views\demos\toolbar\events.cshtml" />
+    <Content Include="Views\demos\toolbar\index.cshtml" />
+    <Content Include="Views\demos\toolbar\integration.cshtml" />
+    <Content Include="Views\demos\toolbar\keyboard-navigation.cshtml" />
+    <Content Include="Views\demos\toolbar\resizing.cshtml" />
+    <Content Include="Views\demos\toolbar\right-to-left-support.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

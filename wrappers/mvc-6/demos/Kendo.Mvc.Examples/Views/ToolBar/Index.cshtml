@@ -10,7 +10,7 @@
             menuButtons.Add().Text("Insert below").Icon("insert-down");
         });
         items.Add().Type(CommandType.Separator);
-        items.Add().Template("<label>Format:</label>");
+        items.Add().Template("<label for='dropdown'>Format:</label>");
         items.Add().Template("<input id='dropdown' style='width: 150px;' />").Overflow(ShowInOverflowPopup.Never);
         items.Add().Type(CommandType.Separator);
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
@@ -21,9 +21,9 @@
         });
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
         {
-            buttons.Add().Text("Bold").Togglable(true).Icon("bold").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Italic").Togglable(true).Icon("italic").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Underline").Togglable(true).Icon("underline").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Bold").Togglable(true).Icon("bold");
+            buttons.Add().Text("Italic").Togglable(true).Icon("italic");
+            buttons.Add().Text("Underline").Togglable(true).Icon("underline");
         });
         items.Add().Type(CommandType.Button).Text("Action").Overflow(ShowInOverflowPopup.Always);
         items.Add().Type(CommandType.Button).Text("Another Action").Overflow(ShowInOverflowPopup.Always);
