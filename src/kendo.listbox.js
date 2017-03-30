@@ -84,7 +84,6 @@ var __meta__ = { // jshint ignore:line
         options: {
             name: "ListBox",
             autoBind: true,
-            enabled: true,
             template: "",
             dataTextField: null,
             selectable: "single"
@@ -243,19 +242,29 @@ var __meta__ = { // jshint ignore:line
             return this.dataSource.getByUid(uid);
         },
 
-        enable: function(enable) {
+        enable: function(items, enable) {
             var that = this;
             var enabled = isUndefined(enable) ? true : !!enable;
+            var itemsLength = $(items).length;
+            var i;
 
-            that.options.enabled = enabled;
+            for (i = 0; i < itemsLength; i++) {
+                that._enableItem($(items[i]), enabled);
+            }
+        },
 
-            if (enabled) {
-                that.wrapper.removeClass(DISABLED_STATE_CLASS);
-                that._getList().removeClass(DISABLED_STATE_CLASS);
-            } else {
-                that.wrapper.addClass(DISABLED_STATE_CLASS);
-                that._getList().addClass(DISABLED_STATE_CLASS);
-                that.items().removeClass(SELECTED_STATE_CLASS);
+        _enableItem: function(item, enable) {
+            var that = this;
+            var model = that._modelFromElement(item);
+
+            if (model) {
+                if (enable) {
+                    $(item).removeClass(DISABLED_STATE_CLASS);
+                } else {
+                    $(item)
+                        .addClass(DISABLED_STATE_CLASS)
+                        .removeClass(SELECTED_STATE_CLASS);
+                }
             }
         },
 

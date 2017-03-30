@@ -144,12 +144,4 @@
 
         equal(listbox.select().length, 0);
     });
-
-    test("should not select items from disabled listbox", function() {
-        listbox.enable(false);
-
-        listbox.select(listbox.items());
-
-        equal(listbox.select().length, 0);
-    });
 })();

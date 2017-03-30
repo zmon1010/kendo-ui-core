@@ -590,6 +590,8 @@
     module("ListBox api", {
         setup: function() {
             listbox = createListBox();
+            item1 = listbox.items().eq(0);
+            item2 = listbox.items().eq(1);
         },
         teardown: function() {
             destroyListBox(listbox);
@@ -597,63 +599,51 @@
         }
     });
 
-    test("options.enabled should be true by default", function() {
-        equal(listbox.options.enabled, true);
+    test("enable() should enable single item", function() {
+        listbox.enable(item1);
+
+        equal(item1.hasClass(DISABLED_STATE_CLASS), false);
     });
 
-    test("enable() should remove disabled class from wrapper", function() {
-        listbox.wrapper.addClass(DISABLED_STATE_CLASS);
+    test("enable() should enable multiple items", function() {
+        listbox.enable(item1.add(item2));
 
-        listbox.enable();
-
-        equal(listbox.wrapper.hasClass(DISABLED_STATE_CLASS), false);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), false);
+        equal(item2.hasClass(DISABLED_STATE_CLASS), false);
     });
 
-    test("enable() should remove disabled class from list", function() {
-        getList(listbox).addClass(DISABLED_STATE_CLASS);
+    test("enable(true) should enable single item", function() {
+        listbox.enable(item1, true);
 
-        listbox.enable();
-
-        equal(getList(listbox).hasClass(DISABLED_STATE_CLASS), false);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), false);
     });
 
-    test("enable(false) should add disabled class to wrapper", function() {
-        listbox.wrapper.removeClass(DISABLED_STATE_CLASS);
+    test("enable(true) should enable multiple items", function() {
+        listbox.enable(item1.add(item2), true);
 
-        listbox.enable(false);
-
-        equal(listbox.wrapper.hasClass(DISABLED_STATE_CLASS), true);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), false);
+        equal(item2.hasClass(DISABLED_STATE_CLASS), false);
     });
 
-    test("enable(false) should add disabled class to list", function() {
-        getList(listbox).addClass(DISABLED_STATE_CLASS);
+    test("enable() should disable single item", function() {
+        listbox.enable(item1, false);
 
-        listbox.enable(false);
-
-        equal(getList(listbox).hasClass(DISABLED_STATE_CLASS), true);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), true);
     });
 
-    test("enable(false) should remove selected class from items", function() {
-        listbox.items().addClass(SELECTED_STATE_CLASS);
+    test("enable() should disable multiple items", function() {
+        listbox.enable(item1.add(item2), false);
 
-        listbox.enable(false);
-
-        equal(listbox.items().filter(DOT + SELECTED_STATE_CLASS).length, 0);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), true);
+        equal(item2.hasClass(DISABLED_STATE_CLASS), true);
     });
 
-    test("enable() should set options.enabled to true", function() {
-        listbox.options.enabled = false;
+    test("enable() should remove selection", function() {
+        listbox.select(item1);
 
-        listbox.enable();
+        listbox.enable(item1, false);
 
-        equal(listbox.options.enabled, true);
-    });
-
-    test("enable(false) should set options.enabled to false", function() {
-        listbox.options.enabled = true;
-
-        listbox.enable(false);
-
-        equal(listbox.options.enabled, false);
+        equal(item1.hasClass(SELECTED_STATE_CLASS), false);
+        equal(item1.hasClass(DISABLED_STATE_CLASS), true);
     });
 })();
