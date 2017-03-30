@@ -1,44 +1,60 @@
 (function() {
-    var ListBox = kendo.ui.ListBox,
-        div;
+    var ListBox = kendo.ui.ListBox;
+    var div;
+    var listbox;
 
-    module("kendo.ui.ListBox initialization", {
+    module("ListBox initialization", {
         setup: function() {
             div = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
         }
     });
 
     test("ListBox attaches a listbox object to a target", function() {
-        var listBox = new ListBox(div);
+        listbox = new ListBox(div);
         ok(div.data("kendoListBox") instanceof ListBox);
     });
 
+    test("should add k-listbox class to wrapper", function() {
+        listbox = new ListBox(div);
+
+        equal(listbox.wrapper.hasClass("k-listbox"), true);
+    });
+
     test("Has selectedable on", function() {
-        var listBox = new ListBox(div, {
+        listbox = new ListBox(div, {
             selectable: true
         });
 
-        ok(listBox.selectable instanceof kendo.ui.Selectable);
+        ok(listbox.selectable instanceof kendo.ui.Selectable);
     });
 
     test("Selectable is always on", function() {
-        var listBox = new ListBox(div, {
+        listbox = new ListBox(div, {
             selectable: false
         });
 
-        ok(listBox.selectable instanceof kendo.ui.Selectable);
+        ok(listbox.selectable instanceof kendo.ui.Selectable);
     });
 
-    test("Selectable is destroyed on widget destroy", function() {
-        var listBox = new ListBox(div);
-        var destroySpy = spy(listBox.selectable, "destroy");
+    test("selectable should be destroyed on widget destroy", function() {
+        listbox = new ListBox(div);
+        var destroySpy = spy(listbox.selectable, "destroy");
 
-        listBox.destroy();
+        listbox.destroy();
 
         equal(destroySpy.calls("destroy"), 1);
-        equal(listBox.selectable, undefined);
+        equal(listbox.selectable, null);
+    });
+
+    test("toolbar should be destroyed on widget destory", function() {
+        listbox = new ListBox(div);
+
+        listbox.destroy();
+
+        equal(listbox.toolbar, null);
     });
 })();

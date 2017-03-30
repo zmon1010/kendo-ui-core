@@ -36,13 +36,6 @@
         return listbox;
     }
 
-    function destroyListBox(widget) {
-        if (widget) {
-            widget.destroy();
-            widget = null;
-        }
-    }
-
     function getDataItem(listbox, item) {
         return listbox.dataSource.getByUid(getId(item));
     }
@@ -53,9 +46,6 @@
 
     function getList(listbox) {
         return listbox.wrapper.find(".k-listBox");
-    }
-    function equalListItems(item1, item2) {
-        equal(getId(item1), getId(item2));
     }
 
     module("ListBox api", {
@@ -228,260 +218,24 @@
         equal(listbox2.items().length, transferredItems.length);
     });
 
-    module("ListBox api", {
-        setup: function() {
-            listbox = createListBox();
-            item1 = listbox.items().eq(0);
-            item2 = listbox.items().eq(1);
-            item3 = listbox.items().eq(2);
-            item4 = listbox.items().eq(3);
-        },
-        teardown: function() {
-            destroyListBox(listbox);
-            kendo.destroy(QUnit.fixture);
-        }
+    test("transfer() should not change selection in destiantion listbox", function() {
+        listbox2.dataSource.add({ id: 21, text: "item21" });
+        listbox2.select(listbox2.items());
+        listbox1.select(item1);
+
+        listbox1.transfer(listbox1.select());
+
+        equal(listbox2.items().eq(0).hasClass(SELECTED_STATE_CLASS), true);
     });
 
-    test("moveUp() should not move the html element of the first list item", function() {
-        listbox.moveUp(item1);
+    test("transfer() should not change disabled state of items in destiantion listbox", function() {
+        listbox2.dataSource.add({ id: 21, text: "item21" });
+        listbox2.select(listbox2.items().addClass(DISABLED_STATE_CLASS));
+        listbox1.select(item1);
 
-        equal(listbox.items()[0], item1[0]);
-    });
+        listbox1.transfer(listbox1.select());
 
-    test("moveUp() should not move the data item of the first list item in the dataSource", function() {
-        listbox.moveUp(item1);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-    });
-
-    test("moveUp() should move the html element of a list item", function() {
-        listbox.moveUp(item2);
-
-        equalListItems(listbox.items().eq(0), item2);
-        equalListItems(listbox.items().eq(1), item1);
-    });
-
-    test("moveUp() should move the data item of a list item in the dataSource", function() {
-        listbox.moveUp(item2);
-
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-    });
-
-    test("moveUp() should reorder the html elements of multiple list items", function() {
-        var movedItems = item2.add(item3);
-
-        listbox.moveUp(movedItems);
-
-        equalListItems(listbox.items().eq(0), item2);
-        equalListItems(listbox.items().eq(1), item3);
-        equalListItems(listbox.items().eq(2), item1);
-        equalListItems(listbox.items().eq(3), item4);
-    });
-
-    test("moveUp() should reorder the data items of multiple list items in the dataSource", function() {
-        var movedItems = item2.add(item3);
-
-        listbox.moveUp(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item3));
-        equal(listbox.dataSource.at(2).uid, getId(item1));
-        equal(listbox.dataSource.at(3).uid, getId(item4));
-    });
-
-    test("moveUp() should reorder the html elements of non-adjacent list items", function() {
-        var movedItems = item2.add(item4);
-
-        listbox.moveUp(movedItems);
-
-        equalListItems(listbox.items().eq(0), item2);
-        equalListItems(listbox.items().eq(1), item1);
-        equalListItems(listbox.items().eq(2), item4);
-        equalListItems(listbox.items().eq(3), item3);
-    });
-
-    test("moveUp() should reorder the data items of non-adjacent list items in the dataSource", function() {
-        var movedItems = item2.add(item4);
-
-        listbox.moveUp(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-        equal(listbox.dataSource.at(2).uid, getId(item4));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
-    });
-
-    test("moveUp() should not reorder the html elements of multiple list items at the top", function() {
-        var movedItems = item1.add(item2);
-
-        listbox.moveUp(movedItems);
-
-        equalListItems(listbox.items().eq(0), item1);
-        equalListItems(listbox.items().eq(1), item2);
-        equalListItems(listbox.items().eq(2), item3);
-        equalListItems(listbox.items().eq(3), item4);
-    });
-
-    test("moveUp() should not reorder the data items of multiple list items at the top in the dataSource", function() {
-        var movedItems = item1.add(item2);
-
-        listbox.moveUp(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item2));
-        equal(listbox.dataSource.at(2).uid, getId(item3));
-        equal(listbox.dataSource.at(3).uid, getId(item4));
-    });
-
-    test("moveUp() should not partially reorder the html elements of multiple list items at the top", function() {
-        var movedItems = item1.add(item3);
-
-        listbox.moveUp(movedItems);
-
-        equalListItems(listbox.items().eq(0), item1);
-        equalListItems(listbox.items().eq(1), item2);
-        equalListItems(listbox.items().eq(2), item3);
-        equalListItems(listbox.items().eq(3), item4);
-    });
-
-    test("moveUp() should not partially reorder the data items of multiple list items at the top in the dataSource", function() {
-        var movedItems = item1.add(item3);
-
-        listbox.moveUp(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item2));
-        equal(listbox.dataSource.at(2).uid, getId(item3));
-        equal(listbox.dataSource.at(3).uid, getId(item4));
-    });
-
-    module("ListBox api", {
-        setup: function() {
-            listbox = createListBox();
-            item1 = listbox.items().eq(0);
-            item2 = listbox.items().eq(1);
-            item3 = listbox.items().eq(2);
-            item4 = listbox.items().eq(3);
-        },
-        teardown: function() {
-            destroyListBox(listbox);
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("moveDown() should not move the html element of the last list item", function() {
-        listbox.moveDown(item4);
-
-        equal(listbox.items()[3], item4[0]);
-    });
-
-    test("moveDown() should not move the data item of the last list item in the dataSource", function() {
-        listbox.moveDown(item4);
-
-        equal(listbox.dataSource.at(3).uid, getId(item4));
-    });
-
-    test("moveDown() should move the html element of a list item", function() {
-        listbox.moveDown(item1);
-
-        equalListItems(listbox.items().eq(0), item2);
-        equalListItems(listbox.items().eq(1), item1);
-    });
-
-    test("moveDown() should move the data item of a list item in the dataSource", function() {
-        listbox.moveDown(item1);
-
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-    });
-
-    test("moveDown() should reorder the html elements of multiple list items", function() {
-        var movedItems = item2.add(item3);
-
-        listbox.moveDown(movedItems);
-
-        equalListItems(listbox.items().eq(0), item1);
-        equalListItems(listbox.items().eq(1), item4);
-        equalListItems(listbox.items().eq(2), item2);
-        equalListItems(listbox.items().eq(3), item3);
-    });
-
-    test("moveDown() should reorder the data items of multiple list items in the dataSource", function() {
-        var movedItems = item2.add(item3);
-
-        listbox.moveDown(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item4));
-        equal(listbox.dataSource.at(2).uid, getId(item2));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
-    });
-
-    test("moveDown() should reorder the html elements of non-adjacent list items", function() {
-        var movedItems = item1.add(item3);
-
-        listbox.moveDown(movedItems);
-
-        equalListItems(listbox.items().eq(0), item2);
-        equalListItems(listbox.items().eq(1), item1);
-        equalListItems(listbox.items().eq(2), item4);
-        equalListItems(listbox.items().eq(3), item3);
-    });
-
-    test("moveDown() should reorder the data items of non-adjacent list items in the dataSource", function() {
-        var movedItems = item1.add(item3);
-
-        listbox.moveDown(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-        equal(listbox.dataSource.at(2).uid, getId(item4));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
-    });
-
-    test("moveDown() should not reorder the html elements of multiple list items at the bottom", function() {
-        var movedItems = item3.add(item4);
-
-        listbox.moveDown(movedItems);
-
-        equalListItems(listbox.items().eq(0), item1);
-        equalListItems(listbox.items().eq(1), item2);
-        equalListItems(listbox.items().eq(2), item3);
-        equalListItems(listbox.items().eq(3), item4);
-    });
-
-    test("moveDown() should not reorder the data items of multiple list items at the bottom in the dataSource", function() {
-        var movedItems = item3.add(item4);
-
-        listbox.moveDown(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item2));
-        equal(listbox.dataSource.at(2).uid, getId(item3));
-        equal(listbox.dataSource.at(3).uid, getId(item4));
-    });
-
-    test("moveDown() should not partially reorder the html elements of multiple list items at the bottom", function() {
-        var movedItems = item2.add(item4);
-
-        listbox.moveDown(movedItems);
-
-        equalListItems(listbox.items().eq(0), item1);
-        equalListItems(listbox.items().eq(1), item2);
-        equalListItems(listbox.items().eq(2), item3);
-        equalListItems(listbox.items().eq(3), item4);
-    });
-
-    test("moveDown() should not partially reorder the data items of multiple list items at the bottom in the dataSource", function() {
-        var movedItems = item2.add(item4);
-
-        listbox.moveDown(movedItems);
-
-        equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item2));
-        equal(listbox.dataSource.at(2).uid, getId(item3));
-        equal(listbox.dataSource.at(3).uid, getId(item4));
+        equal(listbox2.items().eq(0).hasClass(DISABLED_STATE_CLASS), true);
     });
 
     module("ListBox api", {
@@ -524,11 +278,27 @@
         equalListItems(listbox.items().eq(0), item1);
     });
 
+    test("reorder() should keep item selection", function() {
+        item1.addClass(SELECTED_STATE_CLASS);
+
+        listbox.reorder(item1, 1);
+
+        equal(listbox.items().eq(1).hasClass(SELECTED_STATE_CLASS), true);
+    });
+
+    test("reorder() should keep item disabled state", function() {
+        item1.addClass(DISABLED_STATE_CLASS);
+
+        listbox.reorder(item1, 1);
+
+        equal(listbox.items().eq(1).hasClass(DISABLED_STATE_CLASS), true);
+    });
+
     module("ListBox api", {
         setup: function() {
             listbox = createListBox();
-            dataSource = new kendo.data.DataSource( {
-                data: [{ value: 1}]
+            dataSource = new kendo.data.DataSource({
+                data: [{ value: 1 }]
             });
         },
         teardown: function() {

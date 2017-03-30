@@ -18,24 +18,50 @@ var __meta__ = { // jshint ignore:line
     var DataSource = data.DataSource;
     var Selectable = kendo.ui.Selectable;
     var DataBoundWidget = kendo.ui.DataBoundWidget;
+    var Class = kendo.Class;
 
+    var extend = $.extend;
     var proxy = $.proxy;
 
-    var NS = ".kendoListBox";
+    var DOT = ".";
+    var COMMA = ",";
+
+    var KENDO_LISTBOX = "kendoListBox";
+    var NS = DOT + KENDO_LISTBOX;
     var DISABLED_STATE_CLASS = "k-state-disabled";
     var SELECTED_STATE_CLASS = "k-state-selected";
-    var ENABLED_ITEM_SELECTOR = ".k-listBox:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
+    var ENABLED_ITEM_SELECTOR = ".k-listbox-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
+    var TOOLBAR_CLASS = "k-listbox-toolbar";
+    var LISTBOX_CLASS = "k-listbox";
+    var REMOVE_TOOL_CLASS = "k-listbox-remove";
+    var MOVE_UP_TOOL_CLASS = "k-listbox-moveup";
+    var MOVE_DOWN_TOOL_CLASS = "k-listbox-movedown";
+    var TRANSFER_TO_TOOL_CLASS = "k-listbox-transfer-to";
+    var TRANSFER_FROM_TOOL_CLASS = "k-listbox-transfer-from";
+    var LIST_CLASS = "k-listbox-list";
+    var TOOLS_CLASS_NAMES = [
+        DOT + REMOVE_TOOL_CLASS,
+        DOT + MOVE_UP_TOOL_CLASS,
+        DOT + MOVE_DOWN_TOOL_CLASS,
+        DOT + TRANSFER_TO_TOOL_CLASS,
+        DOT + TRANSFER_FROM_TOOL_CLASS
+    ];
 
+    var CLICK = "click" + NS;
     var CHANGE = "change";
     var DATABOUND = "dataBound";
     var REMOVE = "remove";
     var REORDER = "reorder";
     var TRANSFER = "transfer";
+    var MOVE_UP = "moveUp";
+    var MOVE_DOWN = "moveDown";
+    var TRANSFER_TO = "transferTo";
+    var TRANSFER_FROM = "transferFrom";
     var UNIQUE_ID = "uid";
 
     var MOVE_UP_OFFSET = -1;
     var MOVE_DOWN_OFFSET = 1;
-
+    
     function getSortedDomIndices(items) {
         var indices = $.map(items, function(item) {
             return $(item).index();
@@ -53,13 +79,12 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             Widget.fn.init.call(that, element, options);
 
-            that.wrapper = element = that.element;
+            that.wrapper = element = that.element.addClass(LISTBOX_CLASS);
 
             that._templates();
-
             that._selectable();
-
             that._dataSource();
+            that._createToolbar();
         },
 
         destroy: function() {
@@ -69,6 +94,7 @@ var __meta__ = { // jshint ignore:line
 
             that._unbindDataSource();
             that._destroySelectable();
+            that._destroyToolbar();
 
             kendo.destroy(that.element);
         },
@@ -90,56 +116,27 @@ var __meta__ = { // jshint ignore:line
         },
 
         _add: function(dataItem) {
-            this.dataSource.add(dataItem);
-        },
-
-        moveUp: function(items) {
             var that = this;
-
-            if (that._canMoveUp(items)) {
-                that._moveItems(items, MOVE_UP_OFFSET);
-            }
+            var item = that.options.template(dataItem);
+            
+            that._getList().append(item);
+            that._unbindDataSource();
+            that.dataSource.add(dataItem);
+            that._bindDataSource();
         },
 
-        _canMoveUp: function(items) {
-            var domIndices = getSortedDomIndices(items);
-
-            return (domIndices.length > 0 && domIndices[0] > 0);
-        },
-
-        moveDown: function(items) {
+        _insertElementAt: function(item, index) {
             var that = this;
+            var list = that._getList();
 
-            if (that._canMoveDown(items)) {
-                that._moveItems(items, MOVE_DOWN_OFFSET);
-            }
-        },
-
-        _canMoveDown: function(items) {
-            var domIndices = getSortedDomIndices(items);
-
-            return (domIndices.length > 0 && $(domIndices).last()[0] < (this.items().length - 1));
-        },
-
-        _moveItems: function(items, offset) {
-            var that = this;
-            var domIndices = getSortedDomIndices(items);
-            var movedItems = $.makeArray(items.sort(that._listItemComparer));
-
-            while (movedItems.length > 0 && domIndices.length > 0) {
-                if (offset < 0) {
-                    that._reorderItem(movedItems.shift(), domIndices.shift() + offset);
-                } else {
-                    that._reorderItem(movedItems.pop(), domIndices.pop() + offset);
-                }
-            }
+            if (index > 0) {
+                $(item).insertAfter(list.children().eq(index - 1));
+            } else {
+                $(list).prepend(item);
+            }            
         },
 
         reorder: function(item, index) {
-            this._reorderItem(item, index);
-        },
-
-        _reorderItem: function(item, index) {
             var that = this;
             var dataSource = that.dataSource;
             var model = that._modelFromElement(item);
@@ -147,8 +144,12 @@ var __meta__ = { // jshint ignore:line
             var itemAtIndex = that.items()[index];
 
             if (model && itemAtIndex && dataItemAtIndex) {
+                that._unbindDataSource();
                 dataSource.remove(model);
                 dataSource.insert(index, model);
+                that._bindDataSource();
+                that._removeElement(item);
+                that._insertElementAt(item, index);
             }
         },
 
@@ -168,9 +169,16 @@ var __meta__ = { // jshint ignore:line
             var model = that._modelFromElement(item);
 
             if (model) {
-                $(item).off(NS).remove();
+                that._unbindDataSource();
                 dataSource.remove(model);
+                that._bindDataSource();
+                that._removeElement(item);
             }
+        },
+
+        _removeElement: function(item) {
+            kendo.destroy(item);
+            $(item).off().remove();
         },
 
         dataItem: function(element) {
@@ -187,8 +195,8 @@ var __meta__ = { // jshint ignore:line
 
         transfer: function(items) {
             var that = this;
-            var destinationListBox = $(that.options.connectWith).getKendoListBox();
-            var itemsLength = (items || []).length;
+            var destinationListBox = $(that.options.connectWith).data(KENDO_LISTBOX);
+            var itemsLength = $(items).length;
             var i;
 
             if (destinationListBox instanceof kendo.ui.ListBox) {
@@ -217,7 +225,7 @@ var __meta__ = { // jshint ignore:line
                 return selectable.value();
             }
 
-            enabledItems = that._getEnabledItems(items);
+            enabledItems = that.items().filter(items).filter(ENABLED_ITEM_SELECTOR);
 
             if (!selectable.options.multiple) {
                 selectable.clear();
@@ -229,11 +237,6 @@ var __meta__ = { // jshint ignore:line
 
         clearSelection: function() {
             this.selectable.clear();
-        },
-
-        _getEnabledItems: function(items) {
-            var enabledItems = $(this._getList().find(items)).filter(ENABLED_ITEM_SELECTOR);
-            return enabledItems;
         },
 
         _modelFromElement: function(element) {
@@ -342,14 +345,16 @@ var __meta__ = { // jshint ignore:line
             var template = that.options.template;
             var html = "";
 
-            html+= "<ul class='k-listBox'>";
+            html += "<ul class='" + LIST_CLASS + "'>";
             for (var idx = 0; idx < view.length; idx++) {
                 html += template(view[idx]);
             }
             html+= "</ul>";
-            that.element.html(html);
 
+            that.element.find("*").off().end().html(html);
             that._setItemIds();
+            that._destroyToolbar();
+            that._createToolbar();
         },
 
         _setItemIds: function() {
@@ -384,12 +389,12 @@ var __meta__ = { // jshint ignore:line
 
             if (that.selectable) {
                 that.selectable.destroy();
-                delete that.selectable;
+                that.selectable = null;
             }
         },
 
         _getList: function() {
-            return this.element.find(".k-listBox");
+            return this.element.find(DOT + LIST_CLASS);
         },
 
         _listItemComparer: function(item1, item2) {
@@ -401,10 +406,276 @@ var __meta__ = { // jshint ignore:line
             } else {
                 return (indexItem1 > indexItem2 ? 1 : (-1));
             }
+        },
+
+        _createToolbar: function() {
+            var that = this;
+
+            if (!that.toolbar) {
+                that.toolbar = $(
+                    "<div class='" + TOOLBAR_CLASS + "'>" +
+                        "<span class='k-button k-listbox-tool k-listbox-remove' data-command='" + REMOVE + "'>Remove</span>" +
+                        "<span class='k-button k-listbox-tool k-listbox-moveup' data-command='" + MOVE_UP + "'>Move up</span>" +
+                        "<span class='k-button k-listbox-tool k-listbox-movedown' data-command='" + MOVE_DOWN + "'>Move down</span>" +
+                        "<span class='k-button k-listbox-tool k-listbox-transfer-to' data-command='" + TRANSFER_TO + "'>Transfer to</span>" +
+                        "<span class='k-button k-listbox-tool k-listbox-transfer-from' data-command='" + TRANSFER_FROM + "'>Transfer from</span>" +
+                    "</div>").appendTo(that.wrapper);
+
+                
+                that.toolbar.on(CLICK, TOOLS_CLASS_NAMES.join(COMMA), proxy(that._onToolbarClick, that));
+            }
+        },
+
+        _destroyToolbar: function() {
+            var that = this;
+
+            kendo.destroy(that.toolbar);
+            $(that.toolbar).off(NS).remove();
+            that.toolbar = null;
+        },
+
+        _onToolbarClick: function(e) {
+            var that = this;
+            
+            var selectedItems = that.select();
+            that._executeCommand($(e.currentTarget).data("command"), { items: selectedItems });
+        },
+        
+        _executeCommand: function(commandName, options) {
+            var command = CommandFactory.current.create(commandName, { listBox: this, items: options.items });
+
+            if (command) {
+                command.execute();
+            }
         }
     });
 
     kendo.ui.plugin(ListBox);
+
+    var CommandFactory = Class.extend({
+        init: function() {
+            this._commands = [];
+        },
+
+        register: function(commandName, commandType) {
+            this._commands.push({
+                commandName: commandName,
+                commandType: commandType
+            });
+        },
+
+        create: function(commandName, options) {
+            var commands = this._commands;
+            var itemsLength = commands.length;
+            var name = commandName ? commandName.toLowerCase() : "";
+            var match;
+            var command;
+            var i;
+
+            for (i = 0; i < itemsLength; i++) {
+                command = commands[i];
+
+                if (command.commandName.toLowerCase() === name) {
+                    match = command;
+                    break;
+                }
+            }
+
+            if (match) {
+                return new match.commandType(options);
+            }
+        }
+    });
+    CommandFactory.current = new CommandFactory();
+
+    var ListBoxCommand = Class.extend({
+        init: function(options) {
+            var that = this;
+
+            that.options = extend({}, that.options, options);
+            that.listBox = that.options.listBox;
+            that.items = $(that.options.items);
+        },
+
+        options: {
+            listBox: null,
+            items: []
+        },
+
+        execute: $.noop,
+
+        getItems: function() {
+            return $(this.listBox.select());
+        }
+    });
+
+    var RemoveItemsCommand = ListBoxCommand.extend({
+        execute: function() {
+            var that = this;
+            var listBox = that.listBox;
+            var items = that.getItems();
+            var itemsLength = items.length;
+            var model;
+            var item;
+            var i;
+
+            for (i = 0; i < itemsLength; i++) {
+                item = items.eq(i);
+                model = listBox.dataItem(item);
+
+                if (model && !listBox.trigger(REMOVE, { model: model, item: item })) {
+                    listBox.remove(item);
+                }
+            }
+        }
+    });
+    CommandFactory.current.register(REMOVE, RemoveItemsCommand);
+
+    var MoveItemsCommand = ListBoxCommand.extend({
+        execute: function() {
+            var that = this;
+
+            if (that.canMoveItems()) {
+                that.moveItems();
+            }
+        },
+
+        canMoveItems: $.noop,
+
+        moveItems: function() {
+            var that = this;
+            var listBox = that.listBox;
+            var options = that.options;
+            var items = that.items;
+            var offset = options.offset;
+            var domIndices = getSortedDomIndices(items);
+            var movedItems = $.makeArray(items.sort(that.itemComparer));
+            var moveAction = options.moveAction;
+            var movedItem;
+            var movedDataItem;
+
+            while (movedItems.length > 0 && domIndices.length > 0) {
+                movedItem = movedItems[moveAction]();
+                movedDataItem = listBox.dataItem(movedItem);
+
+                if (movedItem && movedDataItem && !listBox.trigger(REORDER, { model: movedDataItem, item: $(movedItem) })) {                    
+                    listBox.reorder(movedItem, domIndices[moveAction]() + offset);
+                }
+            }
+        },
+
+        options: {
+            offset: 0,
+            moveAction: "pop"    
+        },
+
+        itemComparer: function(item1, item2) {
+            var indexItem1 = $(item1).index();
+            var indexItem2 = $(item2).index();
+
+            if (indexItem1 === indexItem2) {
+                return 0;
+            } else {
+                return (indexItem1 > indexItem2 ? 1 : (-1));
+            }
+        }
+    });
+
+    var MoveUpItemsCommand = MoveItemsCommand.extend({
+        options: {
+            offset: MOVE_UP_OFFSET,
+            moveAction: "shift"
+        },
+
+        canMoveItems: function() {
+            var items = this.items;
+            var domIndices = getSortedDomIndices(items);
+
+            return (domIndices.length > 0 && domIndices[0] > 0);
+        }
+    });
+    CommandFactory.current.register(MOVE_UP, MoveUpItemsCommand);
+
+    var MoveDownItemsCommand = MoveItemsCommand.extend({
+        options: {
+            offset: MOVE_DOWN_OFFSET,
+            moveAction: "pop"
+        },
+
+        canMoveItems: function() {
+            var that = this;
+            var items = that.items;
+            var domIndices = getSortedDomIndices(items);
+
+            return (domIndices.length > 0 && $(domIndices).last()[0] < (that.listBox.items().length - 1));
+        }
+    });
+    CommandFactory.current.register(MOVE_DOWN, MoveDownItemsCommand);
+
+    var TransferItemsToCommand = ListBoxCommand.extend({
+        execute: function() {
+            var that = this;
+            var listBox = that.listBox;
+            var items = that.getItems();
+            var itemsLength = items.length;
+            var model;
+            var item;
+            var i;
+
+            for (i = 0; i < itemsLength; i++) {
+                item = items.eq(i);
+                model = listBox.dataItem(item);
+
+                if (model && !listBox.trigger(TRANSFER, { model: model, item: item })) {
+                    listBox.transfer(item);
+                }
+            }
+        }
+    });
+    CommandFactory.current.register(TRANSFER_TO, TransferItemsToCommand);
+
+    var TransferItemsFromCommand = ListBoxCommand.extend({
+        execute: function() {
+            var that = this;
+            var sourceListBox = that._getSourceListBox();
+            var items = sourceListBox ? sourceListBox.select() : $();
+            var itemsLength = items.length;
+            var item;
+            var model;
+            var i;
+
+            if (sourceListBox) {
+                for (i = 0; i < itemsLength; i++) {
+                    item = items.eq(i);
+                    model = sourceListBox.dataItem(item);
+
+                    if (model && !sourceListBox.trigger(TRANSFER, { model: model, item: $(item) })) {
+                        sourceListBox.transfer(item);
+                    }
+                }       
+            }
+        },
+
+        _getSourceListBox: function() {
+            var that = this;
+            var listBoxElements = $(DOT + LISTBOX_CLASS);
+            var listBoxId = "#" + that.listBox.element.attr("id");
+            var sourceListBox;
+            var i;
+
+            for (i = 0; i < listBoxElements.length; i++) {
+                sourceListBox = $(listBoxElements[i]).data(KENDO_LISTBOX);
+
+                if (sourceListBox && sourceListBox.options.connectWith === listBoxId) {
+                    return sourceListBox;
+                }
+            }
+
+            return null;
+        }
+    });
+    CommandFactory.current.register(TRANSFER_FROM, TransferItemsFromCommand);
+
 })(window.kendo.jQuery);
 
 return window.kendo;
