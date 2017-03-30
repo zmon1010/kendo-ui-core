@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public string Culture { get; set; }
 
+        public bool? DateInput { get; set; }
+
         public DateTime[] Dates { get; set; }
 
         public string Format { get; set; }
@@ -35,6 +37,11 @@ namespace Kendo.Mvc.UI
             if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
+            }
+
+            if (DateInput.HasValue)
+            {
+                settings["dateInput"] = DateInput;
             }
 
             if (Dates?.Any() == true)

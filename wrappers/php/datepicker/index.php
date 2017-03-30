@@ -22,6 +22,7 @@ $monthPicker->value(new DateTime('November 2011', new DateTimeZone('UTC')))
             ->start('year')
             ->depth('year')
             ->format('MMMM yyyy')
+            ->dateInput(true)
             ->attr('style', 'width: 100%');
 
 echo $monthPicker->render();

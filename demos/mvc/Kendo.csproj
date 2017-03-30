@@ -1266,6 +1266,12 @@
     <Content Include="Views\demos\panelbar\angular.cshtml" />
     <Content Include="Views\demos\menu\menu-bind-attributes.cshtml" />
     <Content Include="Views\demos\upload\chunkupload.cshtml" />
+    <Content Include="Views\demos\dateinput\index.cshtml" />
+    <Content Include="Views\demos\dateinput\api.cshtml" />
+    <Content Include="Views\demos\dateinput\keyboard-navigation.cshtml" />
+    <Content Include="Views\demos\dateinput\mvvm.cshtml" />
+    <Content Include="Views\demos\dateinput\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\dateinput\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

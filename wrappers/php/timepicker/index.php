@@ -6,7 +6,7 @@ require_once '../lib/Kendo/Autoload.php';
     <h4>Set alarm time</h4>
 <?php
 $timePicker = new \Kendo\UI\TimePicker('timepicker');
-
+$timePicker->dateInput(true);
 $timePicker->value('10:00 AM');
 $timePicker->attr('style', 'width: 100%');
 

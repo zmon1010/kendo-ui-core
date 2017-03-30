@@ -109,6 +109,14 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
         setProperty("culture", value);
     }
 
+    public boolean getDateInput() {
+        return (Boolean)getProperty("dateInput");
+    }
+
+    public void setDateInput(boolean value) {
+        setProperty("dateInput", value);
+    }
+
     public java.lang.Object getDates() {
         return (java.lang.Object)getProperty("dates");
     }

@@ -185,5 +185,24 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this as TPickerBuilder;
         }
+
+        /// <summary>
+        /// Specifies if the picker will use DateInput for editing value
+        /// </summary>
+        /// <param name="value">The value for DateInput</param>
+        public TPickerBuilder DateInput(bool value)
+        {
+            Component.DateInput = value;
+            return this as TPickerBuilder;
+        }
+
+        /// <summary>
+        /// Specifies if the picker will use DateInput for editing value
+        /// </summary>
+        public TPickerBuilder DateInput()
+        {
+            Component.DateInput = true;
+            return this as TPickerBuilder;
+        }
     }
 }

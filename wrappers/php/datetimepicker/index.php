@@ -9,6 +9,7 @@ require_once '../include/header.php';
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 
 $dateTimePicker->value(new DateTime('now', new DateTimeZone('UTC')))
+           ->dateInput(true)
            ->attr('style', 'width: 100%');
 
 echo $dateTimePicker->render();

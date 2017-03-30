@@ -15,6 +15,11 @@ namespace Kendo.Mvc.TagHelpers
         public string Culture { get; set; }
 
         /// <summary>
+        /// Specifies if the TimePicker will use DateInput for editing value
+        /// </summary>
+        public bool? DateInput { get; set; }
+
+        /// <summary>
         /// Specifies the format, which is used to format the value of the TimePicker displayed in the input. The format also will be used to parse the input.
         /// </summary>
         public string Format { get; set; }
@@ -51,6 +56,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
+            }
+
+            if (DateInput.HasValue)
+            {
+                settings["dateInput"] = DateInput;
             }
 
             if (Format?.HasValue() == true)

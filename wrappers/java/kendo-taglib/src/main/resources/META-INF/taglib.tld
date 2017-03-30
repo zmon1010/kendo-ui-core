@@ -13096,6 +13096,115 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>DateInput</description>
+        <name>dateInput</name>
+        <tag-class>com.kendoui.taglib.DateInputTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the format, which is used to format the value of the DateInput displayed in the input. The format also will be used to parse the input.</description>
+            <name>format</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the maximum date which can be entered in the input.</description>
+            <name>max</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the minimum date that which be entered in the input.</description>
+            <name>min</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the selected date.</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Fires when the selected date is changed</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>The messages that DateInput uses.  Use it to customize or localize the placeholders of each date/time part.</description>
+        <name>dateInput-messages</name>
+        <tag-class>com.kendoui.taglib.dateinput.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The placeholder for the day of the month part.</description>
+            <name>day</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the AM/PM part.</description>
+            <name>dayperiod</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the hours part.</description>
+            <name>hour</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the minutes part.</description>
+            <name>minute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the months part.</description>
+            <name>month</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the seconds part.</description>
+            <name>second</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the day of the week part.</description>
+            <name>weekday</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The placeholder for the years part.</description>
+            <name>year</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Fires when the selected date is changed</description>
+        <name>dateInput-change</name>
+        <tag-class>com.kendoui.taglib.dateinput.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>DatePicker</description>
         <name>datePicker</name>
         <tag-class>com.kendoui.taglib.DatePickerTag</tag-class>
@@ -13124,6 +13233,12 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the DatePicker will use DateInput for editing value</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies a list of dates, which will be passed to the month template.</description>
@@ -13344,6 +13459,12 @@ The following settings are available for the start value:</description>
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the DateTimePicker will use DateInput for editing value</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies a list of dates, which will be passed to the month template of the DateView.
@@ -45435,6 +45556,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the TimePicker will use DateInput for editing value</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.</description>

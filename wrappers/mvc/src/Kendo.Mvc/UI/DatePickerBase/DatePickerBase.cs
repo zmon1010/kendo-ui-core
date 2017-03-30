@@ -94,5 +94,11 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+        public Boolean? DateInput
+        {
+            get;
+            set;
+        }
     }
 }

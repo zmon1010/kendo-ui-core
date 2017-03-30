@@ -522,6 +522,89 @@
         "category": "Editors"
     },
     {
+        "text": "DateInput",
+        "name": "dateinput",
+        "api": "web/dateinput",
+        "new": true,
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dateinput/overview"
+        },
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/date-time-input"
+        },
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/datetime"
+        },
+        "spriteCssClass": "dateInputIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "dateinput/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK DateInput sample"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows Telerik DateInput basic features to select dates and times in $FRAMEWORK application."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "dateinput/events",
+                "title": {
+                    "aspnet-mvc": "Attach an event to $FRAMEWORK DateInput | $FRAMEWORK Demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use $FRAMEWORK Date Input to pick a date or change it manually from a dropdown calendar."
+                }
+            },
+            {
+                "text": "API",
+                "url": "dateinput/api",
+                "title": {
+                    "aspnet-mvc": "API $FRAMEWORK Dateinput example"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example demonstrates how the API of Telerik $FRAMEWORK Dateinput can be configured to modify the features of the extension."
+                }
+            },
+            {
+                "text": "Globalization",
+                "url": "dateinput/globalization"
+            },
+            {
+                "text": "RTL support",
+                "url": "dateinput/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "RTL support in $FRAMEWORK DateInput control | $FRAMEWORK Demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how $FRAMEWORK DateInput component supports RTL functionality."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "dateinput/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK DateInput"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput control."
+                }
+            },
+            {
+                "text": "Tag Helper",
+                "url": "dateinput/tag-helper",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK DateInput Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
+            }
+        ],
+        "category": "Editors"
+    },
+    {
         "text": "DatePicker",
         "name": "datepicker",
         "api": "web/datepicker",
@@ -539,6 +622,7 @@
             {
                 "text": "Basic usage",
                 "url": "datepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK DatePicker sample"
                 },
@@ -662,6 +746,7 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -3894,6 +3979,7 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },

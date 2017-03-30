@@ -30,6 +30,7 @@
         "./kendo.list",
         "./kendo.calendar",
         "./kendo.datepicker",
+        "./kendo.dateinput",
         "./kendo.autocomplete",
         "./kendo.dropdownlist",
         "./kendo.combobox",

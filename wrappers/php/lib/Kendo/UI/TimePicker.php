@@ -31,6 +31,15 @@ class TimePicker extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies if the TimePicker will use DateInput for editing value
+    * @param boolean $value
+    * @return \Kendo\UI\TimePicker
+    */
+    public function dateInput($value) {
+        return $this->setProperty('dateInput', $value);
+    }
+
+    /**
     * Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.
     * @param array $value
     * @return \Kendo\UI\TimePicker

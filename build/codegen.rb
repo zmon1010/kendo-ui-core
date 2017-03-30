@@ -121,7 +121,8 @@ namespace :generate do
                     'docs/api/javascript/ui/treelist.md',
                     'docs/api/javascript/ui/treeview.md',
                     'docs/api/javascript/ui/spreadsheet.md',
-                    'docs/api/javascript/ui/dialog.md'
+                    'docs/api/javascript/ui/dialog.md',
+					'docs/api/javascript/ui/dateinput.md'
                 ]
 
                 components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC::Wrappers::DataViz::Component) }
@@ -237,6 +238,7 @@ namespace :generate do
                 'docs/api/javascript/ui/colorpicker.md',
                 'docs/api/javascript/ui/combobox.md',
                 'docs/api/javascript/ui/contextmenu.md',
+                'docs/api/javascript/ui/dateinput.md',
                 'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/dropdownlist.md',
@@ -289,6 +291,7 @@ namespace :generate do
         task :taghelpers do
             markdown = FileList[
                 'docs/api/javascript/ui/button.md',
+                'docs/api/javascript/ui/dateinput.md',
                 'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/numerictextbox.md',
