@@ -22,11 +22,11 @@ namespace Kendo.Mvc.Examples.Controllers
             [DataMember(Name = "contentType")]
             public string ContentType { get; set; }
             [DataMember(Name = "chunkIndex")]
-            public int ChunkIndex { get; set; }
+            public long ChunkIndex { get; set; }
             [DataMember(Name = "totalChunks")]
-            public int TotalChunks { get; set; }
+            public long TotalChunks { get; set; }
             [DataMember(Name = "totalFileSize")]
-            public int TotalFileSize { get; set; }
+            public long TotalFileSize { get; set; }
         }
 
         public class FileResult

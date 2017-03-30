@@ -32,8 +32,8 @@ public class ChunkUploadController {
     @RequestMapping(value = "/async/chunksave", method = RequestMethod.POST)
     public @ResponseBody String chunksave(@RequestParam List<MultipartFile> files, String metadata) throws JsonGenerationException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int totalChunks = 0;
-        int chunkIndex = 0;
+        long totalChunks = 0;
+        long chunkIndex = 0;
         String uploadUid = "";
         String fileName = "";
         //map json to student
@@ -43,8 +43,8 @@ public class ChunkUploadController {
         }
         
         JsonNode rootNode = mapper.readTree(metadata);
-        totalChunks = rootNode.path("totalChunks").getIntValue();
-        chunkIndex = rootNode.path("chunkIndex").getIntValue();
+        totalChunks = rootNode.path("totalChunks").getLongValue();
+        chunkIndex = rootNode.path("chunkIndex").getLongValue();
         uploadUid = rootNode.path("uploadUid").getTextValue();
         fileName = rootNode.path("fileName").getTextValue();
         
