@@ -76,7 +76,7 @@ namespace Kendo.Mvc.Examples.Controllers
             }
 
             FileResult fileBlob = new FileResult();
-            fileBlob.uploaded = chunkData.TotalChunks <= chunkData.ChunkIndex;
+            fileBlob.uploaded = chunkData.TotalChunks - 1<= chunkData.ChunkIndex;
             fileBlob.fileUid = chunkData.UploadUid;
 
             return Json(fileBlob);

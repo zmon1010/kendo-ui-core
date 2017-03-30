@@ -131,7 +131,7 @@ namespace Kendo.Controllers
             }
 
             FileResult fileBlob = new FileResult();
-            fileBlob.uploaded = somemetaData.TotalChunks <= somemetaData.ChunkIndex;
+            fileBlob.uploaded = somemetaData.TotalChunks - 1<= somemetaData.ChunkIndex;
             fileBlob.fileUid = somemetaData.UploadUid;
 
             return Json(fileBlob);

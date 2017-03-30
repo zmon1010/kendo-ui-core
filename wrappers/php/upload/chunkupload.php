@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //  file_put_contents( $metaData->fileName, $content, FILE_APPEND);
 
             $object = new stdClass();
-            $object->uploaded = $metaData->totalChunks <= $metaData->chunkIndex;
+            $object->uploaded = $metaData->totalChunks - 1<= $metaData->chunkIndex;
             $object->fileUid = $metaData->uploadUid;
 
             $jsonstring = json_encode($object);

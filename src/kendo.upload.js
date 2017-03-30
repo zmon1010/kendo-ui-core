@@ -1601,22 +1601,24 @@ var __meta__ = { // jshint ignore:line
             var module = this;
             var upload = module.upload;
 
-            $(".k-file", this.element).each(function(index) {
+            $(".k-file", this.element).filter(function() {
                 var fileEntry = $(this);
                 var started = isFileUploadStarted(fileEntry);
                 var hasValidationErrors = upload._filesContainValidationErrors(fileEntry.data("fileNames"));
 
-                if (!started && !hasValidationErrors) {
-                    if(upload.options.async.chunkSize){
-                        module.prepareChunk(fileEntry);
+                return !started && !hasValidationErrors;
+            }).each(function(index) {
+                var fileEntry = $(this);
 
-                        if(upload.options.async.concurrent || index === 0){
-                            module.performUpload(fileEntry);
-                        }
-                        }else{
-                            module.performUpload(fileEntry);
-                        }
-                     }
+                if(upload.options.async.chunkSize){
+                    module.prepareChunk(fileEntry);
+
+                    if(upload.options.async.concurrent || index === 0){
+                        module.performUpload(fileEntry);
+                    }
+                }else{
+                    module.performUpload(fileEntry);
+                }
             });
         },
 
@@ -1803,7 +1805,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         removeFileEntry: function(fileEntry) {
+            var chunkSize = this.upload.options.async.chunkSize;
+            var concurrent = this.upload.options.async.concurrent;
+
             this.cleanupFileEntry(fileEntry);
+            if(chunkSize && !concurrent){
+                 if(fileEntry.next().length){
+                     this.performUpload(fileEntry.next());
+                 }
+            }
             this.upload._removeFileEntry(fileEntry);
         },
 
@@ -1814,7 +1824,7 @@ var __meta__ = { // jshint ignore:line
 
             if(this.upload.options.async.chunkSize){
                 fileMetaData = this.metaData[fileUid];
-                percentComplete = fileMetaData.totalChunks ? Math.round((fileMetaData.chunkIndex/fileMetaData.totalChunks)*100):100;
+                percentComplete = fileMetaData.totalChunks ? Math.round(((fileMetaData.chunkIndex + 1)/fileMetaData.totalChunks)*100):100;
             }
             this.upload._onFileProgress({ target : $(fileEntry, this.upload.wrapper) }, percentComplete);
         },
