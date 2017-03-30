@@ -25,7 +25,7 @@ Represents the Kendo UI DateInput widget. Inherits from [Widget](/api/javascript
 
 ### max `Date`*(default: Date(2099, 11, 31))*
 
- Specifies the maximum date, which the calendar can show.
+ Specifies the maximum date which can be entered in the input.
 
 #### Example - specify the maximum date
 
@@ -38,7 +38,7 @@ Represents the Kendo UI DateInput widget. Inherits from [Widget](/api/javascript
 
 ### min `Date`*(default: Date(1900, 0, 1))*
 
- Specifies the minimum date that the calendar can show.
+ Specifies the minimum date that which be entered in the input.
 
 #### Example - specify the minimum date
 

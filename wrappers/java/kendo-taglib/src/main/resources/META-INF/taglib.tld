@@ -13114,13 +13114,13 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the maximum date, which the calendar can show.</description>
+            <description>Specifies the maximum date which can be entered in the input.</description>
             <name>max</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
         </attribute>
         <attribute>
-            <description>Specifies the minimum date that the calendar can show.</description>
+            <description>Specifies the minimum date that which be entered in the input.</description>
             <name>min</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>

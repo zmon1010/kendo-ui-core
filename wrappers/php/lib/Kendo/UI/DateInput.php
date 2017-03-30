@@ -22,7 +22,7 @@ class DateInput extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the maximum date, which the calendar can show.
+    * Specifies the maximum date which can be entered in the input.
     * @param date $value
     * @return \Kendo\UI\DateInput
     */
@@ -31,7 +31,7 @@ class DateInput extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the minimum date that the calendar can show.
+    * Specifies the minimum date that which be entered in the input.
     * @param date $value
     * @return \Kendo\UI\DateInput
     */

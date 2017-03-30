@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies the maximum date, which the calendar can show.
+        /// Specifies the maximum date which can be entered in the input.
         /// </summary>
         /// <param name="value">The value that configures the max.</param>
         public DateInputBuilder Max(DateTime value)
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies the minimum date that the calendar can show.
+        /// Specifies the minimum date that which be entered in the input.
         /// </summary>
         /// <param name="value">The value that configures the min.</param>
         public DateInputBuilder Min(DateTime value)

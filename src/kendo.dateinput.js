@@ -14,9 +14,9 @@ var __meta__ = { // jshint ignore:line
     var global = window;
     var kendo = global.kendo;
     var caret = kendo.caret;
-    var Class = kendo.Class;
     var ui = kendo.ui;
     var Widget = ui.Widget;
+    var keys = kendo.keys;
     var ns = ".kendoDateInput";
     var proxy = $.proxy;
     var objectToString = {}.toString;
@@ -25,8 +25,8 @@ var __meta__ = { // jshint ignore:line
 
     var STATEDISABLED = "k-state-disabled";
     var STATEDEFAULT = "k-state-default";
-    var STATEFOCUSED = "k-state-focused";
-    var STATEHOVER = "k-state-hover";
+    // var STATEFOCUSED = "k-state-focused";
+    // var STATEHOVER = "k-state-hover";
     var STATEINVALID = "k-state-invalid";
 
     var DISABLED = "disabled";
@@ -38,7 +38,6 @@ var __meta__ = { // jshint ignore:line
     var DateInput = Widget.extend({
         init: function (element, options) {
             var that = this;
-            var DOMElement;
 
             Widget.fn.init.call(that, element, options);
             element = that.element;
@@ -62,17 +61,12 @@ var __meta__ = { // jshint ignore:line
             }
             $("<span class='k-icon k-i-warning'></span>").insertAfter(element);
 
-            DOMElement = element[0];
             that._form();
 
             that.element
                 .addClass(insidePicker ? " " : "k-textbox")
                 .attr("autocomplete", "off")
-                .on("focus" + ns, function () {
-                    var value = DOMElement.value;
-                })
                 .on("focusout" + ns, function () {
-                    var value = element.val();
                     that._change();
                 });
 
@@ -154,9 +148,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         value: function (value) {
-            var element = this.element;
-            var options = this.options;
-
             if (value === undefined) {
                 return this._dateTime.getDateObject();
             }
@@ -204,7 +195,6 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             that.element
                 .on("keydown" + ns, proxy(that._keydown, that))
-                .on("paste" + ns, proxy(that._paste, that))
                 .on(INPUT_EVENT_NAME, proxy(that._input, that))
                 .on("mouseup" + ns, proxy(that._mouseUp, that))
                 .on("DOMMouseScroll" + ns + " mousewheel" + ns, proxy(that._scroll, that));
@@ -271,16 +261,11 @@ var __meta__ = { // jshint ignore:line
         _input: function () {
             var that = this;
             var element = that.element[0];
-            var value = element.value;
-            var options = that.options;
-
             var blinkInvalid = false;
 
             if (kendo._activeElement() !== element) {
                 return;
             }
-
-            var symbol = this._format[caret(this.element[0])[0]];
 
             var diff = approximateStringMatching(
                 this._oldText,
@@ -302,7 +287,7 @@ var __meta__ = { // jshint ignore:line
 
                 //android fix
                 if (!navigationOnly) {
-                    var that = this, difSym = diff[0][0];
+                    var difSym = diff[0][0];
                     setTimeout(function () { that._selectSegment(difSym); });
                 }
             }
@@ -314,7 +299,7 @@ var __meta__ = { // jshint ignore:line
                 clearTimeout(that._blinkInvalidTimeout);
                 var stateInvalid = STATEINVALID;
                 that.wrapper.addClass(STATEINVALID);
-                that._blinkInvalidTimeout = setTimeout(function () { that.wrapper.removeClass(stateInvalid) }, 100);
+                that._blinkInvalidTimeout = setTimeout(function () { that.wrapper.removeClass(stateInvalid); }, 100);
             }
         },
 
@@ -323,10 +308,6 @@ var __meta__ = { // jshint ignore:line
             if (selection[0] === selection[1]) {
                 this._selectNearestSegment();
             }
-        },
-
-        _paste: function (e) {
-            this._pasting = true;
         },
 
         _scroll: function (e) {
@@ -371,9 +352,10 @@ var __meta__ = { // jshint ignore:line
 
         _keydown: function (e) {
             var key = e.keyCode;
+            var selection;
             if (key == 37 || key == 39) { //left/right
                 e.preventDefault();
-                var selection = caret(this.element[0]);
+                selection = caret(this.element[0]);
                 if (selection[0] != selection[1]) {
                     this._selectNearestSegment();
                 }
@@ -389,7 +371,7 @@ var __meta__ = { // jshint ignore:line
             }
             if (key == 38 || key == 40) { //up/down
                 e.preventDefault();
-                var selection = caret(this.element[0]);
+                selection = caret(this.element[0]);
                 var symbol = this._format[selection[0]];
                 if (knownSymbols.indexOf(symbol) >= 0) {
                     this._dateTime.modifyPart(symbol, key == 38 ? 1 : -1);
@@ -405,6 +387,9 @@ var __meta__ = { // jshint ignore:line
                         that._input();
                     }, 0);
                 }
+            }
+            if (key === keys.ENTER){
+                this._change();
             }
         },
 
@@ -493,11 +478,11 @@ var __meta__ = { // jshint ignore:line
                 case ("mm"): result = minutes ? pad(value.getMinutes()) : placeholders.minute; break;
                 case ("s"): result = seconds ? value.getSeconds() : placeholders.second; break;
                 case ("ss"): result = seconds ? pad(value.getSeconds()) : placeholders.second; break;
-                case ("f"): result = milliseconds ? math.floor(value.getMilliseconds() / 100) : milliseconds; break;
+                case ("f"): result = milliseconds ? Math.floor(value.getMilliseconds() / 100) : milliseconds; break;
                 case ("ff"):
                     result = value.getMilliseconds();
                     if (result > 99) {
-                        result = math.floor(result / 10);
+                        result = Math.floor(result / 10);
                     }
                     result = milliseconds ? pad(result) : match;
                     break;
@@ -506,8 +491,8 @@ var __meta__ = { // jshint ignore:line
                 case ("zzz"):
                     mins = value.getTimezoneOffset();
                     sign = mins < 0;
-                    result = math.abs(mins / 60).toString().split(".")[0];
-                    mins = math.abs(mins) - (result * 60);
+                    result = Math.abs(mins / 60).toString().split(".")[0];
+                    mins = Math.abs(mins) - (result * 60);
                     result = (sign ? "+" : "-") + pad(result);
                     result += ":" + pad(mins);
                     break;
@@ -515,7 +500,7 @@ var __meta__ = { // jshint ignore:line
                 case ("zz"):
                     result = value.getTimezoneOffset() / 60;
                     sign = result < 0;
-                    result = math.abs(result).toString().split(".")[0];
+                    result = Math.abs(result).toString().split(".")[0];
                     result = (sign ? "+" : "-") + (match === "zz" ? pad(result) : result);
                     break;
             }
@@ -524,8 +509,8 @@ var __meta__ = { // jshint ignore:line
             if (returnsFormat) {
                 result = "" + result;
                 var formatResult = "";
-                if (match == "ddd") match = "EEE";
-                if (match == "dddd") match = "EEEE";
+                if (match == "ddd") { match = "EEE"; }
+                if (match == "dddd") { match = "EEEE"; }
                 for (var i = 0; i < result.length; i++) {
                     formatResult += match[0];
                 }
@@ -533,11 +518,13 @@ var __meta__ = { // jshint ignore:line
             } else {
                 return result;
             }
-        }
+        };
+
         function generateMatcher(retFormat) {
             returnsFormat = retFormat;
             return matcher;
-        };
+        }
+
         function setExisting(symbol, val) {
             switch (symbol) {
                 case "y": year = val; break;
@@ -558,7 +545,7 @@ var __meta__ = { // jshint ignore:line
                 case "s": seconds = val; break;
                 default: return;
             }
-        };
+        }
 
         this.setValue = function (val) {
             date = val;
@@ -602,10 +589,11 @@ var __meta__ = { // jshint ignore:line
                 return true;
             }
             var newValue = new Date((value && value.getTime) ? value.getTime() : value);
+            var newHours;
             switch (symbol) {
                 case "d":
                     var newDate = (date ? newValue.getDate() * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newDate)) return;
+                    if (isNaN(newDate)) { return; }
                     while (newDate > 31) {
                         newDate = parseInt(newDate.toString().slice(1), 10);
                     }
@@ -656,7 +644,7 @@ var __meta__ = { // jshint ignore:line
                     break;
                 case "y":
                     var newYear = (year ? (newValue.getFullYear()) * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newYear)) return;
+                    if (isNaN(newYear)) {return;}
                     while (newYear > 9999) {
                         newYear = parseInt(newYear.toString().slice(1), 10);
                     }
@@ -668,8 +656,8 @@ var __meta__ = { // jshint ignore:line
                     }
                     break;
                 case "h":
-                    var newHours = (hours ? (newValue.getHours() % 12 || 12) * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newHours)) return;
+                    newHours = (hours ? (newValue.getHours() % 12 || 12) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newHours)) { return; }
                     while (newHours > 12) {
                         newHours = parseInt(newHours.toString().slice(1), 10);
                     }
@@ -677,8 +665,8 @@ var __meta__ = { // jshint ignore:line
                     hours = true;
                     break;
                 case "H":
-                    var newHours = (hours ? (newValue.getHours()) * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newHours)) return;
+                    newHours = (hours ? (newValue.getHours()) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newHours)) { return; }
                     while (newHours > 23) {
                         newHours = parseInt(newHours.toString().slice(1), 10);
                     }
@@ -687,7 +675,7 @@ var __meta__ = { // jshint ignore:line
                     break;
                 case "m":
                     var newMinutes = (minutes ? (newValue.getMinutes()) * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newMinutes)) return;
+                    if (isNaN(newMinutes)) { return; }
                     while (newMinutes > 59) {
                         newMinutes = parseInt(newMinutes.toString().slice(1), 10);
                     }
@@ -696,7 +684,7 @@ var __meta__ = { // jshint ignore:line
                     break;
                 case "s":
                     var newSeconds = (seconds ? (newValue.getSeconds()) * 10 : 0) + parseInt(currentChar, 10);
-                    if (isNaN(newSeconds)) return;
+                    if (isNaN(newSeconds)) { return; }
                     while (newSeconds > 59) {
                         newSeconds = parseInt(newSeconds.toString().slice(1), 10);
                     }
@@ -743,7 +731,7 @@ var __meta__ = { // jshint ignore:line
             return (year && month && date && hours && minutes && seconds && milliseconds) ?
                 new Date(value.getTime()) : null;
         };
-        
+
         if (!initDate) {
             value = new Date();
             var sampleFormat = this.toPair(initFormat, initCulture, initMessages)[1];
@@ -753,13 +741,14 @@ var __meta__ = { // jshint ignore:line
         } else {
             value = new Date(initDate.getTime());
         }
-    }
+    };
 
     function approximateStringMatching(oldText, oldFormat, newText, caret){
         var oldTextSeparator = oldText[caret + oldText.length - newText.length];
         oldText = oldText.substring(0, caret + oldText.length - newText.length);
         newText = newText.substring(0, caret);
         var diff = [];
+        var i;
         //handle typing single character over the same selection
         if (oldText === newText && caret > 0) {
             diff.push([oldFormat[caret - 1], newText[caret - 1]]);
@@ -768,7 +757,7 @@ var __meta__ = { // jshint ignore:line
         if (oldText.indexOf(newText) === 0 && (newText.length === 0 || oldFormat[newText.length - 1] !== oldFormat[newText.length])) {
             //handle delete/backspace
             var deletedSymbol = "";
-            for (var i = newText.length; i < oldText.length; i++) {
+            for (i = newText.length; i < oldText.length; i++) {
                 if (oldFormat[i] !== deletedSymbol && knownSymbols.indexOf(oldFormat[i]) >= 0) {
                     deletedSymbol = oldFormat[i];
                     diff.push([deletedSymbol, ""]);
@@ -786,7 +775,7 @@ var __meta__ = { // jshint ignore:line
         //handle typing over literal as well
         if (newText.indexOf(oldText) === 0 || knownSymbols.indexOf(oldFormat[caret - 1]) === -1) {
             var symbol = oldFormat[0];
-            for (var i = Math.max(0, oldText.length - 1); i < oldFormat.length; i++) {
+            for (i = Math.max(0, oldText.length - 1); i < oldFormat.length; i++) {
                 if (knownSymbols.indexOf(oldFormat[i]) >= 0) {
                     symbol = oldFormat[i];
                     break;

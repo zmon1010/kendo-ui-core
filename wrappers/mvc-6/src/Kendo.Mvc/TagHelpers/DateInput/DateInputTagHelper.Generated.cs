@@ -15,12 +15,12 @@ namespace Kendo.Mvc.TagHelpers
         public string Format { get; set; }
 
         /// <summary>
-        /// Specifies the maximum date, which the calendar can show.
+        /// Specifies the maximum date which can be entered in the input.
         /// </summary>
         public DateTime? Max { get; set; }
 
         /// <summary>
-        /// Specifies the minimum date that the calendar can show.
+        /// Specifies the minimum date that which be entered in the input.
         /// </summary>
         public DateTime? Min { get; set; }
 
