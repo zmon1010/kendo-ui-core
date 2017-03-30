@@ -11,11 +11,8 @@
 
 <div class="demo-section k-content">
 	    <kendo:upload name="files">
-	        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
+	        <kendo:upload-async autoUpload="true" chunkSize="1100" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
 	    </kendo:upload>
-	    
-	    
-	    
 </div>
 
 <demo:footer />
