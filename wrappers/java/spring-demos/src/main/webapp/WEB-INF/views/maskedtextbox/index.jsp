@@ -46,7 +46,7 @@
             color: #444;
         }
 
-        #fieldlist input {
+        #fieldlist .k-maskedtextbox {
             width: 100%;
         }
     </style>
