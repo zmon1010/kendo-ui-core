@@ -755,7 +755,7 @@ var Keyboard = Class.extend({
             o,
             matchesKey,
             found = [];
-        var matchKey = function (toolKey) { return toolKey == key || toolKey == e.keyCode; };
+        var matchKey = function (toolKey) { return toolKey == key || toolKey == e.keyCode || toolKey == e.charCode; };
 
         for (toolName in tools) {
             o = $.extend({ ctrl: false, alt: false, shift: false }, tools[toolName].options);

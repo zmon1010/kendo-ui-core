@@ -728,8 +728,6 @@
             this._registerHandler(editor.body, {
                 "keydown": function (e) {
                     var range;
-                    var command;
-                    var AutoLinkCommand = kendo.ui.editor.AutoLinkCommand;
 
                     if ((e.keyCode === keys.BACKSPACE || e.keyCode === keys.DELETE) && editor.body.getAttribute("contenteditable") !== "true") {
                         return false;
@@ -757,17 +755,6 @@
                             range.collapse(true);
                             editor.selectRange(range);
                         }
-                    } else if (e.keyCode == keys.SPACEBAR || e.keyCode == keys.ENTER) {
-                        range = editor.getRange();
-                        command = new AutoLinkCommand(extend({ range: range, body: editor.body, immutables: !!editor.immutables }));
-
-                        if (!command.managesUndoRedo) {
-                            editor.undoRedoStack.push(command);
-                        }
-
-                        command.editor = editor;
-                        command.exec();
-                        editor._selectionChange();
                     }
 
                     var tools = editor.toolbar.tools;

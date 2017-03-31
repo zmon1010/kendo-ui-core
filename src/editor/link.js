@@ -19,7 +19,8 @@ var kendo = window.kendo,
     InlineFormatFinder = Editor.InlineFormatFinder,
     textNodes = RangeUtils.textNodes,
     editableTextNodes = RangeUtils.editableTextNodes,
-    registerTool = Editor.EditorUtils.registerTool;
+    registerTool = Editor.EditorUtils.registerTool,
+    keys = kendo.keys;
 
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
@@ -584,6 +585,7 @@ extend(kendo.ui.editor, {
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
+registerTool("autoLink", new Tool({ key: [keys.ENTER, keys.SPACEBAR], keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 
