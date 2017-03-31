@@ -7881,19 +7881,20 @@ var __meta__ = { // jshint ignore:line
            var result = new $.Deferred();
            var dataSource = grid.dataSource;
            var allPages = grid.options.pdf.allPages;
-           var origBody = grid.wrapper.find(".k-grid-content tbody");
+           var origBody = grid.wrapper.find('table[role="grid"] > tbody');
            var cont = $("<div>")
                .css({ position: "absolute", left: -10000, top: -10000 });
            var clone = grid.wrapper.clone().css({
                height: "auto", width: "auto"
            }).appendTo(cont);
            clone.find(".k-grid-content").css({ height: "auto", width: "auto", overflow: "visible" });
+           clone.find('table[role="grid"]').css({ height: "auto", width: "100%", overflow: "visible" });
            clone.find(".k-grid-pager, .k-grid-toolbar, .k-grouping-header").remove();
            clone.find(".k-grid-header").css({ paddingRight: 0 });
 
            this._initPDFProgress(progress);
 
-           var body = clone.find(".k-grid-content tbody").empty();
+           var body = clone.find('table[role="grid"] > tbody').empty();
            var startingPage = dataSource.page();
 
            function resolve() {
