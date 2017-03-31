@@ -4897,6 +4897,10 @@ var __meta__ = { // jshint ignore:line
             for (; idx < length; idx++) {
                 columnInfo = columnIndexes[idx];
 
+                if (columnInfo === undefined) {
+                    continue;
+                }
+
                 attr = {};
                 if (columnInfo.children) {
                     attr.className = "k-alt";
