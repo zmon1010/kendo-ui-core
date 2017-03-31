@@ -49,6 +49,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.
+        /// </summary>
+        /// <param name="configurator">The configurator for the scrollable setting.</param>
+        public MenuBuilder Scrollable(Action<MenuScrollableSettingsBuilder> configurator)
+        {
+            Container.Scrollable.Enabled = true;
+
+            Container.Scrollable.Menu = Container;
+            configurator(new MenuScrollableSettingsBuilder(Container.Scrollable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the scrollable option.</param>
+        public MenuBuilder Scrollable(bool enabled)
+        {
+            Container.Scrollable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the orientation in which the menu items will be ordered
         /// </summary>
         /// <param name="value">The value for Orientation</param>

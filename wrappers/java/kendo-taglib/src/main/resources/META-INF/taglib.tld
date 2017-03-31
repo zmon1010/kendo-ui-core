@@ -27671,6 +27671,12 @@ its parent horizontally. You can also switch off the screen boundary detection c
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.</description>
+            <name>scrollable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Fires before a sub menu gets closed. You can cancel this event to prevent closure.</description>
             <name>close</name>
             <rtexprvalue>true</rtexprvalue>
@@ -27809,6 +27815,23 @@ by setting the close animation.  Each animation also has a direction which can b
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.</description>
+        <name>menu-scrollable</name>
+        <tag-class>com.kendoui.taglib.menu.ScrollableTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Sets the scroll amount (in pixels) that the menu scrolls when the scroll buttons are hovered.Each such distance is animated and then another animation starts with the same distance.If clicking a scroll button, the menu scrolls with 2x the distance.</description>
+            <name>distance</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
     </tag>
 
 

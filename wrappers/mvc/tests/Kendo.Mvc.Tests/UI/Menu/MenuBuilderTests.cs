@@ -30,7 +30,40 @@ namespace Kendo.Mvc.Tests.Menu
             Assert.True(menu.OpenOnClick);
         }
 
-		[Fact]
+        [Fact]
+        public void Scrollable_sets_the_scrollable_property()
+        {
+            builder.Scrollable(true);
+
+            Assert.True(menu.Scrollable.Enabled);
+        }
+
+        [Fact]
+        public void Setting_Scrollable_returns_builder()
+        {
+            var returnedBuilder = builder.Scrollable(true);
+
+            Assert.IsType(typeof(MenuBuilder), returnedBuilder);
+        }
+
+        [Fact]
+        public void Scrollable_distance_sets_the_scrollable_property()
+        {
+            builder.Scrollable(s => s.Distance(400));
+
+            Assert.True(menu.Scrollable.Enabled);
+            Assert.Equal(400, menu.Scrollable.Distance);
+        }
+
+        [Fact]
+        public void Setting_Scrollable_distance_returns_builder()
+        {
+            var returnedBuilder = builder.Scrollable(s => s.Distance(400));
+
+            Assert.IsType(typeof(MenuBuilder), returnedBuilder);
+        }
+
+        [Fact]
 		public void Setting_items_sets_menu_items()
 		{
 			builder.Items(root => root.Add().Text("Menu Item"));

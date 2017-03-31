@@ -95,6 +95,38 @@ namespace Kendo.Mvc.UI.Fluent.Tests
         //}
 
         [Fact]
+        public void Scrollable_sets_the_scrollable_property()
+        {
+            builder.Scrollable(true);
+
+            Assert.True(menu.Scrollable.Enabled);
+        }
+
+        [Fact]
+        public void Setting_Scrollable_should_return_builder()
+        {
+            var returnedBuilder = builder.Scrollable(true);
+
+            Assert.IsType(typeof(MenuBuilder), returnedBuilder);
+        }
+
+        [Fact]
+        public void Scrollable_Distance_sets_the_scrollable_property()
+        {
+            builder.Scrollable(s => s.Distance(200));
+
+            Assert.Equal(200, menu.Scrollable.Distance);
+        }
+
+        [Fact]
+        public void Setting_Scrollable_Distance_should_return_builder()
+        {
+            var returnedBuilder = builder.Scrollable(s => s.Distance(200));
+
+            Assert.IsType(typeof(MenuBuilder), returnedBuilder);
+        }
+
+        [Fact]
         public void BintTo_for_IEnumerable_should_create_two_items()
         {
             List<TestObject> list = new List<TestObject>

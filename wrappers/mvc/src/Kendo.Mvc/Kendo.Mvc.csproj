@@ -875,6 +875,8 @@
     <Compile Include="UI\MediaPlayer\MediaPlayer.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayerMedia.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayerMessages.cs" />
+    <Compile Include="UI\Menu\Fluent\MenuScrollableBuilder.cs" />
+    <Compile Include="UI\Menu\MenuScrollable.cs" />
     <Compile Include="UI\MobileApplication\Fluent\MobileApplicationIconBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />
@@ -2774,4 +2776,14 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetDefaultCellStyleSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetDefaultCellStyleSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\DateInput\DateInput.cs" /><Compile Include="UI\DateInput\Fluent\DateInputBuilder.cs" /><Compile Include="UI\DateInput\Fluent\DateInputEventBuilder.cs" /><Compile Include="UI\DateInput\Html\DateInputHtmlBuilder.cs" /></ItemGroup><ItemGroup><Compile Include="UI\DateInput\Settings\DateInputMessagesSettings.cs" /><Compile Include="UI\DateInput\Fluent\DateInputMessagesSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\DateInput\DateInput.cs" />
+    <Compile Include="UI\DateInput\Fluent\DateInputBuilder.cs" />
+    <Compile Include="UI\DateInput\Fluent\DateInputEventBuilder.cs" />
+    <Compile Include="UI\DateInput\Html\DateInputHtmlBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\DateInput\Settings\DateInputMessagesSettings.cs" />
+    <Compile Include="UI\DateInput\Fluent\DateInputMessagesSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

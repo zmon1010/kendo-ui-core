@@ -67,6 +67,10 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
 
     }
 
+    public void setScrollable(com.kendoui.taglib.menu.ScrollableTag value) {
+        setProperty("scrollable", value);
+    }
+
     public void setActivate(ActivateFunctionTag value) {
         setEvent("activate", value.getBody());
     }
@@ -145,6 +149,14 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
 
     public void setPopupCollision(java.lang.String value) {
         setProperty("popupCollision", value);
+    }
+
+    public boolean getScrollable() {
+        return (Boolean)getProperty("scrollable");
+    }
+
+    public void setScrollable(boolean value) {
+        setProperty("scrollable", value);
     }
 
     public String getActivate() {

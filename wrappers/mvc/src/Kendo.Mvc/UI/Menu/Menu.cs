@@ -22,12 +22,13 @@ namespace Kendo.Mvc.UI
 
             UrlGenerator = urlGenerator;
             Authorization = authorization;
-          
+
             Items = new LinkedObjectCollection<MenuItem>(null);
 
             CloseOnClick = true;
             HighlightPath = true;
             SecurityTrimming = new SecurityTrimming();
+            Scrollable = new MenuScrollable();
         }
 
         public PopupAnimation Animation
@@ -108,6 +109,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public MenuScrollable Scrollable
+        {
+            get;
+            private set;
+        }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -135,7 +142,7 @@ namespace Kendo.Mvc.UI
             {
                 options["orientation"] = Orientation.ToString().ToLower();
             }
-            
+
             if (OpenOnClick)
             {
                 options["openOnClick"] = true;
@@ -149,6 +156,20 @@ namespace Kendo.Mvc.UI
             if (HoverDelay != null)
             {
                 options["hoverDelay"] = HoverDelay;
+            }
+
+            var scrollSettings = Scrollable.ToJson();
+            if ((bool) scrollSettings["enabled"])
+            {
+                scrollSettings.Remove("enabled");
+                if (scrollSettings.Keys.Any())
+                {
+                    options.Add("scrollable", scrollSettings);
+                }
+                else
+                {
+                    options.Add("scrollable", true);
+                }
             }
 
             writer.Write(Initializer.Initialize(Selector, "Menu", options));
@@ -180,7 +201,7 @@ namespace Kendo.Mvc.UI
 
                 menuTag.WriteTo(writer);
             }
-            
+
             base.WriteHtml(writer);
         }
 

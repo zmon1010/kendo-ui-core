@@ -433,5 +433,42 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Menu()
+        ///             .Name("Menu")
+        ///             .Scrollable(s => s.Distance(300))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MenuBuilder Scrollable(Action<MenuScrollableBuilder> scrollableAction)
+        {
+            scrollableAction(new MenuScrollableBuilder(Component.Scrollable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.
+        /// </summary>
+        /// <param name="value">Boolean flag.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Menu()
+        ///             .Name("Menu")
+        ///             .Scrollable(true)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MenuBuilder Scrollable(bool enabled)
+        {
+            Component.Scrollable.Enabled = enabled;
+
+            return this;
+        }
     }
 }
