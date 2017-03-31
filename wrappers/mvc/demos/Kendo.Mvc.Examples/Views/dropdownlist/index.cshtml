@@ -1,7 +1,7 @@
 <div id="cap-view" class="demo-section k-content">
     <h4>Customize your Kendo Cap</h4>
     <div id="cap" class="black-cap"></div>
-    <h4>Cap Color</h4>
+    <h4>@Html.Label("color", "Cap Color")</h4>
     @(Html.Kendo().DropDownList()
           .Name("color")
           .DataTextField("Text")
@@ -25,7 +25,7 @@
           .HtmlAttributes(new { style = "width: 100%" })
     )
 
-  <h4 style="margin-top: 2em;">Cap Size</h4>
+  <h4 style="margin-top: 2em;">@Html.Label("size", "Cap Size")</h4>
     @(Html.Kendo().DropDownList()
           .Name("size")
           .BindTo(new List<string>() {
