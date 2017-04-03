@@ -105,7 +105,7 @@ its parent horizontally. You can also switch off the screen boundary detection c
     }
 
     /**
-    * If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.
+    * If enabled, the Menu displays buttons that scroll the items when they cannot fit the width or the popups' height of the Menu. By default, scrolling is disabled.The following example demonstrates how to enable the scrolling functionality.
     * @param boolean|\Kendo\UI\MenuScrollable|array $value
     * @return \Kendo\UI\Menu
     */

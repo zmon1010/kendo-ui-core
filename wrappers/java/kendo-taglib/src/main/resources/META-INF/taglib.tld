@@ -27671,7 +27671,7 @@ its parent horizontally. You can also switch off the screen boundary detection c
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.</description>
+            <description>If enabled, the Menu displays buttons that scroll the items when they cannot fit the width or the popups' height of the Menu. By default, scrolling is disabled.The following example demonstrates how to enable the scrolling functionality.</description>
             <name>scrollable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -27820,13 +27820,13 @@ by setting the close animation.  Each animation also has a direction which can b
 
 
     <tag>
-        <description>If enabled, the Menu will display buttons that will scroll the menu items, when they cannot fit the Menu width or menu popups height. By default scrolling is disabled.</description>
+        <description>If enabled, the Menu displays buttons that scroll the items when they cannot fit the width or the popups' height of the Menu. By default, scrolling is disabled.The following example demonstrates how to enable the scrolling functionality.</description>
         <name>menu-scrollable</name>
         <tag-class>com.kendoui.taglib.menu.ScrollableTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Sets the scroll amount (in pixels) that the menu scrolls when the scroll buttons are hovered.Each such distance is animated and then another animation starts with the same distance.If clicking a scroll button, the menu scrolls with 2x the distance.</description>
+            <description>Sets the scroll amount (in pixels) that the Menu scrolls when the scroll buttons are hovered. Each such distance is animated and then another animation starts with the same distance. If clicking a scroll button, the Menu scrolls with 2x the distance.</description>
             <name>distance</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
