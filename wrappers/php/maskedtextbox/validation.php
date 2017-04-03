@@ -25,7 +25,7 @@ $maskedtextbox->attr('data-validmask-msg', 'phone number is incomplete');
                 <span data-for='PhoneNumber' class='k-invalid-msg'></span>
                 </li>
                 <li class="actions">
-                     <button type="button" data-role="button" data-sprite-css-class="k-icon k-i-tick" data-click='save'>Save</button>
+                     <button type="button" data-role="button" data-icon="check" data-click='save'>Save</button>
                 </li>
             </ul>
         </form>
