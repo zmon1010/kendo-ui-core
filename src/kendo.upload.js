@@ -1467,6 +1467,7 @@ var __meta__ = { // jshint ignore:line
         this.position = {};
         this.metaData = {};
         this.cancelled = {};
+        this.resume = {};
         this.paused = {};
         this.retries = {};
     };
@@ -1645,18 +1646,22 @@ var __meta__ = { // jshint ignore:line
 
         onPause: function(e) {
             var fileEntry = getFileEntry(e);
+            var fileUid = fileEntry.data("uid");
 
             if(this.upload.options.async.chunkSize){
-                this.paused[fileEntry.data("uid")] = true;
+                this.paused[fileUid] = true;
+                this.resume[fileUid] = false;
             }
         },
 
         onResume: function(e) {
             var fileEntry = getFileEntry(e);
+            var fileUid = fileEntry.data("uid");
 
             if(this.upload.options.async.chunkSize){
-                delete this.paused[fileEntry.data("uid")];
-                this._prepareNextChunk(fileEntry.data("uid"));
+                delete this.paused[fileUid];
+                this.resume[fileUid] = true;
+                this._increaseChunkIndex(fileUid);
                 this.performUpload(fileEntry);
             }
         },
@@ -1665,6 +1670,7 @@ var __meta__ = { // jshint ignore:line
             var fileEntry = getFileEntry(e);
 
             if(this.upload.options.async.chunkSize){
+                this.retries[fileEntry.data("uid")] = 1;
                 delete this.paused[fileEntry.data("uid")];
             }
 
@@ -1767,8 +1773,11 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
+                delete module.retries[fileUid];
+
                 if(chunkSize && !batch && !jsonResult.uploaded){
-                    module._prepareNextChunk(fileUid); 
+
+                    module._increaseChunkIndex(fileUid); 
                     module.performUpload(fileEntry);
                 }else if(chunkSize && !batch && !concurrent && fileEntry.next().length && !fileEntry.next().hasClass("k-toupload")) {
                         module._resetChunkIndex(fileUid);
@@ -1794,6 +1803,12 @@ var __meta__ = { // jshint ignore:line
 
         onRequestError: function(e, fileEntry) {
             var xhr = e.target;
+            var fileUid = fileEntry.data("uid");
+
+            if(this.retries[fileUid] || this.resume[fileUid]){
+                this._decreasePosition(fileUid);
+            }
+
             this.upload._onUploadError({ target : $(fileEntry, this.upload.wrapper) }, xhr);
         },
 
@@ -1860,12 +1875,20 @@ var __meta__ = { // jshint ignore:line
             };
         },
 
-        _prepareNextChunk: function(uid){
+        _decreaseChunkIndex: function(uid){
+            this.metaData[uid].chunkIndex--;
+        },
+
+        _increaseChunkIndex: function(uid){
             this.metaData[uid].chunkIndex++;
         },
 
         _resetChunkIndex: function(uid){
             this.metaData[uid].chunkIndex = 0;
+        },
+
+        _decreasePosition: function(uid){
+            this.position[uid] -= this.upload.options.async.chunkSize;
         },
 
         _getCurrentChunk: function (file, uid) {
