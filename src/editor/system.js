@@ -460,7 +460,7 @@ var BackspaceHandler = Class.extend({
             this._handleImmutables(marker);
         }
 
-        this._surroundFullySelectedAnchor(marker);
+        this._surroundFullySelectedAnchor(marker, range);
 
         range.setStartAfter(marker.start);
         range.setEndBefore(marker.end);
@@ -516,17 +516,18 @@ var BackspaceHandler = Class.extend({
             dom.remove(endImmutable);
         }
     },
-    _surroundFullySelectedAnchor: function(marker) {
+    _surroundFullySelectedAnchor: function(marker, range) {
         var start = marker.start,
-            startParent = start.parentNode,
+            startParent = $(start).closest("a").get(0),
             end = marker.end,
-            anchorParent = dom.is(startParent, "a") && startParent === end.parentNode && startParent,
-            parent;
+            endParent = $(end).closest("a").get(0);
 
-        if (anchorParent && start === anchorParent.firstChild && end === anchorParent.lastChild) {
-            parent = anchorParent.parentNode;
-            parent.insertBefore(start, anchorParent);
-            parent.insertBefore(end, anchorParent.nextSibling);
+        if(startParent && RangeUtils.isStartOf(range, startParent)){
+            dom.insertBefore(start, startParent);
+        }
+
+        if(endParent && RangeUtils.isEndOf(range, endParent)){
+            dom.insertAfter(end, endParent);
         }
     },
     _root: function(node) {

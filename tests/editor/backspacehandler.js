@@ -53,13 +53,49 @@
         equal(editor.value(), '<table><tbody><tr><td><em>f</em></td><td>&nbsp;</td><td>ar</td></tr></tbody></table>');
     });
 
-    test("removes fully selected anchor", function() {
-        var range = createRangeFromText(editor, 'foo <a src="#">|test text|</a> baz');
+    test("removes fully selected anchor when selection ends outside the element", function() {
+        var range = createRangeFromText(editor, 'foo <a src="#">|test text</a>| baz');
         editor.selectRange(range);
 
         handleBackspace();
 
         equal(editor.value(), 'foo baz');
+    });
+
+    test("removes anchor when selection is outside the element", function() {
+        var range = createRangeFromText(editor, 'foo |<a src="#">test text</a>| baz');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foo baz');
+    });
+
+    test("removes anchor when selection is outside the element", function() {
+        var range = createRangeFromText(editor, 'foo |<a src="#">test text</a>| baz');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foo baz');
+    });
+
+    test("anchor remains when text is partially selected from start", function() {
+        var range = createRangeFromText(editor, 'foo <a src="#">|test| text</a> baz');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foo <a src="#"> text</a> baz');
+    });
+
+    test("anchor remains when text is partially selected to end", function() {
+        var range = createRangeFromText(editor, 'foo <a src="#">test| text|</a> baz');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foo <a src="#">test</a> baz');
     });
 
     test("removes all bom characters before caret without preventing default action", function() {
