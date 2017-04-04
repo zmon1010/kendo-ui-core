@@ -12,10 +12,11 @@ namespace Kendo.Mvc.UI.Html
             var a = new HtmlElement("a")
                 .Attribute("href", url)
                 .Attribute("title", refreshText)
+                .Attribute("aria-label", refreshText)
                 .AddClass("k-pager-refresh k-link");
 
             new HtmlElement("span")
-                .AddClass("k-icon", "k-i-refresh")
+                .AddClass("k-icon", UIPrimitives.Icons.Refresh)
                 .AppendTo(a);
 
             return a;

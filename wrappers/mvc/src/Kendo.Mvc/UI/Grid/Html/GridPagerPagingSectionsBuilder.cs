@@ -2,6 +2,8 @@ namespace Kendo.Mvc.UI.Html
 {
     internal class GridPagerPagingSectionsBuilder : IGridPagerPagingSectionsBuilder
     {
+        private const string AriaLabelAttribute = "aria-label";
+
         private readonly IGridPagerButtonFactory buttonFactory;
         private readonly IGridPagerNumericSectionBuilder numericSectionBuilder;
         private readonly IGridPagerInputBuilder inputSectionBuilder;
@@ -55,11 +57,13 @@ namespace Kendo.Mvc.UI.Html
                                            GetUrl(urlBuilder, section.Page + 1),
                                            "arrow-e", section.Page + 1, section.IsInClientTemplate)
                              .Attribute("title", section.Messages.Next)
+                             .Attribute(AriaLabelAttribute, section.Messages.Next)
                              .AppendTo(container);
 
                 buttonFactory.CreateButton(GridPagerButtonType.Icon, section.Page < section.TotalPages,
                                            GetUrl(urlBuilder, section.TotalPages), "seek-e", section.TotalPages, section.IsInClientTemplate)
                              .Attribute("title", section.Messages.Last)
+                             .Attribute(AriaLabelAttribute, section.Messages.Last)
                              .AppendTo(container);
             }
         }
@@ -80,11 +84,13 @@ namespace Kendo.Mvc.UI.Html
                 buttonFactory.CreateButton(GridPagerButtonType.Icon, section.Page > 1,
                                            GetUrl(urlBuilder, 1), "seek-w", 1, section.IsInClientTemplate)
                              .Attribute("title", section.Messages.First)
+                             .Attribute(AriaLabelAttribute, section.Messages.First)
                              .AppendTo(container);
 
                 buttonFactory.CreateButton(GridPagerButtonType.Icon, section.Page > 1,
                                            GetUrl(urlBuilder, section.Page - 1), "arrow-w", section.Page - 1, section.IsInClientTemplate)
                              .Attribute("title", section.Messages.Previous)
+                             .Attribute(AriaLabelAttribute, section.Messages.Previous)
                              .AppendTo(container);
             }
         }

@@ -33,6 +33,7 @@ namespace Kendo.Mvc.UI.Html
 
             new HtmlElement("a").AddClass(UIPrimitives.Icon, "k-i-collapse")
                 .Attribute("href", "#")
+                .Attribute("aria-label", "Collapse")
                 .AppendTo(p);
             
             var fragment = new HtmlFragment().AppendTo(p);
