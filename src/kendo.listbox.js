@@ -30,7 +30,7 @@ var __meta__ = { // jshint ignore:line
     var NS = DOT + KENDO_LISTBOX;
     var DISABLED_STATE_CLASS = "k-state-disabled";
     var SELECTED_STATE_CLASS = "k-state-selected";
-    var ENABLED_ITEM_SELECTOR = ".k-listbox-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
+    var ENABLED_ITEM_SELECTOR = ".k-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
     var TOOLBAR_CLASS = "k-listbox-toolbar";
     var LISTBOX_CLASS = "k-listbox";
     var REMOVE_TOOL_CLASS = "k-listbox-remove";
@@ -38,7 +38,7 @@ var __meta__ = { // jshint ignore:line
     var MOVE_DOWN_TOOL_CLASS = "k-listbox-movedown";
     var TRANSFER_TO_TOOL_CLASS = "k-listbox-transfer-to";
     var TRANSFER_FROM_TOOL_CLASS = "k-listbox-transfer-from";
-    var LIST_CLASS = "k-listbox-list";
+    var LIST_CLASS = "k-reset k-list";
     var TOOLS_CLASS_NAMES = [
         DOT + REMOVE_TOOL_CLASS,
         DOT + MOVE_UP_TOOL_CLASS,
@@ -100,7 +100,8 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             Widget.fn.init.call(that, element, options);
 
-            that.wrapper = element = that.element.addClass(LISTBOX_CLASS);
+            that._wrapper();
+            element = that.element.attr("multiple", "multiple").hide();
 
             that._templates();
             that._selectable();
@@ -585,7 +586,23 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _templates: function() {
+        _wrapper: function () {
+            var that = this,
+                element = that.element,
+                wrapper = element.parent("span.k-multiselect");
+
+            if (!wrapper[0]) {
+                wrapper = element.wrap('<div class="k-widget k-listbox k-listbox-toolbar-top" deselectable="on" />').parent();
+                wrapper[0].style.cssText = element[0].style.cssText;
+                wrapper[0].title = element[0].title;
+                $('<div class="k-list-scroller" />').insertBefore(element);
+            }
+
+            that.wrapper = wrapper.addClass(element[0].className).css("display", "");
+            that._innerWrapper = $(wrapper[0].firstChild);            
+        },
+
+        _templates: function () {
             var options = this.options;
             var template = options.template;
 
@@ -616,7 +633,7 @@ var __meta__ = { // jshint ignore:line
                 html += template(view[idx]);
             }
             html+= "</ul>";
-
+            that._innerWrapper.html(html);
             that.element.find("*").off().end().html(html);
             that._setItemIds();
             that._destroyToolbar();
@@ -640,7 +657,7 @@ var __meta__ = { // jshint ignore:line
             var selectable = that.options.selectable;
             var selectableOptions = Selectable.parseOptions(selectable);
 
-            that.selectable = new Selectable(that.element, {
+            that.selectable = new Selectable(that._innerWrapper, {
                 aria: true,
                 multiple: selectableOptions.multiple,
                 filter: ENABLED_ITEM_SELECTOR,
@@ -674,20 +691,21 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _createToolbar: function() {
+        _createToolbar: function () {
             var that = this;
 
             if (!that.toolbar) {
+                var prefix = '<li><span class="k-button k-button-icon k-listbox-tool" data-command="';
                 that.toolbar = $(
-                    "<div class='" + TOOLBAR_CLASS + "'>" +
-                        "<span class='k-button k-listbox-tool k-listbox-remove' data-command='" + REMOVE + "'>Remove</span>" +
-                        "<span class='k-button k-listbox-tool k-listbox-moveup' data-command='" + MOVE_UP + "'>Move up</span>" +
-                        "<span class='k-button k-listbox-tool k-listbox-movedown' data-command='" + MOVE_DOWN + "'>Move down</span>" +
-                        "<span class='k-button k-listbox-tool k-listbox-transfer-to' data-command='" + TRANSFER_TO + "'>Transfer to</span>" +
-                        "<span class='k-button k-listbox-tool k-listbox-transfer-from' data-command='" + TRANSFER_FROM + "'>Transfer from</span>" +
-                    "</div>").appendTo(that.wrapper);
-
-                
+                    "<div class='" + TOOLBAR_CLASS + "'><ul>" +
+                    prefix + MOVE_UP + '"><span class="k-icon k-i-arrow-60-up">[up]</span></span></li>' +
+                    prefix + MOVE_DOWN + '"><span class="k-icon k-i-arrow-60-down">[down]</span></span></li>' +
+                    prefix + REMOVE + '"><span class="k-icon k-i-x">[remove]</span></span></li>' +
+                    prefix + TRANSFER_TO + '"><span class="k-icon k-i-arrow-60-right">[transfer to]</span></span></li>' +
+                    prefix + TRANSFER_FROM + '"><span class="k-icon k-i-arrow-60-left">[transfer from]</span></span></li>' +
+                    prefix + "" + '"><span class="k-icon k-i-arrow-double-60-right"><!-- Transfer All To button --></span></span></li>' +
+                    prefix + "" + '"><span class="k-icon k-i-arrow-double-60-left"><!-- Transfer All From button --></span></span></li>' +
+                    "</ul></div>").insertBefore(that._innerWrapper);
                 that.toolbar.on(CLICK, TOOLS_CLASS_NAMES.join(COMMA), proxy(that._onToolbarClick, that));
             }
         },

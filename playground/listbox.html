@@ -15,11 +15,11 @@
     </head>
     <body>
         
-        <div id="listbox1"></div>
+        <select id="listbox1"></select>
 
-        <div id="dataTextFieldListBox"></div>
+        <select id="dataTextFieldListBox"></select>
 
-        <div id="templateListBox"></div>
+        <select id="templateListBox"></select>
 
         <script type="text/x-kendo-template" id="template">
             <div class="item">
@@ -31,7 +31,7 @@
         <script>
             $(document).ready(function() {
 
-                $("#listbox1").kendoListBox({ dataSource: ["John", "Jane", "Jack"] });
+                $("#listbox1").kendoListBox({ dataSource: ["John", "Jane", "Jack"],selectable: "multiple" });
 
                 $("#dataTextFieldListBox").kendoListBox({ 
                         dataSource: [ {name: "Tom", id:1 }, {name: "Jerry", id:2 }, {name: "Donald", id:3 }],
