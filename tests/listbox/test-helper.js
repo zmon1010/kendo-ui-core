@@ -1,6 +1,6 @@
 /* exported createListBoxFromHtml */
 function createListBoxFromHtml(html, options, container) {
-    return $(html || "<div />").appendTo(container || QUnit.fixture[0]).kendoListBox(options).data("kendoListBox");
+    return $(html || "<select />").appendTo(container || QUnit.fixture[0]).kendoListBox(options).data("kendoListBox");
 }
 
 /* exported createListBoxFromOptions */
@@ -10,10 +10,10 @@ function createListBoxFromOptions(widgetOptions, options) {
     options = options || {};
 
     if (options.rtl) {
-        container = $("<div class='k-rtl' />").appendTo(container);
+        container = $("<select class='k-rtl' />").appendTo(container);
     }
 
-    return createListBoxFromHtml("<div />", widgetOptions, container);
+    return createListBoxFromHtml("<select />", widgetOptions, container);
 }
 
 /* exported destroyListBox */
@@ -61,8 +61,22 @@ function getDataItem(listbox, item) {
     return listbox.dataSource.getByUid(item.data("uid"));
 }
 
-function clickButton(listbox, buttonName, event) {
-    listbox.toolbar.find(".k-listbox-" + buttonName).trigger(event || $.Event({ type: "click" }));
+function getToolElementClassName(command) {
+    var clssClassNames = {
+        "remove": "k-i-x",
+        "moveUp": "k-i-arrow-60-up",
+        "moveDown": "k-i-arrow-60-down",
+        "transferTo": "k-i-arrow-60-right",
+        "transferFrom": "k-i-arrow-60-left",
+        "transferAllTo": "k-i-arrow-double-60-right",
+        "transferAllFrom": "k-i-arrow-double-60-left"
+    };
+
+    return clssClassNames[command];
+}
+
+function clickButton(listbox, command, event) {
+    listbox.toolbar.find("a.k-button>." + getToolElementClassName(command)).trigger(event || $.Event({ type: "click" }));
 }
 
 /* exported clickRemoveButton */
@@ -72,20 +86,20 @@ function clickRemoveButton(listbox, event) {
 
 /* exported clickMoveDownButton */
 function clickMoveDownButton(listbox, event) {
-    clickButton(listbox, "movedown", event);
+    clickButton(listbox, "moveDown", event);
 }
 
 /* exported clickMoveUpButton */
 function clickMoveUpButton(listbox, event) {
-    clickButton(listbox, "moveup", event);
+    clickButton(listbox, "moveUp", event);
 }
 
 /* exported clickTransferToButton */
 function clickTransferToButton(listbox, event) {
-    clickButton(listbox, "transfer-to", event);
+    clickButton(listbox, "transferTo", event);
 }
 
 /* exported clickTransferFromButton */
 function clickTransferFromButton(listbox, event) {
-    clickButton(listbox, "transfer-from", event);
+    clickButton(listbox, "transferFrom", event);
 }

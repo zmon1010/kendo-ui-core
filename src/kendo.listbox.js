@@ -24,7 +24,6 @@ var __meta__ = { // jshint ignore:line
     var proxy = $.proxy;
 
     var DOT = ".";
-    var COMMA = ",";
 
     var KENDO_LISTBOX = "kendoListBox";
     var NS = DOT + KENDO_LISTBOX;
@@ -32,20 +31,8 @@ var __meta__ = { // jshint ignore:line
     var SELECTED_STATE_CLASS = "k-state-selected";
     var ENABLED_ITEM_SELECTOR = ".k-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
     var TOOLBAR_CLASS = "k-listbox-toolbar";
-    var LISTBOX_CLASS = "k-listbox";
-    var REMOVE_TOOL_CLASS = "k-listbox-remove";
-    var MOVE_UP_TOOL_CLASS = "k-listbox-moveup";
-    var MOVE_DOWN_TOOL_CLASS = "k-listbox-movedown";
-    var TRANSFER_TO_TOOL_CLASS = "k-listbox-transfer-to";
-    var TRANSFER_FROM_TOOL_CLASS = "k-listbox-transfer-from";
     var LIST_CLASS = "k-reset k-list";
-    var TOOLS_CLASS_NAMES = [
-        DOT + REMOVE_TOOL_CLASS,
-        DOT + MOVE_UP_TOOL_CLASS,
-        DOT + MOVE_DOWN_TOOL_CLASS,
-        DOT + TRANSFER_TO_TOOL_CLASS,
-        DOT + TRANSFER_FROM_TOOL_CLASS
-    ];
+    var LIST_SELECTOR = ".k-reset, .k-list";
 
     var CLICK = "click" + NS;
     var outerWidth = kendo._outerWidth;
@@ -60,8 +47,9 @@ var __meta__ = { // jshint ignore:line
     var MOVE_DOWN = "moveDown";
     var TRANSFER_TO = "transferTo";
     var TRANSFER_FROM = "transferFrom";
+    var TRANSFER_ALL_TO = "transferAllTo";
+    var TRANSFER_ALL_FROM = "transferAllFrom";
     var BEFORE_MOVE = "beforeMove";
-    var ITEMSELECTOR = ".k-listBox>";
     var DRAGGEDCLASS = "paleClass";
     var UNIQUE_ID = "uid";
 
@@ -161,7 +149,8 @@ var __meta__ = { // jshint ignore:line
             hint: null,
             placeholder: null,
             disabled: null,
-            filter: DEFAULT_FILTER
+            filter: DEFAULT_FILTER,
+            connectWith: ""
         },
 
         _add: function(dataItem) {
@@ -373,7 +362,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _dragend: function(e) {
+        _dragend: function() {
             var that = this;
             var draggedItem = that.draggedElement;
             var items = that.items();
@@ -673,7 +662,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _getList: function() {
-            return this.element.find(DOT + LIST_CLASS);
+            return this.wrapper.find(LIST_SELECTOR);
         },
 
         _listItemComparer: function(item1, item2) {
@@ -691,18 +680,20 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             if (!that.toolbar) {
-                var prefix = '<li><span class="k-button k-button-icon k-listbox-tool" data-command="';
+                var prefix = '<li><a href="#" class="k-button k-button-icon k-tool" data-command="';
                 that.toolbar = $(
                     "<div class='" + TOOLBAR_CLASS + "'><ul>" +
-                    prefix + MOVE_UP + '"><span class="k-icon k-i-arrow-60-up">[up]</span></span></li>' +
-                    prefix + MOVE_DOWN + '"><span class="k-icon k-i-arrow-60-down">[down]</span></span></li>' +
-                    prefix + REMOVE + '"><span class="k-icon k-i-x">[remove]</span></span></li>' +
-                    prefix + TRANSFER_TO + '"><span class="k-icon k-i-arrow-60-right">[transfer to]</span></span></li>' +
-                    prefix + TRANSFER_FROM + '"><span class="k-icon k-i-arrow-60-left">[transfer from]</span></span></li>' +
-                    prefix + "" + '"><span class="k-icon k-i-arrow-double-60-right"><!-- Transfer All To button --></span></span></li>' +
-                    prefix + "" + '"><span class="k-icon k-i-arrow-double-60-left"><!-- Transfer All From button --></span></span></li>' +
+                    prefix + MOVE_UP + '"><span class="k-icon k-i-arrow-60-up"></span></span></li>' +
+                    prefix + MOVE_DOWN + '"><span class="k-icon k-i-arrow-60-down"></span></span></li>' +
+                    prefix + REMOVE + '"><span class="k-icon k-i-x"></span></span></li>' +
+                    prefix + TRANSFER_TO + '"><span class="k-icon k-i-arrow-60-right"></span></span></li>' +
+                    prefix + TRANSFER_FROM + '"><span class="k-icon k-i-arrow-60-left"></span></span></li>' +
+                    prefix + TRANSFER_ALL_TO + '"><span class="k-icon k-i-arrow-double-60-right"></span></span></li>' +
+                    prefix + TRANSFER_ALL_FROM + '"><span class="k-icon k-i-arrow-double-60-left"></span></span></li>' +
                     "</ul></div>").insertBefore(that._innerWrapper);
-                that.toolbar.on(CLICK, TOOLS_CLASS_NAMES.join(COMMA), proxy(that._onToolbarClick, that));
+                
+                
+                that.toolbar.on(CLICK, "a.k-button", proxy(that._onToolbarClick, that));
             }
         },
 
@@ -715,9 +706,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         _onToolbarClick: function(e) {
-            var that = this;
-            
+            var that = this;            
             var selectedItems = that.select();
+
+            e.preventDefault();
+            e.stopPropagation();
+
             that._executeCommand($(e.currentTarget).data("command"), { items: selectedItems });
         },
         
@@ -868,7 +862,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         canMoveItems: function() {
-            var items = this.items;
+            var items = this.getItems();
             var domIndices = getSortedDomIndices(items);
 
             return (domIndices.length > 0 && domIndices[0] > 0);
@@ -884,7 +878,7 @@ var __meta__ = { // jshint ignore:line
 
         canMoveItems: function() {
             var that = this;
-            var items = that.items;
+            var items = that.getItems();
             var domIndices = getSortedDomIndices(items);
 
             return (domIndices.length > 0 && $(domIndices).last()[0] < (that.listBox.items().length - 1));
@@ -938,7 +932,7 @@ var __meta__ = { // jshint ignore:line
 
         _getSourceListBox: function() {
             var that = this;
-            var listBoxElements = $(DOT + LISTBOX_CLASS);
+            var listBoxElements = $("[data-role='listbox']");
             var listBoxId = "#" + that.listBox.element.attr("id");
             var sourceListBox;
             var i;

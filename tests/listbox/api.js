@@ -118,13 +118,13 @@
         setup: function() {
             listbox1 = createListBox({
                 connectWith: "#listbox2"
-            }, "<div id='listbox1' />");
+            }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
                     data: []
                 }
-            }, "<div id='listbox2' />");
+            }, "<select id='listbox2' />");
 
             item1 = listbox1.items().eq(0);
         },
@@ -296,7 +296,6 @@
 
     module("ListBox api", {
         setup: function() {
-            listbox = createListBox();
             dataSource = new kendo.data.DataSource({
                 data: [{ value: 1 }]
             });
@@ -308,6 +307,7 @@
     });
 
     test("setDataSource() should set options.dataSource", function() {
+        listbox = createListBox();
         var dataSource = [1, 2, 3];
 
         listbox.setDataSource(dataSource);
@@ -316,6 +316,8 @@
     });
 
     test("setDataSource() should change dataSource items", function() {
+        listbox = createListBox();
+
         listbox.setDataSource(dataSource);
 
         equal(listbox.dataSource.data()[0].uid, dataSource.data()[0].uid);

@@ -9,15 +9,15 @@
     module("ListBox - dragdrop", {
         setup: function() {
             QUnit.fixture.append(
-                '<div id="listA" class="listBox"></div>'
+                '<select id="listA" class="listBox"></select>'
             );
 
             QUnit.fixture.append(
-                '<div id="listB" class="listBox"></div>'
+                '<select id="listB" class="listBox"></select>'
             );
 
             QUnit.fixture.append(
-                '<div id="listC" class="listBox"></div>'
+                '<select id="listC" class="listBox"></select>'
             );
             
             listA  = $("#listA").kendoListBox({ 

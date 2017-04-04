@@ -2,18 +2,20 @@
 (function() {
     var ListBox = kendo.ui.ListBox;
     var container;
+    var listbox;
 
     module("Selectable API",  {
         setup: function() {
-            container = $("<div>").appendTo(QUnit.fixture);
+            container = $("<select />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
         }
     });
 
     test("get all items from the listbox", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -22,7 +24,7 @@
     });
 
     test("select HTML item", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -36,7 +38,7 @@
     });
 
     test("select another deselects the first", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -50,7 +52,7 @@
     });
 
     test("single selection chooses first from list", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -63,7 +65,7 @@
     });
 
     test("select all items when multi select", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3],
             selectable: "multiple"
         });
@@ -77,7 +79,7 @@
     });
 
     test("non-sequential select", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3],
             selectable: "multiple"
         });
@@ -91,7 +93,7 @@
     });
 
     test("clear selection removes selection on all items", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -104,7 +106,7 @@
 
     test("select triggers change event", function() {
         var changeStub = stub({}, "change");
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3],
             change: changeStub.change
         });
@@ -115,7 +117,7 @@
     });
 
     test("clearSelection triggers change", function() {
-        var listbox = new ListBox(container, {
+        listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
 
@@ -125,14 +127,15 @@
         equal(listbox.select().length, 0);
     });
 
-    module("Selectable API",  {
+    module("Selectable API", {
         setup: function() {
-            container = $("<div>").appendTo(QUnit.fixture);
+            container = $("<select />").appendTo(QUnit.fixture);
             listbox = new ListBox(container, {
                 dataSource: [1, 2, 3]
             });
         },
         teardown: function() {
+            destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
         }
     });

@@ -119,13 +119,13 @@
         setup: function() {
             listbox1 = createListBox({
                 connectWith: "#listbox2"
-            }, "<div id='listbox1' />");
+            }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
                     data: []
                 }
-            }, "<div id='listbox2' />");
+            }, "<select id='listbox2' />");
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -135,10 +135,8 @@
     });
 
     test("transferTo action should trigger transfer event", function() {
-        listbox1 = createListBox({
-            transfer: function(e) {
-                args = e;
-            }
+        listbox1.bind(TRANSFER, function(e) {
+            args = e;
         });
         var item = listbox1.items().eq(0);
         var dataItem = getDataItem(listbox1, item);
@@ -163,11 +161,9 @@
 
     test("transferTo action should be preventable", function() {
         var args = {};
-        listbox1 = createListBox({
-            transfer: function(e) {
-                args = e;
-                e.preventDefault();
-            }
+        listbox1.bind(TRANSFER, function(e) {
+            args = e;
+            e.preventDefault();
         });
         var item = listbox1.items().eq(0);
         var itemsLength = listbox1.items().length;
@@ -181,7 +177,7 @@
 
     module("ListBox events", {
         setup: function() {
-            listbox1 = createListBox({}, "<div id='listbox1' />");
+            listbox1 = createListBox({}, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
@@ -194,7 +190,7 @@
                     }]
                 },
                 connectWith: "#listbox1"
-            }, "<div id='listbox2' />");
+            }, "<select id='listbox2' />");
 
              $(document.body).append(QUnit.fixture);
         },

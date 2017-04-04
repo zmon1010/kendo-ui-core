@@ -320,13 +320,13 @@
         setup: function() {
             listbox1 = createListBox({
                 connectWith: "#listbox2"
-            }, "<div id='listbox1' />");
+            }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
                     data: []
                 }
-            }, "<div id='listbox2' />");
+            }, "<select id='listbox2' />");
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -358,7 +358,7 @@
         setup: function() {
             listbox1 = createListBox({
                 connectWith: "#listbox2"
-            }, "<div id='listbox1' />");
+            }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
@@ -368,12 +368,15 @@
                     }]
                 },
                 connectWith: "#listbox1"
-            }, "<div id='listbox2' />");
+            }, "<select id='listbox2' />");
+            
+            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
