@@ -1502,7 +1502,6 @@ var __meta__ = { // jshint ignore:line
                 destroy: "Delete",
                 deleteTaskConfirmation: TASK_DELETE_CONFIRM,
                 deleteDependencyConfirmation: DEPENDENCY_DELETE_CONFIRM,
-                deleteTask: "Delete a task",
                 deleteTaskWindowTitle: "Delete task",
                 deleteDependencyWindowTitle: "Delete dependency",
                 views: {
