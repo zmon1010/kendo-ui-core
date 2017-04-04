@@ -374,6 +374,7 @@ var BackspaceHandler = Class.extend({
         var node = range.startContainer;
         var li = dom.closestEditableOfType(node, ['li']);
         var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
+        var editor = this.editor;
         var previousSibling;
 
         if (dom.isDataNode(node)) {
@@ -388,7 +389,7 @@ var BackspaceHandler = Class.extend({
         if (range.collapsed && range.startOffset !== range.endOffset && range.startOffset < 0) {
             range.startOffset = 0;
             range.endOffset = 0;
-            this.editor.selectRange(range);
+            editor.selectRange(range);
         }
 
         // unwrap block
@@ -418,11 +419,25 @@ var BackspaceHandler = Class.extend({
                 range.setStart(child, 0);
             }
 
-            this.editor.selectRange(range);
+            editor.selectRange(range);
 
             return true;
         }
 
+        // needs this due to window.getSelection() browser inconsistence
+        var linkRange = range;
+        var previousNode = node.previousSibling;
+        if (linkRange.startOffset === 0 && previousNode && previousNode.nodeName.toLowerCase() === "a") {
+            linkRange = editor.createRange();
+            linkRange.setStart(previousNode, previousNode.childNodes.length);
+            linkRange.setEnd(previousNode, previousNode.childNodes.length);
+        }
+
+        if (linkRange.collapsed && editorNS.RangeUtils.isEndOf(linkRange, linkRange.commonAncestorContainer)) {
+            var command = new editorNS.UnlinkCommand({ range: linkRange, body: editor.body, immutables: !!editor.immutables });
+            editor.execCommand(command);
+            editor._selectionChange();
+        }
         return false;
     },
     _handleSelection: function(range) {
