@@ -1,3 +1,5 @@
+using Kendo.Mvc.Resources;
+
 namespace Kendo.Mvc.UI.Html
 {
     public class GridFilterCellDecorator : IGridCellBuilderDecorator
@@ -22,6 +24,7 @@ namespace Kendo.Mvc.UI.Html
             var link = new HtmlElement("a")
                 .AddClass("k-grid-filter")
                 .Attribute("href", "javascript:void(0)")
+                .Attribute("aria-label", Messages.Filter_Filter)
                 .ToggleClass("k-state-active", filtered);
 
             td.Children.Insert(0, link);
