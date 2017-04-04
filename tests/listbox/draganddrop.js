@@ -8,16 +8,17 @@
 
     module("ListBox - dragdrop", {
         setup: function() {
+           
             QUnit.fixture.append(
-                '<select id="listA" class="listBox"></select>'
+                '<select id="listA"></select>'
             );
 
             QUnit.fixture.append(
-                '<select id="listB" class="listBox"></select>'
+                '<select id="listB"></select>'
             );
 
             QUnit.fixture.append(
-                '<select id="listC" class="listBox"></select>'
+                '<select id="listC"></select>'
             );
             
             listA  = $("#listA").kendoListBox({ 
@@ -26,7 +27,7 @@
                     selectable: true,
                     draggable:true,
                     dropSources: ["listB"],
-                    reordable: true
+                    reorderable: true
             }).getKendoListBox();
 
 
@@ -35,7 +36,7 @@
                     dataTextField: "name",
                     selectable: true,
                     dropSources: ["listA"],
-                    reordable: true,
+                    reorderable: true,
                     draggable:true
             }).getKendoListBox();
 
@@ -45,45 +46,90 @@
                     selectable: true,
                     draggable:true
             }).getKendoListBox();
+
+            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
+            if(listA) {
+              listA.destroy();
+            }
+            if(listB) {
+              listB.destroy();
+            }
+            if(listC) {
+              listC.destroy();
+            }
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
-    test("Draggable is false by default", 1, function() {
-        ok(true);
+    test("Reorderable is false by default", 1, function() {
+        ok(kendo.ui.ListBox.prototype.options.reorderable === false);
     });
 
     test("Placeholder moves across connected listboxes", 1, function() {
-        var draggedElement = listB.element.find("li").first();
+        var draggedElement = listB.items().first();
         var draggableOffset = kendo.getOffset(draggedElement);
-        var targetElement = listA.element.find("li").first(),
+        var targetElement = listA.items().first(),
             targetOffset = kendo.getOffset(targetElement);
           
         press(draggedElement, draggableOffset.left, draggableOffset.top);
         move(draggedElement, targetOffset.left, targetOffset.top);
 
-        ok(listA.element.find("li").length === 4, "Placeholder is moved to the ListA");
+        ok(listA._getList().children().length === 4, "Placeholder is moved to the ListA");
     });
 
     test("Item can be dragged from one listbox to another", 2, function() {
-        var draggedElement = listB.element.find("li").first();
+        var draggedElement = listB.items().first();
         var draggableOffset = kendo.getOffset(draggedElement);
+        var targetElement = listA.items().first(),
+            targetOffset = kendo.getOffset(targetElement);
+
         press(draggedElement, draggableOffset.left, draggableOffset.top);
-        move(draggedElement, 32, 20);
-        release(draggedElement, 32, 20);
-        ok(listB.element.find("li").length == 2, "Item is removed from ListB");
-        ok(listA.element.find("li").length == 4, "Item is added to ListA");
+        move(draggedElement, targetOffset.left, targetOffset.top);
+        release(draggedElement, targetOffset.left, targetOffset.top);
+
+        ok(listB.items().length == 2, "Item is removed from ListB");
+        ok(listA.items().length == 4, "Item is added to ListA");
     });
 
     test("Item is correctly reordered in listbox using drag", 1, function() {
-        var draggedElement = listB.element.find("li").first();
+        var draggedElement = listB.items().first();
         var draggableOffset = kendo.getOffset(draggedElement);
-        press(draggedElement, draggableOffset.left, draggableOffset.top);
-        move(draggedElement, 32, 126);
-        release(draggedElement, 32, 126);
+        var targetElement = listB.items().last(),
+            targetOffset = kendo.getOffset(targetElement);
 
-        ok(listB.dataSource.view()[1].name === "Tom");
+        press(draggedElement, draggableOffset.left, draggableOffset.top);
+        move(draggedElement, targetOffset.left, targetOffset.top + 10);
+        release(draggedElement, targetOffset.left, targetOffset.top + 10);
+
+        ok(listB.dataSource.view()[2].name === "Tom");
+    });
+
+    test("Item is not reordered if reordable is false", 1, function() {
+        var draggedElement = listC.items().first();
+        var draggableOffset = kendo.getOffset(draggedElement);
+        var targetElement = listC.items().last(),
+            targetOffset = kendo.getOffset(targetElement);
+          
+        press(draggedElement, draggableOffset.left, draggableOffset.top);
+        move(draggedElement, targetOffset.left, targetOffset.top + 10);
+        release(draggedElement, targetOffset.left, targetOffset.top + 10);
+
+        ok(listC.dataSource.view()[2].name === "Dino");
+    });
+
+    test("Item is not dropped if dropSources is not set", 1, function() {
+        var draggedElement = listA.items().first();
+        var draggableOffset = kendo.getOffset(draggedElement);
+        var targetElement = listC.items().last(),
+            targetOffset = kendo.getOffset(targetElement);
+          
+        press(draggedElement, draggableOffset.left, draggableOffset.top);
+        move(draggedElement, targetOffset.left, targetOffset.top);
+        release(draggedElement, targetOffset.left, targetOffset.top);
+
+        ok(listC.dataSource.view().length === 3);
     });
 })();

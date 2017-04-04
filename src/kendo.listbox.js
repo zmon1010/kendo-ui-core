@@ -31,6 +31,8 @@ var __meta__ = { // jshint ignore:line
     var SELECTED_STATE_CLASS = "k-state-selected";
     var ENABLED_ITEM_SELECTOR = ".k-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
     var TOOLBAR_CLASS = "k-listbox-toolbar";
+    var DRAG_CLUE_CLASS = "k-drag-clue";
+    var DROP_HINT_CLASS = "k-drop-hint";
     var LIST_CLASS = "k-reset k-list";
     var LIST_SELECTOR = ".k-reset, .k-list";
 
@@ -58,7 +60,7 @@ var __meta__ = { // jshint ignore:line
     var START = "start";
     var MOVE = "move";
     var END = "end";
-    var DEFAULT_FILTER = ">ul>*";
+    var DEFAULT_FILTER = "ul.k-reset.k-list>li.k-item";
     var SELECTED = "k-state-selected";
 
     function getSortedDomIndices(items) {
@@ -74,11 +76,11 @@ var __meta__ = { // jshint ignore:line
     }
 
     function defaultHint(element) {
-        return element.clone().addClass(SELECTED);
+        return element.clone().addClass(DRAG_CLUE_CLASS);
     }
 
-    function defaultPlaceholder(element) {
-        return element.clone().height(1).css("overflow","hidden").css("background-color","red");
+    function defaultPlaceholder() {
+        return $('<li>').addClass(DROP_HINT_CLASS);
     }
 
     var ListBox = DataBoundWidget.extend({
@@ -93,21 +95,7 @@ var __meta__ = { // jshint ignore:line
             that._selectable();
             that._dataSource();
             that._createToolbar();
-
-            if(that.options.draggable) {
-                if(!that.options.selectable) {
-                    throw new Error("Dragging requires selection to be enabled");
-                }
-
-                if(!that.options.placeholder) {
-                    that.options.placeholder = defaultPlaceholder;
-                }
-
-                if(!that.options.hint) {
-                    that.options.hint = defaultHint;
-                }
-                that._draggable = that._createDraggable();
-            }
+            that._createDraggable();
         },
 
         destroy: function() {
@@ -143,7 +131,7 @@ var __meta__ = { // jshint ignore:line
             template: "",
             dataTextField: null,
             selectable: "single",
-            reordable: false,
+            reorderable: false,
             draggable: false,
             dropSources : [],
             hint: null,
@@ -176,17 +164,30 @@ var __meta__ = { // jshint ignore:line
 
         _createDraggable: function() {
             var that = this;
-            var element = that.element;
             var options = that.options;
+        
+            if(options.draggable) {
+                if(!that.options.selectable) {
+                    throw new Error("Dragging requires selection to be enabled");
+                }
 
-            return new kendo.ui.Draggable(element, {
-                filter: options.filter,
-                hint: options.hint,
-                dragstart: $.proxy(that._dragstart, that),
-                dragcancel: $.proxy(that._clear, that),
-                drag: $.proxy(that._drag, that),
-                dragend: $.proxy(that._dragend, that)
-            });
+                if(!that.options.placeholder) {
+                    that.options.placeholder = defaultPlaceholder;
+                }
+
+                if(!that.options.hint) {
+                    that.options.hint = defaultHint;
+                }
+
+                that._draggable = new kendo.ui.Draggable(that.wrapper, {
+                    filter: options.filter,
+                    hint: options.hint,
+                    dragstart: proxy(that._dragstart, that),
+                    dragcancel: proxy(that._clear, that),
+                    drag: proxy(that._drag, that),
+                    dragend: proxy(that._dragend, that)
+                });
+            }
         },
 
         _dragstart: function(e) {
@@ -231,18 +232,19 @@ var __meta__ = { // jshint ignore:line
         _findTarget: function(e) {
             var that = this;
             var element = that._findElementUnderCursor(e);
+            var list = that._getList()[0];
             var items;
             var node;
                 
-            if($.contains(that.element[0], element)) {
-                if(!that.options.reordable) {
+            if($.contains(list, element)) {
+                if(!that.options.reorderable) {
                     return null;
                 } 
                 
                 items = that.items();
                 node = items.filter(element)[0] || items.has(element)[0];
                 return node && !$(node).hasClass(SELECTED) ? { element: $(node) } : null;
-            } else if (that.element[0] == element && !that.items().length) {
+            } else if (list == element && !that.items().length) {
                 return { element: that.element, appendToBottom: true };
             } else {
                 return that._searchConnectedListBox(element);
@@ -283,7 +285,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if(!connectedListBox) {
-                connectedListBox = element.closest(".k-listBox").closest("div").getKendoListBox();
+                connectedListBox = element.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
             }
 
             if(connectedListBox && $.inArray(this.element[0].id, connectedListBox.options.dropSources) !== -1) {
@@ -362,19 +364,19 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _dragend: function() {
+        _dragend: function(e) {
             var that = this;
             var draggedItem = that.draggedElement;
             var items = that.items();
             var placeholderIndex = items.not(that.draggedElement).index(that.placeholder);
             var draggedIndex = items.index(that.draggedElement);
             var dataItem = that.dataItem(draggedItem);
-            var eventData = { dataItem: dataItem, item: $(draggedItem), index: placeholderIndex };
-            var connectedListBox = that.placeholder.closest(".listBox").getKendoListBox();
+            var eventData = { dataItem: dataItem, item: $(draggedItem), index: placeholderIndex, draggableEvent: e };
+            var connectedListBox = that.placeholder.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
 
             if(placeholderIndex >= 0) {
                 if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, $.extend({}, eventData, { action: REORDER }))) {
-                     that._reorderItem(draggedItem, placeholderIndex);
+                     that.reorder(draggedItem, placeholderIndex);
                 }
             } else if(connectedListBox) {
                 if(!that.trigger(END, $.extend({}, eventData, { action: REMOVE }))) {
