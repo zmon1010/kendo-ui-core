@@ -50,8 +50,6 @@ var __meta__ = { // jshint ignore:line
     var CLICK = "click" + NS;
     var outerWidth = kendo._outerWidth;
     var outerHeight = kendo._outerHeight;
-    var proxy = $.proxy;
-    var NS = ".kendoListBox";
     var CHANGE = "change";
     var DATABOUND = "dataBound";
     var REMOVE = "remove";
@@ -206,8 +204,8 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var draggedElement = that.draggedElement = e.currentTarget;
             var disabled = that.options.disabled;
-            var model = that._modelFromElement(draggedElement);
-            var eventData = { model: model, item: $(draggedElement), draggableEvent: e };
+            var dataItem = that.dataItem(draggedElement);
+            var eventData = { dataItem: dataItem, item: $(draggedElement), draggableEvent: e };
 
             that.placeholder = $(that.options.placeholder.call(that, draggedElement));
           
@@ -316,8 +314,8 @@ var __meta__ = { // jshint ignore:line
             var draggedElement = that.draggedElement;
             var target = that._findTarget(e);
             var cursorOffset = { left: e.x.location, top: e.y.location };
-            var model = that._modelFromElement(draggedElement);
-            var eventData = { model: model, item: $(draggedElement), draggableEvent: e };
+            var dataItem = that.dataItem(draggedElement);
+            var eventData = { dataItem: dataItem, item: $(draggedElement), draggableEvent: e };
             var targetCenter;
             var offsetDelta;
             var direction;
@@ -381,8 +379,8 @@ var __meta__ = { // jshint ignore:line
             var items = that.items();
             var placeholderIndex = items.not(that.draggedElement).index(that.placeholder);
             var draggedIndex = items.index(that.draggedElement);
-            var model = that._modelFromElement(draggedItem);
-            var eventData = { model: model, item: $(draggedItem), index: placeholderIndex };
+            var dataItem = that.dataItem(draggedItem);
+            var eventData = { dataItem: dataItem, item: $(draggedItem), index: placeholderIndex };
             var connectedListBox = that.placeholder.closest(".listBox").getKendoListBox();
 
             if(placeholderIndex >= 0) {
@@ -395,7 +393,7 @@ var __meta__ = { // jshint ignore:line
                 } 
 
                 if(!connectedListBox.trigger(TRANSFER, $.extend({}, eventData, { action: RECEIVE }))) {
-                    connectedListBox._add(model);
+                    connectedListBox._add(dataItem);
                 }
             }
 
@@ -406,14 +404,14 @@ var __meta__ = { // jshint ignore:line
         reorder: function(item, index) {
             var that = this;
             var dataSource = that.dataSource;
-            var model = that._modelFromElement(item);
+            var dataItem = that.dataItem(item);
             var dataItemAtIndex = dataSource.at(index);
             var itemAtIndex = that.items()[index];
 
-            if (model && itemAtIndex && dataItemAtIndex) {
+            if (dataItem && itemAtIndex && dataItemAtIndex) {
                 that._unbindDataSource();
-                dataSource.remove(model);
-                dataSource.insert(index, model);
+                dataSource.remove(dataItem);
+                dataSource.insert(index, dataItem);
                 that._bindDataSource();
                 that._removeElement(item);
                 that._insertElementAt(item, index);
@@ -433,11 +431,11 @@ var __meta__ = { // jshint ignore:line
         _removeItem: function(item) {
             var that = this;
             var dataSource = that.dataSource;
-            var model = that._modelFromElement(item);
+            var dataItem = that.dataItem(item);
 
-            if (model) {
+            if (dataItem) {
                 that._unbindDataSource();
-                dataSource.remove(model);
+                dataSource.remove(dataItem);
                 that._bindDataSource();
                 that._removeElement(item);
             }
@@ -475,10 +473,10 @@ var __meta__ = { // jshint ignore:line
 
         _transferItem: function(item, destinationListBox) {
             var that = this;
-            var model = that._modelFromElement(item);
+            var dataItem = that.dataItem(item);
 
-            if (model && destinationListBox) {
-                destinationListBox._add(model);
+            if (dataItem && destinationListBox) {
+                destinationListBox._add(dataItem);
                 that.remove(item);
             }
         },
@@ -506,12 +504,6 @@ var __meta__ = { // jshint ignore:line
             this.selectable.clear();
         },
 
-        _modelFromElement: function(element) {
-            var uid = $(element || {}).attr(kendoAttr(UNIQUE_ID));
-
-            return this.dataSource.getByUid(uid);
-        },
-
         enable: function(items, enable) {
             var that = this;
             var enabled = isUndefined(enable) ? true : !!enable;
@@ -525,9 +517,9 @@ var __meta__ = { // jshint ignore:line
 
         _enableItem: function(item, enable) {
             var that = this;
-            var model = that._modelFromElement(item);
+            var dataItem = that.dataItem(item);
 
-            if (model) {
+            if (dataItem) {
                 if (enable) {
                     $(item).removeClass(DISABLED_STATE_CLASS);
                 } else {
@@ -803,15 +795,15 @@ var __meta__ = { // jshint ignore:line
             var listBox = that.listBox;
             var items = that.getItems();
             var itemsLength = items.length;
-            var model;
+            var dataItem;
             var item;
             var i;
 
             for (i = 0; i < itemsLength; i++) {
                 item = items.eq(i);
-                model = listBox.dataItem(item);
+                dataItem = listBox.dataItem(item);
 
-                if (model && !listBox.trigger(REMOVE, { model: model, item: item })) {
+                if (dataItem && !listBox.trigger(REMOVE, { dataItem: dataItem, item: item })) {
                     listBox.remove(item);
                 }
             }
@@ -846,7 +838,7 @@ var __meta__ = { // jshint ignore:line
                 movedItem = movedItems[moveAction]();
                 movedDataItem = listBox.dataItem(movedItem);
 
-                if (movedItem && movedDataItem && !listBox.trigger(REORDER, { model: movedDataItem, item: $(movedItem) })) {                    
+                if (movedItem && movedDataItem && !listBox.trigger(REORDER, { dataItem: movedDataItem, item: $(movedItem) })) {                    
                     listBox.reorder(movedItem, domIndices[moveAction]() + offset);
                 }
             }
@@ -906,15 +898,15 @@ var __meta__ = { // jshint ignore:line
             var listBox = that.listBox;
             var items = that.getItems();
             var itemsLength = items.length;
-            var model;
+            var dataItem;
             var item;
             var i;
 
             for (i = 0; i < itemsLength; i++) {
                 item = items.eq(i);
-                model = listBox.dataItem(item);
+                dataItem = listBox.dataItem(item);
 
-                if (model && !listBox.trigger(TRANSFER, { model: model, item: item })) {
+                if (dataItem && !listBox.trigger(TRANSFER, { dataItem: dataItem, item: item })) {
                     listBox.transfer(item);
                 }
             }
@@ -929,15 +921,15 @@ var __meta__ = { // jshint ignore:line
             var items = sourceListBox ? sourceListBox.select() : $();
             var itemsLength = items.length;
             var item;
-            var model;
+            var dataItem;
             var i;
 
             if (sourceListBox) {
                 for (i = 0; i < itemsLength; i++) {
                     item = items.eq(i);
-                    model = sourceListBox.dataItem(item);
+                    dataItem = sourceListBox.dataItem(item);
 
-                    if (model && !sourceListBox.trigger(TRANSFER, { model: model, item: $(item) })) {
+                    if (dataItem && !sourceListBox.trigger(TRANSFER, { dataItem: dataItem, item: $(item) })) {
                         sourceListBox.transfer(item);
                     }
                 }       

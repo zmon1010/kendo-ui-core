@@ -28,7 +28,7 @@
 
         clickRemoveButton(listbox);
 
-        deepEqual(args.model, dataItem);
+        deepEqual(args.dataItem, dataItem);
         equal(args.item[0], item[0]);
     });
 
@@ -80,7 +80,7 @@
 
         clickMoveDownButton(listbox);
 
-        deepEqual(args.model, dataItem);
+        deepEqual(args.dataItem, dataItem);
         equal(args.item[0], item[0]);
     });
 
@@ -146,7 +146,7 @@
 
         clickTransferToButton(listbox1);
 
-        deepEqual(args.model, dataItem);
+        deepEqual(args.dataItem, dataItem);
         equal(args.item[0], item[0]);
     });
 
@@ -217,7 +217,7 @@
 
         clickTransferFromButton(listbox1);
 
-        deepEqual(args.model, dataItem);
+        deepEqual(args.dataItem, dataItem);
         equal(args.item[0], item[0]);
     });
 
