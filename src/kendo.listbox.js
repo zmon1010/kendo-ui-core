@@ -168,7 +168,7 @@ var __meta__ = { // jshint ignore:line
 
         _add: function(dataItem) {
             var that = this;
-            var item = that.options.template(dataItem);
+            var item = that.templates.itemTemplate(dataItem);
             
             that._getList().append(item);
             that._unbindDataSource();
@@ -603,16 +603,20 @@ var __meta__ = { // jshint ignore:line
         },
 
         _templates: function () {
+            var that = this;
             var options = this.options;
-            var template = options.template;
+            var template;
+            that.templates = {};
 
-            if (!template) {
-                template = kendo.template('<li class="k-item">${' + kendo.expr(options.dataTextField, "data") + "}</li>", { useWithBlock: false });
+            if (options.template && typeof options.template == "string") {
+                template = kendo.template(options.template);
+            } else if (!options.template) {
+                template =  kendo.template('<li class="k-item">${' + kendo.expr(options.dataTextField, "data") + "}</li>", { useWithBlock: false });
             } else {
-                template = kendo.template(template);
+                template = options.template;
             }
 
-            this.options.template = template;
+            that.templates.itemTemplate = template;
         },
 
         refresh: function() {
@@ -625,7 +629,7 @@ var __meta__ = { // jshint ignore:line
         _refresh: function() {
             var that = this;
             var view = that.dataSource.view();
-            var template = that.options.template;
+            var template = that.templates.itemTemplate;
             var html = "";
 
             html += "<ul class='" + LIST_CLASS + "'>";
