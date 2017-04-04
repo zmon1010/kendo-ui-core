@@ -1256,12 +1256,7 @@
                 if (/^(undo|redo)$/i.test(name)) {
                     that.undoRedoStack[name]();
                 } else if (command) {
-                    if (!command.managesUndoRedo) {
-                        that.undoRedoStack.push(command);
-                    }
-
-                    command.editor = that;
-                    command.exec();
+                    that.execCommand(command);
 
                     if (command.async) {
                         command.change = proxy(that._selectionChange, that);
@@ -1271,6 +1266,15 @@
 
                 that._selectionChange();
             }
+        },
+
+        execCommand: function(command) {
+            if (!command.managesUndoRedo) {
+                this.undoRedoStack.push(command);
+            }
+
+            command.editor = this;
+            command.exec();
         }
     });
 

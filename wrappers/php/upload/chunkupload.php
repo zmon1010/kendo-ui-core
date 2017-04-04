@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Save the uploaded files
             $file = $files['tmp_name'];
 
-            $content = file_get_contents($file);
+        //   $content = file_get_contents($file);
         //  file_put_contents( $metaData->fileName, $content, FILE_APPEND);
 
             $object = new stdClass();
