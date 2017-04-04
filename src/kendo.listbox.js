@@ -48,20 +48,33 @@ var __meta__ = { // jshint ignore:line
     ];
 
     var CLICK = "click" + NS;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
+    var proxy = $.proxy;
+    var NS = ".kendoListBox";
     var CHANGE = "change";
     var DATABOUND = "dataBound";
     var REMOVE = "remove";
+    var RECEIVE = "receive";
     var REORDER = "reorder";
     var TRANSFER = "transfer";
     var MOVE_UP = "moveUp";
     var MOVE_DOWN = "moveDown";
     var TRANSFER_TO = "transferTo";
     var TRANSFER_FROM = "transferFrom";
+    var BEFORE_MOVE = "beforeMove";
+    var ITEMSELECTOR = ".k-listBox>";
+    var DRAGGEDCLASS = "paleClass";
     var UNIQUE_ID = "uid";
 
     var MOVE_UP_OFFSET = -1;
     var MOVE_DOWN_OFFSET = 1;
-    
+    var START = "start";
+    var MOVE = "move";
+    var END = "end";
+    var DEFAULT_FILTER = ">ul>*";
+    var SELECTED = "k-state-selected";
+
     function getSortedDomIndices(items) {
         var indices = $.map(items, function(item) {
             return $(item).index();
@@ -72,6 +85,14 @@ var __meta__ = { // jshint ignore:line
 
     function isUndefined(value) {
         return (typeof value === "undefined");
+    }
+
+    function defaultHint(element) {
+        return element.clone().addClass(SELECTED);
+    }
+
+    function defaultPlaceholder(element) {
+        return element.clone().height(1).css("overflow","hidden").css("background-color","red");
     }
 
     var ListBox = DataBoundWidget.extend({
@@ -85,6 +106,21 @@ var __meta__ = { // jshint ignore:line
             that._selectable();
             that._dataSource();
             that._createToolbar();
+
+            if(that.options.draggable) {
+                if(!that.options.selectable) {
+                    throw new Error("Dragging requires selection to be enabled");
+                }
+
+                if(!that.options.placeholder) {
+                    that.options.placeholder = defaultPlaceholder;
+                }
+
+                if(!that.options.hint) {
+                    that.options.hint = defaultHint;
+                }
+                that._draggable = that._createDraggable();
+            }
         },
 
         destroy: function() {
@@ -95,6 +131,9 @@ var __meta__ = { // jshint ignore:line
             that._unbindDataSource();
             that._destroySelectable();
             that._destroyToolbar();
+            if(that._draggable) {
+                that._draggable.destroy();
+            }
 
             kendo.destroy(that.element);
         },
@@ -104,7 +143,11 @@ var __meta__ = { // jshint ignore:line
             DATABOUND,
             REMOVE,
             REORDER,
-            TRANSFER
+            TRANSFER,
+            START,
+            MOVE,
+            END,
+            BEFORE_MOVE
         ],
 
         options: {
@@ -112,7 +155,14 @@ var __meta__ = { // jshint ignore:line
             autoBind: true,
             template: "",
             dataTextField: null,
-            selectable: "single"
+            selectable: "single",
+            reordable: false,
+            draggable: false,
+            dropSources : [],
+            hint: null,
+            placeholder: null,
+            disabled: null,
+            filter: DEFAULT_FILTER
         },
 
         _add: function(dataItem) {
@@ -134,6 +184,222 @@ var __meta__ = { // jshint ignore:line
             } else {
                 $(list).prepend(item);
             }            
+        },
+
+        _createDraggable: function() {
+            var that = this;
+            var element = that.element;
+            var options = that.options;
+
+            return new kendo.ui.Draggable(element, {
+                filter: options.filter,
+                hint: options.hint,
+                dragstart: $.proxy(that._dragstart, that),
+                dragcancel: $.proxy(that._clear, that),
+                drag: $.proxy(that._drag, that),
+                dragend: $.proxy(that._dragend, that)
+            });
+        },
+
+        _dragstart: function(e) {
+            var that = this;
+            var draggedElement = that.draggedElement = e.currentTarget;
+            var disabled = that.options.disabled;
+            var model = that._modelFromElement(draggedElement);
+            var eventData = { model: model, item: $(draggedElement), draggableEvent: e };
+
+            that.placeholder = $(that.options.placeholder.call(that, draggedElement));
+          
+            if(disabled && draggedElement.is(disabled)) {
+                e.preventDefault();
+            } else {
+                if(that.trigger(START, eventData)) {
+                    e.preventDefault();
+                } else {
+                    that.clearSelection();
+                    that.select(draggedElement);
+                    draggedElement.addClass(DRAGGEDCLASS);
+                }
+            }
+        },
+
+        _clear: function() {
+            this.placeholder.remove();
+        },
+
+        _findElementUnderCursor: function(e) {
+            var elementUnderCursor = kendo.elementUnderCursor(e);
+            var draggable = e.sender;
+
+            if($.contains(draggable.hint[0], elementUnderCursor) || draggable.hint[0] === elementUnderCursor) {
+                draggable.hint.hide();
+                elementUnderCursor = kendo.elementUnderCursor(e);
+                draggable.hint.show();
+            }
+
+            return elementUnderCursor;
+        },
+
+        _findTarget: function(e) {
+            var that = this;
+            var element = that._findElementUnderCursor(e);
+            var items;
+            var node;
+                
+            if($.contains(that.element[0], element)) {
+                if(!that.options.reordable) {
+                    return null;
+                } 
+                
+                items = that.items();
+                node = items.filter(element)[0] || items.has(element)[0];
+                return node && !$(node).hasClass(SELECTED) ? { element: $(node) } : null;
+            } else if (that.element[0] == element && !that.items().length) {
+                return { element: that.element, appendToBottom: true };
+            } else {
+                return that._searchConnectedListBox(element);
+            }
+        },
+
+        indexOf: function(element) {
+            var items = this._items();
+            var placeholder = this.placeholder;
+            var draggedElement = this.draggedElement;
+
+            if(placeholder && element[0] == placeholder[0]) {
+                return items.not(draggedElement).index(element);
+            } else {
+                return items.not(placeholder).index(element);
+            }
+        },
+
+        _getElementCenter: function(element) {
+            var center = element.length ? kendo.getOffset(element) : null;
+            if(center) {
+                center.top += outerHeight(element) / 2;
+                center.left += outerWidth(element) / 2;
+            }
+
+            return center;
+        },
+
+        _searchConnectedListBox: function(element) {
+            var connectedListBox;
+            var items;
+            var node;
+
+            element = $(element);
+
+            if(element.getKendoListBox()) {
+                connectedListBox = element.getKendoListBox();
+            }
+
+            if(!connectedListBox) {
+                connectedListBox = element.closest(".k-listBox").closest("div").getKendoListBox();
+            }
+
+            if(connectedListBox && $.inArray(this.element[0].id, connectedListBox.options.dropSources) !== -1) {
+                items = connectedListBox.items();
+                node = items.filter(element)[0] || items.has(element)[0];
+                if(node) {
+                    return { element: $(node), listBox: connectedListBox };
+                } else {
+                    return null;
+                }
+            }
+            return null;
+        },
+
+        _drag: function(e) {
+            var that = this;
+            var draggedElement = that.draggedElement;
+            var target = that._findTarget(e);
+            var cursorOffset = { left: e.x.location, top: e.y.location };
+            var model = that._modelFromElement(draggedElement);
+            var eventData = { model: model, item: $(draggedElement), draggableEvent: e };
+            var targetCenter;
+            var offsetDelta;
+            var direction;
+            var sibling;
+            var getSibling;
+                
+            if(target) {
+                targetCenter = this._getElementCenter(target.element);
+
+                offsetDelta = {
+                    left: Math.round(cursorOffset.left - targetCenter.left),
+                    top: Math.round(cursorOffset.top - targetCenter.top)
+                };
+
+                if(target.appendToBottom) {
+                    that._movePlaceholder(target, null, eventData);
+                    return;
+                }
+
+                if(offsetDelta.top < 0) {
+                    direction = "prev";
+                } else if(offsetDelta.top > 0) {
+                    direction = "next";
+                }
+
+                if(direction) {
+                    getSibling = (direction === "prev") ? jQuery.fn.prev : jQuery.fn.next;
+
+                    sibling = getSibling.call(target.element);
+
+                    while(sibling.length && !sibling.is(":visible")) {
+                        sibling = getSibling.call(sibling);
+                    }
+
+                    if(sibling[0] != that.placeholder[0]) {
+                        that._movePlaceholder(target, direction, eventData);
+                    }
+                }
+            }
+        },
+
+        _movePlaceholder: function(target, direction, eventData) {
+            var placeholder = this.placeholder;
+
+            if (!this.trigger(BEFORE_MOVE, eventData)) {
+                if (!direction) {
+                    target.element.append(placeholder);
+                } else if (direction === "prev") {
+                    target.element.before(placeholder);
+                } else if (direction === "next") {
+                    target.element.after(placeholder);
+                }
+
+                this.trigger(MOVE, eventData);
+            }
+        },
+
+        _dragend: function(e) {
+            var that = this;
+            var draggedItem = that.draggedElement;
+            var items = that.items();
+            var placeholderIndex = items.not(that.draggedElement).index(that.placeholder);
+            var draggedIndex = items.index(that.draggedElement);
+            var model = that._modelFromElement(draggedItem);
+            var eventData = { model: model, item: $(draggedItem), index: placeholderIndex };
+            var connectedListBox = that.placeholder.closest(".listBox").getKendoListBox();
+
+            if(placeholderIndex >= 0) {
+                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, $.extend({}, eventData, { action: REORDER }))) {
+                     that._reorderItem(draggedItem, placeholderIndex);
+                }
+            } else if(connectedListBox) {
+                if(!that.trigger(END, $.extend({}, eventData, { action: REMOVE }))) {
+                   that._removeItem(draggedItem);
+                } 
+
+                if(!connectedListBox.trigger(TRANSFER, $.extend({}, eventData, { action: RECEIVE }))) {
+                    connectedListBox._add(model);
+                }
+            }
+
+            that._clear();
+            that._draggable.dropped = true;
         },
 
         reorder: function(item, index) {
