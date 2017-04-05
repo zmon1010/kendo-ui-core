@@ -49,6 +49,7 @@ var __meta__ = { // jshint ignore:line
 
             that.name = element.name;
             that.multiple = that.options.multiple;
+            that.directory = that.options.directory;
             that.localization = that.options.localization;
 
             var activeInput = that.element;
@@ -116,6 +117,7 @@ var __meta__ = { // jshint ignore:line
             name: "Upload",
             enabled: true,
             multiple: true,
+            directory: false,
             showFileList: true,
             template: "",
             files: [],
@@ -163,8 +165,13 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.setOptions.call(that, options);
 
             that.multiple = that.options.multiple;
+            that.directory = that.options.directory;
 
             activeInput.attr("multiple", that._supportsMultiple() ? that.multiple : false);
+            if(that.directory){
+                activeInput.attr("webkitdirectory", that.directory);
+                activeInput.attr("directory", that.directory);
+            }
             that.toggle(that.options.enabled);
         },
 
@@ -355,6 +362,11 @@ var __meta__ = { // jshint ignore:line
 
             that.element = input;
 
+            if(that.directory){
+                input.attr("webkitdirectory", that.directory);
+                input.attr("directory", that.directory);
+            }
+
             input
                 .attr("multiple", that._supportsMultiple() ? that.multiple : false)
                 .attr("autocomplete", "off")
@@ -400,15 +412,89 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _readDirectory: function(item){
+            var deferred = new $.Deferred();
+            var dirReader = item.createReader();
+
+            dirReader.readEntries(function(entries) {
+                    deferred.resolve(entries);
+            }, deferred.reject);
+
+             return deferred.promise();
+        },
+
+        _readFile: function(item){
+            var that = this;
+            var fullpath = item.fullPath;
+
+            item.file(function(file){
+                    file.relativePath = fullpath.slice(1);
+                    that.droppedFolderFiles.push(file);
+                    that.droppedFolderCounter --;
+                    if(that.droppedFolderCounter === 0){
+                        setTimeout(function(){
+                            if(that.droppedFolderCounter === 0){
+                                if(that.droppedFolderFiles.length){
+                                    that._proceedDroppedItems(that.droppedFolderFiles);
+                                    that.droppedFolderFiles = [];
+                                }
+                            }
+                        },0);
+                    }
+            }, function(){
+                logToConsole("File error.");
+            });
+        },
+
+        _traverseFileTree: function (item, skipCounter) {
+            var that = this;
+            if(!skipCounter){
+                that.droppedFolderCounter--;
+            }
+
+            this._readDirectory(item).then(function(items){
+                that.droppedFolderCounter += items.length;
+                for (var i = 0; i < items.length; i++) {
+                    if(items[i].isFile){
+                        that._readFile(items[i]);
+                    } else if (items[i].isDirectory){
+                        that._traverseFileTree(items[i]);
+                    }
+                }
+            });
+        },
+
         _onDrop: function (e) {
             var dt = e.originalEvent.dataTransfer;
             var that = this;
             var droppedFiles = dt.files;
-            var files = assignGuidToFiles(getAllFileInfo(droppedFiles), that._isAsyncNonBatch());
+            var length;
 
             stopEvent(e);
+           if(that.options.directoryDrop && dt.items){
+                length = dt.items.length
+                that.droppedFolderCounter = 0;
+                that.droppedFolderFiles = []; 
 
-            if (droppedFiles.length > 0 && !that.wrapper.hasClass("k-state-disabled")) {
+                for (var i = 0; i < length; i++) {
+                    var entry = dt.items[i].webkitGetAsEntry();
+
+                    if(entry.isDirectory){
+                        that._traverseFileTree(entry, true);
+                    }else if (entry.isFile){
+                        that.droppedFolderFiles.push(dt.files[i]);
+                    }
+                }
+           }else{
+               that._proceedDroppedItems(droppedFiles);
+           }
+        },
+
+        _proceedDroppedItems: function(droppedFiles){
+            var that = this;
+            var files = assignGuidToFiles(getAllFileInfo(droppedFiles), that._isAsyncNonBatch());
+
+              if (droppedFiles.length > 0 && !that.wrapper.hasClass("k-state-disabled")) {
                 if (!that.multiple && files.length > 1) {
                     files.splice(1, files.length - 1);
                 }
@@ -1544,6 +1630,14 @@ var __meta__ = { // jshint ignore:line
             if (upload.options.async.batch === true) {
                 name = $.map(files, function(file) { return file.name; }).join(", ");
 
+                if(upload.directory || upload.options.directoryDrop){
+                    $(files).each(function(){
+                        if(this.rawFile.webkitRelativePath || this.rawFile.relativePath){
+                            this.name = this.rawFile.webkitRelativePath || this.rawFile.relativePath;
+                        }
+                    });
+                }
+
                 fileEntry = upload._enqueueFile(name, { fileNames: files });
                 fileEntry.data("files", files);
 
@@ -1552,7 +1646,11 @@ var __meta__ = { // jshint ignore:line
                 for (i = 0; i < filesLength; i++) {
                     currentFile = files[i];
                     name = currentFile.name;
-
+                    if(upload.directory || upload.options.directoryDrop){
+                        if(currentFile.rawFile.webkitRelativePath || currentFile.rawFile.relativePath){
+                            currentFile.name = currentFile.rawFile.webkitRelativePath || currentFile.rawFile.relativePath;
+                        }
+                    }
                     fileEntry = upload._enqueueFile(name, { fileNames: [ currentFile ] });
                     fileEntry.data("files", [ currentFile ]);
 
