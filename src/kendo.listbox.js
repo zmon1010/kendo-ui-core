@@ -449,6 +449,19 @@ var __meta__ = { // jshint ignore:line
             return this.dataSource.getByUid(uniqueId);
         },
 
+        _dataItems: function(items) {
+            var dataItems = [];
+            var listItems = $(items);
+            var itemsLength = listItems.length;
+            var i;
+
+            for (i = 0; i < itemsLength; i++) {
+                dataItems.push(this.dataItem(listItems.eq(i)));
+            }
+
+            return dataItems;
+        },
+
         items: function() {
             var list = this._getList();
             return list.children();
@@ -775,12 +788,10 @@ var __meta__ = { // jshint ignore:line
 
             that.options = extend({}, that.options, options);
             that.listBox = that.options.listBox;
-            that.items = $(that.options.items);
         },
 
         options: {
-            listBox: null,
-            items: []
+            listBox: null
         },
 
         execute: $.noop,
@@ -795,18 +806,9 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var listBox = that.listBox;
             var items = that.getItems();
-            var itemsLength = items.length;
-            var dataItem;
-            var item;
-            var i;
 
-            for (i = 0; i < itemsLength; i++) {
-                item = items.eq(i);
-                dataItem = listBox.dataItem(item);
-
-                if (dataItem && !listBox.trigger(REMOVE, { dataItem: dataItem, item: item })) {
-                    listBox.remove(item);
-                }
+            if (!listBox.trigger(REMOVE, { dataItems: listBox._dataItems(items), items: items })) {
+                listBox.remove(items);
             }
         }
     });
@@ -827,19 +829,17 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var listBox = that.listBox;
             var options = that.options;
-            var items = that.items;
+            var items = that.getItems();
             var offset = options.offset;
             var domIndices = getSortedDomIndices(items);
             var movedItems = $.makeArray(items.sort(that.itemComparer));
             var moveAction = options.moveAction;
             var movedItem;
-            var movedDataItem;
 
-            while (movedItems.length > 0 && domIndices.length > 0) {
-                movedItem = movedItems[moveAction]();
-                movedDataItem = listBox.dataItem(movedItem);
-
-                if (movedItem && movedDataItem && !listBox.trigger(REORDER, { dataItem: movedDataItem, item: $(movedItem) })) {                    
+            if (!listBox.trigger(REORDER, { dataItems: listBox._dataItems(movedItems), items: $(movedItems), offset: offset })) {
+                while (movedItems.length > 0 && domIndices.length > 0) {
+                    movedItem = movedItems[moveAction]();
+                  
                     listBox.reorder(movedItem, domIndices[moveAction]() + offset);
                 }
             }
@@ -898,18 +898,9 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var listBox = that.listBox;
             var items = that.getItems();
-            var itemsLength = items.length;
-            var dataItem;
-            var item;
-            var i;
 
-            for (i = 0; i < itemsLength; i++) {
-                item = items.eq(i);
-                dataItem = listBox.dataItem(item);
-
-                if (dataItem && !listBox.trigger(TRANSFER, { dataItem: dataItem, item: item })) {
-                    listBox.transfer(item);
-                }
+            if (!listBox.trigger(TRANSFER, { dataItems: listBox._dataItems(items), items: items })) {
+                listBox.transfer(items);
             }
         }
     });
@@ -920,20 +911,9 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var sourceListBox = that._getSourceListBox();
             var items = sourceListBox ? sourceListBox.select() : $();
-            var itemsLength = items.length;
-            var item;
-            var dataItem;
-            var i;
 
-            if (sourceListBox) {
-                for (i = 0; i < itemsLength; i++) {
-                    item = items.eq(i);
-                    dataItem = sourceListBox.dataItem(item);
-
-                    if (dataItem && !sourceListBox.trigger(TRANSFER, { dataItem: dataItem, item: $(item) })) {
-                        sourceListBox.transfer(item);
-                    }
-                }       
+            if (sourceListBox && !sourceListBox.trigger(TRANSFER, { dataItems: sourceListBox._dataItems(items), items: $(items) })) {
+                sourceListBox.transfer(items);
             }
         },
 
