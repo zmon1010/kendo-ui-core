@@ -245,4 +245,50 @@
         equal(listbox1.items().length, itemsLength1);
         equal(listbox2.items().length, itemsLength2);
     });
+
+    module("ListBox events", {
+        setup: function() {
+            listbox1 = createListBox({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBox({
+                dataSource: {
+                    data: []
+                }
+            }, "<select id='listbox2' />");
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferAllTo action should trigger transfer event", function() {
+        var items = listbox1.items();
+        var dataItems = listbox1.dataItems();
+        listbox1.bind(TRANSFER, function(e) {
+            args = e;
+        });
+
+        clickTransferAllToButton(listbox1);
+
+        equalDataArrays(args.dataItems, dataItems);
+        equalListItemArrays(args.items, items);
+    });
+
+    test("transferAllTo action should be preventable", function() {
+        var args = {};
+        listbox1.bind(TRANSFER, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+        var itemsLength = listbox1.items().length;
+
+        clickTransferAllToButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, itemsLength);
+    });
 })();

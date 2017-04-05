@@ -53,7 +53,25 @@ function createListBox(options, html) {
 
 /* exported equalListItems */
 function equalListItems(item1, item2) {
-    equal(item1.data("uid"), item2.data("uid"));
+    equal(item1[0], item2[0]);
+}
+
+/* exported equalListItemArrays  */
+function equalListItemArrays(array1, array2) {
+    equal(array1.length, array2.length);
+
+    for (var i = 0; i < array1.length; i++) {
+        equalListItems(array1.eq(i), array2.eq(i));
+    }
+}
+
+/* exported equalDataArrays */
+function equalDataArrays(array1, array2) {
+    equal(array1.length, array2.length);    
+
+    for (var i = 0; i < array1.length; i++) {
+        deepEqual(array1[i], array2[i]);
+    }
 }
 
 /* exported getDataItem */
@@ -102,4 +120,9 @@ function clickTransferToButton(listbox, event) {
 /* exported clickTransferFromButton */
 function clickTransferFromButton(listbox, event) {
     clickButton(listbox, "transferFrom", event);
+}
+
+/* exported clickTransferAllToButton */
+function clickTransferAllToButton(listbox, event) {
+    clickButton(listbox, "transferAllTo", event);
 }

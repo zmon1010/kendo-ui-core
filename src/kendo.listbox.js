@@ -957,6 +957,18 @@ var __meta__ = { // jshint ignore:line
     });
     CommandFactory.current.register(TRANSFER_FROM, TransferItemsFromCommand);
 
+    var TransferAllItemsToCommand = ListBoxCommand.extend({
+        execute: function() {
+            var listBox = this.listBox;
+            var items = listBox.items();
+
+            if (!listBox.trigger(TRANSFER, { dataItems: listBox.dataItems(), items: items })) {
+                listBox.transfer(items);
+            }
+        }
+    });
+    CommandFactory.current.register(TRANSFER_ALL_TO, TransferAllItemsToCommand);
+
 })(window.kendo.jQuery);
 
 return window.kendo;

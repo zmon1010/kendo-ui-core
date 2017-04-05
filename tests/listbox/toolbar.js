@@ -41,6 +41,7 @@
 
         clickRemoveButton(listbox);
 
+        equal(removeStub.args(REMOVE).length, 1);
         equal(removeStub.args(REMOVE)[0][0], item[0]);
     });
 
@@ -350,7 +351,8 @@
         listbox1.select(item);
 
         clickTransferToButton(listbox1);
-
+        
+        equal(transferStub.args(TRANSFER).length, 1);
         equal(transferStub.args(TRANSFER)[0][0], item[0]);
     });
 
@@ -396,6 +398,46 @@
 
         clickTransferFromButton(listbox1);
 
+        equal(transferStub.args(TRANSFER).length, 1);
         equal(transferStub.args(TRANSFER)[0][0], item[0]);
+    });
+
+    module("ListBox toolbar", {
+        setup: function() {
+            listbox1 = createListBox({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBox({
+                dataSource: {
+                    data: []
+                }
+            }, "<select id='listbox2' />");
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferAllTo action should work without selection", function() {
+        var itemsLength = listbox1.items().length;
+
+        clickTransferAllToButton(listbox1);
+
+        equal(listbox1.items().length, 0);
+        equal(listbox2.items().length, itemsLength);
+    });
+
+    test("transferAllTo action should call listbox.transfer() with all items", function() {
+        var items = listbox1.items();
+        var transferStub = stub(listbox1, TRANSFER);
+        var itemsLength = listbox1.items().length;
+
+        clickTransferAllToButton(listbox1);
+
+        equal(transferStub.args(TRANSFER).length, 1);
+        equalListItemArrays(transferStub.args(TRANSFER)[0], items);
     });
 })();
