@@ -25688,6 +25688,242 @@ Any valid CSS color string will work here, including hex and rgb.</description>
 
 
     <tag>
+        <description>ListBox</description>
+        <name>listBox</name>
+        <tag-class>com.kendoui.taglib.ListBoxTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.</description>
+            <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.</description>
+            <name>connectWith</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The data source of the widget which is used render listbox items. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
+            <name>dataSource</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.</description>
+            <name>dataTextField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The field of the data item that provides the value of the widget.</description>
+            <name>dataValueField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.</description>
+            <name>disabled</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Indicates if the widget items can be draged and droped.</description>
+            <name>draggable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.</description>
+            <name>dropSources</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The height of the listbox. Numeric values are treated as pixels.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint function is not provided the widget will clone dragged item and use it as a hint.</description>
+            <name>hint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether keyboard navigation is enabled/disabled.</description>
+            <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether widget items can be reordered.</description>
+            <name>reorderable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether selection is enabled/disabled. Possible values:</description>
+            <name>selectable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies ListBox item template.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>dataBound</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when LisbBox's placeholder changes its position.</description>
+            <name>move</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when items in the widget are reordered.</description>
+            <name>reorder</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when ListBox item(s) drag starts.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>transfer</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Indicates if the widget items can be draged and droped.</description>
+        <name>listBox-draggable</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggableTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+            <name>placeholder</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+        <name>listBox-draggable-placeholder</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggablePlaceholderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.</description>
+        <name>listBox-toolbar</name>
+        <tag-class>com.kendoui.taglib.listbox.ToolbarTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The position relative to the ListBox element, at which the toolbar will be shown. Predefined values are "bottom", "top", "left", "right".</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>An Array value with the list of commands displayed in the ListBox's Toolbar. Commands can be built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" command moves up the item that is currently selected by the end user.The "moveDown" command moves down the item that is currently selected by the end user.The "remove" command removes the item(s) that are currently selected by the end user.The "transferAllFrom" command moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" command moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" command moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" command moves all selected items from target widget related with connectWith option to the current ListBox widget.</description>
+            <name>tools</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-change</name>
+        <tag-class>com.kendoui.taglib.listbox.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-dataBound</name>
+        <tag-class>com.kendoui.taglib.listbox.DataBoundFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+        <name>listBox-end</name>
+        <tag-class>com.kendoui.taglib.listbox.EndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when LisbBox's placeholder changes its position.</description>
+        <name>listBox-move</name>
+        <tag-class>com.kendoui.taglib.listbox.MoveFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-remove</name>
+        <tag-class>com.kendoui.taglib.listbox.RemoveFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when items in the widget are reordered.</description>
+        <name>listBox-reorder</name>
+        <tag-class>com.kendoui.taglib.listbox.ReorderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when ListBox item(s) drag starts.</description>
+        <name>listBox-start</name>
+        <tag-class>com.kendoui.taglib.listbox.StartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-transfer</name>
+        <tag-class>com.kendoui.taglib.listbox.TransferFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>ListView</description>
         <name>listView</name>
         <tag-class>com.kendoui.taglib.ListViewTag</tag-class>

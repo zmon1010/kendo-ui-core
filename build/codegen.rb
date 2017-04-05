@@ -122,7 +122,8 @@ namespace :generate do
                     'docs/api/javascript/ui/treeview.md',
                     'docs/api/javascript/ui/spreadsheet.md',
                     'docs/api/javascript/ui/dialog.md',
-					'docs/api/javascript/ui/dateinput.md'
+                    'docs/api/javascript/ui/dateinput.md',
+                    'docs/api/javascript/ui/listbox.md'
                 ]
 
                 components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC::Wrappers::DataViz::Component) }
@@ -270,7 +271,8 @@ namespace :generate do
                 'docs/api/javascript/ui/splitter.md',
                 'docs/api/javascript/ui/pivotgrid.md',
                 'docs/api/javascript/ui/pivotconfigurator.md',
-                'docs/api/javascript/ui/dialog.md'
+                'docs/api/javascript/ui/dialog.md',
+                'docs/api/javascript/ui/listbox.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

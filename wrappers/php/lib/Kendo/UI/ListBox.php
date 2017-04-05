@@ -1,0 +1,268 @@
+<?php
+
+namespace Kendo\UI;
+
+class ListBox extends \Kendo\UI\Widget {
+    public function name() {
+        return 'ListBox';
+    }
+//>> Properties
+
+    /**
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * @param boolean $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function autoBind($value) {
+        return $this->setProperty('autoBind', $value);
+    }
+
+    /**
+    * Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.
+    * @param string $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function connectWith($value) {
+        return $this->setProperty('connectWith', $value);
+    }
+
+    /**
+    * Sets the data source of the ListBox.
+    * @param array|\Kendo\Data\DataSource $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function dataSource($value) {
+        return $this->setProperty('dataSource', $value);
+    }
+
+    /**
+    * The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
+    * @param string $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function dataTextField($value) {
+        return $this->setProperty('dataTextField', $value);
+    }
+
+    /**
+    * The field of the data item that provides the value of the widget.
+    * @param string $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function dataValueField($value) {
+        return $this->setProperty('dataValueField', $value);
+    }
+
+    /**
+    * If set to true the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.
+    * @param boolean $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function disabled($value) {
+        return $this->setProperty('disabled', $value);
+    }
+
+    /**
+    * Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint function is not provided the widget will clone dragged item and use it as a hint.
+    * @param \Kendo\JavaScriptFunction|string| $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function hint($value) {
+        return $this->setProperty('hint', $value);
+    }
+
+    /**
+    * Indicates if the widget items can be draged and droped.
+    * @param boolean|\Kendo\UI\ListBoxDraggable|array $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function draggable($value) {
+        return $this->setProperty('draggable', $value);
+    }
+
+    /**
+    * Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+    * @param array $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function dropSources($value) {
+        return $this->setProperty('dropSources', $value);
+    }
+
+    /**
+    * The height of the listbox. Numeric values are treated as pixels.
+    * @param float|string $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function height($value) {
+        return $this->setProperty('height', $value);
+    }
+
+    /**
+    * Indicates whether keyboard navigation is enabled/disabled.
+    * @param boolean $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function navigatable($value) {
+        return $this->setProperty('navigatable', $value);
+    }
+
+    /**
+    * Indicates whether widget items can be reordered.
+    * @param boolean $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function reorderable($value) {
+        return $this->setProperty('reorderable', $value);
+    }
+
+    /**
+    * Indicates whether selection is enabled/disabled. Possible values:
+    * @param string $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function selectable($value) {
+        return $this->setProperty('selectable', $value);
+    }
+
+    /**
+    * Sets the template option of the ListBox.
+    * Specifies ListBox item template.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function template($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('template', $value);
+    }
+
+    /**
+    * Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.
+    * @param \Kendo\UI\ListBoxToolbar|array $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function toolbar($value) {
+        return $this->setProperty('toolbar', $value);
+    }
+
+    /**
+    * Sets the change event of the ListBox.
+    * Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function change($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('change', $value);
+    }
+
+    /**
+    * Sets the dataBound event of the ListBox.
+    * Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function dataBound($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dataBound', $value);
+    }
+
+    /**
+    * Sets the end event of the ListBox.
+    * Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function end($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('end', $value);
+    }
+
+    /**
+    * Sets the move event of the ListBox.
+    * Fires when LisbBox's placeholder changes its position.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function move($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('move', $value);
+    }
+
+    /**
+    * Sets the remove event of the ListBox.
+    * Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function remove($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('remove', $value);
+    }
+
+    /**
+    * Sets the reorder event of the ListBox.
+    * Fires when items in the widget are reordered.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function reorder($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('reorder', $value);
+    }
+
+    /**
+    * Sets the start event of the ListBox.
+    * Fires when ListBox item(s) drag starts.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function start($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('start', $value);
+    }
+
+    /**
+    * Sets the transfer event of the ListBox.
+    * Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function transfer($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('transfer', $value);
+    }
+
+
+//<< Properties
+}
+
+?>

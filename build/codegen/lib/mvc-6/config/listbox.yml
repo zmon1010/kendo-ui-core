@@ -1,0 +1,8 @@
+:options:
+    - :name: DropSources
+      :merge: true
+      :type: string[]
+
+    - :name: Toolbar.Tools
+      :merge: true
+      :type: string[]
