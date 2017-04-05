@@ -477,12 +477,16 @@ var __meta__ = { // jshint ignore:line
                 that.droppedFolderFiles = []; 
 
                 for (var i = 0; i < length; i++) {
-                    var entry = dt.items[i].webkitGetAsEntry();
+                    if(dt.items[i].webkitGetAsEntry){
+                        var entry = dt.items[i].webkitGetAsEntry();
 
-                    if(entry.isDirectory){
-                        that._traverseFileTree(entry, true);
-                    }else if (entry.isFile){
-                        that.droppedFolderFiles.push(dt.files[i]);
+                        if(entry.isDirectory){
+                            that._traverseFileTree(entry, true);
+                        }else if (entry.isFile){
+                            that.droppedFolderFiles.push(dt.files[i]);
+                        }
+                    }else{
+                         that._proceedDroppedItems(droppedFiles);
                     }
                 }
            }else{
