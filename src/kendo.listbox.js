@@ -146,7 +146,7 @@ var __meta__ = { // jshint ignore:line
             connectWith: ""
         },
 
-        _add: function(dataItem) {
+        add: function(dataItem) {
             var that = this;
             var item = that.templates.itemTemplate(dataItem);
             
@@ -389,7 +389,7 @@ var __meta__ = { // jshint ignore:line
                 } 
 
                 if(!connectedListBox.trigger(TRANSFER, $.extend({}, eventData, { action: RECEIVE }))) {
-                    connectedListBox._add(dataItem);
+                    connectedListBox.add(dataItem);
                 }
             }
 
@@ -485,7 +485,7 @@ var __meta__ = { // jshint ignore:line
             var dataItem = that.dataItem(item);
 
             if (dataItem && destinationListBox) {
-                destinationListBox._add(dataItem);
+                destinationListBox.add(dataItem);
                 that.remove(item);
             }
         },
