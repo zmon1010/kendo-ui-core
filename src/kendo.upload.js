@@ -139,6 +139,7 @@ var __meta__ = { // jshint ignore:line
                 "clearSelectedFiles": "Clear",
                 "uploadSelectedFiles": "Upload",
                 "dropFilesHere": "Drop files here to upload",
+                "invalidFiles": "Invalid file(s). Please check file upload requirements.",
                 "statusUploading": "uploading",
                 "statusUploaded": "uploaded",
                 "statusWarning": "warning",
@@ -472,7 +473,7 @@ var __meta__ = { // jshint ignore:line
 
             stopEvent(e);
            if(that.options.directoryDrop && dt.items){
-                length = dt.items.length
+                length = dt.items.length;
                 that.droppedFolderCounter = 0;
                 that.droppedFolderFiles = []; 
 
