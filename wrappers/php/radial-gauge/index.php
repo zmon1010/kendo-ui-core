@@ -12,7 +12,8 @@ $slider->min(0)
        ->max(180)
        ->value(65)
        ->showButtons(false)
-       ->change('updateValue');
+       ->change('updateValue')
+       ->attr('title', 'slider');
 ?>
 
 <div id="gauge-container">

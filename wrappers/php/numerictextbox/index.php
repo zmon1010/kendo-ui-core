@@ -7,7 +7,8 @@ $numeric->value(17)
         ->min(0)
         ->max(100)
         ->step(1)
-        ->attr('style', 'width: 100%');
+        ->attr('style', 'width: 100%')
+        ->attr('title', 'numeric');
 
 $currency = new \Kendo\UI\NumericTextBox('currency');
 $currency->format('c')
@@ -15,7 +16,8 @@ $currency->format('c')
          ->min(0)
          ->max(100)
          ->decimals(3)
-         ->attr('style', 'width: 100%');
+         ->attr('style', 'width: 100%')
+         ->attr('title', 'currency');
 
 $percentage = new \Kendo\UI\NumericTextBox('percentage');
 $percentage->format('p0')
@@ -23,12 +25,14 @@ $percentage->format('p0')
            ->min(0)
            ->max(0.1)
            ->step(0.01)
-           ->attr('style', 'width: 100%');
+           ->attr('style', 'width: 100%')
+           ->attr('title', 'percentage');
 
 $custom = new \Kendo\UI\NumericTextBox('custom');
 $custom->format('#.00 kg')
        ->value(2)
-       ->attr('style', 'width: 100%');
+       ->attr('style', 'width: 100%')
+       ->attr('title', 'custom');
 
 ?>
 <div id="add-product" class="demo-section k-content">

@@ -9,6 +9,7 @@ $timePicker = new \Kendo\UI\TimePicker('timepicker');
 $timePicker->dateInput(true);
 $timePicker->value('10:00 AM');
 $timePicker->attr('style', 'width: 100%');
+$timePicker->attr('title', 'timepicker');
 
 echo $timePicker->render();
 ?>

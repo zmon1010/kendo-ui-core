@@ -9,7 +9,7 @@
             .Min(0)
             .Max(100)
             .Value(30)
-            .HtmlAttributes(new { style = "width: 100%" })
+            .HtmlAttributes(new { style = "width: 100%", title = "currency" })
       )
     </li>
     <li>
@@ -21,7 +21,7 @@
             .Max(0.9)
             .Step(0.01)
             .Value(0.05)
-            .HtmlAttributes(new { style = "width: 100%" })
+            .HtmlAttributes(new { style = "width: 100%", title = "percentage" })
         )
     </li>
     <li>
@@ -31,7 +31,7 @@
             .Format("#.00 kg")
 			.Min(0)
             .Value(2)
-            .HtmlAttributes(new { style = "width: 100%" })
+            .HtmlAttributes(new { style = "width: 100%", title = "custom" })
       )
    </li>
     <li>
@@ -40,7 +40,7 @@
             .Name("numeric")
             .Value(17)
             .Placeholder("Enter numeric value")
-            .HtmlAttributes(new { style = "width: 100%" })
+            .HtmlAttributes(new { style = "width: 100%", title = "numeric" })
       )
     </li>
  </ul>
