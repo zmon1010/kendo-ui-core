@@ -433,7 +433,9 @@ var BackspaceHandler = Class.extend({
             linkRange.setEnd(previousNode, previousNode.childNodes.length);
         }
 
-        if (linkRange.collapsed && editorNS.RangeUtils.isEndOf(linkRange, linkRange.commonAncestorContainer)) {
+        var a = dom.closestEditableOfType(linkRange.startContainer, ['a']);
+        var isEndOfLink = a && editorNS.RangeUtils.isEndOf(linkRange, a);
+        if (isEndOfLink) {
             var command = new editorNS.UnlinkCommand({ range: linkRange, body: editor.body, immutables: !!editor.immutables });
             editor.execCommand(command);
             editor._selectionChange();

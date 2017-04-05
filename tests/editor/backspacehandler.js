@@ -434,11 +434,32 @@
         editor.value('foo <a>test</a> baz');
         var range = editor.createRange();
         range.setStart(editor.body.getElementsByTagName("a")[0], 1);
-        range.collapse(true);
         editor.selectRange(range);
 
         handleBackspace();
 
         equal(editor.value(), 'foo test baz');
+    });
+
+    test("unlink command after link with nested elements", function() {
+        editor.value('<a><span><strong>test</strong></span></a>');
+        var range = editor.createRange();
+        range.setStart(editor.body.getElementsByTagName("a")[0], 1);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<span><strong>test</strong></span>');
+    });
+
+    test("unlink command after empty link", function() {
+        editor.value('foo<a></a>baz');
+        var range = editor.createRange();
+        range.setStart(editor.body.getElementsByTagName("a")[0], 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foobaz');
     });
 }());
