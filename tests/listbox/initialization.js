@@ -5,7 +5,7 @@
 
     module("ListBox initialization", {
         setup: function() {
-            div = $("<div />").appendTo(QUnit.fixture);
+            div = $("<select />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox);
