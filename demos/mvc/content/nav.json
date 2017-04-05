@@ -3252,6 +3252,18 @@
           "!jsp",
           "!php"
         ]
+      },
+      {
+        "text": "Events",
+        "url": "listbox/events",
+        "title": {
+          "kendo-ui": "jQuery ListBox control example| KendoListBox Demo",
+          "aspnet-mvc": "ASP.NET MVC ListBox demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
       }
     ],
     "category": "Data Management"
