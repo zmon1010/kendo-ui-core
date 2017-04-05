@@ -91,6 +91,10 @@ var __meta__ = { // jshint ignore:line
             that._wrapper();
             element = that.element.attr("multiple", "multiple").hide();
 
+            if (element[0] && !that.options.dataSource) {
+                that.options.dataTextField = that.options.dataTextField || "text";
+                that.options.dataValueField = that.options.dataValueField || "value";
+            }
             that._templates();
             that._selectable();
             that._dataSource();
@@ -130,6 +134,7 @@ var __meta__ = { // jshint ignore:line
             autoBind: true,
             template: "",
             dataTextField: null,
+            dataValueField: null,
             selectable: "single",
             reorderable: false,
             draggable: false,
@@ -534,14 +539,14 @@ var __meta__ = { // jshint ignore:line
             var options = that.options;
             var dataSource = options.dataSource || {};
 
-            dataSource = $.isArray(dataSource) ? {data: dataSource} : dataSource;
-
-            if (options.dataTextField) {
-                dataSource.fields = [{ field: options.dataTextField }];
-            }
+            dataSource = $.isArray(dataSource) ? { data: dataSource } : dataSource;
+            dataSource.select = that.element;
+            dataSource.fields = [
+                { field: options.dataTextField },
+                { field: options.dataValueField }];
 
             that._unbindDataSource();
-            that.dataSource = DataSource.create(that.options.dataSource);
+            that.dataSource = DataSource.create(dataSource);
             that._bindDataSource();
 
             if (that.options.autoBind) {

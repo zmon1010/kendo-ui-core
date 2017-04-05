@@ -3227,6 +3227,18 @@
     "spriteCssClass": "listBoxIcon",
     "items": [
       {
+        "text": "Basic usage",
+        "url": "listbox/index",
+        "title": {
+          "kendo-ui": "jQuery ListBox control example| KendoListBox Demo",
+          "aspnet-mvc": "ASP.NET MVC ListBox demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
         "text": "AngularJS",
         "url": "listbox/angular",
         "title": {
