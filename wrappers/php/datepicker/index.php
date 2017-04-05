@@ -9,7 +9,8 @@ require_once '../include/header.php';
 $datePicker = new \Kendo\UI\DatePicker('datepicker');
 
 $datePicker->value(new DateTime('10/10/2011', new DateTimeZone('UTC')))
-           ->attr('style', 'width: 100%');
+           ->attr('style', 'width: 100%')
+           ->attr('title', 'datepicker');
 
 echo $datePicker->render();
 ?>
@@ -23,7 +24,8 @@ $monthPicker->value(new DateTime('November 2011', new DateTimeZone('UTC')))
             ->depth('year')
             ->format('MMMM yyyy')
             ->dateInput(true)
-            ->attr('style', 'width: 100%');
+            ->attr('style', 'width: 100%')
+            ->attr('title', 'monthpicker');
 
 echo $monthPicker->render();
 ?>

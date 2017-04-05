@@ -60,7 +60,8 @@
         initialize: function(ui, options) {
             ui.attr({ unselectable: "on" });
             var toolbar = options.editor.toolbar;
-            ui.on("click", $.proxy(function() {
+            ui.attr("aria-controls", options.editor.element.attr("id"))
+            .on("click", $.proxy(function() {
                 this.overflowPopup.toggle();
             }, toolbar));
         },
@@ -176,6 +177,10 @@
                     }
 
                     that._toggleOverflowStyles(this.element, true);
+                    ui.attr("aria-expanded", true);
+                },
+                close: function() {
+                    ui.attr("aria-expanded", false);
                 },
                 activate: proxy(that.focusOverflowPopup, that)
             }).data("kendoPopup");
@@ -559,6 +564,10 @@
                     endGroup();
                     startGroup(toolName, overflowFlaseTools);
                     groupName = newGroupName;
+                }
+
+                if (toolName == OVERFLOWANCHOR) {
+                    template.options.title = that.options.messages.overflowAnchor;
                 }
 
                 template = stringify(template);
