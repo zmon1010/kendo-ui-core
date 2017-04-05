@@ -731,6 +731,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The title of the tool that shows the overflow tools.
+        /// </summary>
+        /// <param name="value">The value that configures the overflowanchor.</param>
+        public EditorMessagesSettingsBuilder OverflowAnchor(string value)
+        {
+            container.OverflowAnchor = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The title of the Rows field in Table Wizard.
         /// </summary>
         /// <param name="value">The value that configures the rows.</param>

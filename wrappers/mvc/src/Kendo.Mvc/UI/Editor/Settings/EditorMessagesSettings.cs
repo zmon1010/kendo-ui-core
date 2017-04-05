@@ -94,6 +94,8 @@ namespace Kendo.Mvc.UI
         
         public string ImageWidth { get; set; }
         
+        public string OverflowAnchor { get; set; }
+        
         public string Rows { get; set; }
         
         public string SelectAllCells { get; set; }
@@ -292,6 +294,11 @@ namespace Kendo.Mvc.UI
             if (ImageWidth.HasValue())
             {
                 json["imageWidth"] = ImageWidth;
+            }
+            
+            if (OverflowAnchor.HasValue())
+            {
+                json["overflowAnchor"] = OverflowAnchor;
             }
             
             if (Rows.HasValue())

@@ -671,6 +671,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The title of the tool that shows the overflow tools.
+        /// </summary>
+        /// <param name="value">The value for OverflowAnchor</param>
+        public EditorMessagesSettingsBuilder OverflowAnchor(string value)
+        {
+            Container.OverflowAnchor = value;
+            return this;
+        }
+
+        /// <summary>
         /// The title of the tool that aligns text in the center.
         /// </summary>
         /// <param name="value">The value for JustifyCenter</param>

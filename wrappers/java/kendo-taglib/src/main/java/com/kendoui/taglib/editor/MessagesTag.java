@@ -645,6 +645,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("outdent", value);
     }
 
+    public java.lang.String getOverflowAnchor() {
+        return (java.lang.String)getProperty("overflowAnchor");
+    }
+
+    public void setOverflowAnchor(java.lang.String value) {
+        setProperty("overflowAnchor", value);
+    }
+
     public java.lang.String getPrint() {
         return (java.lang.String)getProperty("print");
     }

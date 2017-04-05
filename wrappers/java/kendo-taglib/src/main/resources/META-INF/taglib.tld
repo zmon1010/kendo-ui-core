@@ -20860,6 +20860,12 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the tool that shows the overflow tools.</description>
+            <name>overflowAnchor</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the Print tool.</description>
             <name>print</name>
             <rtexprvalue>true</rtexprvalue>

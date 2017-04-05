@@ -143,6 +143,8 @@ namespace Kendo.Mvc.UI
 
         public string Italic { get; set; }
 
+        public string OverflowAnchor { get; set; }
+
         public string JustifyCenter { get; set; }
 
         public string JustifyFull { get; set; }
@@ -524,6 +526,11 @@ namespace Kendo.Mvc.UI
             if (Italic?.HasValue() == true)
             {
                 settings["italic"] = Italic;
+            }
+
+            if (OverflowAnchor?.HasValue() == true)
+            {
+                settings["overflowAnchor"] = OverflowAnchor;
             }
 
             if (JustifyCenter?.HasValue() == true)
