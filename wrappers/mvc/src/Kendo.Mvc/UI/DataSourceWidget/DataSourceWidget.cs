@@ -62,10 +62,10 @@ namespace Kendo.Mvc.UI
 
             if (PivotDataSource != null)
             {
-                writer.Write(this.Name + "= new kendo.data." + ClassName + "(" + Initializer.Serialize(PivotDataSource.ToJson()) + ")");
+                writer.Write(this.Name + " = new kendo.data." + ClassName + "(" + Initializer.Serialize(PivotDataSource.ToJson()) + ");");
             }
             else {
-                writer.Write(this.Name + "= new kendo.data." + ClassName + "(" + Initializer.Serialize(DataSource.ToJson()) + ")");
+                writer.Write(this.Name + " = new kendo.data." + ClassName + "(" + Initializer.Serialize(DataSource.ToJson()) + ");");
             }
         }
 
