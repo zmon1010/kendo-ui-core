@@ -60,6 +60,8 @@
 
             math = Math;
 
+        var SASS_THEMES = ["sass", "default-v2", "bootstrap-v4"];
+
         // Constants ==============================================================
         var NS = ".kendoDiagram",
             CASCADING = "cascading",
@@ -2402,10 +2404,17 @@
             },
 
             _initTheme: function() {
-                var that = this,
-                    themes = dataviz.ui.themes || {},
-                    themeName = ((that.options || {}).theme || "").toLowerCase(),
+                var that = this;
+                var themeName = ((that.options || {}).theme || "").toLowerCase();
+                var themes = dataviz.ui.themes || {};
+                var themeOptions;
+
+                if(SASS_THEMES.indexOf(themeName) != -1) {
+                    themeOptions = dataviz.autoTheme().diagram;
+                }
+                else {
                     themeOptions = (themes[themeName] || {}).diagram;
+                }
 
                 that.options = deepExtend({}, themeOptions, that.options);
                 if (that.options.editable === true) {
