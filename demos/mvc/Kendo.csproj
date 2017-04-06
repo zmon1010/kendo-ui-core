@@ -1280,6 +1280,9 @@
     <Content Include="Views\demos\toolbar\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\toolbar\resizing.cshtml" />
     <Content Include="Views\demos\toolbar\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\upload\directoryupload.cshtml" />
+    <Content Include="Views\demos\dateinput\angular.cshtml" />
+    <Content Include="Views\demos\dateinput\localization-globalization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

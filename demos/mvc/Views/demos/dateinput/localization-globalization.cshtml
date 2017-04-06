@@ -39,16 +39,17 @@
                 font-weight: bold;
                 text-transform: uppercase;
                 font-size: 12px;
-                color: #444;
             }
         </style>
 
         <script>
             function createDateInput() {
                 var element = $("#dateinput");
-                if (element.data("dateinput")) {
-                    element.data("dateinput").destroy();
+                if (element.data("kendoDateInput")) {
+                    element.data("kendoDateInput").destroy();
                     element.empty();
+                    element = $('<input id="dateinput" style="width: 100%" />');
+                    element.appendTo($("#product-view").empty());
                 }
                 element.kendoDateInput({
                     format: "F" ,

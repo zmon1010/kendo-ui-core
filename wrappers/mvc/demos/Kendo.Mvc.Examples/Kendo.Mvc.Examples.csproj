@@ -279,6 +279,7 @@
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
     <Compile Include="Controllers\SpreadStreamProcessing\IndexController.cs" />
     <Compile Include="Controllers\Upload\ChunkUploadController.cs" />
+    <Compile Include="Controllers\Upload\DirectoryUploadController.cs" />
     <Compile Include="Controllers\Upload\CustomDropZoneController.cs" />
     <Compile Include="Controllers\Upload\ValidationController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
@@ -3014,6 +3015,7 @@
     <Content Include="Views\dateinput\keyboard_navigation.cshtml" />
     <Content Include="Views\dateinput\right_to_left_support.cshtml" />
     <Content Include="Views\dateinput\events.cshtml" />
+    <Content Include="Views\upload\directoryupload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

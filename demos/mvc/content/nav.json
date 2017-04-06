@@ -1254,7 +1254,6 @@
       {
         "text": "Basic usage",
         "url": "datetimepicker/index",
-        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI Date and Time picker example",
           "aspnet-mvc": "ASP.NET MVC Date and Time picker example"
@@ -6250,7 +6249,6 @@
       {
         "text": "Basic usage",
         "url": "timepicker/index",
-        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI jQuery Time Picker Example",
           "aspnet-mvc": "ASP.NET MVC TimePicker example | UI for ASP.NET MVC demos"
@@ -7156,6 +7154,7 @@
     "text": "Upload",
     "name": "upload",
     "pro": "true",
+     "new": true,
     "api": { "all": "web/upload" },
     "documentation": {
       "kendo-ui": "getting-started/web/upload/overview",
@@ -7235,6 +7234,19 @@
         "meta": {
           "kendo-ui": "This example shows the custom drop zone functionality of Kendo UI Upload control.",
           "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
+        }
+      },
+	 {
+        "text": "Directory Upload",
+        "url": "upload/directoryupload",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Directory upload demo for File Upload | Kendo UI Upload Demo",
+          "aspnet-mvc": "Directory upload demo for ASP.NET MVC File Upload"
+        },
+        "meta": {
+          "kendo-ui": "This example shows directory upload of Kendo UI Upload control.",
+          "aspnet-mvc": "This example shows directory upload functionality of ASP.NET MVC Upload control."
         }
       },
       {

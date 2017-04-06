@@ -1,28 +1,10 @@
 <div id="example">
     <div class="demo-section k-content">
-        <input id="dateinput" value="10/10/2011" style="width: 100%" />
-        <br />
-        <input id="dateinputmonth" value="10/10/2011" style="width: 100%" />
-        <br />
-        <input id="timeinput" style="width: 100%" />
-        <br />
-        <input id="datetimeinput" style="width: 100%" />
+        <input id="dateinput" title="please enter date" value="10/10/2011" style="width: 100%" />
     </div>
     <script>
         $(document).ready(function () {
-
             $("#dateinput").kendoDateInput();
-
-            $("#dateinputmonth").kendoDateInput({
-                format: "MMMM yyyy"
-            });
-            $("#timeinput").kendoDateInput({
-                format: "HH:mm:ss"
-            });
-            $("#datetimeinput").kendoDateInput({
-                format: "F",
-                value: new Date()
-            });
         });
     </script>
 </div>

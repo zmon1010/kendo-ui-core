@@ -746,7 +746,6 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
-                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -3979,7 +3978,6 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
-                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },
@@ -4522,6 +4520,7 @@
         "text": "Upload",
         "name": "upload",
         "api": "web/upload",
+        "new": true,
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview"
         },
@@ -4561,7 +4560,8 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows the chunk upload functionality of $FRAMEWORK Upload control."
-                }
+                },
+            "new": true
             },
             {
             "text": "Custom Drop Zone",
@@ -4571,6 +4571,16 @@
             },
             "meta": {
               "aspnet-mvc": "This example shows the custom drop zone functionality of $FRAMEWORK Upload control."
+            }
+          },
+          {
+            "text": "Directory Upload",
+            "url": "upload/directoryupload",
+            "title": {
+              "aspnet-mvc": "Directory upload demo for $FRAMEWORK File Upload"
+            },
+            "meta": {
+              "aspnet-mvc": "This example shows the directory upload functionality of $FRAMEWORK Upload control."
             },
             "new": true
           },
@@ -4582,8 +4592,7 @@
             },
             "meta": {
               "aspnet-mvc": "This example shows the validation functionality of $FRAMEWORK Upload control."
-            },
-            "new": true
+            }
           },
           {
               "text": "Events",

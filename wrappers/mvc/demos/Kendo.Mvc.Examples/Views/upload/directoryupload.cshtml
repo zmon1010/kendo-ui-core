@@ -1,0 +1,20 @@
+<div class="box">
+    <h4>Information</h4>
+    <p>
+        The example shows how directories can be selected and dropped over the control.
+        This feature is only supported by browsers that support HTML5 directory and DataTransferItem features.
+    </p>
+</div>
+
+<div class="demo-section k-content">
+    @(Html.Kendo().Upload()
+        .Name("files")
+        .Async(a => a
+            .Save("Save", "Upload")
+            .Remove("Remove", "Upload")
+            .ChunkSize(2000)
+        )
+        .Directory(true)
+        .DirectoryDrop(true)
+    )
+</div>
