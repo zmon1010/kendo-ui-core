@@ -18,7 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 @RequestMapping(value="/upload/")
 public class ChunkUploadController {
     
-    public class FileResult
+    private class FileResult
     {
         public boolean uploaded;
         public String fileUid;
