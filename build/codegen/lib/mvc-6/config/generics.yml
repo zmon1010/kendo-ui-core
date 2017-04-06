@@ -30,10 +30,6 @@
     - :name: T
       :constraint: class
 
-:listbox:
-    - :name: T
-      :constraint: class
-
 :pivotgrid:
     - :name: T
       :constraint: class

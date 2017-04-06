@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ListBoxToolbarSettings class
     /// </summary>
-    public partial class ListBoxToolbarSettings<T> where T : class 
+    public partial class ListBoxToolbarSettings 
     {
         public string Position { get; set; }
 
         public string[] Tools { get; set; }
 
 
-        public ListBox<T> ListBox { get; set; }
+        public ListBox ListBox { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

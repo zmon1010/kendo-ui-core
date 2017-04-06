@@ -6,15 +6,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ListBoxDraggableSettings
     /// </summary>
-    public partial class ListBoxDraggableSettingsBuilder<T>
-        where T : class 
+    public partial class ListBoxDraggableSettingsBuilder
     {
-        public ListBoxDraggableSettingsBuilder(ListBoxDraggableSettings<T> container)
+        public ListBoxDraggableSettingsBuilder(ListBoxDraggableSettings container)
         {
             Container = container;
         }
 
-        protected ListBoxDraggableSettings<T> Container
+        protected ListBoxDraggableSettings Container
         {
             get;
             private set;

@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     public partial class WidgetFactory<TModel>
     {
         /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox{T}"/> bound to the specified data item type.
+        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox"/> bound to the specified data item type.
         /// </summary>
         /// <example>
-        /// <typeparam name="T">The type of the data item</typeparam>
         /// <code lang="CS">
         ///  @(Html.Kendo().ListBox&lt;Order&gt;()
         ///             .Name("ListBox")
@@ -16,15 +15,14 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>      
-        public virtual ListBoxBuilder<T> ListBox<T>() where T : class
+        public virtual ListBoxBuilder ListBox()
         {
-            return new ListBoxBuilder<T>(new ListBox<T>(HtmlHelper.ViewContext));
+            return new ListBoxBuilder(new ListBox(HtmlHelper.ViewContext));
         }
 
         /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox{T}"/> bound to the specified data source.
+        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox"/> bound to the specified data source.
         /// </summary>
-        /// <typeparam name="T">The type of the data item</typeparam>
         /// <param name="dataSource">The data source.</param>
         /// <example>
         /// <code lang="CS">
@@ -33,19 +31,18 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>
-        public virtual ListBoxBuilder<T> ListBox<T>(IEnumerable<T> dataSource) where T : class
+        public virtual ListBoxBuilder ListBox(IEnumerable dataSource)
         {
-            var builder = ListBox<T>();
+            var builder = ListBox();
 
-            //builder.Component.DataSource.Data = dataSource;
+            builder.Component.DataSource.Data = dataSource;
 
             return builder;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox{T}"/> bound an item in ViewData.
+        /// Creates a new <see cref="Kendo.Mvc.UI.ListBox"/> bound an item in ViewData.
         /// </summary>
-        /// <typeparam name="T">Type of the data item</typeparam>
         /// <param name="dataSourceViewDataKey">The data source view data key.</param>
         /// <example>
         /// <code lang="CS">
@@ -54,11 +51,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>
-        public virtual ListBoxBuilder<T> ListBox<T>(string dataSourceViewDataKey) where T : class
+        public virtual ListBoxBuilder ListBox(string dataSourceViewDataKey)
         {
-            var builder = ListBox<T>();
+            var builder = ListBox();
 
-            //builder.Component.DataSource.Data = HtmlHelper.ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable<T>;
+            builder.Component.DataSource.Data = HtmlHelper.ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable;
 
             return builder;
         }

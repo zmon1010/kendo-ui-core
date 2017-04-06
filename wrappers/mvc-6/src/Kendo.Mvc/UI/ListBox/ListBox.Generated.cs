@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ListBox component
     /// </summary>
-    public partial class ListBox<T> where T : class 
+    public partial class ListBox 
     {
         public bool? AutoBind { get; set; }
 
@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI
 
         public ClientHandlerDescriptor Hint { get; set; }
 
-        public ListBoxDraggableSettings<T> Draggable { get; } = new ListBoxDraggableSettings<T>();
+        public ListBoxDraggableSettings Draggable { get; } = new ListBoxDraggableSettings();
 
         public string[] DropSources { get; set; }
 
@@ -35,7 +35,11 @@ namespace Kendo.Mvc.UI
 
         public string Selectable { get; set; }
 
-        public ListBoxToolbarSettings<T> Toolbar { get; } = new ListBoxToolbarSettings<T>();
+        public ClientHandlerDescriptor Template { get; set; }
+
+        public string TemplateId { get; set; }
+
+        public ListBoxToolbarSettings Toolbar { get; } = new ListBoxToolbarSettings();
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -105,6 +109,19 @@ namespace Kendo.Mvc.UI
             if (Selectable?.HasValue() == true)
             {
                 settings["selectable"] = Selectable;
+            }
+
+            if (TemplateId.HasValue())
+            {
+                settings["template"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
+                    )
+                };
+            }
+            else if (Template.HasValue())
+            {
+                settings["template"] = Template;
             }
 
             var toolbar = Toolbar.Serialize();

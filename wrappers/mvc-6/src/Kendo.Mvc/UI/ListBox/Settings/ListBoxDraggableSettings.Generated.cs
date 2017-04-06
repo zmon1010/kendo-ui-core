@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ListBoxDraggableSettings class
     /// </summary>
-    public partial class ListBoxDraggableSettings<T> where T : class 
+    public partial class ListBoxDraggableSettings 
     {
         public ClientHandlerDescriptor Placeholder { get; set; }
 
         public bool? Enabled { get; set; }
 
-        public ListBox<T> ListBox { get; set; }
+        public ListBox ListBox { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

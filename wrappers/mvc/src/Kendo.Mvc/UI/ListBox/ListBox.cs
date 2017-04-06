@@ -1,6 +1,5 @@
 namespace Kendo.Mvc.UI
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -11,12 +10,22 @@ namespace Kendo.Mvc.UI
 
     public class ListBox : WidgetBase
     {
-        private readonly IUrlGenerator urlGenerator;
+        private readonly ListBoxSettingsSerializer settingsSerializer;
+
+        public IUrlGenerator UrlGenerator { get; private set; }
+
+        public string DataSourceId { get; set; }
+
+        public DataSource DataSource { get; private set; }
 
         public ListBox(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator)
             : base(viewContext, initializer)
         {
-            this.urlGenerator = urlGenerator;
+            settingsSerializer = new ListBoxSettingsSerializer(this);
+            UrlGenerator = urlGenerator;
+            DataSource = new DataSource();
+
+
 //>> Initialization
         
             Draggable = new ListBoxDraggableSettings();
@@ -31,8 +40,6 @@ namespace Kendo.Mvc.UI
         public bool? AutoBind { get; set; }
         
         public string ConnectWith { get; set; }
-        
-        public object? DataSource { get; set; }
         
         public string DataTextField { get; set; }
         
@@ -86,11 +93,6 @@ namespace Kendo.Mvc.UI
                 json["connectWith"] = ConnectWith;
             }
             
-            if (DataSource.HasValue)
-            {
-                json["dataSource"] = DataSource;
-            }
-                
             if (DataTextField.HasValue())
             {
                 json["dataTextField"] = DataTextField;
@@ -164,6 +166,9 @@ namespace Kendo.Mvc.UI
                 json["toolbar"] = toolbar;
             }
         //<< Serialization
+
+            // Manually serialized settings go here
+            settingsSerializer.Serialize(json);
 
             writer.Write(Initializer.Initialize(Selector, "ListBox", json));
 

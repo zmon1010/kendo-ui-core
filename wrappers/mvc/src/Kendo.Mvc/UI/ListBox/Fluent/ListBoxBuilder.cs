@@ -3,6 +3,9 @@ namespace Kendo.Mvc.UI.Fluent
     using System.Collections.Generic;
     using System.Collections;
     using System;
+    using Fluent;
+    using System.Web.Mvc;
+    using System.Linq;
 
     /// <summary>
     /// Defines the fluent API for configuring the Kendo ListBox for ASP.NET MVC.
@@ -40,17 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxBuilder ConnectWith(string value)
         {
             container.ConnectWith = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// The data source of the widget which is used render listbox items. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
-        /// </summary>
-        /// <param name="value">The value that configures the datasource.</param>
-        public ListBoxBuilder DataSource(object value)
-        {
-            container.DataSource = value;
 
             return this;
         }
@@ -221,7 +213,59 @@ namespace Kendo.Mvc.UI.Fluent
         //<< Fields
 
 
-        
+        // Place custom settings here
+
+        /// <summary>
+        /// Binds the ListBox to an IEnumerable list.
+        /// </summary>
+        /// <param name="dataSource">The data source.</param>
+        public ListBoxBuilder BindTo(IEnumerable data)
+        {
+            Component.DataSource.Data = data;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Binds the ListBox to a list of SelectListItem.
+        /// </summary>
+        /// <param name="dataSource">The data source.</param>
+        public ListBoxBuilder BindTo(IEnumerable<SelectListItem> dataSource)
+        {
+            if (string.IsNullOrEmpty(Component.DataValueField)
+                && string.IsNullOrEmpty(Component.DataTextField))
+            {
+                DataValueField("Value");
+                DataTextField("Text");
+            }
+
+            Component.DataSource.Data = dataSource
+                .Select(item => new {
+                    Text = item.Text,
+                    Value = item.Value ?? item.Text,
+                    Selected = item.Selected
+                });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the data source configuration of the ListBox.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the data source</param>
+        public ListBoxBuilder DataSource(Action<ReadOnlyDataSourceBuilder> configurator)
+        {
+            configurator(new ReadOnlyDataSourceBuilder(Component.DataSource, Component.ViewContext, Component.UrlGenerator));
+
+            return this;
+        }
+
+        public ListBoxBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
         /// <summary>
         /// Configures the client-side events.
         /// </summary>

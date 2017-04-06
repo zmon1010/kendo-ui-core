@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ListBoxToolbarSettings class
     /// </summary>
-    public partial class ListBoxToolbarSettings<T> where T : class 
+    public partial class ListBoxToolbarSettings
     {
         public Dictionary<string, object> Serialize()
         {
