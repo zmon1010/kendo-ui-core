@@ -7,6 +7,8 @@
     var item;
     var item1;
     var item2;
+    var dataItem1;
+    var dataItem2;
     var dataItems = [{
         id: 1,
         text: "item1"
@@ -47,6 +49,54 @@
     function getList(listbox) {
         return listbox.wrapper.find(".k-listBox");
     }
+
+    module("ListBox api", {
+        setup: function() {
+            listbox = createListBox();
+            item1 = listbox.items().eq(0);
+            dataItem1 = { id: 5, text: "item5" };
+            dataItem2 = { id: 6, text: "item6" };
+        },
+        teardown: function() {
+            destroyListBox(listbox);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("add() should add a single data item", function() {
+        var dataItemsLength = listbox.dataItems().length;
+
+        listbox.add(dataItem1);
+
+        equal(listbox.dataSource.data().length, dataItemsLength + 1);
+    });
+
+    test("add() should append a single list item", function() {
+        var itemsLength = listbox.items().length;
+
+        listbox.add(dataItem1);
+
+        equal(listbox.items().length, itemsLength + 1);
+        equal(listbox.items().last().html(), dataItem1.text);
+    });
+
+    test("add() should add multiple data item", function() {
+        var dataItemsLength = listbox.dataItems().length;
+
+        listbox.add([dataItem1, dataItem2]);
+
+        equal(listbox.dataSource.data().length, dataItemsLength + 2);
+    });
+
+    test("add() should append multiple list items", function() {
+        var itemsLength = listbox.items().length;
+
+        listbox.add([dataItem1, dataItem2]);
+
+        equal(listbox.items().length, itemsLength + 2);
+        equal(listbox.items().last().prev().html(), dataItem1.text);
+        equal(listbox.items().last().html(), dataItem2.text);
+    });
 
     module("ListBox api", {
         setup: function() {
@@ -112,130 +162,6 @@
         var dataItem = listbox.dataItem(null);
 
         equal(dataItem, undefined);
-    });
-
-    module("ListBox api", {
-        setup: function() {
-            listbox1 = createListBox({
-                connectWith: "#listbox2"
-            }, "<select id='listbox1' />");
-
-            listbox2 = createListBox({
-                dataSource: {
-                    data: []
-                }
-            }, "<select id='listbox2' />");
-
-            item1 = listbox1.items().eq(0);
-        },
-        teardown: function() {
-            destroyListBox(listbox1);
-            destroyListBox(listbox2);
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("transfer() should remove a data item from the source listbox dataSource", function() {
-        listbox1.transfer(item1);
-
-        equal(listbox1.dataSource.data().length, 3);
-        equal(getDataItem(listbox1, item1), undefined);
-    });
-
-    test("transfer() should remove element from the source listbox html", function() {
-        listbox1.transfer(item1);
-
-        equal(listbox1.items().length, 3);
-        equal(listbox1.items().eq(0).html(), dataItems[1].text);
-        equal(listbox1.items().eq(1).html(), dataItems[2].text);
-    });
-
-    test("transfer() should remove the selected item from the source listbox dataSource", function() {
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox1.dataSource.data().length, 3);
-        equal(listbox.dataSource.at(0).uid, getId(listbox.items().eq(0)));
-    });
-
-    test("transfer() should remove selected element from the source listbox html", function() {
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox1.items().length, 3);
-        equal(listbox1.items().eq(0).html(), dataItems[1].text);
-        equal(listbox1.items().eq(1).html(), dataItems[2].text);
-    });
-
-    test("transfer() should remove multiple items from the source listbox", function() {
-        listbox1.transfer(listbox1.items());
-
-        equal(listbox1.dataSource.data().length, 0);
-        equal(listbox1.items().length, 0);
-    });
-
-    test("transfer() should add a data item to the destination listbox dataSource", function() {
-        listbox1.transfer(item1);
-        data = listbox2.dataSource.data();
-
-        equal(listbox2.dataSource.data().length, 1);
-        equal(listbox2.dataSource.at(0).uid, getId(item1));
-    });
-
-    test("transfer() should add element to the destination listbox html", function() {
-        listbox1.transfer(item1);
-
-        equal(listbox2.dataSource.data().length, 1);
-        equal(listbox2.items().eq(0).html(), item1.html());
-    });
-
-    test("transfer() should add the selected item to the destination listbox dataSource", function() {
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox2.dataSource.data().length, 1);
-        equal(listbox2.dataSource.at(0).uid, getId(item1));
-    });
-
-    test("transfer() should add selected element to the destination listbox html", function() {
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox2.items().length, 1);
-        equal(listbox2.items().eq(0).html(), item1.html());
-    });
-
-    test("transfer() should add multiple items to the destination listbox", function() {
-        var transferredItems = listbox1.items();
-
-        listbox1.transfer(transferredItems);
-
-        equal(listbox2.dataSource.data().length, transferredItems.length);
-        equal(listbox2.items().length, transferredItems.length);
-    });
-
-    test("transfer() should not change selection in destiantion listbox", function() {
-        listbox2.dataSource.add({ id: 21, text: "item21" });
-        listbox2.select(listbox2.items());
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox2.items().eq(0).hasClass(SELECTED_STATE_CLASS), true);
-    });
-
-    test("transfer() should not change disabled state of items in destiantion listbox", function() {
-        listbox2.dataSource.add({ id: 21, text: "item21" });
-        listbox2.select(listbox2.items().addClass(DISABLED_STATE_CLASS));
-        listbox1.select(item1);
-
-        listbox1.transfer(listbox1.select());
-
-        equal(listbox2.items().eq(0).hasClass(DISABLED_STATE_CLASS), true);
     });
 
     module("ListBox api", {

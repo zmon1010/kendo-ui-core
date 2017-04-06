@@ -8,6 +8,7 @@
     var REORDER = "reorder";
     var REMOVE = "remove";
     var TRANSFER = "transfer";
+    var ADD = "add";
 
     module("ListBox events", {
         teardown: function() {
@@ -86,7 +87,7 @@
         clickMoveDownButton(listbox);
 
         equalDataArrays(args.dataItems, [dataItem]);
-        equalListItemArrays(args.items, $(item));        
+        equalListItemArrays(args.items, $(item));
         equal(args.offset, 1);
     });
 
@@ -144,7 +145,7 @@
         clickMoveUpButton(listbox);
 
         equalDataArrays(args.dataItems, [dataItem]);
-        equalListItemArrays(args.items, $(item));        
+        equalListItemArrays(args.items, $(item));
         equal(args.offset, -1);
     });
 
@@ -193,16 +194,19 @@
                     data: []
                 }
             }, "<select id='listbox2' />");
+
+            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
-    test("transferTo action should trigger transfer event with args", function() {
-        listbox1.bind(TRANSFER, function(e) {
+    test("transferTo action should trigger remove event with args for source listbox", function() {
+        listbox1.bind(REMOVE, function(e) {
             args = e;
         });
         var item = listbox1.items().eq(0);
@@ -215,14 +219,27 @@
         equalListItemArrays(args.items, $(item));
     });
 
-    test("transferTo action should trigger a single transfer event for multiple items", function() {
+    test("transferTo action should trigger add event with args for destination listbox", function() {
+        listbox2.bind(ADD, function(e) {
+            args = e;
+        });
+        var item = listbox1.items().eq(0);
+        var dataItem = listbox1.dataItem(item);
+        listbox1.select(item);
+
+        clickTransferToButton(listbox1);
+
+        equalDataArrays(args.dataItems, [dataItem]);
+        equalListItemArrays(args.items, $(item));
+    });
+
+    test("transferTo action should trigger a single add event for multiple items", function() {
         var calls = 0;
-        listbox1.bind(TRANSFER, function(e) {
+        listbox2.bind(ADD, function(e) {
             calls++;
         });
         var item2 = listbox1.items().eq(1);
         var item3 = listbox1.items().eq(2);
-        var transferSpy = spy(listbox1, TRANSFER);
         listbox1.select(item2.add(item3));
 
         clickTransferToButton(listbox1);
@@ -230,9 +247,23 @@
         equal(calls, 1);
     });
 
-    test("transferTo action should be preventable", function() {
+    test("transferTo action should trigger a single remove event for multiple items", function() {
+        var calls = 0;
+        listbox1.bind(REMOVE, function(e) {
+            calls++;
+        });
+        var item2 = listbox1.items().eq(1);
+        var item3 = listbox1.items().eq(2);
+        listbox1.select(item2.add(item3));
+
+        clickTransferToButton(listbox1);
+
+        equal(calls, 1);
+    });
+
+    test("transferTo should trigger a remove event for source listbox which should be preventable", function() {
         var args = {};
-        listbox1.bind(TRANSFER, function(e) {
+        listbox1.bind(REMOVE, function(e) {
             args = e;
             e.preventDefault();
         });
@@ -244,11 +275,34 @@
 
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, itemsLength);
+        equal(listbox2.items().length, 1);
+    });
+
+    test("transferTo should trigger an add event for destination listbox which should be preventable", function() {
+        var args = {};
+        listbox2.bind(ADD, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+        var item = listbox1.items().eq(0);
+        var itemsLength = listbox1.items().length;
+        listbox1.select(item);
+
+        clickTransferToButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, itemsLength - 1);
+        equal(listbox2.items().length, 0);
     });
 
     module("ListBox events", {
         setup: function() {
-            listbox1 = createListBox({}, "<select id='listbox1' />");
+            listbox1 = createListBox({
+                dataSource: {
+                    data: []
+                },
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
                 dataSource: {
@@ -259,8 +313,7 @@
                         id: 6,
                         text: "item6"
                     }]
-                },
-                connectWith: "#listbox1"
+                }
             }, "<select id='listbox2' />");
 
              $(document.body).append(QUnit.fixture);
@@ -273,13 +326,12 @@
         }
     });
 
-    test("transferFrom action should trigger transfer event of the source listbox", function() {
-        var args = {};
-        listbox2.bind(TRANSFER, function(e) {
+    test("transferFrom action should trigger a remove event with args for source listbox", function() {
+        listbox2.bind(REMOVE, function(e) {
             args = e;
         });
         var item = listbox2.items().eq(0);
-        var dataItem = getDataItem(listbox2, item);
+        var dataItem = listbox2.dataItem(item);
         listbox2.select(item);
 
         clickTransferFromButton(listbox1);
@@ -288,36 +340,80 @@
         equalListItemArrays(args.items, $(item));
     });
 
-    test("transferFrom action should trigger a single transfer event for multiple items", function() {
+    test("transferFrom action should trigger an add event with args for destination listbox", function() {
+        listbox1.bind(ADD, function(e) {
+            args = e;
+        });
+        var item = listbox2.items().eq(0);
+        var dataItem = listbox2.dataItem(item);
+        listbox2.select(item);
+
+        clickTransferFromButton(listbox1);
+
+        equalDataArrays(args.dataItems, [dataItem]);
+        equalListItemArrays(args.items, $(item));
+    });
+
+    test("transferFrom action should trigger a single add event for multiple items", function() {
         var calls = 0;
-        listbox2.bind(TRANSFER, function(e) {
+        listbox1.bind(ADD, function(e) {
             calls++;
         });
-        var item1 = listbox2.items().eq(0);
         var item2 = listbox2.items().eq(1);
-        listbox2.select(item2.add(item1));
+        var item3 = listbox2.items().eq(2);
+        listbox2.select(item2.add(item3));
 
         clickTransferFromButton(listbox1);
 
         equal(calls, 1);
     });
 
-    test("transferFrom action should be preventable", function() {
+    test("transferFrom action should trigger a single remove event for multiple items", function() {
+        var calls = 0;
+        listbox2.bind(REMOVE, function(e) {
+            calls++;
+        });
+        var item2 = listbox2.items().eq(1);
+        var item3 = listbox2.items().eq(2);
+        listbox2.select(item2.add(item3));
+
+        clickTransferFromButton(listbox1);
+
+        equal(calls, 1);
+    });
+
+    test("transferFrom should trigger a remove event for source listbox which should be preventable", function() {
         var args = {};
-        listbox2.bind(TRANSFER,  function(e) {
+        listbox2.bind(REMOVE, function(e) {
             args = e;
             e.preventDefault();
         });
         var item = listbox2.items().eq(0);
-        var itemsLength1 = listbox1.items().length;
-        var itemsLength2 = listbox2.items().length;
+        var itemsLength = listbox2.items().length;
         listbox2.select(item);
 
         clickTransferFromButton(listbox1);
 
         equal(args.isDefaultPrevented(), true);
-        equal(listbox1.items().length, itemsLength1);
-        equal(listbox2.items().length, itemsLength2);
+        equal(listbox1.items().length, 1);
+        equal(listbox2.items().length, itemsLength);
+    });
+
+    test("transferFrom should trigger an add event for destination listbox which should be preventable", function() {
+        var args = {};
+        listbox1.bind(ADD, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+        var item = listbox2.items().eq(0);
+        var itemsLength = listbox2.items().length;
+        listbox2.select(item);
+
+        clickTransferFromButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, 0);
+        equal(listbox2.items().length, itemsLength - 1);
     });
 
     module("ListBox events", {
@@ -331,30 +427,46 @@
                     data: []
                 }
             }, "<select id='listbox2' />");
+
+            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
-    test("transferAllTo action should trigger transfer event with args", function() {
-        var items = listbox1.items();
-        var dataItems = listbox1.dataItems();
-        listbox1.bind(TRANSFER, function(e) {
+    test("transferAllTo action should trigger remove event with args for source listbox", function() {
+        listbox1.bind(REMOVE, function(e) {
             args = e;
         });
+        var items = listbox1.items();
+        var dataItems = listbox1.dataItems();
 
         clickTransferAllToButton(listbox1);
 
         equalDataArrays(args.dataItems, dataItems);
-        equalListItemArrays(args.items, $(items));
+        equalListItemArrays(args.items, items);
     });
 
-    test("transferFrom action should trigger a single transfer event for all items", function() {
+    test("transferAllTo action should trigger add event with args for destination listbox", function() {
+        listbox2.bind(ADD, function(e) {
+            args = e;
+        });
+        var items = listbox1.items();
+        var dataItems = listbox1.dataItems();
+
+        clickTransferAllToButton(listbox1);
+
+        equalDataArrays(args.dataItems, dataItems);
+        equalListItemArrays(args.items, items);
+    });
+
+    test("transferAllTo action should trigger a single add event for multiple items", function() {
         var calls = 0;
-        listbox1.bind(TRANSFER, function(e) {
+        listbox2.bind(ADD, function(e) {
             calls++;
         });
 
@@ -363,17 +475,155 @@
         equal(calls, 1);
     });
 
-    test("transferAllTo action should be preventable", function() {
+    test("transferAllTo action should trigger a single remove event for multiple items", function() {
+        var calls = 0;
+        listbox1.bind(REMOVE, function(e) {
+            calls++;
+        });
+
+        clickTransferAllToButton(listbox1);
+
+        equal(calls, 1);
+    });
+
+    test("transferAllTo should trigger a remove event for source listbox which should be preventable", function() {
         var args = {};
-        listbox1.bind(TRANSFER, function(e) {
+        listbox1.bind(REMOVE, function(e) {
             args = e;
             e.preventDefault();
         });
-        var itemsLength = listbox1.items().length;
+        var items = listbox1.items();
+        var dataItems = listbox1.dataItems();
+        var itemsLength = items.length;
 
         clickTransferAllToButton(listbox1);
 
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, itemsLength);
+        equal(listbox2.items().length, itemsLength);
+    });
+
+    test("transferAllTo should trigger an add event for destination listbox which should be preventable", function() {
+        var args = {};
+        listbox2.bind(ADD, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+        var items = listbox1.items();
+        var dataItems = listbox1.dataItems();
+
+        clickTransferAllToButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, 0);
+        equal(listbox2.items().length, 0);
+    });
+
+    module("ListBox toolbar", {
+        setup: function() {
+            listbox1 = createListBox({
+                dataSource: {
+                    data: []
+                },
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBox({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            $(document.body).append(QUnit.fixture);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferAllFrom action should trigger remove event with args for source listbox", function() {
+        listbox2.bind(REMOVE, function(e) {
+            args = e;
+        });
+        var items = listbox2.items();
+        var dataItems = listbox2.dataItems();
+
+        clickTransferAllFromButton(listbox1);
+
+        equalDataArrays(args.dataItems, dataItems);
+        equalListItemArrays(args.items, items);
+    });
+
+    test("transferAllFrom action should trigger add event with args for destination listbox", function() {
+        listbox1.bind(ADD, function(e) {
+            args = e;
+        });
+        var items = listbox2.items();
+        var dataItems = listbox2.dataItems();
+
+        clickTransferAllFromButton(listbox1);
+
+        equalDataArrays(args.dataItems, dataItems);
+        equalListItemArrays(args.items, items);
+    });
+
+    test("transferAllFrom action should trigger a single add event for multiple items", function() {
+        var calls = 0;
+        listbox1.bind(ADD, function(e) {
+            calls++;
+        });
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(calls, 1);
+    });
+
+    test("transferAllFrom action should trigger a single remove event for multiple items", function() {
+        var calls = 0;
+        listbox2.bind(REMOVE, function(e) {
+            calls++;
+        });
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(calls, 1);
+    });
+
+    test("transferAllFrom should trigger a remove event for source listbox which should be preventable", function() {
+        var args = {};
+        listbox2.bind(REMOVE, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+        var itemsLength = listbox2.items().length;
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, itemsLength);
+        equal(listbox2.items().length, itemsLength);
+    });
+
+    test("transferAllFrom should trigger an add event for destination listbox which should be preventable", function() {
+        var args = {};
+        listbox1.bind(ADD, function(e) {
+            args = e;
+            e.preventDefault();
+        });
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(args.isDefaultPrevented(), true);
+        equal(listbox1.items().length, 0);
+        equal(listbox2.items().length, 0);
     });
 })();

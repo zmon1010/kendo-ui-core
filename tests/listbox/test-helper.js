@@ -67,7 +67,7 @@ function equalListItemArrays(array1, array2) {
 
 /* exported equalDataArrays */
 function equalDataArrays(array1, array2) {
-    equal(array1.length, array2.length);    
+    equal(array1.length, array2.length);
 
     for (var i = 0; i < array1.length; i++) {
         deepEqual(array1[i], array2[i]);
@@ -125,4 +125,9 @@ function clickTransferFromButton(listbox, event) {
 /* exported clickTransferAllToButton */
 function clickTransferAllToButton(listbox, event) {
     clickButton(listbox, "transferAllTo", event);
+}
+
+/* exported clickTransferAllFromButton */
+function clickTransferAllFromButton(listbox, event) {
+    clickButton(listbox, "transferAllFrom", event);
 }

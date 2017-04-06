@@ -21,6 +21,7 @@ var __meta__ = { // jshint ignore:line
     var Class = kendo.Class;
 
     var extend = $.extend;
+    var noop = $.noop;
     var proxy = $.proxy;
 
     var DOT = ".";
@@ -41,6 +42,7 @@ var __meta__ = { // jshint ignore:line
     var outerHeight = kendo._outerHeight;
     var CHANGE = "change";
     var DATABOUND = "dataBound";
+    var ADD = "add";
     var REMOVE = "remove";
     var RECEIVE = "receive";
     var REORDER = "reorder";
@@ -120,6 +122,7 @@ var __meta__ = { // jshint ignore:line
         events: [
             CHANGE,
             DATABOUND,
+            ADD,
             REMOVE,
             REORDER,
             TRANSFER,
@@ -146,10 +149,21 @@ var __meta__ = { // jshint ignore:line
             connectWith: ""
         },
 
-        add: function(dataItem) {
+        add: function(dataItems) {
+            var that = this;
+            var items = dataItems && dataItems.length ? dataItems : [dataItems];
+            var itemsLength = items.length;
+            var i;
+
+            for (i = 0; i < itemsLength; i++) {
+                that._addItem(items[i]);
+            }
+        },
+
+        _addItem: function(dataItem) {
             var that = this;
             var item = that.templates.itemTemplate(dataItem);
-            
+
             that._getList().append(item);
             that._unbindDataSource();
             that.dataSource.add(dataItem);
@@ -164,13 +178,13 @@ var __meta__ = { // jshint ignore:line
                 $(item).insertAfter(list.children().eq(index - 1));
             } else {
                 $(list).prepend(item);
-            }            
+            }
         },
 
         _createDraggable: function() {
             var that = this;
             var options = that.options;
-        
+
             if(options.draggable) {
                 if(!that.options.selectable) {
                     throw new Error("Dragging requires selection to be enabled");
@@ -203,7 +217,7 @@ var __meta__ = { // jshint ignore:line
             var eventData = { dataItem: dataItem, item: $(draggedElement), draggableEvent: e };
 
             that.placeholder = $(that.options.placeholder.call(that, draggedElement));
-          
+
             if(disabled && draggedElement.is(disabled)) {
                 e.preventDefault();
             } else {
@@ -240,12 +254,12 @@ var __meta__ = { // jshint ignore:line
             var list = that._getList()[0];
             var items;
             var node;
-                
+
             if($.contains(list, element)) {
                 if(!that.options.reorderable) {
                     return null;
-                } 
-                
+                }
+
                 items = that.items();
                 node = items.filter(element)[0] || items.has(element)[0];
                 return node && !$(node).hasClass(SELECTED) ? { element: $(node) } : null;
@@ -317,7 +331,7 @@ var __meta__ = { // jshint ignore:line
             var direction;
             var sibling;
             var getSibling;
-                
+
             if(target) {
                 targetCenter = this._getElementCenter(target.element);
 
@@ -386,7 +400,7 @@ var __meta__ = { // jshint ignore:line
             } else if(connectedListBox) {
                 if(!that.trigger(END, $.extend({}, eventData, { action: REMOVE }))) {
                    that._removeItem(draggedItem);
-                } 
+                }
 
                 if(!connectedListBox.trigger(TRANSFER, $.extend({}, eventData, { action: RECEIVE }))) {
                     connectedListBox.add(dataItem);
@@ -600,7 +614,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             that.wrapper = wrapper.addClass(element[0].className).css("display", "");
-            that._innerWrapper = $(wrapper[0].firstChild);            
+            that._innerWrapper = $(wrapper[0].firstChild);
         },
 
         _templates: function () {
@@ -711,8 +725,8 @@ var __meta__ = { // jshint ignore:line
                     prefix + TRANSFER_ALL_TO + '"><span class="k-icon k-i-arrow-double-60-right"></span></span></li>' +
                     prefix + TRANSFER_ALL_FROM + '"><span class="k-icon k-i-arrow-double-60-left"></span></span></li>' +
                     "</ul></div>").insertBefore(that._innerWrapper);
-                
-                
+
+
                 that.toolbar.on(CLICK, "a.k-button", proxy(that._onToolbarClick, that));
             }
         },
@@ -726,7 +740,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _onToolbarClick: function(e) {
-            var that = this;            
+            var that = this;
             var selectedItems = that.select();
 
             e.preventDefault();
@@ -734,7 +748,7 @@ var __meta__ = { // jshint ignore:line
 
             that._executeCommand($(e.currentTarget).data("command"), { items: selectedItems });
         },
-        
+
         _executeCommand: function(commandName, options) {
             var command = CommandFactory.current.create(commandName, { listBox: this, items: options.items });
 
@@ -794,7 +808,7 @@ var __meta__ = { // jshint ignore:line
             listBox: null
         },
 
-        execute: $.noop,
+        execute: noop,
 
         getItems: function() {
             return $(this.listBox.select());
@@ -823,7 +837,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        canMoveItems: $.noop,
+        canMoveItems: noop,
 
         moveItems: function() {
             var that = this;
@@ -839,7 +853,7 @@ var __meta__ = { // jshint ignore:line
             if (!listBox.trigger(REORDER, { dataItems: listBox._dataItems(movedItems), items: $(movedItems), offset: offset })) {
                 while (movedItems.length > 0 && domIndices.length > 0) {
                     movedItem = movedItems[moveAction]();
-                  
+
                     listBox.reorder(movedItem, domIndices[moveAction]() + offset);
                 }
             }
@@ -847,7 +861,7 @@ var __meta__ = { // jshint ignore:line
 
         options: {
             offset: 0,
-            moveAction: "pop"    
+            moveAction: "pop"
         },
 
         itemComparer: function(item1, item2) {
@@ -893,61 +907,78 @@ var __meta__ = { // jshint ignore:line
     });
     CommandFactory.current.register(MOVE_DOWN, MoveDownItemsCommand);
 
-    var TransferItemsToCommand = ListBoxCommand.extend({
+    var TransferItemsCommand = ListBoxCommand.extend({
         execute: function() {
             var that = this;
-            var listBox = that.listBox;
+            var sourceListBox = that.getSourceListBox();
             var items = that.getItems();
+            var dataItems = sourceListBox ? sourceListBox._dataItems(items) : [];
+            var destinationListBox = that.getDestinationListBox();
 
-            if (!listBox.trigger(TRANSFER, { dataItems: listBox._dataItems(items), items: items })) {
-                listBox.transfer(items);
+            if (destinationListBox && items.length > 0) {
+                if (!destinationListBox.trigger(ADD, { dataItems: dataItems, items: items })) {
+                    destinationListBox.add(dataItems);
+                }
+
+                if (!sourceListBox.trigger(REMOVE, { dataItems: dataItems, items: items })) {
+                    sourceListBox.remove(items);
+                }
             }
+        },
+
+        getSourceListBox: noop,
+        getDestinationListBox: noop
+    });
+
+    var TransferItemsToCommand = TransferItemsCommand.extend({
+        getSourceListBox: function() {
+            return this.listBox;
+        },
+
+        getDestinationListBox: function() {
+            var sourceListBox = this.getSourceListBox();
+            return sourceListBox ? $(sourceListBox.options.connectWith).data(KENDO_LISTBOX) : null;
+        },
+
+        getItems: function() {
+            var sourceListBox = this.getSourceListBox();
+            return sourceListBox ? $(sourceListBox.select()) : $();
         }
     });
     CommandFactory.current.register(TRANSFER_TO, TransferItemsToCommand);
 
-    var TransferItemsFromCommand = ListBoxCommand.extend({
-        execute: function() {
-            var that = this;
-            var sourceListBox = that._getSourceListBox();
-            var items = sourceListBox ? sourceListBox.select() : $();
-
-            if (sourceListBox && !sourceListBox.trigger(TRANSFER, { dataItems: sourceListBox._dataItems(items), items: $(items) })) {
-                sourceListBox.transfer(items);
-            }
+    var TransferItemsFromCommand = TransferItemsCommand.extend({
+        getSourceListBox: function() {
+            var destinationListBox = this.getDestinationListBox();
+            return destinationListBox ? $(destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
         },
 
-        _getSourceListBox: function() {
-            var that = this;
-            var listBoxElements = $("[data-role='listbox']");
-            var listBoxId = "#" + that.listBox.element.attr("id");
-            var sourceListBox;
-            var i;
+        getDestinationListBox: function() {
+            return this.listBox;
+        },
 
-            for (i = 0; i < listBoxElements.length; i++) {
-                sourceListBox = $(listBoxElements[i]).data(KENDO_LISTBOX);
-
-                if (sourceListBox && sourceListBox.options.connectWith === listBoxId) {
-                    return sourceListBox;
-                }
-            }
-
-            return null;
+        getItems: function() {
+            var sourceListBox = this.getSourceListBox();
+            return sourceListBox ? $(sourceListBox.select()) : $();
         }
     });
     CommandFactory.current.register(TRANSFER_FROM, TransferItemsFromCommand);
 
-    var TransferAllItemsToCommand = ListBoxCommand.extend({
-        execute: function() {
-            var listBox = this.listBox;
-            var items = listBox.items();
-
-            if (!listBox.trigger(TRANSFER, { dataItems: listBox.dataItems(), items: items })) {
-                listBox.transfer(items);
-            }
+    var TransferAllItemsToCommand = TransferItemsToCommand.extend({
+        getItems: function() {
+            var sourceListBox = this.getSourceListBox();
+            return sourceListBox ? sourceListBox.items() : $();
         }
     });
     CommandFactory.current.register(TRANSFER_ALL_TO, TransferAllItemsToCommand);
+
+    var TransferAllItemsFromCommand = TransferItemsFromCommand.extend({
+        getItems: function() {
+            var sourceListBox = this.getSourceListBox();
+            return sourceListBox ? sourceListBox.items() : $();
+        }
+    });
+    CommandFactory.current.register(TRANSFER_ALL_FROM, TransferAllItemsFromCommand);
 
 })(window.kendo.jQuery);
 
