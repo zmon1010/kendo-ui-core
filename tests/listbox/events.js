@@ -295,6 +295,19 @@
         equal(listbox2.items().length, 0);
     });
 
+    test("transferTo should not change selection if remove event for source listbox is prevented", function() {
+        listbox1.bind(REMOVE, function(e) {
+            e.preventDefault();
+        });
+        var item = listbox1.items().eq(0);
+        listbox1.select(item);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equalListItems(listbox1.select(), item);
+    });
+
     module("ListBox events", {
         setup: function() {
             listbox1 = createListBox({
@@ -414,6 +427,19 @@
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, 0);
         equal(listbox2.items().length, itemsLength - 1);
+    });
+
+    test("transferFrom should not change selection if remove event for source listbox is prevented", function() {
+        listbox2.bind(REMOVE, function(e) {
+            e.preventDefault();
+        });
+        var item = listbox2.items().eq(0);
+        listbox2.select(item);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], item[0]);
     });
 
     module("ListBox events", {

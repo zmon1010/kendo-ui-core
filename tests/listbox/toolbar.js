@@ -19,14 +19,18 @@
     }
 
     module("ListBox toolbar", {
+        setup: function() {
+            listbox = createListBox();
+            $(document.body).append(QUnit.fixture);
+        },
         teardown: function() {
             destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
     test("remove action should not work without selection", function() {
-        listbox = createListBox();
         var itemsLength = listbox.items().length;
 
         clickRemoveButton(listbox);
@@ -35,7 +39,6 @@
     });
 
     test("remove action should call listbox.remove()", function() {
-        listbox = createListBox();
         var item = listbox.items().eq(0);
         var removeStub = stub(listbox, REMOVE);
         listbox.select(item);
@@ -44,6 +47,15 @@
 
         equal(removeStub.args(REMOVE).length, 1);
         equal(removeStub.args(REMOVE)[0][0], item[0]);
+    });
+
+    test("remove action should clear the selection", function() {
+        var item = listbox.items().eq(0);
+        listbox.select(item);
+
+        clickRemoveButton(listbox);
+
+        equal(listbox.select().length, 0);
     });
 
     module("ListBox toolbar", {
@@ -331,6 +343,10 @@
             }, "<select id='listbox2' />");
 
             $(document.body).append(QUnit.fixture);
+
+            item1 = listbox1.items().eq(0);
+            item2 = listbox1.items().eq(1);
+            item3 = listbox1.items().eq(2);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -373,6 +389,27 @@
         equalDataArrays(removeStub.args(REMOVE)[0], $(item));
     });
 
+    test("transferTo action should select the next non-disabled item", function() {
+        var dataItem = listbox1.dataItem(item1);
+        listbox1.select(item1);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equalListItems(listbox1.select(), item2);
+    });
+
+    test("transferTo action should not selected disabled items", function() {
+        var dataItem = listbox1.dataItem(item1);
+        listbox1.enable(item2, false);
+        listbox1.select(item1);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equal(listbox1.select()[0], item3[0]);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             listbox1 = createListBox({
@@ -384,11 +421,21 @@
                     data: [{
                         id: 5,
                         text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }, {
+                        id: 7,
+                        text: "item7"
                     }]
                 }
             }, "<select id='listbox2' />");
 
             $(document.body).append(QUnit.fixture);
+
+            item1 = listbox2.items().eq(0);
+            item2 = listbox2.items().eq(1);
+            item3 = listbox2.items().eq(2);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -399,12 +446,13 @@
     });
 
     test("transferFrom action should not work without selection", function() {
-        var itemsLength = listbox1.items().length;
+        var itemsLength1 = listbox1.items().length;
+        var itemsLength2 = listbox2.items().length;
 
         clickTransferFromButton(listbox1);
 
-        equal(listbox1.items().length, itemsLength);
-        equal(listbox2.items().length, 1);
+        equal(listbox1.items().length, itemsLength1);
+        equal(listbox2.items().length, itemsLength2);
     });
 
     test("transferFrom action should call add() for destination listbox", function() {
@@ -431,6 +479,27 @@
         equalDataArrays(removeStub.args(REMOVE)[0], $(item));
     });
 
+    test("transferFrom action should select the next non-disabled item", function() {
+        var dataItem = listbox2.dataItem(item1);
+        listbox2.select(item1);
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], item2[0]);
+    });
+
+    test("transferFrom action should skip disabled item", function() {
+        var dataItem = listbox2.dataItem(item1);
+        listbox2.enable(item2, false);
+        listbox2.select(item1);
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], item3[0]);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             listbox1 = createListBox({
@@ -442,11 +511,17 @@
                     data: []
                 }
             }, "<select id='listbox2' />");
+
+            item1 = listbox1.items().eq(0);
+            item2 = listbox1.items().eq(1);
+
+            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
         }
     });
 
@@ -480,6 +555,15 @@
         equalListItemArrays(removeStub.args(REMOVE)[0], items);
     });
 
+    test("transferAllTo action should skip disabled items", function() {
+        listbox1.enable(item2, false);
+
+        clickTransferAllToButton(listbox1);
+
+        equal(listbox1.items().length, 1)
+        equalListItems(listbox1.items()[0], item2);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             listbox1 = createListBox({
@@ -500,6 +584,9 @@
                     }]
                 }
             }, "<select id='listbox2' />");
+
+            item1 = listbox2.items().eq(0);
+            item2 = listbox2.items().eq(1);
 
             $(document.body).append(QUnit.fixture);
         },
@@ -586,5 +673,14 @@
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, 0);
         equal(listbox2.items().length, 0);
+    });
+
+    test("transferAllFrom action should skip disabled items", function() {
+        listbox2.enable(item2, false);
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(listbox2.items().length, 1)
+        equalListItems(listbox2.items()[0], item2);
     });
 })();

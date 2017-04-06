@@ -164,7 +164,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var item = that.templates.itemTemplate(dataItem);
 
-            that._getList().append(item);
+            $(item).attr(kendoAttr(UNIQUE_ID), dataItem.uid).appendTo(that._getList());
             that._unbindDataSource();
             that.dataSource.add(dataItem);
             that._bindDataSource();
@@ -458,9 +458,9 @@ var __meta__ = { // jshint ignore:line
 
         dataItem: function(element) {
             var uniqueIdAttr = kendoAttr(UNIQUE_ID);
-            var uniqueId = $(element).closest("[" + uniqueIdAttr + "]").attr(uniqueIdAttr);
+            var uid = $(element).attr(uniqueIdAttr) || $(element).closest("[" + uniqueIdAttr + "]").attr(uniqueIdAttr);
 
-            return this.dataSource.getByUid(uniqueId);
+           return this.dataSource.getByUid(uid);
         },
 
         _dataItems: function(items) {
@@ -741,16 +741,15 @@ var __meta__ = { // jshint ignore:line
 
         _onToolbarClick: function(e) {
             var that = this;
-            var selectedItems = that.select();
 
             e.preventDefault();
             e.stopPropagation();
 
-            that._executeCommand($(e.currentTarget).data("command"), { items: selectedItems });
+            that._executeCommand($(e.currentTarget).data("command"), { listBox: that });
         },
 
         _executeCommand: function(commandName, options) {
-            var command = CommandFactory.current.create(commandName, { listBox: this, items: options.items });
+            var command = CommandFactory.current.create(commandName, options);
 
             if (command) {
                 command.execute();
@@ -808,11 +807,12 @@ var __meta__ = { // jshint ignore:line
             listBox: null
         },
 
-        execute: noop,
-
         getItems: function() {
             return $(this.listBox.select());
-        }
+        },
+
+        execute: noop,
+        updateSelection: noop
     });
 
     var RemoveItemsCommand = ListBoxCommand.extend({
@@ -823,7 +823,12 @@ var __meta__ = { // jshint ignore:line
 
             if (!listBox.trigger(REMOVE, { dataItems: listBox._dataItems(items), items: items })) {
                 listBox.remove(items);
+                that.updateSelection();
             }
+        },
+
+        updateSelection: function() {
+            this.listBox.clearSelection();
         }
     });
     CommandFactory.current.register(REMOVE, RemoveItemsCommand);
@@ -908,12 +913,17 @@ var __meta__ = { // jshint ignore:line
     CommandFactory.current.register(MOVE_DOWN, MoveDownItemsCommand);
 
     var TransferItemsCommand = ListBoxCommand.extend({
+        options: {
+            itemSelector: ENABLED_ITEM_SELECTOR
+        },
+
         execute: function() {
             var that = this;
             var sourceListBox = that.getSourceListBox();
-            var items = that.getItems();
+            var items = that.getItems().filter(that.options.itemSelector);
             var dataItems = sourceListBox ? sourceListBox._dataItems(items) : [];
             var destinationListBox = that.getDestinationListBox();
+            var updatedSelection = that.getUpdatedSelection(items);
 
             if (destinationListBox && items.length > 0) {
                 if (!destinationListBox.trigger(ADD, { dataItems: dataItems, items: items })) {
@@ -922,7 +932,28 @@ var __meta__ = { // jshint ignore:line
 
                 if (!sourceListBox.trigger(REMOVE, { dataItems: dataItems, items: items })) {
                     sourceListBox.remove(items);
+                    that.updateSelection(updatedSelection);
                 }
+            }
+        },
+
+        getUpdatedSelection: function(items) {
+            var that = this;
+            var sourceListBox = that.getSourceListBox();
+            var nextItem = $(items).nextAll(that.options.itemSelector)[0];
+
+            if (nextItem) {
+                return nextItem;
+            } else {
+                return sourceListBox ? sourceListBox.items().not(items).filter(that.options.itemSelector).first() : $();
+            }
+        },
+
+        updateSelection: function(items) {
+            var sourceListBox = this.getSourceListBox();
+
+            if (sourceListBox) {
+                $(sourceListBox.select(items));
             }
         },
 

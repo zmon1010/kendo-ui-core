@@ -53,7 +53,7 @@ function createListBox(options, html) {
 
 /* exported equalListItems */
 function equalListItems(item1, item2) {
-    equal(item1[0], item2[0]);
+    equal($(item1).data("uid"), $(item2).data("uid"));
 }
 
 /* exported equalListItemArrays  */
