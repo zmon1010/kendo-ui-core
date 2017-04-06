@@ -9,6 +9,7 @@ require_once '../include/header.php';
 $dateInput = new \Kendo\UI\DateInput('dateinput');
 
 $dateInput->value(new DateTime('10/10/2011', new DateTimeZone('UTC')))
+           ->attr('title', 'date input')
            ->attr('style', 'width: 100%');
 
 echo $dateInput->render();
@@ -19,6 +20,7 @@ echo $dateInput->render();
 $dateinput2 = new \Kendo\UI\DateInput('dateinput2');
 
 $dateinput2->format('MMMM yyyy')
+            ->attr('title', 'date input')
             ->attr('style', 'width: 100%');
 
 echo $dateinput2->render();
