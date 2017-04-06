@@ -2291,7 +2291,18 @@ namespace Kendo.Mvc.Resources {
                 return ResourceManager.GetString("Upload_InvalidFileExtension", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to invalid files.
+        /// </summary>
+        public static string Upload_InvalidFiles
+        {
+            get
+            {
+                return ResourceManager.GetString("Upload_InvalidFiles", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to clear files.
         /// </summary>

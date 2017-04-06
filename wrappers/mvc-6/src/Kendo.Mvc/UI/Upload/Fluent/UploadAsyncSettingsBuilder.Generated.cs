@@ -45,6 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.
+		/// This property is only in use when the async.batch is set false.
         /// </summary>
         /// <param name="value">The value for ChunkSize</param>
         public UploadAsyncSettingsBuilder ChunkSize(double value)

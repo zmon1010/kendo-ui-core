@@ -36,6 +36,7 @@ namespace Kendo.Mvc.UI
 
         /// <summary>
         /// Gets or sets a value indicating the chunk size
+        /// This property is only in use when the async.batch is set false.
         /// </summary>
         double? ChunkSize { get; set; }
 

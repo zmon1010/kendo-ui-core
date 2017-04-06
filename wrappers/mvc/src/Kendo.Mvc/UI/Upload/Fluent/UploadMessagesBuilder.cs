@@ -323,6 +323,27 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets invalid files
+        /// </summary>
+        /// <param name="invalidFiles">New invalid files.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Messages(msgs => msgs
+        ///                 .InvalidFiles("invalid files")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadMessagesBuilder InvalidFiles(string invalidFilesMessage)
+        {
+            messages.InvalidFiles = invalidFilesMessage;
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets clear file text
         /// </summary>
         /// <param name="clearSelectedFilesMessage">New clear file text.</param>

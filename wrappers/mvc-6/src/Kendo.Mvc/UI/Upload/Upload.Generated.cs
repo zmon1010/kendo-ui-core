@@ -13,6 +13,10 @@ namespace Kendo.Mvc.UI
     {
         public UploadAsyncSettings Async { get; } = new UploadAsyncSettings();
 
+        public bool? Directory { get; set; }
+
+        public bool? DirectoryDrop { get; set; }
+
         public string DropZone { get; set; }
 
         public List<UploadFile> Files { get; set; } = new List<UploadFile>();
@@ -36,6 +40,16 @@ namespace Kendo.Mvc.UI
             if (async.Any())
             {
                 settings["async"] = async;
+            }
+
+            if (Directory.HasValue)
+            {
+                settings["directory"] = Directory;
+            }
+
+            if (DirectoryDrop.HasValue)
+            {
+                settings["directoryDrop"] = DirectoryDrop;
             }
 
             if (DropZone?.HasValue() == true)

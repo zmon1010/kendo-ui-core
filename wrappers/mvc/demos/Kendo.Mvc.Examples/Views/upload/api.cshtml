@@ -12,7 +12,7 @@
 <form method="post">
     <div class="demo-section k-content">
         @(Html.Kendo().Upload()
-            .Name("files")
+            .Name("files").Messages(m=>m.InvalidFiles("lalal"))
         )
     </div>
 </form>

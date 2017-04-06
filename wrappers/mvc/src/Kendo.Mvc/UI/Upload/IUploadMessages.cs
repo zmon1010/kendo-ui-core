@@ -32,6 +32,8 @@ namespace Kendo.Mvc.UI
 
         string InvalidFileExtension { get; set; }
 
+        string InvalidFiles { get; set; }
+
         string ClearSelectedFiles { get; set; }
 
         IDictionary<string, object> ToJson();

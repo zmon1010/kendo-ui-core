@@ -11,6 +11,16 @@ namespace Kendo.Mvc.TagHelpers
     {
         public UploadAsyncSettingsTagHelper Async { get; set; }
         /// <summary>
+        /// Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+        /// </summary>
+        public bool? Directory { get; set; }
+
+        /// <summary>
+        /// Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+        /// </summary>
+        public bool? DirectoryDrop { get; set; }
+
+        /// <summary>
         /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
         /// </summary>
         public string DropZone { get; set; }
@@ -62,6 +72,16 @@ namespace Kendo.Mvc.TagHelpers
                 {
                     settings["async"] = async;
                 }
+            }
+
+            if (Directory.HasValue)
+            {
+                settings["directory"] = Directory;
+            }
+
+            if (DirectoryDrop.HasValue)
+            {
+                settings["directoryDrop"] = DirectoryDrop;
             }
 
             if (DropZone?.HasValue() == true)

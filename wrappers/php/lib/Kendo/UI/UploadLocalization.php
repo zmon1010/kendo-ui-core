@@ -60,6 +60,15 @@ class UploadLocalization extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the text for invalid files validation message when batch property is true and more than one file is not passing the validation.
+    * @param string $value
+    * @return \Kendo\UI\UploadLocalization
+    */
+    public function invalidFiles($value) {
+        return $this->setProperty('invalidFiles', $value);
+    }
+
+    /**
     * Sets the text for an invalid maxFileSize validation message.
     * @param string $value
     * @return \Kendo\UI\UploadLocalization

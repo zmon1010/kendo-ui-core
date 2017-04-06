@@ -38,6 +38,24 @@ for more details.
     }
 
     /**
+    * Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+    * @param boolean $value
+    * @return \Kendo\UI\Upload
+    */
+    public function directory($value) {
+        return $this->setProperty('directory', $value);
+    }
+
+    /**
+    * Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+    * @param boolean $value
+    * @return \Kendo\UI\Upload
+    */
+    public function directoryDrop($value) {
+        return $this->setProperty('directoryDrop', $value);
+    }
+
+    /**
     * Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
     * @param string $value
     * @return \Kendo\UI\Upload
