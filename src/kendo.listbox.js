@@ -14,6 +14,7 @@ var __meta__ = { // jshint ignore:line
     var kendo = window.kendo;
     var kendoAttr = kendo.attr;
     var data = kendo.data;
+    var keys = kendo.keys;
     var Widget = kendo.ui.Widget;
     var DataSource = data.DataSource;
     var Selectable = kendo.ui.Selectable;
@@ -25,19 +26,23 @@ var __meta__ = { // jshint ignore:line
     var proxy = $.proxy;
 
     var DOT = ".";
-
+    
     var KENDO_LISTBOX = "kendoListBox";
     var NS = DOT + KENDO_LISTBOX;
     var DISABLED_STATE_CLASS = "k-state-disabled";
     var SELECTED_STATE_CLASS = "k-state-selected";
-    var ENABLED_ITEM_SELECTOR = ".k-list:not(.k-state-disabled) > .k-item:not(.k-state-disabled)";
+    var ENABLED_ITEM_SELECTOR = ".k-item:not(.k-state-disabled)";
+    var ENABLED_ITEMS_SELECTOR = ".k-list:not(.k-state-disabled) >" + ENABLED_ITEM_SELECTOR;
     var TOOLBAR_CLASS = "k-listbox-toolbar";
+    var FOCUSED_CLASS = "k-state-focused";
     var DRAG_CLUE_CLASS = "k-drag-clue";
     var DROP_HINT_CLASS = "k-drop-hint";
     var LIST_CLASS = "k-reset k-list";
-    var LIST_SELECTOR = ".k-reset, .k-list";
+    var LIST_SELECTOR = ".k-reset.k-list";
 
     var CLICK = "click" + NS;
+    var KEYDOWN = "keydown" + NS;
+    var BLUR = "blur" + NS;
     var outerWidth = kendo._outerWidth;
     var outerHeight = kendo._outerHeight;
     var CHANGE = "change";
@@ -56,6 +61,7 @@ var __meta__ = { // jshint ignore:line
     var BEFORE_MOVE = "beforeMove";
     var DRAGGEDCLASS = "paleClass";
     var UNIQUE_ID = "uid";
+    var TABINDEX = "tabindex";
 
     var MOVE_UP_OFFSET = -1;
     var MOVE_DOWN_OFFSET = 1;
@@ -63,7 +69,6 @@ var __meta__ = { // jshint ignore:line
     var MOVE = "move";
     var END = "end";
     var DEFAULT_FILTER = "ul.k-reset.k-list>li.k-item";
-    var SELECTED = "k-state-selected";
 
     function getSortedDomIndices(items) {
         var indices = $.map(items, function(item) {
@@ -102,6 +107,7 @@ var __meta__ = { // jshint ignore:line
             that._dataSource();
             that._createToolbar();
             that._createDraggable();
+            that._createNavigatable();
         },
 
         destroy: function() {
@@ -112,6 +118,10 @@ var __meta__ = { // jshint ignore:line
             that._unbindDataSource();
             that._destroySelectable();
             that._destroyToolbar();
+            that.wrapper.off(NS);
+            if(that._target){
+                that._target = null;
+            }
             if(that._draggable) {
                 that._draggable.destroy();
             }
@@ -145,7 +155,8 @@ var __meta__ = { // jshint ignore:line
             placeholder: null,
             disabled: null,
             filter: DEFAULT_FILTER,
-            connectWith: ""
+            connectWith: "",
+            navigatable: false
         },
 
         add: function(dataItems) {
@@ -178,6 +189,138 @@ var __meta__ = { // jshint ignore:line
             } else {
                 $(list).prepend(item);
             }
+        },
+
+        _createNavigatable: function() {
+            var that = this;
+            var options = that.options;
+            var tabIndex;
+
+            if(options.navigatable) {
+                if(!that.options.selectable) {
+                    throw new Error("Keyboard navigation requires selection to be enabled");
+                }
+                that.wrapper.on(CLICK, ENABLED_ITEMS_SELECTOR, proxy(that._click, that))
+                            .on(KEYDOWN, proxy(that._keyDown, that))
+                            .on(BLUR, LIST_SELECTOR, proxy(that._blur, that));
+
+                tabIndex = that.element.attr(TABINDEX);            
+                that._tabIndex = !isNaN(tabIndex) ? tabIndex : 0;
+            }
+        },
+
+        _blur: function() {
+            if(this._target) {
+                this._target.removeClass(FOCUSED_CLASS);
+            }
+            this._target = null;
+        },
+
+        _click: function(e) {
+            var that = this;
+            var target = $(e.currentTarget);
+            var oldTarget = that._target;
+
+            if(oldTarget) {
+                oldTarget.removeClass(FOCUSED_CLASS);
+            }
+
+            that._target = target;
+            target.addClass(FOCUSED_CLASS);
+            if(that._getList()[0] !== kendo._activeElement()){
+                that.focus();
+            }
+        },
+
+        _getNavigatableItem: function(key) {
+            var that = this;
+            var current;
+
+            if(!that._target){
+                current = that.items().filter(ENABLED_ITEM_SELECTOR).first();
+            }  else {
+                current = that._target;
+            }
+
+            if(key === keys.UP && that._target) {
+                current = that._target.prev(ENABLED_ITEM_SELECTOR);
+            }
+
+            if(key === keys.DOWN && that._target) {
+                current = that._target.next(ENABLED_ITEM_SELECTOR);
+            }
+
+            return current.length ? current : null;
+        },
+
+        _keyDown: function(e) {
+            var that = this;
+            var key = e.keyCode;
+            var current = that._getNavigatableItem(key);
+            var shouldPreventDefault;
+            var index;
+
+            if(key == keys.DELETE) {
+                that.remove(that.select());
+                if(that._target) {
+                    that._target.removeClass(FOCUSED_CLASS);
+                    that._target = null;
+                }
+                shouldPreventDefault = true;
+            } else if(key === keys.DOWN || key === keys.UP) {
+                if(that._target) {
+                    that._target.removeClass(FOCUSED_CLASS);
+                }
+                if (e.shiftKey) {
+                    if(e.ctrlKey) {
+                        index = that.items().index(current);
+                        if(!that.trigger(REORDER, { dataItem: that.dataItem(that._target), item: $(that._target) })) {
+                            that.reorder(that._target, index);
+                            return;
+                        }
+                    } else {
+                        that.select(that._target);
+                        that.select(current);
+                    }
+                } 
+                that._target = current;
+                that._target.addClass(FOCUSED_CLASS);
+                shouldPreventDefault = true;
+            } else if(key == keys.SPACEBAR) {
+                if(e.ctrlKey && that._target) {
+                   if(that._target.hasClass(SELECTED_STATE_CLASS)) {
+                       that._target.removeClass(SELECTED_STATE_CLASS);
+                   } else {
+                       that.select(that._target);
+                   }
+                } else {
+                    that.clearSelection();
+                    that.select(that._target);
+                } 
+                shouldPreventDefault = true;
+            } else if(e.ctrlKey && key == keys.RIGHT) {
+                if(e.shiftKey) {
+                   that._executeCommand(TRANSFER_ALL_TO);
+                } else {
+                   that._executeCommand(TRANSFER_TO);
+                }
+                shouldPreventDefault = true;
+            } else if(e.ctrlKey && key == keys.LEFT) {
+                if(e.shiftKey) {
+                   that._executeCommand(TRANSFER_ALL_FROM);
+                } else {
+                   that._executeCommand(TRANSFER_FROM);
+                }
+                shouldPreventDefault = true;
+            }
+            
+            if(shouldPreventDefault) {
+                e.preventDefault();
+            }
+        },
+
+        focus: function() {
+            this._getList().focus();
         },
 
         _createDraggable: function() {
@@ -261,23 +404,11 @@ var __meta__ = { // jshint ignore:line
 
                 items = that.items();
                 node = items.filter(element)[0] || items.has(element)[0];
-                return node && !$(node).hasClass(SELECTED) ? { element: $(node) } : null;
+                return node && !$(node).hasClass(SELECTED_STATE_CLASS) ? { element: $(node) } : null;
             } else if (list == element && !that.items().length) {
                 return { element: that.element, appendToBottom: true };
             } else {
                 return that._searchConnectedListBox(element);
-            }
-        },
-
-        indexOf: function(element) {
-            var items = this._items();
-            var placeholder = this.placeholder;
-            var draggedElement = this.draggedElement;
-
-            if(placeholder && element[0] == placeholder[0]) {
-                return items.not(draggedElement).index(element);
-            } else {
-                return items.not(placeholder).index(element);
             }
         },
 
@@ -489,7 +620,7 @@ var __meta__ = { // jshint ignore:line
                 return selectable.value();
             }
 
-            enabledItems = that.items().filter(items).filter(ENABLED_ITEM_SELECTOR);
+            enabledItems = that.items().filter(items).filter(ENABLED_ITEMS_SELECTOR);
 
             if (!selectable.options.multiple) {
                 selectable.clear();
@@ -629,6 +760,9 @@ var __meta__ = { // jshint ignore:line
             }
             html+= "</ul>";
             that._innerWrapper.html(html);
+            if(that.options.navigatable) {
+                that._getList().attr(TABINDEX, that._tabIndex);
+            }
             that.element.find("*").off().end().html(html);
             that._setItemIds();
             that._destroyToolbar();

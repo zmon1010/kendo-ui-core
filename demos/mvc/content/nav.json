@@ -3264,6 +3264,18 @@
           "kendo-ui": "",
           "aspnet-mvc": ""
         }
+      },
+	    {
+        "text": "Keyboard navigation",
+        "url": "listbox/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI ListBox widget",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
+          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
+        }
       }
     ],
     "category": "Data Management"

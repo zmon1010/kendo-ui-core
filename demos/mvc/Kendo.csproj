@@ -763,7 +763,7 @@
     <Content Include="Views\demos\linear-gauge\mvvm.cshtml" />
     <Content Include="Views\demos\linear-gauge\scale-options.cshtml" />
     <Content Include="Views\demos\listbox\index.cshtml" />
-    <Content Include="Views\demos\listbox\angular.cshtml" /> 
+    <Content Include="Views\demos\listbox\angular.cshtml" />
     <Content Include="Views\demos\listview\editing.cshtml" />
     <Content Include="Views\demos\listview\index.cshtml" />
     <Content Include="Views\demos\listview\keyboard-navigation.cshtml" />
@@ -1285,6 +1285,9 @@
     <Content Include="Views\demos\upload\directoryupload.cshtml" />
     <Content Include="Views\demos\dateinput\angular.cshtml" />
     <Content Include="Views\demos\dateinput\localization-globalization.cshtml" />
+    <Content Include="Views\demos\listbox\angular.cshtml" />
+    <Content Include="Views\demos\listbox\index.cshtml" />
+    <Content Include="Views\demos\listbox\keyboard-navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
