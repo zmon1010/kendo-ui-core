@@ -59,10 +59,7 @@ echo $dateInput->render();
             dateinput.readonly();
         });
 
-        $("#value").kendoDatePicker({
-            change: setValue,
-            dateinput: true
-        });
+        $("#value").kendoDatePicker();
 
         $("#set").click(setValue);
 

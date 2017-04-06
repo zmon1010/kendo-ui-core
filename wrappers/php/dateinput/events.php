@@ -16,14 +16,6 @@ echo $dateInput->render();
      <div class="console"></div>
 </div>
 <script>
-    function open() {
-        kendoConsole.log("Open");
-    }
-
-    function close() {
-        kendoConsole.log("Close");
-    }
-
     function change() {
         kendoConsole.log("Change :: " + kendo.toString(this.value(), 'd'));
     }
