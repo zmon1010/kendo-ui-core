@@ -13,6 +13,13 @@
                         <input type="search" id="search" name="search" required validationMessage="Select movie" style="width: 220px;" /><span class="k-invalid-msg" data-for="search"></span>
                     </li>
                     <li>
+                        <label for="date" class="required">Date</label>
+                        <input type="text" id="date" name="date"
+                               min="5/6/2017" data-max-msg="Enter date after '5/6/2017''"
+                               pattern="\d+\/\d+\/\d+" validationMessage="Enter full date"
+                               style="width: 220px;" /><span class="k-invalid-msg" data-for="date"></span>
+                    </li>
+                    <li>
                         <label for="time">Start time</label>
                         <select name="time" id="time" required data-required-msg="Select start time" style="width: 220px;" >
                             <option>14:00</option>
@@ -138,6 +145,8 @@
                     });
 
                     $("#amount").kendoNumericTextBox();
+
+                    $("#date").kendoDateInput();
 
                     var validator = $("#ticketsForm").kendoValidator().data("kendoValidator"),
                     status = $(".status");
