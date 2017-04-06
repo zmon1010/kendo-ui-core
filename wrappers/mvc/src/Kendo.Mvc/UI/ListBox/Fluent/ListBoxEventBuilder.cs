@@ -16,6 +16,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the add event.</param>
+        public ListBoxEventBuilder Add(string handler)
+        {
+            Handler("add", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
@@ -60,7 +71,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public ListBoxEventBuilder Remove(string handler)
@@ -88,17 +99,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxEventBuilder Start(string handler)
         {
             Handler("start", handler);
-
-            return this;
-        }
-        
-        /// <summary>
-        /// Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the transfer event.</param>
-        public ListBoxEventBuilder Transfer(string handler)
-        {
-            Handler("transfer", handler);
 
             return this;
         }

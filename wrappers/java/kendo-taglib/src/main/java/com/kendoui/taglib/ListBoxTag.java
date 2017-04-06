@@ -55,6 +55,10 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("toolbar", value);
     }
 
+    public void setAdd(AddFunctionTag value) {
+        setEvent("add", value.getBody());
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }
@@ -81,10 +85,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setStart(StartFunctionTag value) {
         setEvent("start", value.getBody());
-    }
-
-    public void setTransfer(TransferFunctionTag value) {
-        setEvent("transfer", value.getBody());
     }
 
     public boolean getAutoBind() {
@@ -199,6 +199,18 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("template", new Function(value));
     }
 
+    public String getAdd() {
+        Function property = ((Function)getProperty("add"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setAdd(String value) {
+        setProperty("add", new Function(value));
+    }
+
     public String getChange() {
         Function property = ((Function)getProperty("change"));
         if (property != null) {
@@ -281,18 +293,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setStart(String value) {
         setProperty("start", new Function(value));
-    }
-
-    public String getTransfer() {
-        Function property = ((Function)getProperty("transfer"));
-        if (property != null) {
-            return property.getBody();
-        }
-        return null;
-    }
-
-    public void setTransfer(String value) {
-        setProperty("transfer", new Function(value));
     }
 
 //<< Attributes

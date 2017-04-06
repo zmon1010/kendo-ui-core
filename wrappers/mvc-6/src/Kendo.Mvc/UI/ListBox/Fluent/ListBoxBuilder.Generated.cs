@@ -243,7 +243,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// @(Html.Kendo().ListBox()
         ///       .Name("ListBox")
         ///       .Events(events => events
-        ///           .Change("onChange")
+        ///           .Add("onAdd")
         ///       )
         /// )
         /// </code>

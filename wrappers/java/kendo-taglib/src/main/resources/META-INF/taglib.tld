@@ -25785,6 +25785,11 @@ If hint function is not provided the widget will clone dragged item and use it a
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>add</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
@@ -25805,7 +25810,7 @@ If hint function is not provided the widget will clone dragged item and use it a
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -25817,11 +25822,6 @@ If hint function is not provided the widget will clone dragged item and use it a
         <attribute>
             <description>Fires when ListBox item(s) drag starts.</description>
             <name>start</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
-            <name>transfer</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
@@ -25876,6 +25876,12 @@ If placeholder function is not provided the widget will clone dragged item, remo
 
 
     <tag>
+        <description>Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-add</name>
+        <tag-class>com.kendoui.taglib.listbox.AddFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-change</name>
         <tag-class>com.kendoui.taglib.listbox.ChangeFunctionTag</tag-class>
@@ -25900,7 +25906,7 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-remove</name>
         <tag-class>com.kendoui.taglib.listbox.RemoveFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -25915,12 +25921,6 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <description>Fires when ListBox item(s) drag starts.</description>
         <name>listBox-start</name>
         <tag-class>com.kendoui.taglib.listbox.StartFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
-        <name>listBox-transfer</name>
-        <tag-class>com.kendoui.taglib.listbox.TransferFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

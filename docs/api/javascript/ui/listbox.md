@@ -250,7 +250,7 @@ If placeholder function is not provided the widget will clone dragged item, remo
 
 ### dropSources `Array`
 
-Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The `dropSources` option describes **one way** relationship, if the developer wants a two way connection then the `dropSources` option should be set on both widgets.
+Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The `dropSources` option describes **one way** relationship, if the developer wants a two way connection then the `dropSources` option should be set on both widgets.
 
 > **Important** When `dropSources` is defined, the `draggable` option also should be set to `true`.
 
@@ -789,6 +789,48 @@ Sets the dataSource of an existing ListBox and rebinds it.
 
 ## Events
 
+### add
+
+Fires before the list box item is added to the ListBox.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <select id="listBoxA">
+        <option>ItemA1</option>
+        <option>ItemA2</option>
+    </select>
+    <select id="listBoxB">
+        <option>ItemB1</option>
+        <option>ItemB2</option>
+    </select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            toolbar: {
+                tools: [ "transferTo" ]
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            add: function (e) {
+                // handle add event
+            }
+        });
+    </script>
+
+#### Event Data
+
+##### e.items `Array`
+
+The item elements to be deleted.
+
+##### e.dataItems `Array`
+
+The data items which to be deleted.
+
 ### change
 Fires when item's position is changed or when the list view selection has changed.
 
@@ -938,7 +980,7 @@ The original draggable's drag event data.
 
 ### remove
 
-Fires before the list box item is removed. If it is not prevented will call DataSource [sync](/api/javascript/data/datasource#methods-sync) method.
+Fires before the list box item is removed.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1090,44 +1132,3 @@ If invoked prevents the drag start action. The element will remain at its origin
          }
     });
     </script>
-
-### transfer
-
-Fires before the list box items are transfered. If it is not prevented will call DataSource [sync](/api/javascript/data/datasource#methods-sync) method.
-
-The event handler function context (available via the `this` keyword) will be set to the widget instance.
-
-#### Example
-
-    <select id="listBoxA">
-        <option>ItemA1</option>
-        <option>ItemA2</option>
-    </select>
-    <select id="listBoxB">
-        <option>ItemB1</option>
-        <option>ItemB2</option>
-    </select>
-
-    <script>
-        $("#listBoxA").kendoListBox({
-            connectWith: "#listBoxB",
-            toolbar: {
-                tools: [ "transferTo", "transferFrom", "transferAllTo", "transferAllFrom" ]
-            },
-            transfer: function (e) {
-                // handle event
-            }
-        });
-
-        $("#listBoxB").kendoListBox();
-    </script>
-
-#### Event Data
-
-##### e.items `Array`
-
-The item elements to be transfered.
-
-##### e.dataItems `Array`
-
-The data items which to be transfered.

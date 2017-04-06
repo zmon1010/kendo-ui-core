@@ -150,6 +150,20 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
+    * Sets the add event of the ListBox.
+    * Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function addEvent($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('add', $value);
+    }
+
+    /**
     * Sets the change event of the ListBox.
     * Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
@@ -207,7 +221,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the remove event of the ListBox.
-    * Fires before the list box item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -245,20 +259,6 @@ If hint function is not provided the widget will clone dragged item and use it a
         }
 
         return $this->setProperty('start', $value);
-    }
-
-    /**
-    * Sets the transfer event of the ListBox.
-    * Fires before the list box items are transfered. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\UI\ListBox
-    */
-    public function transfer($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('transfer', $value);
     }
 
 
