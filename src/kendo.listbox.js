@@ -125,7 +125,6 @@ var __meta__ = { // jshint ignore:line
             ADD,
             REMOVE,
             REORDER,
-            TRANSFER,
             START,
             MOVE,
             END,
@@ -479,29 +478,6 @@ var __meta__ = { // jshint ignore:line
         items: function() {
             var list = this._getList();
             return list.children();
-        },
-
-        transfer: function(items) {
-            var that = this;
-            var destinationListBox = $(that.options.connectWith).data(KENDO_LISTBOX);
-            var itemsLength = $(items).length;
-            var i;
-
-            if (destinationListBox instanceof kendo.ui.ListBox) {
-                for (i = 0; i < itemsLength; i++) {
-                    that._transferItem($(items[i]), destinationListBox);
-                }
-            }
-        },
-
-        _transferItem: function(item, destinationListBox) {
-            var that = this;
-            var dataItem = that.dataItem(item);
-
-            if (dataItem && destinationListBox) {
-                destinationListBox.add(dataItem);
-                that.remove(item);
-            }
         },
 
         select: function(items) {
@@ -943,7 +919,7 @@ var __meta__ = { // jshint ignore:line
             var nextItem = $(items).nextAll(that.options.itemSelector)[0];
 
             if (nextItem) {
-                return nextItem;
+                return $(nextItem);
             } else {
                 return sourceListBox ? sourceListBox.items().not(items).filter(that.options.itemSelector).first() : $();
             }
