@@ -28,6 +28,9 @@
 
         public string Phone { get; set; }
 
+        [ScaffoldColumn(false)]
+        public bool HasChildren { get { return true; } set { } }
+
         [Required]
         [Range(0, 9999)]         
         [DataType("Integer")]
