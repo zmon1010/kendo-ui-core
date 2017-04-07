@@ -2,8 +2,8 @@
     <div class="demo-section k-content wide">
         @(Html.Kendo().ListBox()
             .Name("optional")
+            .Toolbar(toolbar => toolbar.Tools(tools => tools.TransferTo()))
             .ConnectWith("#selected")
-            .Toolbar(t => t.Tools(new[] { "transferTo" }))
             .BindTo(ViewBag.Attendees)
         )
 

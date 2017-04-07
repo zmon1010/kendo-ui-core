@@ -5,39 +5,42 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using System.Web.Routing;
     using Kendo.Mvc.Extensions;
+    using Fluent;
 
     public class ListBoxToolbarSettings : JsonObject
     {
         public ListBoxToolbarSettings()
         {
+            Tools = new List<string>();
+
             //>> Initialization
         
         //<< Initialization
         }
 
+        public List<string> Tools { get; set; }
+
+        public ListBoxToolbarPosition? Position { get; set; }
+
         //>> Fields
-        
-        public string Position { get; set; }
-        
-        public string[] Tools { get; set; }
-        
+
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
-        
-            if (Position.HasValue())
+
+            //<< Serialization
+
+            if (Position.HasValue)
             {
-                json["position"] = Position;
+                json["position"] = Position.Value.Serialize();
             }
-            
+
             if (Tools != null)
             {
                 json["tools"] = Tools;
             }
-            
-        //<< Serialization
         }
     }
 }

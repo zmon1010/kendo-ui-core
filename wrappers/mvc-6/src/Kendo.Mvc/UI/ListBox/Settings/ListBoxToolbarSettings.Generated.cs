@@ -11,9 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ListBoxToolbarSettings 
     {
-        public string Position { get; set; }
-
-        public string[] Tools { get; set; }
+        public ListBoxToolbarPosition? Position { get; set; }
 
 
         public ListBox ListBox { get; set; }
@@ -22,14 +20,9 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Position?.HasValue() == true)
+            if (Position.HasValue)
             {
-                settings["position"] = Position;
-            }
-
-            if (Tools?.Any() == true)
-            {
-                settings["tools"] = Tools;
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;
