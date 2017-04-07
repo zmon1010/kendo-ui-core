@@ -1,8 +1,8 @@
 
 <div id="tshirt-view" class="demo-section k-content">
     <h4>Customize your Kendo T-shirt</h4>
-    <img id="tshirt" src="@Url.Content("~/Content/web/combobox/tShirt.png")" />
-    <h4>T-shirt Fabric</h4>
+    <img id="tshirt" alt="T-shirt image" src="@Url.Content("~/Content/web/combobox/tShirt.png")" />
+    <h4>@Html.Label("fabric", "T-shirt Fabric")</h4>
     @(Html.Kendo().ComboBox()
           .Name("fabric")
           .Filter("contains")
@@ -28,7 +28,7 @@
           .HtmlAttributes(new { style="width:100%;" })
     )
 
-    <h4 style="margin-top: 2em;">T-shirt Size</h4> 
+    <h4 style="margin-top: 2em;">@Html.Label("size", "T-shirt Size")</h4> 
     @(Html.Kendo().ComboBox()
           .Name("size")
           .Placeholder("Select size...")
