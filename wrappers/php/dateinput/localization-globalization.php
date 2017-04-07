@@ -54,6 +54,7 @@ require_once '../include/header.php';
     </div>
     
     <div id="product-view" class="demo-section k-content">
+        <h4>Enter Date</h4>
         <?php
             $dateInput = new \Kendo\UI\DateInput('dateinput');
             $dateInput->value(new DateTime())

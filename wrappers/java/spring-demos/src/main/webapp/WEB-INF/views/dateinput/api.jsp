@@ -4,6 +4,11 @@
 
 <demo:header />
 
+<div class="demo-section k-content">
+<h4>Enter Date</h4>
+    <kendo:dateInput name="dateinput" style="width: 100%;"></kendo:dateInput>
+</div>
+
 <div class="box wide">
     <div class="box-col">
         <h4>Set / Get Value</h4>
@@ -29,10 +34,6 @@
     </div>
 </div>
 
- <div class="demo-section k-content">
-    <kendo:dateInput name="dateinput" style="width: 100%;"></kendo:dateInput>
-</div>
-
 <script>
     $(document).ready(function() {
         $("#dateinput").closest(".k-widget")
@@ -56,10 +57,7 @@
             dateinput.readonly();
         });
 
-        $("#value").kendoDatePicker({
-            change: setValue,
-            dateinput: true
-        });
+        $("#value").kendoDatePicker();
 
         $("#set").click(setValue);
 

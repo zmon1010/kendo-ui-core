@@ -4,7 +4,7 @@
 <demo:header />
 <div class="demo-section k-content">
     <div class="k-rtl">
-        <h4>Choose date:</h4>
+        <h4>Enter date</h4>
         <kendo:dateInput name="datepicker" style="width: 100%;"></kendo:dateInput>
     </div>
 </div>

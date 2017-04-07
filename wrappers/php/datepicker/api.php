@@ -4,6 +4,15 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
+<div class="demo-section k-content">
+    <h4>Select Date</h4>
+<?php
+$datePicker = new \Kendo\UI\DatePicker('datepicker');
+$datePicker->attr('style', 'width: 100%');
+echo $datePicker->render();
+?>
+</div>
+
 <div class="box wide">
    <div class="box-col">
        <h4>Set / Get Value</h4>
@@ -38,13 +47,7 @@ require_once '../include/header.php';
    </div>
 </div>
 
-<div class="demo-section k-content">
-<?php
-$datePicker = new \Kendo\UI\DatePicker('datepicker');
-$datePicker->attr('style', 'width: 100%');
-echo $datePicker->render();
-?>
-</div>
+
 <script>
     $(document).ready(function() {
         var datepicker = $("#datepicker").data("kendoDatePicker");
@@ -73,9 +76,7 @@ echo $datePicker->render();
             datepicker.close();
         });
 
-        $("#value").kendoDatePicker({
-            change: setValue
-        });
+        $("#value").kendoDatePicker();
 
         $("#set").click(setValue);
 
