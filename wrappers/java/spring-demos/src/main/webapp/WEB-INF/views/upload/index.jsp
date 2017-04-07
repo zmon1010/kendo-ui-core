@@ -18,7 +18,7 @@
 <form method="post" action="<c:url value='/upload/' />">
     <div class="demo-section k-content">
     
-        <kendo:upload name="files" />
+        <kendo:upload name="files" aria-label="files" />
         
         <p style="padding-top: 1em; text-align: right">
             <input type="submit" value="Submit" class="k-button k-primary" />
