@@ -11,7 +11,8 @@ $slider->attr('class', 'balSlider')
        ->max(10)
        ->value(0)
        ->smallStep(2)
-       ->largeStep(1);
+       ->largeStep(1)
+       ->attr('title', 'slider');
 
 function eqSlider($index, $value) {
     $eqSlider = new \Kendo\UI\Slider("eqSlider$index");
@@ -23,7 +24,8 @@ function eqSlider($index, $value) {
              ->smallStep(1)
              ->largeStep(20)
              ->value($value)
-             ->showButtons(false);
+             ->showButtons(false)
+             ->attr('title', 'eqSlider1');
 
     return $eqSlider;
 }
