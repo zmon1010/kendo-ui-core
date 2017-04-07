@@ -475,7 +475,7 @@ var __meta__ = { // jshint ignore:line
            if(that.options.directoryDrop && dt.items){
                 length = dt.items.length;
                 that.droppedFolderCounter = 0;
-                that.droppedFolderFiles = []; 
+                that.droppedFolderFiles = [];
 
                 for (var i = 0; i < length; i++) {
                     if(dt.items[i].webkitGetAsEntry){
@@ -782,8 +782,8 @@ var __meta__ = { // jshint ignore:line
         _renderAction: function (actionClass, actionText, iconClass) {
             if (actionClass !== "") {
                 return $(
-                "<button type='button' class='k-button k-upload-action'>" +
-                    "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "' aria-label='" + actionText +"'></span>" +
+                "<button type='button' class='k-button k-upload-action' aria-label='" + actionText + "'>" +
+                    "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "'></span>" +
                 "</button>"
                 ).on("focus", function() { $(this).addClass("k-state-focused"); })
                  .on("blur", function() { $(this).removeClass("k-state-focused"); });
@@ -1048,7 +1048,7 @@ var __meta__ = { // jshint ignore:line
             var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play");
             var failedUploads, headerUploadStatusIcon;
 
-            if(currentlyPaused.length && 
+            if(currentlyPaused.length &&
             (currentlyPaused.length === currentlyUploading.length || !that.options.async.concurrent)){
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
                                 .removeClass()
@@ -1880,7 +1880,7 @@ var __meta__ = { // jshint ignore:line
 
                 if(chunkSize && !batch && !jsonResult.uploaded){
 
-                    module._increaseChunkIndex(fileUid); 
+                    module._increaseChunkIndex(fileUid);
                     module.performUpload(fileEntry);
                 }else if(chunkSize && !batch && !concurrent && fileEntry.next().length && !fileEntry.next().hasClass("k-toupload")) {
                         module._resetChunkIndex(fileUid);
