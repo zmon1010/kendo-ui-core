@@ -4,6 +4,15 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
+<div class="demo-section k-content">
+    <h4>Enter Date:</h4>
+<?php
+$dateInput = new \Kendo\UI\DateInput('dateinput');
+$dateInput->attr('style', 'width: 100%');
+echo $dateInput->render();
+?>
+</div>
+
 <div class="box wide">
     <div class="box-col">
         <h4>Set / Get Value</h4>
@@ -29,13 +38,6 @@ require_once '../include/header.php';
     </div>
 </div>
 
-<div class="demo-section k-content">
-<?php
-$dateInput = new \Kendo\UI\DateInput('dateinput');
-$dateInput->attr('style', 'width: 100%');
-echo $dateInput->render();
-?>
-</div>
 <script>
     $(document).ready(function() {
         $("#dateinput").closest(".k-widget")

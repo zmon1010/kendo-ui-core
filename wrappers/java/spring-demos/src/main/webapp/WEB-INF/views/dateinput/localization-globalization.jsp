@@ -40,6 +40,7 @@
         </div>
         
         <div id="product-view" class="demo-section k-content">
+        <h4>Enter date</h4>
             <kendo:dateInput name="dateinput" value="${date}" style="width:100%"></kendo:dateInput>
         </div>
     </div>

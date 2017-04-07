@@ -4,6 +4,7 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 <div class="demo-section k-content">
+    <h4>Select Date</h4>
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 $dateTimePicker->attr('style', 'width: 100%;');
@@ -86,9 +87,7 @@ echo $dateTimePicker->render();
             datetimepicker.close("time");
         });
 
-        $("#value").kendoDateTimePicker({
-            change: setValue
-        });
+        $("#value").kendoDateTimePicker();
 
         $("#set").click(setValue);
 

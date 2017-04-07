@@ -7,9 +7,9 @@
 
 <div class="demo-section k-content">
         <h4>Show e-mails from:</h4>
-        <kendo:dateInput name="dateinput1" value="${date}" style="width:100%"></kendo:dateInput>
+        <kendo:dateInput name="dateinput1" value="${date}" title="date input" style="width:100%"></kendo:dateInput>
 		<h4 style="margin-top: 2em;">Add to archive mail from:</h4>
-        <kendo:dateInput name="dateinput2" format="MMMM yyyy" style="width:100%">
+        <kendo:dateInput name="dateinput2" format="MMMM yyyy" title="date input" style="width:100%">
         </kendo:dateInput>
 </div>
 

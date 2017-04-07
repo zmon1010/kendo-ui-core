@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/datepicker/")
 public class DisableDatesController {
     
-    @RequestMapping(value = {"/disabled-dates"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/disable-dates"}, method = RequestMethod.GET)
     public String index() {       
-        return "datepicker/disabled-dates";
+        return "datepicker/disable-dates";
     }    
 }

@@ -4,6 +4,11 @@
 
 <demo:header />
 
+<div class="demo-section k-content">
+<h4>Select Date</h4>
+    <kendo:datePicker name="datepicker" style="width: 100%;"></kendo:datePicker>
+</div>
+
 <div class="box wide">
    <div class="box-col">
          <h4>Set / Get Value</h4>
@@ -38,10 +43,6 @@
     </div>
 </div>
 
- <div class="demo-section k-content">
-    <kendo:datePicker name="datepicker" style="width: 100%;"></kendo:datePicker>
-</div>
-
 <script>
 $(document).ready(function() {
     var datepicker = $("#datepicker").data("kendoDatePicker");
@@ -70,9 +71,7 @@ $(document).ready(function() {
         datepicker.close();
     });
 
-    $("#value").kendoDatePicker({
-        change: setValue
-    });
+    $("#value").kendoDatePicker();
 
     $("#set").click(setValue);
 

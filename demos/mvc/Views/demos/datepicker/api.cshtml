@@ -1,4 +1,9 @@
 
+            <div class="demo-section k-content">
+                <h4>Select date</h4>
+                <input id="datepicker" style="width: 100%;" />
+            </div>
+        
         <div id="example">
             <div class="box wide">
                <div class="box-col">
@@ -34,10 +39,6 @@
                </div>
            </div>
 
-            <div class="demo-section k-content">
-                <input id="datepicker" style="width: 100%;" />
-            </div>
-
             <script>
                 $(document).ready(function() {
                     $("#datepicker").kendoDatePicker()
@@ -70,9 +71,7 @@
                         datepicker.close();
                     });
 
-                    $("#value").kendoDatePicker({
-                        change: setValue
-                    });
+                    $("#value").kendoDatePicker();
 
                     $("#set").click(setValue);
 

@@ -1,3 +1,11 @@
+<div class="demo-section k-content">
+    <h4>Select date</h4>
+    @(Html.Kendo().DatePicker()
+          .Name("datepicker")
+          .HtmlAttributes(new { style = "width: 100%" })
+    )
+</div>
+
 <div class="box wide">
     <div class="box-col">
         <h4>Set / Get Value</h4>
@@ -32,12 +40,6 @@
     </div>
 </div>
 
-<div class="demo-section k-content">
-    @(Html.Kendo().DatePicker()
-          .Name("datepicker")
-          .HtmlAttributes(new { style = "width: 100%" })
-    )
-</div>
 <script>
     $(document).ready(function() {
         $("#datepicker").closest(".k-widget")
@@ -69,9 +71,7 @@
             datepicker.close();
         });
 
-        $("#value").kendoDatePicker({
-            change: setValue
-        });
+        $("#value").kendoDatePicker();
 
         $("#set").click(setValue);
 

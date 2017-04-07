@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
    <div class="demo-section k-content">
-    <h4>Select date:</h4>
+    <h4>Enter date</h4>
         <kendo:dateInput name="dateinput" style="width: 100%" accesskey="w"></kendo:dateInput>
    </div>
 
