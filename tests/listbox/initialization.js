@@ -92,6 +92,18 @@
         deepEqual(listbox.options.toolbar, { position: "right", tools: [] });
     });
 
+    test("tollbar should render tool elements", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "left",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.toolbar.element.find("li>a.k-button").length, 1);
+        equal(listbox.toolbar.element.find("li>a.k-button").data("command"), REMOVE);
+    });
+
     test("tollbar with position left should add k-listbox-toolbar-left class", function() {
         listbox = createListBoxWithToolbar({
             toolbar: {

@@ -15,6 +15,7 @@ var __meta__ = { // jshint ignore:line
     var kendoAttr = kendo.attr;
     var data = kendo.data;
     var keys = kendo.keys;
+    var kendoTemplate = kendo.template;
     var Widget = kendo.ui.Widget;
     var DataSource = data.DataSource;
     var Selectable = kendo.ui.Selectable;
@@ -36,6 +37,7 @@ var __meta__ = { // jshint ignore:line
     var ENABLED_ITEM_SELECTOR = ".k-item:not(.k-state-disabled)";
     var ENABLED_ITEMS_SELECTOR = ".k-list:not(.k-state-disabled) >" + ENABLED_ITEM_SELECTOR;
     var TOOLBAR_CLASS = "k-listbox-toolbar";
+    var TOOL_SELECTOR = "li > a.k-button";
     var FOCUSED_CLASS = "k-state-focused";
     var DRAG_CLUE_CLASS = "k-drag-clue";
     var DROP_HINT_CLASS = "k-drop-hint";
@@ -514,7 +516,7 @@ var __meta__ = { // jshint ignore:line
                         that._movePlaceholder(target, direction);
                     }
                 }
-             } 
+             }
              else if(that.placeholder.parent().length){
                 that.placeholder.remove();
              }
@@ -1143,6 +1145,7 @@ var __meta__ = { // jshint ignore:line
             that.options = extend({}, that.options, options);
             that.listBox = options.listBox;
 
+            that._initTemplates();
             that._createTools();
             that._attachEventHandlers();
         },
@@ -1161,6 +1164,17 @@ var __meta__ = { // jshint ignore:line
             tools: []
         },
 
+        _initTemplates: function() {
+            this.templates = {
+                tool: kendoTemplate(
+                    "<li>" +
+                        "<a href='\\\\#' class='k-button k-button-icon k-tool' data-command='#= command #'>" +
+                            "<span class='k-icon #= iconClass #'></span>" +
+                        "</a>" +
+                    "</li>")
+            };
+        },
+
         _createTools: function() {
             var that = this;
             var options = that.options;
@@ -1175,10 +1189,7 @@ var __meta__ = { // jshint ignore:line
                 tool = defaultTools[tools[i] || tools[i].name];
 
                 if (tool) {
-                    toolList.append(
-                        '<a href="#" class="k-button k-button-icon k-tool" data-command=' + tool.command + '>' +
-                            '<span class="k-icon ' + tool.iconClass + '"></span>' +
-                        '</a>');
+                    toolList.append($(that.templates.tool(tool)));
                 }
             }
 
@@ -1192,7 +1203,7 @@ var __meta__ = { // jshint ignore:line
         _attachEventHandlers: function() {
             var that = this;
 
-            that.element.on(CLICK, "a.k-button", proxy(that._onToolClick, that));
+            that.element.on(CLICK, TOOL_SELECTOR, proxy(that._onToolClick, that));
         },
 
         _onToolClick: function(e) {
