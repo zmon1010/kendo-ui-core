@@ -51,25 +51,23 @@ var __meta__ = { // jshint ignore:line
     var DATABOUND = "dataBound";
     var ADD = "add";
     var REMOVE = "remove";
-    var RECEIVE = "receive";
     var REORDER = "reorder";
-    var TRANSFER = "transfer";
     var MOVE_UP = "moveUp";
     var MOVE_DOWN = "moveDown";
     var TRANSFER_TO = "transferTo";
     var TRANSFER_FROM = "transferFrom";
     var TRANSFER_ALL_TO = "transferAllTo";
     var TRANSFER_ALL_FROM = "transferAllFrom";
-    var BEFORE_MOVE = "beforeMove";
-    var DRAGGEDCLASS = "paleClass";
+    var DRAGGEDCLASS = "k-ghost";
     var UNIQUE_ID = "uid";
     var TABINDEX = "tabindex";
 
     var MOVE_UP_OFFSET = -1;
     var MOVE_DOWN_OFFSET = 1;
-    var START = "start";
-    var MOVE = "move";
-    var END = "end";
+    var DRAGSTART = "dragstart";
+    var DRAG = "drag";
+    var DROP = "drop";
+    var DRAGEND = "dragend";
     var DEFAULT_FILTER = "ul.k-reset.k-list>li.k-item";
 
     var RIGHT = "right";
@@ -95,7 +93,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function defaultHint(element) {
-        return element.clone().addClass(DRAG_CLUE_CLASS);
+        return element.clone().addClass(DRAG_CLUE_CLASS).width(element.width()).height(element.height());
     }
 
     function defaultPlaceholder() {
@@ -136,6 +134,7 @@ var __meta__ = { // jshint ignore:line
             }
             if(that._draggable) {
                 that._draggable.destroy();
+                that.placeholder = null;
             }
 
             kendo.destroy(that.element);
@@ -147,10 +146,10 @@ var __meta__ = { // jshint ignore:line
             ADD,
             REMOVE,
             REORDER,
-            START,
-            MOVE,
-            END,
-            BEFORE_MOVE
+            DRAGSTART,
+            DRAG,
+            DROP,
+            DRAGEND
         ],
 
         options: {
@@ -161,12 +160,9 @@ var __meta__ = { // jshint ignore:line
             dataValueField: null,
             selectable: "single",
             reorderable: false,
-            draggable: false,
+            draggable: null,
             dropSources : [],
-            hint: null,
-            placeholder: null,
             disabled: null,
-            filter: DEFAULT_FILTER,
             connectWith: "",
             navigatable: false,
             toolbar: {
@@ -341,24 +337,22 @@ var __meta__ = { // jshint ignore:line
 
         _createDraggable: function() {
             var that = this;
-            var options = that.options;
+            var draggable = that.options.draggable;
+            var hint;
 
-            if(options.draggable) {
+            if(draggable) {
+                hint = draggable.hint;
                 if(!that.options.selectable) {
                     throw new Error("Dragging requires selection to be enabled");
                 }
 
-                if(!that.options.placeholder) {
-                    that.options.placeholder = defaultPlaceholder;
-                }
-
-                if(!that.options.hint) {
-                    that.options.hint = defaultHint;
+                if(!hint) {
+                    hint = defaultHint;
                 }
 
                 that._draggable = new kendo.ui.Draggable(that.wrapper, {
-                    filter: options.filter,
-                    hint: options.hint,
+                    filter: draggable.filter ? draggable.filter : DEFAULT_FILTER,
+                    hint: kendo.isFunction(hint) ? hint : $(hint),
                     dragstart: proxy(that._dragstart, that),
                     dragcancel: proxy(that._clear, that),
                     drag: proxy(that._drag, that),
@@ -371,15 +365,20 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var draggedElement = that.draggedElement = e.currentTarget;
             var disabled = that.options.disabled;
+            var placeholder = that.options.draggable.placeholder;
             var dataItem = that.dataItem(draggedElement);
-            var eventData = { dataItem: dataItem, item: $(draggedElement), draggableEvent: e };
+            var eventData = { dataItems: dataItem, items: $(draggedElement), draggableEvent: e };
 
-            that.placeholder = $(that.options.placeholder.call(that, draggedElement));
+            if(!placeholder) {
+                placeholder = defaultPlaceholder;
+            }
+
+            that.placeholder = kendo.isFunction(placeholder) ? $(placeholder.call(that, draggedElement)) : $(placeholder);
 
             if(disabled && draggedElement.is(disabled)) {
                 e.preventDefault();
             } else {
-                if(that.trigger(START, eventData)) {
+                if(that.trigger(DRAGSTART, eventData)) {
                     e.preventDefault();
                 } else {
                     that.clearSelection();
@@ -471,12 +470,17 @@ var __meta__ = { // jshint ignore:line
             var target = that._findTarget(e);
             var cursorOffset = { left: e.x.location, top: e.y.location };
             var dataItem = that.dataItem(draggedElement);
-            var eventData = { dataItem: dataItem, item: $(draggedElement), draggableEvent: e };
+            var eventData = { dataItems: [dataItem], items: $(draggedElement), draggableEvent: e };
             var targetCenter;
             var offsetDelta;
             var direction;
             var sibling;
             var getSibling;
+
+            if(that.trigger(DRAG, eventData)) {
+                e.preventDefault();
+                return;
+            }
 
             if(target) {
                 targetCenter = this._getElementCenter(target.element);
@@ -487,7 +491,7 @@ var __meta__ = { // jshint ignore:line
                 };
 
                 if(target.appendToBottom) {
-                    that._movePlaceholder(target, null, eventData);
+                    that._movePlaceholder(target, null);
                     return;
                 }
 
@@ -507,25 +511,24 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     if(sibling[0] != that.placeholder[0]) {
-                        that._movePlaceholder(target, direction, eventData);
+                        that._movePlaceholder(target, direction);
                     }
                 }
-            }
+             } 
+             else if(that.placeholder.parent().length){
+                that.placeholder.remove();
+             }
         },
 
-        _movePlaceholder: function(target, direction, eventData) {
+        _movePlaceholder: function(target, direction) {
             var placeholder = this.placeholder;
 
-            if (!this.trigger(BEFORE_MOVE, eventData)) {
-                if (!direction) {
-                    target.element.append(placeholder);
-                } else if (direction === "prev") {
-                    target.element.before(placeholder);
-                } else if (direction === "next") {
-                    target.element.after(placeholder);
-                }
-
-                this.trigger(MOVE, eventData);
+            if (!direction) {
+                target.element.append(placeholder);
+            } else if (direction === "prev") {
+                target.element.before(placeholder);
+            } else if (direction === "next") {
+                target.element.after(placeholder);
             }
         },
 
@@ -536,25 +539,33 @@ var __meta__ = { // jshint ignore:line
             var placeholderIndex = items.not(that.draggedElement).index(that.placeholder);
             var draggedIndex = items.index(that.draggedElement);
             var dataItem = that.dataItem(draggedItem);
-            var eventData = { dataItem: dataItem, item: $(draggedItem), index: placeholderIndex, draggableEvent: e };
+            var eventData = { dataItems: [dataItem], items: $(draggedItem) };
             var connectedListBox = that.placeholder.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
 
+            if(that.trigger(DROP, $.extend({}, eventData, { draggableEvent: e }))) {
+                e.preventDefault();
+                return;
+            }
+
             if(placeholderIndex >= 0) {
-                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, $.extend({}, eventData, { action: REORDER }))) {
-                     that.reorder(draggedItem, placeholderIndex);
+                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, $.extend({}, eventData, { offset: placeholderIndex }))) {
+                    draggedItem.removeClass(DRAGGEDCLASS);
+                    that.reorder(draggedItem, placeholderIndex);
                 }
             } else if(connectedListBox) {
-                if(!that.trigger(END, $.extend({}, eventData, { action: REMOVE }))) {
+                if(!that.trigger(REMOVE, eventData)) {
                    that._removeItem(draggedItem);
                 }
 
-                if(!connectedListBox.trigger(TRANSFER, $.extend({}, eventData, { action: RECEIVE }))) {
-                    connectedListBox.add(dataItem);
+                if(!connectedListBox.trigger(ADD, eventData)) {
+                    connectedListBox.add([dataItem]);
                 }
             }
 
             that._clear();
             that._draggable.dropped = true;
+
+            that.trigger(DRAGEND, $.extend({}, eventData, { draggableEvent: e }));
         },
 
         reorder: function(item, index) {
