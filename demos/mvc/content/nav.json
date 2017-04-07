@@ -3257,7 +3257,7 @@
         "text": "Events",
         "url": "listbox/events",
         "title": {
-          "kendo-ui": "ListBox Events| KendoListBox Events Demo",
+          "kendo-ui": "ListBox Events",
           "aspnet-mvc": "ASP.NET MVC ListBox demo | Telerik UI for ASP.NET MVC demos"
         },
         "meta": {

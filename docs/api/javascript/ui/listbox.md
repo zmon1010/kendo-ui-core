@@ -940,7 +940,7 @@ The original draggable's drag event data.
 
 ### move
 
-Fires when LisbBox's placeholder changes its position.
+Fires when ListBox's placeholder changes its position.
 
 #### Event Data
 
