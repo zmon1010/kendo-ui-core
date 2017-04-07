@@ -51,7 +51,7 @@ class DiagramShape extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the height of the shape when added to the diagram.
+    * Defines the height of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -78,7 +78,7 @@ class DiagramShape extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.
+    * Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -87,7 +87,7 @@ class DiagramShape extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.
+    * Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -142,8 +142,7 @@ class DiagramShape extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the DiagramShape.
-    * A function returning a visual element to render for this shape.
-See visual.
+    * A function returning a visual element to render for this shape. For more information, refer to visual.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -156,7 +155,7 @@ See visual.
     }
 
     /**
-    * Defines the width of the shape when added to the diagram.
+    * Defines the width of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -165,7 +164,7 @@ See visual.
     }
 
     /**
-    * Defines the x-coordinate of the shape when added to the diagram.
+    * Defines the x-coordinate of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */
@@ -174,7 +173,7 @@ See visual.
     }
 
     /**
-    * Defines the y-coordinate of the shape when added to the diagram.
+    * Defines the y-coordinate of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */

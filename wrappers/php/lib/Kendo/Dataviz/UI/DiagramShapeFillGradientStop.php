@@ -16,7 +16,7 @@ Ranges from 0 (start of gradient) to 1 (end of gradient).
     }
 
     /**
-    * The color in any of the following formats.| Format         | Description
+    * The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value

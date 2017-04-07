@@ -16,11 +16,11 @@ Ranges from 0 (start of gradient) to 1 (end of gradient).
     }
 
     /**
-    * The color in any of the following formats.| Format         | Description
+    * The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value
-| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent' or '' (empty string) will clear the fill.
+| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent', or '' (empty string) clears the fill.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradientStop
     */

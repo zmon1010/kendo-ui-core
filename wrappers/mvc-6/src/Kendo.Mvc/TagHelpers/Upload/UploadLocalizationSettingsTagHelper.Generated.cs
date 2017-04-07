@@ -40,7 +40,7 @@ namespace Kendo.Mvc.TagHelpers
         public string InvalidFileExtension { get; set; }
 
         /// <summary>
-        /// Sets the text for invalid files validation message when batch property is true and more than one file is not passing the validation.
+        /// Sets the text for the validation messages of invalid files when the batch property is true and when two or more files are not passing the validation.
         /// </summary>
         public string InvalidFiles { get; set; }
 

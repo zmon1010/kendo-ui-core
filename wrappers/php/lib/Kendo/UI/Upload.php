@@ -38,7 +38,7 @@ for more details.
     }
 
     /**
-    * Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+    * Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.
     * @param boolean $value
     * @return \Kendo\UI\Upload
     */
@@ -47,7 +47,7 @@ for more details.
     }
 
     /**
-    * Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+    * Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.
     * @param boolean $value
     * @return \Kendo\UI\Upload
     */

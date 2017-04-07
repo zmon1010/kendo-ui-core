@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+        /// Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.
         /// </summary>
         /// <param name="value">The value for Directory</param>
         public UploadBuilder Directory(bool value)
@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+        /// Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.
         /// </summary>
         public UploadBuilder Directory()
         {
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+        /// Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.
         /// </summary>
         /// <param name="value">The value for DirectoryDrop</param>
         public UploadBuilder DirectoryDrop(bool value)
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+        /// Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.
         /// </summary>
         public UploadBuilder DirectoryDrop()
         {

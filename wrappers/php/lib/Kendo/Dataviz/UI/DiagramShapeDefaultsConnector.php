@@ -16,7 +16,7 @@ class DiagramShapeDefaultsConnector extends \Kendo\SerializableObject {
 
     /**
     * Sets the position option of the DiagramShapeDefaultsConnector.
-    * The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.
+    * The function that positions the connector. The function is passed a shape and should return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsConnector
     */

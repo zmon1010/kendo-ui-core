@@ -13719,7 +13719,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. See the dataSource topic below for a concrete example.</description>
+            <description>The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. For an example, refer to the dataSource topic below.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13994,14 +13994,14 @@ data source is fired. By default the widget will bind to the data source specifi
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolTag</tag-class>
 
@@ -16276,7 +16276,7 @@ A diagram can have in general disconnected pieces, known as components, which ca
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <description>If set to true, the content is forwarded to proxyURL even if the browser supports the saving of files locally.</description>
             <name>forceProxy</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -16288,28 +16288,25 @@ A diagram can have in general disconnected pieces, known as components, which ca
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <description>If set to true, reverses the paper dimensions if needed to verify that the width corresponds to the longer side.</description>
             <name>landscape</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the paper size of the PDF document.
-The default "auto" means paper size is determined by content.Supported values:</description>
+            <description>Specifies the paper size of the PDF document. The default setting is auto and determines the paper size by content.The supported values are:</description>
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
-the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe, the proxy has to set the Content-Disposition header to inline; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyTarget</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+            <description>The URL of the server side proxy which will stream the file to the end user.When the browser is not capable of saving files locally, a proxy will be used. Such browsers are Internet Explorer version 9 (and older) and Safari. You are responsible for implementing the server-side proxy. The proxy receives a POST request with the following parameters in the request body:The proxy is expected to return the decoded file with a set Content-Disposition header.</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16330,32 +16327,31 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
     </tag>
 
     <tag>
-        <description>Specifies the margins of the page (numbers or strings with units). Supported
-units are "mm", "cm", "in" and "pt" (default).</description>
+        <description>Specifies the margins of the page (numbers or strings with units). The supported units are mm, cm, in, and pt (default).</description>
         <name>diagram-pdf-margin</name>
         <tag-class>com.kendoui.taglib.diagram.PdfMarginTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The bottom margin. Numbers are considered as "pt" units.</description>
+            <description>The bottom margin. Numbers are assumed to be in pt units.</description>
             <name>bottom</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The left margin. Numbers are considered as "pt" units.</description>
+            <description>The left margin. Numbers are assumed to be in pt units.</description>
             <name>left</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The right margin. Numbers are considered as "pt" units.</description>
+            <description>The right margin. Numbers are assumed to be in pt units.</description>
             <name>right</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The top margin. Numbers are considered as "pt" units.</description>
+            <description>The top margin. Numbers are assumed to be in pt units.</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -16436,19 +16432,19 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the height of the shape when added to the diagram.</description>
+            <description>Defines the height of the shape when added to the Diagram.</description>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -16478,25 +16474,25 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
+            <description>A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the width of the shape when added to the diagram.</description>
+            <description>Defines the width of the shape when added to the Diagram.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the x-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the x-coordinate of the shape when added to the Diagram.</description>
             <name>x</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the y-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the y-coordinate of the shape when added to the Diagram.</description>
             <name>y</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -16505,7 +16501,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Defines default options for the shape connectors.</description>
+        <description>Defines the default options for the shape connectors.</description>
         <name>diagram-shapeDefaults-connectorDefaults</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsTag</tag-class>
         <body-content>JSP</body-content>
@@ -16615,7 +16611,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16644,7 +16640,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The stroke dash type.</description>
+            <description>The dash type of the stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16692,7 +16688,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+            <description>The function that positions the connector. The function is passed a shape and should return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16835,7 +16831,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
-        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+        <description>The function that positions the connector. The function is passed a shape and should return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
         <name>diagram-shapeDefaults-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -16889,7 +16885,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The text displayed in the shape.</description>
+            <description>The text that is displayed in the shape.</description>
             <name>text</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16911,7 +16907,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies whether the connectors should appear on hover.</description>
+            <description>Specifies whether the connectors appear on hover.</description>
             <name>connect</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -16932,14 +16928,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options that are supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options that are supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTag</tag-class>
 
@@ -16987,7 +16983,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
+            <description>The name of the tool. The built-in tools are edit, delete, rotateClockwise, and rotateAnticlockwise.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17035,7 +17031,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The step of the rotateClockwise and rotateAnticlockwise tools.</description>
+            <description>The step of the rotateClockwise and  rotateAnticlockwise tools.</description>
             <name>step</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17314,15 +17310,15 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <description>The center of the radial gradient.The coordinates are relative to the shape-bounding box.
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>center</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>end</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -17335,13 +17331,13 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
         </attribute>
         <attribute>
             <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>start</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:</description>
+            <description>The type of the gradient. The supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17363,11 +17359,11 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The color in any of the following formats.| Format         | Description
+            <description>The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value
-| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent' or '' (empty string) will clear the fill.</description>
+| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent', or '' (empty string) clears the fill.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17398,7 +17394,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Hover's fill options.</description>
+            <description>Defines the hover fill options.</description>
             <name>fill</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17407,19 +17403,19 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
     </tag>
 
     <tag>
-        <description>Hover's fill options.</description>
+        <description>Defines the hover fill options.</description>
         <name>diagram-shapeDefaults-hover-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsHoverFillTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Hover's fill color.</description>
+            <description>Defines the hover fill color.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Hover's fill opacity.</description>
+            <description>Defines the hover fill opacity.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17452,7 +17448,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the color of the shape's stroke.</description>
+            <description>Defines the color of the shape stroke.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17464,7 +17460,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the thickness or width of the shape's stroke.</description>
+            <description>Defines the thickness or width of the shape stroke.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17475,7 +17471,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
 
 
     <tag>
-        <description>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
+        <description>A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
         <name>diagram-shapeDefaults-visual</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17507,7 +17503,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the height of the shape when added to the diagram.</description>
+            <description>Defines the height of the shape when added to the Diagram.</description>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17519,13 +17515,13 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17549,26 +17545,25 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function returning a visual element to render for this shape.
-See visual.</description>
+            <description>A function returning a visual element to render for this shape. For more information, refer to visual.</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the width of the shape when added to the diagram.</description>
+            <description>Defines the width of the shape when added to the Diagram.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the x-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the x-coordinate of the shape when added to the Diagram.</description>
             <name>x</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the y-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the y-coordinate of the shape when added to the Diagram.</description>
             <name>y</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17686,7 +17681,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17715,7 +17710,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The stroke dash type.</description>
+            <description>The dash type of the stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17763,13 +17758,13 @@ See visual.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The connector name. Predefined names include:</description>
+            <description>The connector name. The predefined names are:</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+            <description>The function that positions the connector. The function is passed a shape and shhould return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17866,7 +17861,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17912,7 +17907,7 @@ See visual.</description>
 
 
     <tag>
-        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+        <description>The function that positions the connector. The function is passed a shape and shhould return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
         <name>diagram-shape-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17997,14 +17992,14 @@ See visual.</description>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shape-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shape-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolTag</tag-class>
 
@@ -18052,7 +18047,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
+            <description>The name of the tool. The built-in tools are edit, delete, rotateClockwise, and rotateAnticlockwise.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18380,14 +18375,14 @@ See visual.</description>
 
         <attribute>
             <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>center</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>end</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -18400,13 +18395,13 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
         </attribute>
         <attribute>
             <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>start</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:</description>
+            <description>The type of the gradient. The supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18428,7 +18423,7 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The color in any of the following formats.| Format         | Description
+            <description>The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value
@@ -18463,7 +18458,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Hover's fill options.</description>
+            <description>Defines the hover fill options.</description>
             <name>fill</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18472,19 +18467,19 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
     </tag>
 
     <tag>
-        <description>Hover's fill options.</description>
+        <description>Defines the hover fill options.</description>
         <name>diagram-shape-hover-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeHoverFillTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Hover's fill color.</description>
+            <description>Defines the hover fill color.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Hover's fill opacity.</description>
+            <description>Defines the hover fill opacity.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -18517,7 +18512,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the color of the shape's stroke.</description>
+            <description>Defines the color of the shape stroke.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18529,7 +18524,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the thickness or width of the shape's stroke.</description>
+            <description>Defines the thickness or width of the shape stroke.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -18540,8 +18535,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
 
 
     <tag>
-        <description>A function returning a visual element to render for this shape.
-See visual.</description>
+        <description>A function returning a visual element to render for this shape. For more information, refer to visual.</description>
         <name>diagram-shape-visual</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -48018,13 +48012,13 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.</description>
+            <description>Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.</description>
             <name>directory</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Enables dropping folders over the upload and its drop zone. When a directory is dropped, its entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.</description>
+            <description>Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.</description>
             <name>directoryDrop</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -48149,8 +48143,7 @@ Files selected one after the other will be uploaded in separate requests.</descr
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.
-This property is only in use when the async.batch is set false.</description>
+            <description>When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.You can use this property only when async.batch is set to false.</description>
             <name>chunkSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -48295,7 +48288,7 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Sets the text for invalid files validation message when batch property is true and more than one file is not passing the validation.</description>
+            <description>Sets the text for the validation messages of invalid files when the batch property is true and when two or more files are not passing the validation.</description>
             <name>invalidFiles</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
