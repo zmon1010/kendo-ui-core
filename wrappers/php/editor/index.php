@@ -10,6 +10,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     $editor
         ->attr('style', 'height:440px')
+        ->attr('aria-label', 'editor')
         ->resizable(true)
         ->startContent();
 ?>
