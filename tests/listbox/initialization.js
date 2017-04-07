@@ -2,6 +2,7 @@
     var ListBox = kendo.ui.ListBox;
     var div;
     var listbox;
+    var REMOVE = "remove";
 
     module("ListBox initialization", {
         setup: function() {
@@ -50,11 +51,132 @@
         equal(listbox.selectable, null);
     });
 
-    test("toolbar should be destroyed on widget destory", function() {
-        listbox = new ListBox(div);
+    module("ListBox initialization", {
+        setup: function() {
+        },
+        teardown: function() {
+            destroyListBox(listbox);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("toolbar is destroyed on widget destroy", function() {
+        listbox = createListBoxWithToolbar();
+        var destroySpy = spy(listbox.toolbar, "destroy");
 
         listbox.destroy();
 
+        equal(destroySpy.calls("destroy"), 1);
         equal(listbox.toolbar, null);
+    });
+
+    test("toolbar cannot be initialized without tools", function() {
+        listbox = createListBox();
+
+        equal(listbox.toolbar, undefined);
+    });
+
+    test("toolbar cannot be initialized with empty list of tools", function() {
+        listbox = createListBox({
+            toolbar: {
+                tools: []
+            }
+        });
+
+        equal(listbox.toolbar, undefined);
+    });
+
+    test("toolbar is configured with default settings", function() {
+        listbox = createListBox();
+
+        deepEqual(listbox.options.toolbar, { position: "right", tools: [] });
+    });
+
+    test("tollbar with position left should add k-listbox-toolbar-left class", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "left",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.hasClass("k-listbox-toolbar-left"), true);
+    });
+
+    test("tollbar with position right should add k-listbox-toolbar-right class", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "right",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.hasClass("k-listbox-toolbar-right"), true);
+    });
+
+    test("tollbar with position top should add k-listbox-toolbar-top class", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "top",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.hasClass("k-listbox-toolbar-top"), true);
+    });
+
+    test("tollbar with position bottom should add k-listbox-toolbar-bottom class", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "bottom",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.hasClass("k-listbox-toolbar-bottom"), true);
+    });
+
+    test("tollbar element is inserted before list when position is left", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "left",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.find(".k-list-scroller").prev()[0], listbox.toolbar.element[0]);
+    });
+
+    test("tollbar element is inserted before list when position is right", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "right",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.find(".k-list-scroller").prev()[0], listbox.toolbar.element[0]);
+    });
+
+    test("tollbar element is inserted before list when position is top", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "top",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.find(".k-list-scroller").prev()[0], listbox.toolbar.element[0]);
+    });
+
+    test("tollbar element is inserted after list when position is bottom", function() {
+        listbox = createListBoxWithToolbar({
+            toolbar: {
+                position: "bottom",
+                tools: [REMOVE]
+            }
+        });
+
+        equal(listbox.wrapper.find(".k-list-scroller").next()[0], listbox.toolbar.element[0]);
     });
 })();

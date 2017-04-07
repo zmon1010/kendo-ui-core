@@ -18,7 +18,7 @@
     });
 
     test("remove action should trigger remove event with args", function() {
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             remove: function(e) {
                 args = e;
             }
@@ -36,7 +36,7 @@
 
     test("remove action should trigger a single remove event for multiple items", function() {
         var calls = 0;
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             remove: function(e) {
                 calls++;
             }
@@ -51,7 +51,7 @@
 
     test("remove action should be preventable", function() {
         var args = {};
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             remove: function(e) {
                 args = e;
                 e.preventDefault();
@@ -75,7 +75,7 @@
     });
 
     test("movedown action should trigger reorder event with args", function() {
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 args = e;
             }
@@ -93,7 +93,7 @@
 
     test("movedown action should trigger a single reorder event for multiple items", function() {
         var calls = 0;
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 calls++;
             }
@@ -109,7 +109,7 @@
 
     test("movedown action should be preventable", function() {
         var args = {};
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 args = e;
                 e.preventDefault();
@@ -133,7 +133,7 @@
     });
 
     test("moveup action should trigger reorder event with args", function() {
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 args = e;
             }
@@ -151,7 +151,7 @@
 
     test("moveup action should trigger a single reorder event for multiple items", function() {
         var calls = 0;
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 calls++;
             }
@@ -167,7 +167,7 @@
 
     test("moveup action should be preventable", function() {
         var args = {};
-        listbox = createListBox({
+        listbox = createListBoxWithToolbar({
             reorder: function(e) {
                 args = e;
                 e.preventDefault();
@@ -185,11 +185,11 @@
 
     module("ListBox events", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 }
@@ -310,14 +310,14 @@
 
     module("ListBox events", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 },
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: [{
                         id: 5,
@@ -444,11 +444,11 @@
 
     module("ListBox events", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 }
@@ -547,14 +547,14 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 },
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: [{
                         id: 5,

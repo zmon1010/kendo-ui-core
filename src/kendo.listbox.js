@@ -25,8 +25,10 @@ var __meta__ = { // jshint ignore:line
     var noop = $.noop;
     var proxy = $.proxy;
 
+    var DASH = "-";
     var DOT = ".";
-    
+    var SPACE = " ";
+
     var KENDO_LISTBOX = "kendoListBox";
     var NS = DOT + KENDO_LISTBOX;
     var DISABLED_STATE_CLASS = "k-state-disabled";
@@ -69,6 +71,16 @@ var __meta__ = { // jshint ignore:line
     var MOVE = "move";
     var END = "end";
     var DEFAULT_FILTER = "ul.k-reset.k-list>li.k-item";
+
+    var RIGHT = "right";
+    var BOTTOM = "bottom";
+
+    var TOOLBAR_POSITION_CLASS_NAMES = [
+        TOOLBAR_CLASS + DASH + "left",
+        TOOLBAR_CLASS + DASH + RIGHT,
+        TOOLBAR_CLASS + DASH + "top",
+        TOOLBAR_CLASS + DASH + BOTTOM
+    ];
 
     function getSortedDomIndices(items) {
         var indices = $.map(items, function(item) {
@@ -156,7 +168,11 @@ var __meta__ = { // jshint ignore:line
             disabled: null,
             filter: DEFAULT_FILTER,
             connectWith: "",
-            navigatable: false
+            navigatable: false,
+            toolbar: {
+                position: RIGHT,
+                tools: []
+            }
         },
 
         add: function(dataItems) {
@@ -204,7 +220,7 @@ var __meta__ = { // jshint ignore:line
                             .on(KEYDOWN, proxy(that._keyDown, that))
                             .on(BLUR, LIST_SELECTOR, proxy(that._blur, that));
 
-                tabIndex = that.element.attr(TABINDEX);            
+                tabIndex = that.element.attr(TABINDEX);
                 that._tabIndex = !isNaN(tabIndex) ? tabIndex : 0;
             }
         },
@@ -282,7 +298,7 @@ var __meta__ = { // jshint ignore:line
                         that.select(that._target);
                         that.select(current);
                     }
-                } 
+                }
                 that._target = current;
                 that._target.addClass(FOCUSED_CLASS);
                 shouldPreventDefault = true;
@@ -296,7 +312,7 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that.clearSelection();
                     that.select(that._target);
-                } 
+                }
                 shouldPreventDefault = true;
             } else if(e.ctrlKey && key == keys.RIGHT) {
                 if(e.shiftKey) {
@@ -313,7 +329,7 @@ var __meta__ = { // jshint ignore:line
                 }
                 shouldPreventDefault = true;
             }
-            
+
             if(shouldPreventDefault) {
                 e.preventDefault();
             }
@@ -728,7 +744,6 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var options = this.options;
             var template;
-            that.templates = {};
 
             if (options.template && typeof options.template == "string") {
                 template = kendo.template(options.template);
@@ -738,7 +753,10 @@ var __meta__ = { // jshint ignore:line
                 template = options.template;
             }
 
-            that.templates.itemTemplate = template;
+            that.templates = {
+                itemTemplate: template,
+                toolbar: "<div class='" + TOOLBAR_CLASS + "'></div>"
+            };
         },
 
         refresh: function() {
@@ -765,7 +783,6 @@ var __meta__ = { // jshint ignore:line
             }
             that.element.find("*").off().end().html(html);
             that._setItemIds();
-            that._destroyToolbar();
             that._createToolbar();
         },
 
@@ -822,40 +839,26 @@ var __meta__ = { // jshint ignore:line
 
         _createToolbar: function () {
             var that = this;
+            var toolbarOptions = that.options.toolbar;
+            var position = toolbarOptions.position || RIGHT;
+            var toolbarInsertion = position === BOTTOM ? "insertAfter" : "insertBefore";
+            var toolbarElement = $(that.templates.toolbar)[toolbarInsertion](that._innerWrapper);
 
-            if (!that.toolbar) {
-                var prefix = '<li><a href="#" class="k-button k-button-icon k-tool" data-command="';
-                that.toolbar = $(
-                    "<div class='" + TOOLBAR_CLASS + "'><ul>" +
-                    prefix + MOVE_UP + '"><span class="k-icon k-i-arrow-60-up"></span></span></li>' +
-                    prefix + MOVE_DOWN + '"><span class="k-icon k-i-arrow-60-down"></span></span></li>' +
-                    prefix + REMOVE + '"><span class="k-icon k-i-x"></span></span></li>' +
-                    prefix + TRANSFER_TO + '"><span class="k-icon k-i-arrow-60-right"></span></span></li>' +
-                    prefix + TRANSFER_FROM + '"><span class="k-icon k-i-arrow-60-left"></span></span></li>' +
-                    prefix + TRANSFER_ALL_TO + '"><span class="k-icon k-i-arrow-double-60-right"></span></span></li>' +
-                    prefix + TRANSFER_ALL_FROM + '"><span class="k-icon k-i-arrow-double-60-left"></span></span></li>' +
-                    "</ul></div>").insertBefore(that._innerWrapper);
+            that._destroyToolbar();
 
-
-                that.toolbar.on(CLICK, "a.k-button", proxy(that._onToolbarClick, that));
+            if (toolbarOptions && toolbarOptions.tools && toolbarOptions.tools.length > 0) {
+                that.toolbar = new ToolBar(toolbarElement, extend({}, that.options.toolbar, { listBox: that }));
+                that.wrapper.removeClass(TOOLBAR_POSITION_CLASS_NAMES.join(SPACE)).addClass(TOOLBAR_CLASS + DASH + position);
             }
         },
 
         _destroyToolbar: function() {
             var that = this;
 
-            kendo.destroy(that.toolbar);
-            $(that.toolbar).off(NS).remove();
-            that.toolbar = null;
-        },
-
-        _onToolbarClick: function(e) {
-            var that = this;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            that._executeCommand($(e.currentTarget).data("command"), { listBox: that });
+            if (that.toolbar) {
+                that.toolbar.destroy();
+                that.toolbar = null;
+            }
         },
 
         _executeCommand: function(commandName, options) {
@@ -1120,6 +1123,124 @@ var __meta__ = { // jshint ignore:line
         }
     });
     CommandFactory.current.register(TRANSFER_ALL_FROM, TransferAllItemsFromCommand);
+
+    var ToolBar = Class.extend({
+        init: function(element, options) {
+            var that = this;
+
+            that.element = $(element).addClass(TOOLBAR_CLASS);
+            that.options = extend({}, that.options, options);
+            that.listBox = options.listBox;
+
+            that._createTools();
+            that._attachEventHandlers();
+        },
+
+        destroy: function() {
+            var that = this;
+
+            kendo.destroy(that.element);
+            that.element.off().find("*").off();
+            that.element.remove();
+            that.element = null;
+        },
+
+        options: {
+            position: RIGHT,
+            tools: []
+        },
+
+        _createTools: function() {
+            var that = this;
+            var options = that.options;
+            var defaultTools = ToolBar.defaultTools;
+            var tools = options.tools;
+            var toolsLength = tools.length;
+            var toolList = that._createToolList();
+            var tool;
+            var i;
+
+            for (i = 0; i < toolsLength; i++) {
+                tool = defaultTools[tools[i] || tools[i].name];
+
+                if (tool) {
+                    toolList.append(
+                        '<a href="#" class="k-button k-button-icon k-tool" data-command=' + tool.command + '>' +
+                            '<span class="k-icon ' + tool.iconClass + '"></span>' +
+                        '</a>');
+                }
+            }
+
+            that.element.append(toolList);
+        },
+
+        _createToolList: function() {
+            return $("<ul class='k-reset' />");
+        },
+
+        _attachEventHandlers: function() {
+            var that = this;
+
+            that.element.on(CLICK, "a.k-button", proxy(that._onToolClick, that));
+        },
+
+        _onToolClick: function(e) {
+            e.preventDefault();
+
+            this._executeToolCommand($(e.currentTarget).data("command"));
+        },
+
+        _executeToolCommand: function(command) {
+            var that = this;
+            var listBox = that.listBox;
+
+            if (listBox) {
+                listBox._executeCommand(command, { listBox: listBox });
+            }
+        }
+    });
+
+    ToolBar.defaultTools = {
+        remove: {
+            command: REMOVE,
+            text: REMOVE,
+            iconClass: "k-i-x"
+        },
+        moveUp: {
+            command: MOVE_UP,
+            text: MOVE_UP,
+            iconClass: "k-i-arrow-60-up"
+        },
+        moveDown: {
+            command: MOVE_DOWN,
+            text: MOVE_DOWN,
+            iconClass: "k-i-arrow-60-down"
+        },
+        transferTo: {
+            command: TRANSFER_TO,
+            text: TRANSFER_TO,
+            iconClass: "k-i-arrow-60-right"
+        },
+        transferFrom: {
+            command: TRANSFER_FROM,
+            text: TRANSFER_FROM,
+            iconClass: "k-i-arrow-60-left"
+        },
+        transferAllTo: {
+            command: TRANSFER_ALL_TO,
+            text: TRANSFER_ALL_TO,
+            iconClass: "k-i-arrow-double-60-right"
+        },
+        transferAllFrom: {
+            command: TRANSFER_ALL_FROM,
+            text: TRANSFER_ALL_FROM,
+            iconClass: "k-i-arrow-double-60-left"
+        }
+    };
+
+    extend(ListBox, {
+        ToolBar: ToolBar
+    });
 
 })(window.kendo.jQuery);
 

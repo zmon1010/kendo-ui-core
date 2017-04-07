@@ -40,13 +40,32 @@ function createListBox(options, html) {
         text: "item4"
     }];
 
-    var listbox = createListBoxFromHtml(html, $.extend({
+    var listbox = createListBoxFromHtml(html, $.extend({}, {
         dataSource: {
             data: dataItems
         },
         dataTextField: "text",
         selectable: "multiple"
     }, options || {}));
+
+    return listbox;
+}
+
+/* exported createListBoxWithToolbar */
+function createListBoxWithToolbar(options, html) {
+    var listbox = createListBox($.extend({}, {
+        toolbar: {
+            tools: [
+                "remove",
+                "transferTo",
+                "transferFrom",
+                "moveUp",
+                "moveDown",
+                "transferAllTo",
+                "transferAllFrom"
+            ]
+        }
+    }, options), html);
 
     return listbox;
 }
@@ -94,7 +113,7 @@ function getToolElementClassName(command) {
 }
 
 function clickButton(listbox, command, event) {
-    listbox.toolbar.find("a.k-button>." + getToolElementClassName(command)).trigger(event || $.Event({ type: "click" }));
+    listbox.toolbar.element.find("a.k-button>." + getToolElementClassName(command)).trigger(event || $.Event({ type: "click" }));
 }
 
 /* exported clickRemoveButton */

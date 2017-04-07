@@ -20,7 +20,7 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox = createListBox();
+            listbox = createListBoxWithToolbar();
             $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
@@ -60,7 +60,7 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox = createListBox();
+            listbox = createListBoxWithToolbar();
             item1 = listbox.items().eq(0);
             item2 = listbox.items().eq(1);
             item3 = listbox.items().eq(2);
@@ -196,7 +196,7 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox = createListBox();
+            listbox = createListBoxWithToolbar();
             item1 = listbox.items().eq(0);
             item2 = listbox.items().eq(1);
             item3 = listbox.items().eq(2);
@@ -332,11 +332,11 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 }
@@ -412,11 +412,11 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: [{
                         id: 5,
@@ -502,11 +502,11 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 }
@@ -566,14 +566,14 @@
 
     module("ListBox toolbar", {
         setup: function() {
-            listbox1 = createListBox({
+            listbox1 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 },
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBox({
+            listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: [{
                         id: 5,
