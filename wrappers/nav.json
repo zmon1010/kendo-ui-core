@@ -2102,6 +2102,35 @@
         "category": "Data Management"
     },
     {
+        "text": "ListBox",
+        "name": "listbox",
+        "api": "web/listbox",
+        "new": "true",
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listbox/overview"
+        },
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/listbox"
+        },
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/listbox"
+        },
+        "spriteCssClass": "listBoxIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "listbox/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox demo | Telerik UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "Play with this basic example of Telerik ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
+                }
+            }
+        ],
+        "category": "Data Management"
+    },
+    {
         "text": "ListView",
         "name": "listview",
         "api": "web/listview",

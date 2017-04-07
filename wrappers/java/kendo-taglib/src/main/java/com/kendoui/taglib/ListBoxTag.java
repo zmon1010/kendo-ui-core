@@ -16,7 +16,12 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
     public ListBoxTag() {
         super("ListBox");
     }
-    
+
+    @Override
+    protected Element<?> createElement() {
+        return new Select().attr("name", getName());
+    }
+
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag

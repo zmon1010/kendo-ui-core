@@ -18,13 +18,14 @@ namespace Kendo.Mvc.UI
 
         public DataSource DataSource { get; private set; }
 
+        public ListBoxSelectable? Selectable { get; set; }
+
         public ListBox(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator)
             : base(viewContext, initializer)
         {
             settingsSerializer = new ListBoxSettingsSerializer(this);
             UrlGenerator = urlGenerator;
             DataSource = new DataSource();
-
 
 //>> Initialization
         
@@ -62,8 +63,6 @@ namespace Kendo.Mvc.UI
         public bool? Navigatable { get; set; }
         
         public bool? Reorderable { get; set; }
-        
-        public string Selectable { get; set; }
         
         public string Template { get; set; }
 
@@ -141,11 +140,6 @@ namespace Kendo.Mvc.UI
                 json["reorderable"] = Reorderable;
             }
                 
-            if (Selectable.HasValue())
-            {
-                json["selectable"] = Selectable;
-            }
-            
             if (!string.IsNullOrEmpty(TemplateId))
             {
                 json["template"] = new ClientHandlerDescriptor {

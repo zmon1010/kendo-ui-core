@@ -867,6 +867,7 @@
     <Compile Include="UI\Grid\Fluent\GridNoRecordsSettingsBuilder.cs" />
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
     <Compile Include="UI\Grid\Settings\GridNoRecordsSettings.cs" />
+    <Compile Include="UI\ListBox\ListBoxSelectable.cs" />
     <Compile Include="UI\ListBox\ListBoxSettingsSerializer.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerEventBuilder.cs" />

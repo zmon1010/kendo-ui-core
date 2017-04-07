@@ -6,6 +6,10 @@ class ListBox extends \Kendo\UI\Widget {
     public function name() {
         return 'ListBox';
     }
+
+    protected function createElement() {
+        return new \Kendo\Html\Element('select');
+    }
 //>> Properties
 
     /**
@@ -82,7 +86,7 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+    * Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
     * @param array $value
     * @return \Kendo\UI\ListBox
     */

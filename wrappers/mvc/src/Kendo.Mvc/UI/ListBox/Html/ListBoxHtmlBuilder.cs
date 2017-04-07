@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI
 
         protected virtual IHtmlNode CreateElement()
         {
-            return new HtmlElement("div");
+            return new HtmlElement("select");
         }
 
         

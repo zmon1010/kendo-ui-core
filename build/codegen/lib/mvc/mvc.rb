@@ -144,6 +144,7 @@ module CodeGen::MVC::Wrappers
         'treeview.checkboxes',
         'treeview.template',
         'listbox.datasource',
+        'listbox.selectable',
         'editor.filebrowser',
         'editor.imagebrowser',
         'editor.tag',

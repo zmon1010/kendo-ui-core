@@ -6,3 +6,17 @@
     - :name: Toolbar.Tools
       :merge: true
       :type: string[]
+
+    - :name: selectable
+      :type: String
+      :enum_type: ListBoxSelectable
+      :description: Represents the selectable options.
+      :values:
+          - :value: single
+            :member: Single
+            :description: Single selection
+
+          - :value: multiple
+            :member: Multiple
+            :description: Multiple selections
+

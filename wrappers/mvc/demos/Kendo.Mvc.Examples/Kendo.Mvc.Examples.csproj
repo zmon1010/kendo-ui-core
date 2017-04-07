@@ -263,6 +263,7 @@
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\Grid\Editing_Remote_ValidationController.cs" />
     <Compile Include="Controllers\Grid\ServerExportController.cs" />
+    <Compile Include="Controllers\ListBox\IndexController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -3016,6 +3017,7 @@
     <Content Include="Views\dateinput\right_to_left_support.cshtml" />
     <Content Include="Views\dateinput\events.cshtml" />
     <Content Include="Views\upload\directoryupload.cshtml" />
+    <Content Include="Views\listbox\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -23,8 +23,19 @@ namespace Kendo.Mvc.UI.Fluent
             container = component;
         }
 
+        /// <summary>
+        /// Represents the selectable options.
+        /// </summary>
+        /// <param name="value">The value for Selectable</param>
+        public ListBoxBuilder Selectable(ListBoxSelectable value)
+        {
+            container.Selectable = value;
+            return this;
+        }
+
+
         //>> Fields
-        
+
         /// <summary>
         /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
@@ -124,7 +135,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+        /// Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
         /// </summary>
         /// <param name="value">The value that configures the dropsources.</param>
         public ListBoxBuilder DropSources(params string[] value)
@@ -163,17 +174,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxBuilder Reorderable(bool value)
         {
             container.Reorderable = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// Indicates whether selection is enabled/disabled. Possible values:
-        /// </summary>
-        /// <param name="value">The value that configures the selectable.</param>
-        public ListBoxBuilder Selectable(string value)
-        {
-            container.Selectable = value;
 
             return this;
         }

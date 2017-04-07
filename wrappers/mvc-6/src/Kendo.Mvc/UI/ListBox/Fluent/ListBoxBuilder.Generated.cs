@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Array of selectors which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+        /// Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
         /// </summary>
         /// <param name="value">The value for DropSources</param>
         public ListBoxBuilder DropSources(params string[] value)
@@ -181,16 +181,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether selection is enabled/disabled. Possible values:
-        /// </summary>
-        /// <param name="value">The value for Selectable</param>
-        public ListBoxBuilder Selectable(string value)
-        {
-            Container.Selectable = value;
-            return this;
-        }
-
-        /// <summary>
         /// Specifies ListBox item template.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
@@ -229,6 +219,16 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Toolbar.ListBox = Container;
             configurator(new ListBoxToolbarSettingsBuilder(Container.Toolbar));
 
+            return this;
+        }
+
+        /// <summary>
+        /// Represents the selectable options.
+        /// </summary>
+        /// <param name="value">The value for Selectable</param>
+        public ListBoxBuilder Selectable(ListBoxSelectable value)
+        {
+            Container.Selectable = value;
             return this;
         }
 

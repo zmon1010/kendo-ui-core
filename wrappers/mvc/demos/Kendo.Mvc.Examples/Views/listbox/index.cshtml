@@ -1,0 +1,28 @@
+﻿<div id="example" role="application">
+    <div class="demo-section k-content wide">
+        @(Html.Kendo().ListBox()
+            .Name("optional")
+            .ConnectWith("#selected")
+            .Toolbar(t => t.Tools(new[] { "transferTo" }))
+            .BindTo(ViewBag.Attendees)
+        )
+
+        @(Html.Kendo().ListBox()
+            .Name("selected")
+            .BindTo(new List<string>())
+            .Selectable(ListBoxSelectable.Multiple)
+        )
+
+    </div>
+    <style>
+        #example .k-listbox:nth-of-type(1) {
+            width: 49%;
+            float: left;
+        }
+
+        #example .k-listbox:nth-of-type(2) {
+            width: 49%;
+            float: right;
+        }
+    </style>
+</div>

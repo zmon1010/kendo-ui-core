@@ -33,13 +33,13 @@ namespace Kendo.Mvc.UI
 
         public bool? Reorderable { get; set; }
 
-        public string Selectable { get; set; }
-
         public ClientHandlerDescriptor Template { get; set; }
 
         public string TemplateId { get; set; }
 
         public ListBoxToolbarSettings Toolbar { get; } = new ListBoxToolbarSettings();
+
+        public ListBoxSelectable? Selectable { get; set; }
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -106,11 +106,6 @@ namespace Kendo.Mvc.UI
                 settings["reorderable"] = Reorderable;
             }
 
-            if (Selectable?.HasValue() == true)
-            {
-                settings["selectable"] = Selectable;
-            }
-
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
@@ -128,6 +123,11 @@ namespace Kendo.Mvc.UI
             if (toolbar.Any())
             {
                 settings["toolbar"] = toolbar;
+            }
+
+            if (Selectable.HasValue)
+            {
+                settings["selectable"] = Selectable?.Serialize();
             }
 
             return settings;

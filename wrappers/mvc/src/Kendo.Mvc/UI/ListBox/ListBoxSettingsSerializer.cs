@@ -19,13 +19,14 @@
             }
             else
             {
-                if (listBox.DataSource.Data != null)
-                {
-                    options["dataSource"] = listBox.DataSource.Data;
-                }
-                else
+                if (!string.IsNullOrEmpty(listBox.DataSource.Transport.Read.Url) || 
+                    listBox.DataSource.Type == DataSourceType.Custom)
                 {
                     options["dataSource"] = listBox.DataSource.ToJson();
+                }
+                else if (listBox.DataSource.Data != null)
+                {
+                    options["dataSource"] = listBox.DataSource.Data;
                 }
             }
 
@@ -34,6 +35,11 @@
             if (!autoBind)
             {
                 options["autoBind"] = autoBind;
+            }
+
+            if (listBox.Selectable.HasValue)
+            {
+                options["selectable"] = listBox.Selectable.Value.Serialize();
             }
         }
     }

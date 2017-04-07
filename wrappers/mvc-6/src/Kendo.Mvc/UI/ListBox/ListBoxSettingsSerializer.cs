@@ -14,19 +14,20 @@
 
         public void Serialize(IDictionary<string, object> options)
         {
-            if (listBox.DataSourceId.HasValue())
+            if (!string.IsNullOrEmpty(listBox.DataSourceId))
             {
                 options["dataSource"] = listBox.DataSourceId;
             }
             else
             {
-                if (listBox.DataSource.Data != null)
-                {
-                    options["dataSource"] = listBox.DataSource.Data;
-                }
-                else
+                if (!string.IsNullOrEmpty(listBox.DataSource.Transport.Read.Url) || 
+                    listBox.DataSource.Type == DataSourceType.Custom)
                 {
                     options["dataSource"] = listBox.DataSource.ToJson();
+                }
+                else if (listBox.DataSource.Data != null)
+                {
+                    options["dataSource"] = listBox.DataSource.Data;
                 }
             }
 
