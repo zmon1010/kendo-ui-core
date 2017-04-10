@@ -26,14 +26,6 @@
                 }
             };
 
-            function onEnd(e) {
-                kendoConsole.log("event: end");
-            };
-
-            function onMove(e) {
-                kendoConsole.log("event: move");
-            };
-
             function onRemove(e) {
                 kendoConsole.log("event: remove. " + e.dataItems.length + " item(s) removed.");
             };
@@ -42,8 +34,20 @@
                 kendoConsole.log("event: reorder");
             };
 
-            function onStart(e) {
-                kendoConsole.log("event: start");
+            function onDragStart(e) {
+                kendoConsole.log("event: dragstart");
+            };
+
+            function onDrag(e) {
+                kendoConsole.log("event: drag");
+            };
+
+            function onDrop(e) {
+                kendoConsole.log("event: drop");
+            };
+
+            function onDragEnd(e) {
+                kendoConsole.log("event: dragend");
             };
 
             $("#optional").kendoListBox({
@@ -74,11 +78,12 @@
                 add: onAdd,
                 change: onChange,
                 dataBound: onDataBound,
-                end: onEnd,
-                move: onMove,
+                dragstart: onDragStart,
+                drag: onDrag,
+                drop: onDrop,
+                dragend: onDragEnd,
                 remove: onRemove,
-                reorder: onReorder,
-                start: onStart
+                reorder: onReorder
             });
 
             $("#selected").kendoListBox({
@@ -98,11 +103,12 @@
                 add: onAdd,
                 change: onChange,
                 dataBound: onDataBound,
-                end: onEnd,
-                move: onMove,
+                dragstart: onDragStart,
+                drag: onDrag,
+                drop: onDrop,
+                dragend: onDragEnd,
                 remove: onRemove,
-                reorder: onReorder,
-                start: onStart
+                reorder: onReorder
             });
         });
     </script>

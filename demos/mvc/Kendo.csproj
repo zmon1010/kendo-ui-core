@@ -1286,6 +1286,7 @@
     <Content Include="Views\demos\listbox\angular.cshtml" />
     <Content Include="Views\demos\listbox\index.cshtml" />
     <Content Include="Views\demos\listbox\keyboard-navigation.cshtml" />
+    <Content Include="Views\demos\listbox\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
