@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         //>> Fields
-
+        
         //<< Fields
 
         /// <summary>

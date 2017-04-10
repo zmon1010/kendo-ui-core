@@ -72,12 +72,20 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setEvent("dataBound", value.getBody());
     }
 
-    public void setEnd(EndFunctionTag value) {
-        setEvent("end", value.getBody());
+    public void setDrag(DragFunctionTag value) {
+        setEvent("drag", value.getBody());
     }
 
-    public void setMove(MoveFunctionTag value) {
-        setEvent("move", value.getBody());
+    public void setDragend(DragendFunctionTag value) {
+        setEvent("dragend", value.getBody());
+    }
+
+    public void setDragstart(DragstartFunctionTag value) {
+        setEvent("dragstart", value.getBody());
+    }
+
+    public void setDrop(DropFunctionTag value) {
+        setEvent("drop", value.getBody());
     }
 
     public void setRemove(RemoveFunctionTag value) {
@@ -86,10 +94,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setReorder(ReorderFunctionTag value) {
         setEvent("reorder", value.getBody());
-    }
-
-    public void setStart(StartFunctionTag value) {
-        setEvent("start", value.getBody());
     }
 
     public boolean getAutoBind() {
@@ -240,28 +244,52 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("dataBound", new Function(value));
     }
 
-    public String getEnd() {
-        Function property = ((Function)getProperty("end"));
+    public String getDrag() {
+        Function property = ((Function)getProperty("drag"));
         if (property != null) {
             return property.getBody();
         }
         return null;
     }
 
-    public void setEnd(String value) {
-        setProperty("end", new Function(value));
+    public void setDrag(String value) {
+        setProperty("drag", new Function(value));
     }
 
-    public String getMove() {
-        Function property = ((Function)getProperty("move"));
+    public String getDragend() {
+        Function property = ((Function)getProperty("dragend"));
         if (property != null) {
             return property.getBody();
         }
         return null;
     }
 
-    public void setMove(String value) {
-        setProperty("move", new Function(value));
+    public void setDragend(String value) {
+        setProperty("dragend", new Function(value));
+    }
+
+    public String getDragstart() {
+        Function property = ((Function)getProperty("dragstart"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDragstart(String value) {
+        setProperty("dragstart", new Function(value));
+    }
+
+    public String getDrop() {
+        Function property = ((Function)getProperty("drop"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDrop(String value) {
+        setProperty("drop", new Function(value));
     }
 
     public String getRemove() {
@@ -286,18 +314,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setReorder(String value) {
         setProperty("reorder", new Function(value));
-    }
-
-    public String getStart() {
-        Function property = ((Function)getProperty("start"));
-        if (property != null) {
-            return property.getBody();
-        }
-        return null;
-    }
-
-    public void setStart(String value) {
-        setProperty("start", new Function(value));
     }
 
 //<< Attributes

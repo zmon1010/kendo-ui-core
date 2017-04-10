@@ -427,21 +427,21 @@ The position relative to the ListBox element, at which the toolbar will be shown
 
 ### toolbar.tools `Array`
 
-An `Array` value with the list of commands displayed in the ListBox's Toolbar. Commands can be built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").
+An `Array` value with the list of tools displayed in the ListBox's Toolbar. Tools are built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").
 
-The "moveUp" command moves up the item that is currently selected by the end user.
+The "moveUp" tool moves up the item that is currently selected by the end user.
 
-The "moveDown" command moves down the item that is currently selected by the end user.
+The "moveDown" tool moves down the item that is currently selected by the end user.
 
-The "remove" command removes the item(s) that are currently selected by the end user.
+The "remove" tool removes the item(s) that are currently selected by the end user.
 
-The "transferAllFrom" command moves all items from current ListBox widget to the target widget related with `connectWith` option.
+The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with `connectWith` option.
 
-The "transferAllTo" command moves all items from target widget related with `connectWith` option to the current ListBox widget.
+The "transferAllTo" tool moves all items from target widget related with `connectWith` option to the current ListBox widget.
 
-The "transferFrom" command moves all selected items from current ListBox widget to the target widget related with `connectWith` option.
+The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with `connectWith` option.
 
-The "transferTo" command moves all selected items from target widget related with `connectWith` option to the current ListBox widget.
+The "transferTo" tool moves all selected items from target widget related with `connectWith` option to the current ListBox widget.
 
 #### Example
 
@@ -885,37 +885,25 @@ The event handler function context (available via the `this` keyword) will be se
     });
     </script>
 
-### end
+### dragstart
 
-Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+Fires when ListBox item(s) drag starts.
 
 #### Event Data
 
-##### e.action `String`
+##### e.draggableEvent `Object`
 
-Possible values are: "sort" - indicates that item's position was changed inside the same ListBox container; "remove" - indicates that the item was removed from current ListBox widget; "receive" - indicates that the item was received by a connected ListBox widget instance;
-
-##### e.preventDefault `Function`
-
-If invoked prevents the sort action. The element will be reverted at its original position. The hint and placeholder will be destroyed.
+The original draggable's dragstart event data.
 
 ##### e.item `jQuery`
 
-The element that is dragged.
+The element that will be dragged.
 
-##### e.oldIndex `Number`
+##### e.preventDefault `Function`
 
-The original position of the item in the ListBox collection. In case the item is received from connected ListBox the value will be -1
+If invoked prevents the drag start action. The element will remain at its original position. The hint and placeholder will not be initialized.
 
-##### e.newIndex `Number`
-
-The position where item will be placed. In case the item is removed from connected ListBox the value will be -1
-
-##### e.draggableEvent `Object`
-
-The original draggable's drag event data.
-
-#### Example
+#### Example - prevent certain item from being dragged by cancelling the drag start action
 
     <select id="listBox">
         <option>Orange</option>
@@ -925,20 +913,17 @@ The original draggable's drag event data.
     </select>
     <script>
     $("#listBox").kendoListBox({
-        draggable: true,
-        reorderable: true,
-        end: function(e) {
-            console.log("from " + e.oldIndex + " to " + e.newIndex);
-
-            //prevent first item to be placed at the end of the list
-            if(e.newIndex == 2 && e.oldIndex == 0) {
-                e.preventDefault();
-            }
-        }
+         draggable: true,
+         reorderable: true,
+         dragstart: function(e) {
+             if (e.item.text() === "Orange") {
+                 e.preventDefault();
+             }
+         }
     });
     </script>
 
-### move
+### drag
 
 Fires when ListBox's placeholder changes its position.
 
@@ -972,9 +957,93 @@ The original draggable's drag event data.
     $("#listBox").kendoListBox({
          draggable: true,
          reorderable: true,
-         move: function(e) {
-             console.log("move event");
+         drag: function(e) {
+             console.log("drag event");
          }
+    });
+    </script>
+
+### drop
+Fired when ListBox item is dropped over one of the drop targets.
+
+#### Event Data
+
+##### e.items `Array`
+
+The item elements to be droped.
+
+##### e.dataItems `Array`
+
+The data items which to be droped.
+
+#### Example
+
+    <select id="listBox">
+        <option>Orange</option>
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Peach</option>
+    </select>
+    <script>
+    $("#listBox").kendoListBox({
+         draggable: true,
+         reorderable: true,
+         drop: function(e) {
+             console.log("drop event");
+         }
+    });
+    </script>
+
+### dragend
+
+Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+
+#### Event Data
+
+##### e.action `String`
+
+Possible values are: "sort" - indicates that item's position was changed inside the same ListBox container; "remove" - indicates that the item was removed from current ListBox widget; "receive" - indicates that the item was received by a connected ListBox widget instance;
+
+##### e.preventDefault `Function`
+
+If invoked prevents the sort action. The element will be reverted at its original position. The hint and placeholder will be destroyed.
+
+##### e.items `Array`
+
+The item elements to be dragged.
+
+##### e.oldIndex `Number`
+
+The original position of the item in the ListBox collection. In case the item is received from connected ListBox the value will be -1
+
+##### e.newIndex `Number`
+
+The position where item will be placed. In case the item is removed from connected ListBox the value will be -1
+
+##### e.draggableEvent `Object`
+
+The original draggable's drag event data.
+
+#### Example
+
+    <select id="listBox">
+        <option>Orange</option>
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Peach</option>
+    </select>
+    <script>
+    $("#listBox").kendoListBox({
+        draggable: true,
+        reorderable: true,
+        dragend: function(e) {
+            console.log("from " + e.oldIndex + " to " + e.newIndex);
+
+            //prevent first item to be placed at the end of the list
+            if(e.newIndex == 2 && e.oldIndex == 0) {
+                e.preventDefault();
+            }
+        }
     });
     </script>
 
@@ -1094,41 +1163,3 @@ The item elements to be reordered.
 #### e.offset `Number`
 
 The offset is -1 when moving up and 1 when moving down.
-
-### start
-
-Fires when ListBox item(s) drag starts.
-
-#### Event Data
-
-##### e.draggableEvent `Object`
-
-The original draggable's dragstart event data.
-
-##### e.item `jQuery`
-
-The element that will be dragged.
-
-##### e.preventDefault `Function`
-
-If invoked prevents the drag start action. The element will remain at its original position. The hint and placeholder will not be initialized.
-
-#### Example - prevent certain item from being dragged by cancelling the drag start action
-
-    <select id="listBox">
-        <option>Orange</option>
-        <option>Apple</option>
-        <option>Banana</option>
-        <option>Peach</option>
-    </select>
-    <script>
-    $("#listBox").kendoListBox({
-         draggable: true,
-         reorderable: true,
-         start: function(e) {
-             if (e.item.text() === "Orange") {
-                 e.preventDefault();
-             }
-         }
-    });
-    </script>

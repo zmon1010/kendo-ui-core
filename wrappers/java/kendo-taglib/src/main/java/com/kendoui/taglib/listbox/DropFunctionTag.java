@@ -9,7 +9,7 @@ import com.kendoui.taglib.ListBoxTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class StartFunctionTag extends FunctionTag /* interfaces */ /* interfaces */ {
+public class DropFunctionTag extends FunctionTag /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
@@ -19,7 +19,7 @@ public class StartFunctionTag extends FunctionTag /* interfaces */ /* interfaces
         ListBoxTag parent = (ListBoxTag)findParentWithClass(ListBoxTag.class);
 
 
-        parent.setStart(this);
+        parent.setDrop(this);
 
 //<< doEndTag
 

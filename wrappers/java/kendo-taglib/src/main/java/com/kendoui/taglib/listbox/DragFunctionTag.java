@@ -9,7 +9,7 @@ import com.kendoui.taglib.ListBoxTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class TransferFunctionTag extends FunctionTag /* interfaces */ /* interfaces */ {
+public class DragFunctionTag extends FunctionTag /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
@@ -19,7 +19,7 @@ public class TransferFunctionTag extends FunctionTag /* interfaces */ /* interfa
         ListBoxTag parent = (ListBoxTag)findParentWithClass(ListBoxTag.class);
 
 
-        parent.setTransfer(this);
+        parent.setDrag(this);
 
 //<< doEndTag
 

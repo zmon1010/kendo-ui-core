@@ -23,14 +23,14 @@ namespace Kendo.Mvc.UI
         public ListBoxToolbarPosition? Position { get; set; }
 
         //>> Fields
-
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
-
-            //<< Serialization
+        
+        //<< Serialization
 
             if (Position.HasValue)
             {

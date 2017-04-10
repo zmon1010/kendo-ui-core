@@ -80,12 +80,78 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fires when ListBox item(s) drag starts.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragstart event.</param>
+        public ListBoxEventBuilder DragStart(string handler)
+        {
+            Handler("dragstart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when ListBox item(s) drag starts.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ListBoxEventBuilder DragStart(Func<object, object> handler)
+        {
+            Handler("dragstart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when ListBox's placeholder changes its position.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the drag event.</param>
+        public ListBoxEventBuilder Drag(string handler)
+        {
+            Handler("drag", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when ListBox's placeholder changes its position.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ListBoxEventBuilder Drag(Func<object, object> handler)
+        {
+            Handler("drag", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when ListBox item is dropped over one of the drop targets.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the drop event.</param>
+        public ListBoxEventBuilder Drop(string handler)
+        {
+            Handler("drop", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when ListBox item is dropped over one of the drop targets.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ListBoxEventBuilder Drop(Func<object, object> handler)
+        {
+            Handler("drop", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the end event.</param>
-        public ListBoxEventBuilder End(string handler)
+        /// <param name="handler">The name of the JavaScript function that will handle the dragend event.</param>
+        public ListBoxEventBuilder DragEnd(string handler)
         {
-            Handler("end", handler);
+            Handler("dragend", handler);
 
             return this;
         }
@@ -94,31 +160,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ListBoxEventBuilder End(Func<object, object> handler)
+        public ListBoxEventBuilder DragEnd(Func<object, object> handler)
         {
-            Handler("end", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when LisbBox's placeholder changes its position.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the move event.</param>
-        public ListBoxEventBuilder Move(string handler)
-        {
-            Handler("move", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when LisbBox's placeholder changes its position.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ListBoxEventBuilder Move(Func<object, object> handler)
-        {
-            Handler("move", handler);
+            Handler("dragend", handler);
 
             return this;
         }
@@ -163,28 +207,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxEventBuilder Reorder(Func<object, object> handler)
         {
             Handler("reorder", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when ListBox item(s) drag starts.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the start event.</param>
-        public ListBoxEventBuilder Start(string handler)
-        {
-            Handler("start", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when ListBox item(s) drag starts.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ListBoxEventBuilder Start(Func<object, object> handler)
-        {
-            Handler("start", handler);
 
             return this;
         }

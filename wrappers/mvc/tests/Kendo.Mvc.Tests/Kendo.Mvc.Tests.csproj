@@ -229,6 +229,7 @@
     <Compile Include="UI\HierarchicalDataSource\HierarchicalModelDescriptorBuilderTests.cs" />
     <Compile Include="UI\DataSource\ModelDescriptorTests.cs" />
     <Compile Include="UI\ListBox\ListBoxBuilderTests.cs" />
+    <Compile Include="UI\ListBox\ListBoxToolFactoryTests.cs" />
     <Compile Include="UI\Map\Fluent\MapLayerDefaultsBubbleSettingsBuilderTests.cs" />
     <Compile Include="UI\Map\Fluent\MapLayerBuilderTests.cs" />
     <Compile Include="UI\Map\Fluent\MapLayerDefaultsMarkerSettingsBuilderTests.cs" />

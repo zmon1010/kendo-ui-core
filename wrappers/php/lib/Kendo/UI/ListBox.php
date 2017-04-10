@@ -196,31 +196,59 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * Sets the end event of the ListBox.
+    * Sets the dragstart event of the ListBox.
+    * Fires when ListBox item(s) drag starts.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function dragstart($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dragstart', $value);
+    }
+
+    /**
+    * Sets the drag event of the ListBox.
+    * Fires when ListBox's placeholder changes its position.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function drag($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('drag', $value);
+    }
+
+    /**
+    * Sets the drop event of the ListBox.
+    * Fired when ListBox item is dropped over one of the drop targets.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\ListBox
+    */
+    public function drop($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('drop', $value);
+    }
+
+    /**
+    * Sets the dragend event of the ListBox.
     * Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
-    public function end($value) {
+    public function dragend($value) {
         if (is_string($value)) {
             $value = new \Kendo\JavaScriptFunction($value);
         }
 
-        return $this->setProperty('end', $value);
-    }
-
-    /**
-    * Sets the move event of the ListBox.
-    * Fires when LisbBox's placeholder changes its position.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\UI\ListBox
-    */
-    public function move($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('move', $value);
+        return $this->setProperty('dragend', $value);
     }
 
     /**
@@ -249,20 +277,6 @@ If hint function is not provided the widget will clone dragged item and use it a
         }
 
         return $this->setProperty('reorder', $value);
-    }
-
-    /**
-    * Sets the start event of the ListBox.
-    * Fires when ListBox item(s) drag starts.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\UI\ListBox
-    */
-    public function start($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('start', $value);
     }
 
 

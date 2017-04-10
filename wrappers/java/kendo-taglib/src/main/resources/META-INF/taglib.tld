@@ -25800,13 +25800,23 @@ If hint function is not provided the widget will clone dragged item and use it a
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
-            <name>end</name>
+            <description>Fires when ListBox item(s) drag starts.</description>
+            <name>dragstart</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when LisbBox's placeholder changes its position.</description>
-            <name>move</name>
+            <description>Fires when ListBox's placeholder changes its position.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when ListBox item is dropped over one of the drop targets.</description>
+            <name>drop</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+            <name>dragend</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -25817,11 +25827,6 @@ If hint function is not provided the widget will clone dragged item and use it a
         <attribute>
             <description>Fires when items in the widget are reordered.</description>
             <name>reorder</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when ListBox item(s) drag starts.</description>
-            <name>start</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
@@ -25865,7 +25870,7 @@ If placeholder function is not provided the widget will clone dragged item, remo
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>An Array value with the list of commands displayed in the ListBox's Toolbar. Commands can be built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" command moves up the item that is currently selected by the end user.The "moveDown" command moves down the item that is currently selected by the end user.The "remove" command removes the item(s) that are currently selected by the end user.The "transferAllFrom" command moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" command moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" command moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" command moves all selected items from target widget related with connectWith option to the current ListBox widget.</description>
+            <description>An Array value with the list of tools displayed in the ListBox's Toolbar. Tools are built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" tool moves up the item that is currently selected by the end user.The "moveDown" tool moves down the item that is currently selected by the end user.The "remove" tool removes the item(s) that are currently selected by the end user.The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" tool moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" tool moves all selected items from target widget related with connectWith option to the current ListBox widget.</description>
             <name>tools</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -25894,15 +25899,27 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
-        <name>listBox-end</name>
-        <tag-class>com.kendoui.taglib.listbox.EndFunctionTag</tag-class>
+        <description>Fires when ListBox item(s) drag starts.</description>
+        <name>listBox-dragstart</name>
+        <tag-class>com.kendoui.taglib.listbox.DragstartFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when LisbBox's placeholder changes its position.</description>
-        <name>listBox-move</name>
-        <tag-class>com.kendoui.taglib.listbox.MoveFunctionTag</tag-class>
+        <description>Fires when ListBox's placeholder changes its position.</description>
+        <name>listBox-drag</name>
+        <tag-class>com.kendoui.taglib.listbox.DragFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when ListBox item is dropped over one of the drop targets.</description>
+        <name>listBox-drop</name>
+        <tag-class>com.kendoui.taglib.listbox.DropFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+        <name>listBox-dragend</name>
+        <tag-class>com.kendoui.taglib.listbox.DragendFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -25915,12 +25932,6 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <description>Fires when items in the widget are reordered.</description>
         <name>listBox-reorder</name>
         <tag-class>com.kendoui.taglib.listbox.ReorderFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when ListBox item(s) drag starts.</description>
-        <name>listBox-start</name>
-        <tag-class>com.kendoui.taglib.listbox.StartFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
