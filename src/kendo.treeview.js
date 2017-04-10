@@ -1234,7 +1234,7 @@ var __meta__ = { // jshint ignore:line
                     defaultTemplate += " name='" + checkboxes.name + "'";
                 }
 
-                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><label for='_#= item.uid #' class='k-checkbox-label'><span style='display:none' aria-hidden='true'>#= item.text || 'checkbox'#</span></label>";
+                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><label for='_#= item.uid #' class='k-checkbox-label'></label>";
 
                 checkboxes = extend({
                     template: defaultTemplate
