@@ -13,9 +13,19 @@
     var REMOVE = "remove";
     var TRANSFER = "transfer";
     var ADD = "add";
+    var MOVE_UP = "moveUp";
+    var MOVE_DOWN = "moveDown";
+    var TRANSFER_TO = "transferTo";
+    var TRANSFER_FROM = "transferFrom";
+    var TRANSFER_ALL_TO = "transferAllTo";
+    var TRANSFER_ALL_FROM = "transferAllFrom";
 
     function getId(item) {
         return item.data("uid");
+    }
+
+    function getToolElement(listbox, toolName) {
+        return listbox.wrapper.find("[data-command='" + toolName + "']");
     }
 
     module("ListBox toolbar", {
@@ -196,6 +206,7 @@
 
     module("ListBox toolbar", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
             listbox = createListBoxWithToolbar();
             item1 = listbox.items().eq(0);
             item2 = listbox.items().eq(1);
@@ -332,6 +343,8 @@
 
     module("ListBox toolbar", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
+
             listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
@@ -341,8 +354,6 @@
                     data: []
                 }
             }, "<select id='listbox2' />");
-
-            $(document.body).append(QUnit.fixture);
 
             item1 = listbox1.items().eq(0);
             item2 = listbox1.items().eq(1);
@@ -412,6 +423,8 @@
 
     module("ListBox toolbar", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
+
             listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
@@ -430,8 +443,6 @@
                     }]
                 }
             }, "<select id='listbox2' />");
-
-            $(document.body).append(QUnit.fixture);
 
             item1 = listbox2.items().eq(0);
             item2 = listbox2.items().eq(1);
@@ -502,6 +513,8 @@
 
     module("ListBox toolbar", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
+
             listbox1 = createListBoxWithToolbar({
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
@@ -514,8 +527,6 @@
 
             item1 = listbox1.items().eq(0);
             item2 = listbox1.items().eq(1);
-
-            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -566,6 +577,8 @@
 
     module("ListBox toolbar", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
+
             listbox1 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
@@ -573,7 +586,7 @@
                 connectWith: "#listbox2"
             }, "<select id='listbox1' />");
 
-            listbox2 = createListBoxWithToolbar({
+            listbox2 = createListBox({
                 dataSource: {
                     data: [{
                         id: 5,
@@ -587,8 +600,6 @@
 
             item1 = listbox2.items().eq(0);
             item2 = listbox2.items().eq(1);
-
-            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -682,5 +693,385 @@
 
         equal(listbox2.items().length, 1)
         equalListItems(listbox2.items()[0], item2);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox = createListBoxWithToolbar();
+
+            item1 = listbox.items().eq(0);
+            item2 = listbox.items().eq(1);
+            item3 = listbox.items().eq(2);
+            lastItem = listbox.items().last();
+        },
+        teardown: function() {
+            destroyListBox(listbox);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("remove tool should be disabled when no item is selected", function() {
+        var tool = getToolElement(listbox, REMOVE);
+
+        listbox.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("remove tool should be enabled when an item is selected", function() {
+        var tool = getToolElement(listbox, REMOVE);
+
+        listbox.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("remove tool should be disabled after executing remove", function() {
+        var tool = getToolElement(listbox, REMOVE);
+        listbox.select(item1);
+
+        clickRemoveButton(listbox);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("moveup tool should be disabled when first item is selected", function() {
+        var tool = getToolElement(listbox, MOVE_UP);
+
+        listbox.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("moveup tool should be enabled when the first item is not selected", function() {
+        var tool = getToolElement(listbox, MOVE_UP);
+
+        listbox.select(item2);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("moveup tool should be disabled after executing moveup on the second item", function() {
+        var tool = getToolElement(listbox, MOVE_UP);
+        listbox.select(item2);
+
+        clickMoveUpButton(listbox);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("movedown tool should be disabled when last item is selected", function() {
+        var tool = getToolElement(listbox, MOVE_DOWN);
+
+        listbox.select(lastItem);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("movedown tool should be enabled when the last item is not selected", function() {
+        var tool = getToolElement(listbox, MOVE_DOWN);
+
+        listbox.select(item2);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("movedown tool should be disabled after executing movedown before the last item", function() {
+        var tool = getToolElement(listbox, MOVE_DOWN);
+        listbox.select(item3);
+
+        clickMoveDownButton(listbox);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox1 = createListBoxWithToolbar({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            item1 = listbox1.items().eq(0);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferTo tool should be disabled when no item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_TO);
+
+        listbox1.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("transferTo tool should be enabled when item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_TO);
+
+        listbox1.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferTo tool should be enabled after executing transferTo", function() {
+        var tool = getToolElement(listbox1, TRANSFER_TO);
+        listbox1.select(item1);
+
+        clickTransferToButton(listbox1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            listbox1 = createListBoxWithToolbar({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            item1 = listbox2.items().eq(0);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferFrom tool should be disabled when no item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_FROM);
+
+        listbox2.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("transferFrom tool should be enabled when item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_FROM);
+
+        listbox2.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferFrom tool should be enabled after executing transferFrom", function() {
+        var tool = getToolElement(listbox1, TRANSFER_FROM);
+        listbox2.select(item1);
+
+        clickTransferFromButton(listbox1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferFrom tool should be disabled after deleting all items", function() {
+        var tool = getToolElement(listbox1, TRANSFER_FROM);
+        listbox2.select(listbox2.items());
+
+        clickRemoveButton(listbox2);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox3 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 7,
+                        text: "item7"
+                    }, {
+                        id: 8,
+                        text: "item8"
+                    }]
+                },
+                connectWith: "#listbox1"
+            }, "<select id='listbox3' />");
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            listbox1 = createListBoxWithToolbar({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            item1 = listbox1.items().eq(0);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            destroyListBox(listbox3);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferFrom tool should be disabled when item of connected listbox is not selected", function() {
+        var tool = getToolElement(listbox3, TRANSFER_FROM);
+
+        listbox1.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("transferFrom tool should be enabled when item of connected listbox is selected", function() {
+        var tool = getToolElement(listbox3, TRANSFER_FROM);
+
+        listbox1.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox1 = createListBoxWithToolbar({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            item1 = listbox1.items().eq(0);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferAllTo tool should be enabled when no item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_TO);
+
+        listbox1.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferAllTo tool should be enabled when item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_TO);
+
+        listbox1.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferAllTo tool should be disabled after executing transferAllTo", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_TO);
+
+        clickTransferAllToButton(listbox1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            listbox1 = createListBoxWithToolbar({
+                connectWith: "#listbox2"
+            }, "<select id='listbox1' />");
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                }
+            }, "<select id='listbox2' />");
+
+            item1 = listbox1.items().eq(0);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            kendo.destroy(QUnit.fixture);
+            $(document.body).find(QUnit.fixture).off().remove();
+        }
+    });
+
+    test("transferAllFrom tool should be enabled when no item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_FROM);
+
+        listbox2.clearSelection();
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferAllFrom tool should be enabled when item is selected", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_FROM);
+
+        listbox2.select(item1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferAllFrom tool should be disabled after executing transferAllFrom", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_FROM);
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
     });
 })();

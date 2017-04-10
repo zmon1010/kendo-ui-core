@@ -37,7 +37,7 @@ var __meta__ = { // jshint ignore:line
     var ENABLED_ITEM_SELECTOR = ".k-item:not(.k-state-disabled)";
     var ENABLED_ITEMS_SELECTOR = ".k-list:not(.k-state-disabled) >" + ENABLED_ITEM_SELECTOR;
     var TOOLBAR_CLASS = "k-listbox-toolbar";
-    var TOOL_SELECTOR = "li > a.k-button";
+    var TOOL_SELECTOR = "li > a.k-button:not(.k-state-disabled)";
     var FOCUSED_CLASS = "k-state-focused";
     var DRAG_CLUE_CLASS = "k-drag-clue";
     var DROP_HINT_CLASS = "k-drop-hint";
@@ -63,6 +63,7 @@ var __meta__ = { // jshint ignore:line
     var DRAGGEDCLASS = "k-ghost";
     var UNIQUE_ID = "uid";
     var TABINDEX = "tabindex";
+    var COMMAND = "command";
 
     var MOVE_UP_OFFSET = -1;
     var MOVE_DOWN_OFFSET = 1;
@@ -120,6 +121,7 @@ var __meta__ = { // jshint ignore:line
             that._createToolbar();
             that._createDraggable();
             that._createNavigatable();
+            that._setupConnections();
         },
 
         destroy: function() {
@@ -139,6 +141,7 @@ var __meta__ = { // jshint ignore:line
                 that.placeholder = null;
             }
 
+            that._disposeConnections();
             kendo.destroy(that.element);
         },
 
@@ -664,7 +667,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         clearSelection: function() {
-            this.selectable.clear();
+            var that = this;
+            var selectable = that.selectable;
+
+            if (selectable) {
+                selectable.clear();
+            }
         },
 
         enable: function(items, enable) {
@@ -855,10 +863,20 @@ var __meta__ = { // jshint ignore:line
                 aria: true,
                 multiple: selectableOptions.multiple,
                 filter: ENABLED_ITEM_SELECTOR,
-                change: function() {
-                    that.trigger(CHANGE);
-                }
+                change: proxy(that._onSelect, that)
             });
+        },
+
+        _onSelect: function() {
+            var that = this;
+
+            that._updateToolbar();
+
+            if (that._connectedFromListBox) {
+                that._connectedFromListBox._updateToolbar();
+            }
+
+            that.trigger(CHANGE);
         },
 
         _destroySelectable: function() {
@@ -874,29 +892,20 @@ var __meta__ = { // jshint ignore:line
             return this.wrapper.find(LIST_SELECTOR);
         },
 
-        _listItemComparer: function(item1, item2) {
-            var indexItem1 = $(item1).index();
-            var indexItem2 = $(item2).index();
-
-            if (indexItem1 === indexItem2) {
-                return 0;
-            } else {
-                return (indexItem1 > indexItem2 ? 1 : (-1));
-            }
-        },
-
         _createToolbar: function () {
             var that = this;
             var toolbarOptions = that.options.toolbar;
             var position = toolbarOptions.position || RIGHT;
             var toolbarInsertion = position === BOTTOM ? "insertAfter" : "insertBefore";
             var toolbarElement = $(that.templates.toolbar)[toolbarInsertion](that._innerWrapper);
+            var tools = toolbarOptions.tools || [];
 
             that._destroyToolbar();
 
-            if (toolbarOptions && toolbarOptions.tools && toolbarOptions.tools.length > 0) {
-                that.toolbar = new ToolBar(toolbarElement, extend({}, that.options.toolbar, { listBox: that }));
-                that.wrapper.removeClass(TOOLBAR_POSITION_CLASS_NAMES.join(SPACE)).addClass(TOOLBAR_CLASS + DASH + position);
+            if (tools.length && tools.length > 0) {
+                that.toolbar = new ToolBar(toolbarElement, extend({}, toolbarOptions, { listBox: that }));
+                that.wrapper.removeClass(TOOLBAR_POSITION_CLASS_NAMES.join(SPACE))
+                            .addClass(TOOLBAR_CLASS + DASH + position);
             }
         },
 
@@ -909,11 +918,98 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _executeCommand: function(commandName, options) {
-            var command = CommandFactory.current.create(commandName, options);
+        _executeCommand: function(commandName) {
+            var that = this;
+            var command = CommandFactory.current.create(commandName, { listBox: that });
 
             if (command) {
                 command.execute();
+                that._updateToolbar();
+                that._updateConnectedToolbars();
+            }
+        },
+
+        _updateToolbar: function() {
+            var toolbar = this.toolbar;
+
+            if (toolbar) {
+                toolbar._updateToolStates();
+            }
+        },
+
+        _setupConnections: function() {
+            var that = this;
+
+            that._setupConnectionTo();
+            that._setupConnectionFrom();
+            that._updateConnectedToolbars();
+        },
+
+        _setupConnectionTo: function() {
+            var that = this;
+            var connectedToListBox = $(that.options.connectWith).data(KENDO_LISTBOX);
+
+            if (connectedToListBox) {
+                that._connectedListBoxSelectHandler = proxy(that._onConnectedListBoxSelect, that);
+                connectedToListBox.bind(CHANGE, that._connectedListBoxSelectHandler);
+            }
+        },
+
+        _setupConnectionFrom: function() {
+            var that = this;
+            var id = "#" + that.element.attr("id");
+            var listBoxElements;
+            var connectedFromListBox;
+            var i;
+
+            listBoxElements = $("[data-role='listbox']");
+
+            for (i = 0; i < listBoxElements.length; i++) {
+                connectedFromListBox = $(listBoxElements[i]).data(KENDO_LISTBOX);
+
+                if (connectedFromListBox && id === connectedFromListBox.options.connectWith) {
+                    that._connectedFromListBox = connectedFromListBox;
+                    break;
+                }
+            }
+        },
+
+        _disposeConnections: function() {
+            var that = this;
+            var connectedToListBox = $(that.options.connectWith).data(KENDO_LISTBOX);
+
+            if (connectedToListBox) {
+                connectedToListBox.unbind(CHANGE, that._connectedListBoxSelectHandler);
+            }
+
+            that._connectedFromListBox = null;
+        },
+
+        _onConnectedListBoxSelect: function() {
+            this._updateToolbar();
+        },
+
+        _updateConnectedToolbars: function() {
+            var that = this;
+
+            that._updateConnectedToListBoxToolbar();
+            that._updateConnectedFromListBoxToolbar();
+        },
+
+        _updateConnectedToListBoxToolbar: function() {
+            var that = this;
+            var connectedToListBox = $(that.options.connectWith).data(KENDO_LISTBOX);
+
+            if (connectedToListBox) {
+                connectedToListBox._updateToolbar();
+            }
+        },
+
+        _updateConnectedFromListBoxToolbar: function() {
+            var connectedFromListbox = this._connectedFromListBox;
+
+            if (connectedFromListbox) {
+                connectedFromListbox._updateToolbar();
             }
         }
     });
@@ -973,6 +1069,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         execute: noop,
+        canExecute: noop,
         updateSelection: noop
     });
 
@@ -985,7 +1082,15 @@ var __meta__ = { // jshint ignore:line
             if (!listBox.trigger(REMOVE, { dataItems: listBox._dataItems(items), items: items })) {
                 listBox.remove(items);
                 that.updateSelection();
+
+                if (listBox.items().length === 0) {
+                    listBox.trigger(CHANGE);
+                }
             }
+        },
+
+        canExecute: function() {
+            return this.listBox.select().length > 0;
         },
 
         updateSelection: function() {
@@ -998,12 +1103,12 @@ var __meta__ = { // jshint ignore:line
         execute: function() {
             var that = this;
 
-            if (that.canMoveItems()) {
+            if (that.canExecute()) {
                 that.moveItems();
             }
         },
 
-        canMoveItems: noop,
+        canExecute: noop,
 
         moveItems: function() {
             var that = this;
@@ -1048,7 +1153,7 @@ var __meta__ = { // jshint ignore:line
             moveAction: "shift"
         },
 
-        canMoveItems: function() {
+        canExecute: function() {
             var items = this.getItems();
             var domIndices = getSortedDomIndices(items);
 
@@ -1063,7 +1168,7 @@ var __meta__ = { // jshint ignore:line
             moveAction: "pop"
         },
 
-        canMoveItems: function() {
+        canExecute: function() {
             var that = this;
             var items = that.getItems();
             var domIndices = getSortedDomIndices(items);
@@ -1075,13 +1180,13 @@ var __meta__ = { // jshint ignore:line
 
     var TransferItemsCommand = ListBoxCommand.extend({
         options: {
-            itemSelector: ENABLED_ITEM_SELECTOR
+            filter: ENABLED_ITEM_SELECTOR
         },
 
         execute: function() {
             var that = this;
             var sourceListBox = that.getSourceListBox();
-            var items = that.getItems().filter(that.options.itemSelector);
+            var items = that.getItems().filter(that.options.filter);
             var dataItems = sourceListBox ? sourceListBox._dataItems(items) : [];
             var destinationListBox = that.getDestinationListBox();
             var updatedSelection = that.getUpdatedSelection(items);
@@ -1101,12 +1206,12 @@ var __meta__ = { // jshint ignore:line
         getUpdatedSelection: function(items) {
             var that = this;
             var sourceListBox = that.getSourceListBox();
-            var nextItem = $(items).nextAll(that.options.itemSelector)[0];
+            var nextItem = $(items).nextAll(that.options.filter)[0];
 
             if (nextItem) {
                 return $(nextItem);
             } else {
-                return sourceListBox ? sourceListBox.items().not(items).filter(that.options.itemSelector).first() : $();
+                return sourceListBox ? sourceListBox.items().not(items).filter(that.options.filter).first() : $();
             }
         },
 
@@ -1123,6 +1228,12 @@ var __meta__ = { // jshint ignore:line
     });
 
     var TransferItemsToCommand = TransferItemsCommand.extend({
+        canExecute: function() {
+            var sourceListBox = this.getSourceListBox();
+
+            return (sourceListBox ? sourceListBox.select().length > 0 : false);
+        },
+
         getSourceListBox: function() {
             return this.listBox;
         },
@@ -1140,6 +1251,12 @@ var __meta__ = { // jshint ignore:line
     CommandFactory.current.register(TRANSFER_TO, TransferItemsToCommand);
 
     var TransferItemsFromCommand = TransferItemsCommand.extend({
+        canExecute: function() {
+            var sourceListBox = this.getSourceListBox();
+
+            return (sourceListBox ? sourceListBox.select().length > 0 : false);
+        },
+
         getSourceListBox: function() {
             var destinationListBox = this.getDestinationListBox();
             return destinationListBox ? $(destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
@@ -1157,6 +1274,12 @@ var __meta__ = { // jshint ignore:line
     CommandFactory.current.register(TRANSFER_FROM, TransferItemsFromCommand);
 
     var TransferAllItemsToCommand = TransferItemsToCommand.extend({
+        canExecute: function() {
+            var sourceListBox = this.getSourceListBox();
+
+            return (sourceListBox ? sourceListBox.items().length > 0 : false);
+        },
+
         getItems: function() {
             var sourceListBox = this.getSourceListBox();
             return sourceListBox ? sourceListBox.items() : $();
@@ -1165,6 +1288,12 @@ var __meta__ = { // jshint ignore:line
     CommandFactory.current.register(TRANSFER_ALL_TO, TransferAllItemsToCommand);
 
     var TransferAllItemsFromCommand = TransferItemsFromCommand.extend({
+        canExecute: function() {
+            var sourceListBox = this.getSourceListBox();
+
+            return (sourceListBox ? sourceListBox.items().length > 0 : false);
+        },
+
         getItems: function() {
             var sourceListBox = this.getSourceListBox();
             return sourceListBox ? sourceListBox.items() : $();
@@ -1178,18 +1307,19 @@ var __meta__ = { // jshint ignore:line
 
             that.element = $(element).addClass(TOOLBAR_CLASS);
             that.options = extend({}, that.options, options);
-            that.listBox = options.listBox;
+            that.listBox = that.options.listBox;
 
             that._initTemplates();
             that._createTools();
+            that._updateToolStates();
             that._attachEventHandlers();
         },
 
         destroy: function() {
             var that = this;
 
+            that._detachEventHandlers();
             kendo.destroy(that.element);
-            that.element.off().find("*").off();
             that.element.remove();
             that.element = null;
         },
@@ -1212,16 +1342,14 @@ var __meta__ = { // jshint ignore:line
 
         _createTools: function() {
             var that = this;
-            var options = that.options;
-            var defaultTools = ToolBar.defaultTools;
-            var tools = options.tools;
+            var tools = that.options.tools;
             var toolsLength = tools.length;
             var toolList = that._createToolList();
             var tool;
             var i;
 
             for (i = 0; i < toolsLength; i++) {
-                tool = defaultTools[tools[i] || tools[i].name];
+                tool = ToolBar.defaultTools[tools[i]];
 
                 if (tool) {
                     toolList.append($(that.templates.tool(tool)));
@@ -1241,10 +1369,14 @@ var __meta__ = { // jshint ignore:line
             that.element.on(CLICK, TOOL_SELECTOR, proxy(that._onToolClick, that));
         },
 
+        _detachEventHandlers: function() {
+            this.element.off(NS).find("*").off(NS);
+        },
+
         _onToolClick: function(e) {
             e.preventDefault();
 
-            this._executeToolCommand($(e.currentTarget).data("command"));
+            this._executeToolCommand($(e.currentTarget).data(COMMAND));
         },
 
         _executeToolCommand: function(command) {
@@ -1252,7 +1384,32 @@ var __meta__ = { // jshint ignore:line
             var listBox = that.listBox;
 
             if (listBox) {
-                listBox._executeCommand(command, { listBox: listBox });
+                listBox._executeCommand(command);
+            }
+        },
+
+        _updateToolStates: function() {
+            var that = this;
+            var tools = that.options.tools;
+            var toolsLength = tools.length;
+            var i;
+
+            for (i = 0; i < toolsLength; i++) {
+                that._updateToolState(tools[i]);
+            }
+        },
+
+        _updateToolState: function(toolName) {
+            var that = this;
+            var command = CommandFactory.current.create(toolName, { listBox: that.listBox });
+            var toolElement = that.element.find("[data-command='" + toolName + "']")[0];
+
+            if (toolElement && command && command.canExecute) {
+                if (command.canExecute()) {
+                    $(toolElement).removeClass(DISABLED_STATE_CLASS);
+                } else {
+                    $(toolElement).addClass(DISABLED_STATE_CLASS);
+                }
             }
         }
     });

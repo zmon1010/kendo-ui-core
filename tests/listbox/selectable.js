@@ -116,7 +116,7 @@
         equal(changeStub.calls("change"), 1);
     });
 
-    test("clearSelection triggers change", function() {
+    test("clearSelection removes selection", function() {
         listbox = new ListBox(container, {
             dataSource: [1, 2, 3]
         });
