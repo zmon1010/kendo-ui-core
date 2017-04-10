@@ -179,19 +179,20 @@ var __meta__ = { // jshint ignore:line
             var itemsLength = items.length;
             var i;
 
+            that._unbindDataSource();
             for (i = 0; i < itemsLength; i++) {
                 that._addItem(items[i]);
             }
+            that._bindDataSource();
+            that._syncElement();
         },
 
-        _addItem: function(dataItem) {
+        _addItem: function (dataItem) {
             var that = this;
             var item = that.templates.itemTemplate({ item: dataItem, r: that.templates.itemContent });
 
             $(item).attr(kendoAttr(UNIQUE_ID), dataItem.uid).appendTo(that._getList());
-            that._unbindDataSource();
             that.dataSource.add(dataItem);
-            that._bindDataSource();
         },
 
         _insertElementAt: function(item, index) {
@@ -556,7 +557,7 @@ var __meta__ = { // jshint ignore:line
                 }
             } else if(connectedListBox) {
                 if(!that.trigger(REMOVE, eventData)) {
-                   that._removeItem(draggedItem);
+                    that.remove([draggedItem]);
                 }
 
                 if(!connectedListBox.trigger(ADD, eventData)) {
@@ -587,25 +588,26 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        remove: function(items) {
+        remove: function (items) {
             var that = this;
             var itemsLength = (items || []).length;
             var i;
 
+            that._unbindDataSource();
             for (i = 0; i < itemsLength; i++) {
                 that._removeItem($(items[i]));
             }
+            that._bindDataSource();
+            that._syncElement();
         },
 
-        _removeItem: function(item) {
+        _removeItem: function (item) {
             var that = this;
             var dataSource = that.dataSource;
             var dataItem = that.dataItem(item);
 
             if (dataItem) {
-                that._unbindDataSource();
                 dataSource.remove(dataItem);
-                that._bindDataSource();
                 that._removeElement(item);
             }
         },
@@ -740,7 +742,7 @@ var __meta__ = { // jshint ignore:line
         _wrapper: function () {
             var that = this,
                 element = that.element,
-                wrapper = element.parent("span.k-multiselect");
+                wrapper = element.parent("div.k-listbox");
 
             if (!wrapper[0]) {
                 wrapper = element.wrap('<div class="k-widget k-listbox k-listbox-toolbar-top" deselectable="on" />').parent();
@@ -776,7 +778,7 @@ var __meta__ = { // jshint ignore:line
         refresh: function() {
             var that = this;
 
-            that._refresh();
+            that._refresh();            
             that.trigger(DATABOUND);
         },
 
@@ -795,9 +797,39 @@ var __meta__ = { // jshint ignore:line
             if(that.options.navigatable) {
                 that._getList().attr(TABINDEX, that._tabIndex);
             }
-            that.element.find("*").off().end().html(html);
             that._setItemIds();
             that._createToolbar();
+            that._syncElement();
+        },
+        
+        _syncElement: function () {
+            var options = "";
+            var view = this.dataSource.view();
+            for (var idx = 0; idx < view.length; idx++) {
+                options += this._option(view[idx][this.options.dataValueField], view[idx][this.options.dataTextField], true);
+            }
+            this.element.html(options);
+        },
+
+        _option: function (dataValue, dataText) {
+            var option = "<option";
+
+            if (dataValue !== undefined) {
+                dataValue += "";
+
+                if (dataValue.indexOf('"') !== -1) {
+                    dataValue = dataValue.replace(/"/g, "&quot;");
+                }
+
+                option += ' value="' + dataValue + '"';
+            }
+            option += " selected>";
+
+            if (dataText !== undefined) {
+                option += kendo.htmlEncode(dataText);
+            }
+
+            return option += "</option>";
         },
 
         _setItemIds: function() {
