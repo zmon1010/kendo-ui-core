@@ -3,7 +3,7 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 <div class="demo-section k-content">
-    <h4>Choose shipping countries:</h4>
+    <h4><label for="countries">Choose shipping countries:</label></h4>
     <?php
     $countries = array('Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium',
         'Bosnia & Herzegovina', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia',

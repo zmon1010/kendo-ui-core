@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 <div id="tshirt-view" class="demo-section k-content">
 	  <h4>Customize your Kendo T-shirt</h4>
-    <img id="tshirt" src="../content/web/combobox/tShirt.png" />
-    <h4>T-shirt Fabric</h4>
+    <img id="tshirt" alt="T-shirt image" src="../content/web/combobox/tShirt.png" />
+    <h4><label for="fabric">T-shirt Fabric</label></h4>
 <?php
 $fabrics = new \Kendo\Data\DataSource();
 $fabrics->data(array(
@@ -28,7 +28,7 @@ $input->dataSource($fabrics)
 
 echo $input->render();
 ?>
-    <h4 style="margin-top: 2em;">T-shirt Size</h4> 
+    <h4 style="margin-top: 2em;"><label for="size">T-shirt Size</label></h4>
 <?php
 
 $select = new \Kendo\UI\ComboBox('size');
