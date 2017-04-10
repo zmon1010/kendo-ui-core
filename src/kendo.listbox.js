@@ -460,6 +460,8 @@ var __meta__ = { // jshint ignore:line
                 node = items.filter(element)[0] || items.has(element)[0];
                 if(node) {
                     return { element: $(node), listBox: connectedListBox };
+                } else if(!items.length) {
+                    return { element: connectedListBox._getList(), appendToBottom: true };
                 } else {
                     return null;
                 }
@@ -544,7 +546,7 @@ var __meta__ = { // jshint ignore:line
             var dataItem = that.dataItem(draggedItem);
             var eventData = { dataItems: [dataItem], items: $(draggedItem) };
             var connectedListBox = that.placeholder.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
-
+           
             if(that.trigger(DROP, $.extend({}, eventData, { draggableEvent: e }))) {
                 e.preventDefault();
                 return;

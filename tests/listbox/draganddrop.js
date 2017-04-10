@@ -3,8 +3,7 @@
         listA,
         listB,
         listC,
-        draggedElement,
-        draggableOffset;
+        listD;
 
     module("ListBox - dragdrop", {
         setup: function() {
@@ -19,6 +18,10 @@
 
             QUnit.fixture.append(
                 '<select id="listC"></select>'
+            );
+
+            QUnit.fixture.append(
+                '<select id="listD"></select>'
             );
             
             listA  = $("#listA").kendoListBox({ 
@@ -47,6 +50,12 @@
                     draggable:true
             }).getKendoListBox();
 
+            listD = $("#listD").kendoListBox({ 
+                    dataTextField: "name",
+                    dataSource: [],
+                    dropSources: ["listA"]
+            }).getKendoListBox();
+
             $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
@@ -58,6 +67,9 @@
             }
             if(listC) {
               listC.destroy();
+            }
+            if(listD) {
+              listD.destroy();
             }
             kendo.destroy(QUnit.fixture);
             $(document.body).find(QUnit.fixture).off().remove();
@@ -131,5 +143,19 @@
         release(draggedElement, targetOffset.left, targetOffset.top);
 
         ok(listC.dataSource.view().length === 3);
+    });
+
+    test("Item is not dropped if dropSources is empty", 1, function() {
+        var draggedElement = listA.items().first();
+        var draggableOffset = kendo.getOffset(draggedElement);
+        var targetElement = listD._getList();
+        targetElement.height(30);
+        var targetOffset = kendo.getOffset(targetElement);
+          
+        press(draggedElement, draggableOffset.left, draggableOffset.top);
+        move(draggedElement, targetOffset.left, targetOffset.top);
+        release(draggedElement, targetOffset.left, targetOffset.top);
+
+        ok(listD.dataSource.view().length === 1);
     });
 })();
