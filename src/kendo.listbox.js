@@ -186,7 +186,7 @@ var __meta__ = { // jshint ignore:line
 
         _addItem: function(dataItem) {
             var that = this;
-            var item = that.templates.itemTemplate(dataItem);
+            var item = that.templates.itemTemplate({ item: dataItem, r: that.templates.itemContent });
 
             $(item).attr(kendoAttr(UNIQUE_ID), dataItem.uid).appendTo(that._getList());
             that._unbindDataSource();
@@ -761,13 +761,14 @@ var __meta__ = { // jshint ignore:line
             if (options.template && typeof options.template == "string") {
                 template = kendo.template(options.template);
             } else if (!options.template) {
-                template =  kendo.template('<li class="k-item">${' + kendo.expr(options.dataTextField, "data") + "}</li>", { useWithBlock: false });
+                template = kendo.template('${' + kendo.expr(options.dataTextField, "data") + "}", { useWithBlock: false });
             } else {
                 template = options.template;
             }
 
             that.templates = {
-                itemTemplate: template,
+                itemTemplate: kendo.template("# var item = data.item, r = data.r; # <li class='k-item'>#=r(item)#</li>", { useWithBlock: false }),
+                itemContent: template,
                 toolbar: "<div class='" + TOOLBAR_CLASS + "'></div>"
             };
         },
@@ -787,7 +788,7 @@ var __meta__ = { // jshint ignore:line
 
             html += "<ul class='" + LIST_CLASS + "'>";
             for (var idx = 0; idx < view.length; idx++) {
-                html += template(view[idx]);
+                html += template({ item: view[idx], r: that.templates.itemContent });
             }
             html+= "</ul>";
             that._innerWrapper.html(html);

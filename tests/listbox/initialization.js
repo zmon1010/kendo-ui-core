@@ -191,4 +191,22 @@
 
         equal(listbox.wrapper.find(".k-list-scroller").next()[0], listbox.toolbar.element[0]);
     });
+
+    test("when providing a template function the rendered content is wrapped in a li element", function() {
+        listbox = createListBox({
+            template: kendo.template("<div>#:text#</div>")
+        });
+
+        equal(listbox.items().first().prop('nodeName').toLowerCase(), "li");
+        equal(listbox.items().first().html(), "<div>item1</div>");
+    });
+
+    test("when providing a template string the rendered content is wrapped in a li element", function() {
+        listbox = createListBox({
+            template: "<div>#:text#</div>"
+        });
+
+        equal(listbox.items().first().prop('nodeName').toLowerCase(), "li");
+        equal(listbox.items().first().html(), "<div>item1</div>");
+    });
 })();
