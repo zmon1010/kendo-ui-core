@@ -652,4 +652,35 @@
         equal(listbox1.items().length, 0);
         equal(listbox2.items().length, 0);
     });
+
+    module("ListBox events", {
+        teardown: function() {
+            destroyListBox(listbox);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("initializing a listbox with data source should trigger dataBound event", function() {
+        var called = false;
+
+        listbox = createListBoxWithToolbar({
+            dataBound: function() {
+                called = true;
+            }
+        });
+
+        equal(called, true);
+    });
+
+    test("refresh should trigger dataBound event", function() {
+        var called = false;
+        listbox = createListBox();
+        listbox.bind("dataBound", function() {
+            called = true;
+        })
+
+        listbox.refresh();
+
+        equal(called, true);
+    });
 })();

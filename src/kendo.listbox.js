@@ -549,7 +549,7 @@ var __meta__ = { // jshint ignore:line
             var dataItem = that.dataItem(draggedItem);
             var eventData = { dataItems: [dataItem], items: $(draggedItem) };
             var connectedListBox = that.placeholder.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
-           
+
             if(that.trigger(DROP, $.extend({}, eventData, { draggableEvent: e }))) {
                 e.preventDefault();
                 return;
@@ -733,7 +733,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var dataSource = that.dataSource;
 
-            that._dataChangeHandler = proxy(that._refresh, that);
+            that._dataChangeHandler = proxy(that.refresh, that);
 
             if (dataSource) {
                 dataSource.bind(CHANGE, that._dataChangeHandler);
@@ -787,13 +787,6 @@ var __meta__ = { // jshint ignore:line
 
         refresh: function() {
             var that = this;
-
-            that._refresh();            
-            that.trigger(DATABOUND);
-        },
-
-        _refresh: function() {
-            var that = this;
             var view = that.dataSource.view();
             var template = that.templates.itemTemplate;
             var html = "";
@@ -810,8 +803,9 @@ var __meta__ = { // jshint ignore:line
             that._setItemIds();
             that._createToolbar();
             that._syncElement();
+            that.trigger(DATABOUND);
         },
-        
+
         _syncElement: function () {
             var options = "";
             var view = this.dataSource.view();
