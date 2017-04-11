@@ -975,7 +975,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (uploadPercentage.length > 0) {
-                uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-i-warning');
+                if(!uploadPercentage.parent().find(".k-i-warning").length){
+                    uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-i-warning');
+                }
             } else {
                 $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-i-warning'></span>");
             }
