@@ -50,6 +50,14 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
         return "upload-async";
     }
 
+    public float getAutoRetryAfter() {
+        return (Float)getProperty("autoRetryAfter");
+    }
+
+    public void setAutoRetryAfter(float value) {
+        setProperty("autoRetryAfter", value);
+    }
+
     public boolean getAutoUpload() {
         return (Boolean)getProperty("autoUpload");
     }
@@ -82,12 +90,12 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("concurrent", value);
     }
 
-    public float getMaxRetries() {
-        return (Float)getProperty("maxRetries");
+    public float getMaxAutoRetries() {
+        return (Float)getProperty("maxAutoRetries");
     }
 
-    public void setMaxRetries(float value) {
-        setProperty("maxRetries", value);
+    public void setMaxAutoRetries(float value) {
+        setProperty("maxAutoRetries", value);
     }
 
     public java.lang.String getRemoveField() {
@@ -112,14 +120,6 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
 
     public void setRemoveVerb(java.lang.String value) {
         setProperty("removeVerb", value);
-    }
-
-    public float getRetryAfter() {
-        return (Float)getProperty("retryAfter");
-    }
-
-    public void setRetryAfter(float value) {
-        setProperty("retryAfter", value);
     }
 
     public java.lang.String getSaveField() {

@@ -48,12 +48,12 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets or sets a value indicating how much retries will be performed when the upload fails
         /// </summary>
-        double? MaxRetries { get; set; }
+        double? MaxAutoRetries { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating after how many ticks the upload will be retried
         /// </summary>
-        double? RetryAfter { get; set; }
+        double? AutoRetryAfter { get; set; }
 
         /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests

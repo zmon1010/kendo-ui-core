@@ -97,22 +97,22 @@ namespace Kendo.Mvc.UI.Fluent
  
          /// <summary>
          /// It sets the number of attempts that will be performed if an upload is failing.
-         /// The property is only used when the async.retryAfter property is also defined.
+         /// The property is only used when the async.autoRetryAfter property is also defined.
          /// </summary>
-         /// <param name="value">The value for MaxRetries</param>
-         public UploadAsyncSettingsBuilder MaxRetries(double value)
+         /// <param name="value">The value for MaxAutoRetries</param>
+         public UploadAsyncSettingsBuilder MaxAutoRetries(double value)
          {
-             settings.MaxRetries = value;
+             settings.MaxAutoRetries = value;
              return this;
          }
  
          /// <summary>
          /// If the property is set the failed upload request will be repeated after the declared amount of ticks.
          /// </summary>
-         /// <param name="value">The value for RetryAfter</param>
-         public UploadAsyncSettingsBuilder RetryAfter(double value)
+         /// <param name="value">The value for AutoRetryAfter</param>
+         public UploadAsyncSettingsBuilder AutoRetryAfter(double value)
          {
-             settings.RetryAfter = value;
+             settings.AutoRetryAfter = value;
              return this;
          }
 

@@ -32,14 +32,14 @@ namespace Kendo.Mvc.TagHelpers
         public bool? Concurrent { get; set; }
 
         /// <summary>
-        /// Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.
+        /// If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
         /// </summary>
-        public double? MaxRetries { get; set; }
+        public double? AutoRetryAfter { get; set; }
 
         /// <summary>
-        /// If you set the property, the failed upload request is repeated after the declared amount of ticks.
+        /// Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.
         /// </summary>
-        public double? RetryAfter { get; set; }
+        public double? MaxAutoRetries { get; set; }
 
         /// <summary>
         /// The name of the form field submitted to the Remove URL.
@@ -98,14 +98,14 @@ namespace Kendo.Mvc.TagHelpers
                 settings["concurrent"] = Concurrent;
             }
 
-            if (MaxRetries.HasValue)
+            if (AutoRetryAfter.HasValue)
             {
-                settings["maxRetries"] = MaxRetries;
+                settings["autoRetryAfter"] = AutoRetryAfter;
             }
 
-            if (RetryAfter.HasValue)
+            if (MaxAutoRetries.HasValue)
             {
-                settings["retryAfter"] = RetryAfter;
+                settings["maxAutoRetries"] = MaxAutoRetries;
             }
 
             if (RemoveField?.HasValue() == true)

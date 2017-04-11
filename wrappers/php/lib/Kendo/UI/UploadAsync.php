@@ -44,21 +44,21 @@ Files selected one after the other will be uploaded in separate requests.
     }
 
     /**
-    * Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.
+    * If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
     * @param float $value
     * @return \Kendo\UI\UploadAsync
     */
-    public function maxRetries($value) {
-        return $this->setProperty('maxRetries', $value);
+    public function autoRetryAfter($value) {
+        return $this->setProperty('autoRetryAfter', $value);
     }
 
     /**
-    * If you set the property, the failed upload request is repeated after the declared amount of ticks.
+    * Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.
     * @param float $value
     * @return \Kendo\UI\UploadAsync
     */
-    public function retryAfter($value) {
-        return $this->setProperty('retryAfter', $value);
+    public function maxAutoRetries($value) {
+        return $this->setProperty('maxAutoRetries', $value);
     }
 
     /**

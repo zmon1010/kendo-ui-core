@@ -48129,6 +48129,12 @@ for more details.</description>
         <body-content>empty</body-content>
 
         <attribute>
+            <description>If you set the property, the failed upload request is repeated after the declared amount of miliseconds.</description>
+            <name>autoRetryAfter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The selected files will be uploaded immediately by default. You can change this behavior by setting autoUpload to false.</description>
             <name>autoUpload</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48155,8 +48161,8 @@ Files selected one after the other will be uploaded in separate requests.</descr
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.</description>
-            <name>maxRetries</name>
+            <description>Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.</description>
+            <name>maxAutoRetries</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
@@ -48178,12 +48184,6 @@ requests containing one or more "fileNames" fields specifying the files to be de
             <name>removeVerb</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>If you set the property, the failed upload request is repeated after the declared amount of ticks.</description>
-            <name>retryAfter</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
         </attribute>
         <attribute>
             <description>The name of the form field submitted to the save URL. The default value is the input name.</description>

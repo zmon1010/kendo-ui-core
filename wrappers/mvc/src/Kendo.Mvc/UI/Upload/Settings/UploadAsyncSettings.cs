@@ -73,14 +73,14 @@ namespace Kendo.Mvc.UI
 
         /// <summary>
         /// It sets the number of attempts that will be performed if an upload is failing.
-        /// The property is only used when the async.retryAfter property is also defined.
+        /// The property is only used when the async.autoRetryAfter property is also defined.
         /// </summary>
-        public double? MaxRetries { get; set; }
+        public double? MaxAutoRetries { get; set; }
 
         /// <summary>
         /// If the property is set the failed upload request will be repeated after the declared amount of ticks.
         /// </summary>
-        public double? RetryAfter { get; set; }
+        public double? AutoRetryAfter { get; set; }
 
         /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests
@@ -108,8 +108,8 @@ namespace Kendo.Mvc.UI
                     .Add("batch", Batch, () => Batch.HasValue)
                     .Add("chunkSize", ChunkSize, () => ChunkSize.HasValue)
                     .Add("concurrent", Concurrent, () => Concurrent.HasValue)
-                    .Add("maxRetries", MaxRetries, () => MaxRetries.HasValue)
-                    .Add("retryAfter", RetryAfter, () => RetryAfter.HasValue)
+                    .Add("maxAutoRetries", MaxAutoRetries, () => MaxAutoRetries.HasValue)
+                    .Add("autoRetryAfter", AutoRetryAfter, () => AutoRetryAfter.HasValue)
                     .Add("withCredentials", WithCredentials, () => WithCredentials.HasValue);
 
                 if (Remove.HasValue())
