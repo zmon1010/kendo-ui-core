@@ -5,7 +5,7 @@ require_once '../include/header.php';
 ?>
 
 <div class="demo-section k-content">
-    <h4>Enter Date:</h4>
+    <h4>Enter a date</h4>
 <?php
 $dateInput = new \Kendo\UI\DateInput('dateinput');
 $dateInput->attr('style', 'width: 100%');

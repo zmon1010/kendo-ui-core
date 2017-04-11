@@ -5,7 +5,7 @@
 <demo:header />
 
 <div class="demo-section k-content">
-<h4>Enter Date</h4>
+<h4>Enter a date</h4>
     <kendo:dateInput name="dateinput" style="width: 100%;"></kendo:dateInput>
 </div>
 

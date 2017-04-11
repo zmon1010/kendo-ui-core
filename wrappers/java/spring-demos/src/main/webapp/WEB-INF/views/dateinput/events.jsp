@@ -5,8 +5,8 @@
 <demo:header />
 
 <div class="demo-section k-content">
-    <h4>Enter Date</h4>
-    <kendo:dateInput name="dateinput" change="change" style="width: 100%;">
+    <h4>Enter a date</h4>
+    <kendo:dateInput name="dateinput"  value="${date}" change="change" style="width: 100%;">
 	</kendo:dateInput>
  </div>
  <div class="box">                
