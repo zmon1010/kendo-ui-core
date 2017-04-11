@@ -38,6 +38,10 @@
         ok(kendo.ui.ListBox.prototype.options.navigatable === false);
     });
 
+    test("List element has tab index", 1, function() {
+        ok(!isNaN(listA._getList().attr("tabindex")));
+    });
+
     test("First item gets focused on keydown if focused item is not present", 1, function() {
         listA.focus();
         listA._keyDown({ keyCode: keys.DOWN, preventDefault: $.noop });

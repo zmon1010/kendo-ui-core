@@ -109,6 +109,7 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.init.call(that, element, options);
 
             that._wrapper();
+            that._list();
             element = that.element.attr("multiple", "multiple").hide();
 
             if (element[0] && !that.options.dataSource) {
@@ -128,7 +129,10 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             DataBoundWidget.fn.destroy.call(that);
-
+            if(!isNaN(that._listTabIndex)) {
+                that._getList().off();
+                that._listTabIndex = null;
+            }
             that._unbindDataSource();
             that._destroySelectable();
             that._destroyToolbar();
@@ -212,19 +216,32 @@ var __meta__ = { // jshint ignore:line
         _createNavigatable: function() {
             var that = this;
             var options = that.options;
-            var tabIndex;
 
             if(options.navigatable) {
                 if(!that.options.selectable) {
                     throw new Error("Keyboard navigation requires selection to be enabled");
                 }
-                that.wrapper.on(CLICK, ENABLED_ITEMS_SELECTOR, proxy(that._click, that))
+                that._getList().on(CLICK, ENABLED_ITEM_SELECTOR, proxy(that._click, that))
                             .on(KEYDOWN, proxy(that._keyDown, that))
-                            .on(BLUR, LIST_SELECTOR, proxy(that._blur, that));
-
-                tabIndex = that.element.attr(TABINDEX);
-                that._tabIndex = !isNaN(tabIndex) ? tabIndex : 0;
+                            .on(BLUR, proxy(that._blur, that));
             }
+        },
+
+        _getTabIndex: function() {
+            var that = this;
+            var tabindex;
+
+            if(!isNaN(that._listTabIndex))
+            {
+                return that._listTabIndex;
+            }
+
+            tabindex = that.element.attr(TABINDEX);
+            that._listTabIndex = !isNaN(tabindex) ? tabindex : 0;
+
+            that.element.removeAttr(TABINDEX);
+
+            return that._listTabIndex;
         },
 
         _blur: function() {
@@ -765,6 +782,14 @@ var __meta__ = { // jshint ignore:line
             that._innerWrapper = $(wrapper[0].firstChild);
         },
 
+        _list: function () {
+            var that = this;
+            $("<ul class='" + LIST_CLASS + "'></ul>").appendTo(that._innerWrapper);
+            if(that.options.navigatable) {
+                that._getList().attr(TABINDEX, that._getTabIndex());
+            }
+        },
+
         _templates: function () {
             var that = this;
             var options = this.options;
@@ -791,15 +816,10 @@ var __meta__ = { // jshint ignore:line
             var template = that.templates.itemTemplate;
             var html = "";
 
-            html += "<ul class='" + LIST_CLASS + "'>";
             for (var idx = 0; idx < view.length; idx++) {
                 html += template({ item: view[idx], r: that.templates.itemContent });
             }
-            html+= "</ul>";
-            that._innerWrapper.html(html);
-            if(that.options.navigatable) {
-                that._getList().attr(TABINDEX, that._tabIndex);
-            }
+            that._getList().html(html);
             that._setItemIds();
             that._createToolbar();
             that._syncElement();
