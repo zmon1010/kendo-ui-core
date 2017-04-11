@@ -312,7 +312,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
             }
         });
         simulateFileSelect();
-        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        var ariaLabelValue = $(".k-upload-action", uploadInstance.wrapper).attr("aria-label");
         equal(ariaLabelValue, "cancel the file upload");
     });
 
@@ -323,7 +323,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
             }
         });
         simulateFileSelect();
-        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        var ariaLabelValue = $(".k-upload-action", uploadInstance.wrapper).attr("aria-label");
         ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
     });
 

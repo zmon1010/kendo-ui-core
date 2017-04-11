@@ -122,8 +122,8 @@ var __meta__ = { // jshint ignore:line
             template: "",
             files: [],
             async: {
-                retryAfter: 0,
-                maxRetries: 1,
+                autoRetryAfter: 0,
+                maxAutoRetries: 1,
                 removeVerb: "POST",
                 autoUpload: true,
                 withCredentials: true,
@@ -942,11 +942,11 @@ var __meta__ = { // jshint ignore:line
 
            that._checkAllComplete();
 
-            if(this.options.async.retryAfter){
-               this._retryAfter(fileEntry);
+            if(this.options.async.autoRetryAfter){
+               this._autoRetryAfter(fileEntry);
             }
         },
-        _retryAfter: function(fileEntry){
+        _autoRetryAfter: function(fileEntry){
             var that = this;
             var retries = this._module.retries;
 
@@ -954,11 +954,11 @@ var __meta__ = { // jshint ignore:line
                 retries[fileEntry.data("uid")] = 1;
             }
 
-            if(retries[fileEntry.data("uid")] <= this.options.async.maxRetries){
+            if(retries[fileEntry.data("uid")] <= this.options.async.maxAutoRetries){
                 retries[fileEntry.data("uid")]++;
                 setTimeout(function(){
                     that._module.performUpload(fileEntry);
-                },this.options.async.retryAfter);
+                },this.options.async.autoRetryAfter);
             }else{
                 retries[fileEntry.data("uid")] = 0;
             }
