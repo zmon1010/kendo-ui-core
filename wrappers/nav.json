@@ -2126,6 +2126,16 @@
                 "meta": {
                     "aspnet-mvc": "Play with this basic example of Telerik ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
                 }
+            },
+            {
+                "text": "Events",
+                "url": "listbox/events",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox events demo | Telerik UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows events which are triggered in $FRAMEWORK ListBox component."
+                }
             }
         ],
         "category": "Data Management"

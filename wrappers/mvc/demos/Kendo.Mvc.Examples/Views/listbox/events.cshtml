@@ -1,0 +1,127 @@
+﻿<div id="example" role="application">
+    <div class="demo-section k-content wide">
+        @(Html.Kendo().ListBox()
+            .Name("optional")
+            .Toolbar(toolbar =>
+            {
+                toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
+                toolbar.Tools(tools => tools
+                    .MoveUp()
+                    .MoveDown()
+                    .Remove()
+                    .TransferFrom()
+                    .TransferTo()
+                    .TransferAllFrom()
+                    .TransferAllTo()
+                );
+            })
+            .ConnectWith("#selected")
+            .Selectable(ListBoxSelectable.Multiple)
+            .Draggable(draggable => draggable.Placeholder("placeholder"))
+            .DropSources("selected")
+            .DataTextField("ContactName")
+            .DataValueField("CustomerID")
+            .DataSource(source => source
+                .Custom()
+                .Type("aspnetmvc-ajax")
+                .Transport(transport => transport
+                    .Read(read => read.Action("GetCustomers", "ListBox"))
+                )
+            )
+            .Events(events => events
+                .Add("onAdd")
+                .Change("onChange")
+                .DataBound("onDataBound")
+                .DragStart("onDragStart")
+                .Drag("onDrag")
+                .Drop("onDrop")
+                .DragEnd("onDragEnd")
+                .Remove("onRemove")
+                .Reorder("onReorder")
+            )
+        )
+
+        @(Html.Kendo().ListBox()
+            .Name("selected")
+            .ConnectWith("#optional")
+            .Selectable(ListBoxSelectable.Multiple)
+            .Draggable(draggable => draggable.Placeholder("placeholder"))
+            .DropSources("optional")
+            .DataTextField("ContactName")
+            .DataValueField("CustomerID")
+            .Events(events => events
+                .Add("onAdd")
+                .Change("onChange")
+                .DataBound("onDataBound")
+                .DragStart("onDragStart")
+                .Drag("onDrag")
+                .Drop("onDrop")
+                .DragEnd("onDragEnd")
+                .Remove("onRemove")
+                .Reorder("onReorder")
+            )
+            .BindTo(new List<CustomerViewModel>())
+        )
+    </div>
+    <div class="demo-section k-content wide">
+        <h4>Console log</h4>
+        <div class="console"></div>
+    </div>
+    <script>
+        function onAdd(e) {
+            kendoConsole.log("event: add. " + e.dataItems.length + " item(s) added.");
+        }
+
+        function onChange(e) {
+            kendoConsole.log("event: change");
+        }
+
+        function onDataBound(e) {
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event :: dataBound");
+            }
+        }
+
+        function onRemove(e) {
+            kendoConsole.log("event: remove. " + e.dataItems.length + " item(s) removed.");
+        };
+
+        function onReorder(e) {
+            kendoConsole.log("event: reorder");
+        }
+
+        function onDragStart(e) {
+            kendoConsole.log("event: dragstart");
+        }
+
+        function onDrag(e) {
+            kendoConsole.log("event: drag");
+        }
+
+        function onDrop(e) {
+            kendoConsole.log("event: drop");
+        }
+
+        function onDragEnd(e) {
+            kendoConsole.log("event: dragend");
+        }
+
+        function placeholder(element) {
+            return element.clone().css({
+                "opacity": 0.3,
+                "border": "1px dashed #000000"
+            });
+        }
+    </script>
+    <style>
+        #example .k-listbox:nth-of-type(1) {
+            width: 49%;
+            float: left;
+        }
+
+        #example .k-listbox:nth-of-type(2) {
+            width: 49%;
+            float: right;
+        }
+    </style>
+</div>
