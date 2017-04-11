@@ -7131,6 +7131,9 @@ function drawDOM(element, options) {
         }
 
         function splitElement(element) {
+            if (element.tagName == "TABLE") {
+                setCSS(element, { tableLayout: "fixed" });
+            }
             var style = getComputedStyle(element);
             var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
             var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
