@@ -3258,14 +3258,26 @@
         "url": "listbox/events",
         "title": {
           "kendo-ui": "ListBox Events",
-          "aspnet-mvc": "ASP.NET MVC ListBox demo | Telerik UI for ASP.NET MVC demos"
+          "aspnet-mvc": "ASP.NET MVC ListBox events demo | Telerik UI for ASP.NET MVC demos"
         },
         "meta": {
           "kendo-ui": "",
           "aspnet-mvc": ""
         }
       },
-	    {
+      {
+        "text": "Templates",
+        "url": "listbox/templates",
+        "title": {
+          "kendo-ui": "ListBox templates",
+          "aspnet-mvc": "ASP.NET MVC ListBox templates demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
         "text": "Keyboard navigation",
         "url": "listbox/keyboard-navigation",
         "title": {
