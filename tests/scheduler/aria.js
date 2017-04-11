@@ -201,4 +201,12 @@
         equal(td.attr("aria-selected"), "false");
         equal(td2.attr("aria-selected"), "true");
     });
+
+    test("scheduler adds aria-label attribute to prev and next navigation buttons", function(){
+        jasmine.clock().tick(1);
+        var toolbar = scheduler.toolbar;
+
+        equal(toolbar.find(".k-nav-prev .k-link").attr("aria-label"), "Previous");
+        equal(toolbar.find(".k-nav-next .k-link").attr("aria-label"), "Next");
+    });
 })();

@@ -493,6 +493,23 @@
         equal(timeElementsCount,0);
     });
 
+    test("renders events' delete button with aria-label attribute", function() {
+        var view = setup({ date: new Date(2013, 1, 2), messages: {destroy: "Delete"} });
+
+        view.render([new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 0, 0),
+            end: new Date(2013, 1, 2, 2, 10, 0),
+            isAllDay: false,
+            id: "2"
+        })]);
+
+        var eventBtn = view.element.find(".k-event-delete");
+
+        ok(eventBtn.is("[aria-label=Delete]"));
+    });
+
     test("non-overlapping events are not rendered on different rows", function() {
         var view = setup({ date: new Date(2013, 1, 2) });
 

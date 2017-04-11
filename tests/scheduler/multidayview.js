@@ -47,6 +47,10 @@
         return new MyDayView(container, $.extend({ majorTick: 120 }, options));
     }
 
+    function stripZeroWidthSpace(string){
+        return string.replace(/\u200B/g,'');
+    }
+
     function setupGroupedScheduler(element, orientation, view, options) {
         orientation = orientation || "horizontal";
         options = $.extend({}, {
@@ -162,9 +166,9 @@
         var cells = view.times.find("th");
 
         equal(cells.first().text(), "10:00 AM");
-        equal(cells.eq(1).html(), "&nbsp;");
+        equal(stripZeroWidthSpace(cells.eq(1).html()), "");
         equal(cells.eq(2).text(), "10:30 AM");
-        equal(cells.eq(3).html(), "&nbsp;");
+        equal(stripZeroWidthSpace(cells.eq(3).html()), "");
     });
 
     test("time slots does not overflow endTime", function() {
@@ -174,7 +178,7 @@
                 minorTickCount: 8
             });
 
-        equal(view.times.find("th").filter(function() { return this.innerHTML != "&nbsp;"; }).last().text(), "10:00 PM");
+        equal(view.times.find("th").filter(function() { return stripZeroWidthSpace(this.innerHTML) != ""; }).last().text(), "10:00 PM");
         equal(view.times.find("th").length, 96);
     });
 
@@ -195,7 +199,7 @@
                 endTime: new Date(2000, 0, 1, 10, 0, 0),
             });
 
-        equal(view.times.find("tr:not(:last) th").filter(function() { return this.innerHTML != "&nbsp;"; }).last().text(), "7:00 AM");
+        equal(view.times.find("tr:not(:last) th").filter(function() { return stripZeroWidthSpace(this.innerHTML) != ""; }).last().text(), "7:00 AM");
         equal(view.times.find("tr:last").text(), "9:00 AM");
         equal(view.times.find("th").length, 21);
     });
@@ -1218,7 +1222,7 @@
             dates: [new Date("2013/6/6")]
         });
 
-        equal(view.times.find("tr th").filter(function() { return this.innerHTML != "&nbsp;"; }).last().text(), "12:00 PM");
+        equal(view.times.find("tr th").filter(function() { return stripZeroWidthSpace(this.innerHTML) != ""; }).last().text(), "12:00 PM");
     });
 
     test("default workDayEnd and workDayStart are used when rendered in work mode", function() {
@@ -2664,6 +2668,21 @@
 
         equal(events.filter("[role=gridcell]").length, events.length);
         equal(events.filter("[aria-selected=false]").length, events.length);
+    });
+
+    test("View renders events' delete button with aria-label attribute", function() {
+        var view = setup({ dates: [ new Date(2013, 1, 2), new Date(2013, 1, 3) ], messages: {destroy: "Delete"} });
+
+        view.render([new SchedulerEvent({
+            uid: "foo", title: "",
+            start: new Date(2013, 1, 2, 0, 0, 0),
+            end: new Date(2013, 1, 2, 1, 0, 0),
+            id: "2"
+        })]);
+
+        var eventBtn = view.element.find(".k-event-delete");
+
+        ok(eventBtn.is("[aria-label=Delete]"));
     });
 
     test("Do not render events if daySlot is disabled", function() {

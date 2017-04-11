@@ -27,7 +27,7 @@
                                    "# } #" +
                                    '{0}' +
                                    '#if (showDelete) {#' +
-                                       '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
+                                       '<a href="\\#" class="k-link k-event-delete" title="${data.messages.destroy}" aria-label="${data.messages.destroy}"><span class="k-icon k-i-close"></span></a>' +
                                    '#}#' +
                                '</div>';
 
@@ -257,7 +257,8 @@
                     options.editable = $.extend(
                         { "delete": true },
                         options.editable,
-                        { create: false, update: false }
+                        { create: false, update: false },
+                        { messages: options.messages }
                     );
                 }
 
@@ -450,7 +451,7 @@
                             task.tail || task.middle ? '<span class="k-icon k-i-arrow-60-left"></span>' : "",
                             this._timeTemplate(task.clone({ start: task._startTime || task.start, end: task.endTime || task.end })),
                             task.head || task.middle ? '<span class="k-icon k-i-arrow-60-right"></span>' : "",
-                            this._eventTemplate(task.clone({ showDelete: showDelete }))
+                            this._eventTemplate(task.clone({ showDelete: showDelete, messages: this.options.messages }))
                         ));
 
                         tableRows.push('<tr role="row" aria-selected="false"' + (today ? ' class="k-today">' : ">") + tableRow.join("") + "</tr>");

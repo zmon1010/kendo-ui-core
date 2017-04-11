@@ -43,7 +43,7 @@ var __meta__ = { // jshint ignore:line
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete" title="${data.messages.destroy}" aria-label="${data.messages.destroy}"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                     '# if(data.head || data.middle) {#' +
                         '<span class="k-icon k-i-arrow-60-right"></span>' +
@@ -960,6 +960,7 @@ var __meta__ = { // jshint ignore:line
             event.ns = kendo.ns;
             event.resources = this.eventResources(event);
             event.inverseColor = event.resources && event.resources[0] ? this._shouldInverseResourceColor(event.resources[0]) : false;
+            event.messages = options.messages || { destroy: "Delete" };
 
             var element = $(this.eventTemplate(event));
 

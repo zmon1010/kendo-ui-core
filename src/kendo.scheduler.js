@@ -96,9 +96,9 @@ var __meta__ = { // jshint ignore:line
            '</ul>' +
            '# } #' +
             '<ul class="k-reset k-scheduler-navigation">' +
-               '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link">${messages.today}</a></li>' +
-               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
-               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link" title="${messages.today}">${messages.today}</a></li>' +
+               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link" title="${messages.previous}" aria-label="${messages.previous}"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link" title="${messages.next}" aria-label="${messages.next}"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
                '<li class="k-state-default k-nav-current">' +
                     '<a role="button" href="\\#" class="k-link">' +
                         '<span class="k-icon k-i-calendar"></span>' +
@@ -2259,6 +2259,8 @@ var __meta__ = { // jshint ignore:line
                 cancel: "Cancel",
                 destroy: "Delete",
                 deleteWindowTitle: "Delete event",
+                next: "Next",
+                previous: "Previous",
                 ariaSlotLabel: "Selected from {0:t} to {1:t}",
                 ariaEventLabel: "{0} on {1:D} at {2:t}",
                 views: {
