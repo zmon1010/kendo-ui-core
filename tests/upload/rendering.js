@@ -118,13 +118,13 @@ module("Upload / Rendering / Aria-Label-Action-Buttons", {
 
 test("aria-label is rendered for remove button", function() {
     simulateFileSelect();
-    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    var ariaLabelValue = $(".k-upload-action", uploadInstance.wrapper).attr("aria-label");
     ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
 });
 
 test("aria-label is rendered for remove button", function() {
     simulateFileSelect();
-    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    var ariaLabelValue = $(".k-upload-action", uploadInstance.wrapper).attr("aria-label");
     equal(ariaLabelValue, "remove file");
 });
 
