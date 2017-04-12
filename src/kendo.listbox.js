@@ -250,6 +250,7 @@ var __meta__ = { // jshint ignore:line
         _blur: function() {
             if(this._target) {
                 this._target.removeClass(FOCUSED_CLASS);
+                this._getList().removeAttr("aria-activedescendant");
             }
             this._target = null;
         },
@@ -265,6 +266,7 @@ var __meta__ = { // jshint ignore:line
 
             that._target = target;
             target.addClass(FOCUSED_CLASS);
+            that._getList().attr("aria-activedescendant", target.attr("id"));
             if(that._getList()[0] !== kendo._activeElement()){
                 that.focus();
             }
@@ -302,6 +304,7 @@ var __meta__ = { // jshint ignore:line
                 that.remove(that.select());
                 if(that._target) {
                     that._target.removeClass(FOCUSED_CLASS);
+                    that._getList().removeAttr("aria-activedescendant");
                     that._target = null;
                 }
                 shouldPreventDefault = true;
@@ -323,6 +326,7 @@ var __meta__ = { // jshint ignore:line
                 }
                 that._target = current;
                 that._target.addClass(FOCUSED_CLASS);
+                that._getList().attr("aria-activedescendant", that._target.attr("id"));
                 shouldPreventDefault = true;
             } else if(key == keys.SPACEBAR) {
                 if(e.ctrlKey && that._target) {
@@ -787,7 +791,7 @@ var __meta__ = { // jshint ignore:line
 
         _list: function () {
             var that = this;
-            $("<ul class='" + LIST_CLASS + "'></ul>").appendTo(that._innerWrapper);
+            $("<ul class='" + LIST_CLASS + "' role='listbox'></ul>").appendTo(that._innerWrapper);
             if(that.options.navigatable) {
                 that._getList().attr(TABINDEX, that._getTabIndex());
             }
@@ -807,7 +811,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             that.templates = {
-                itemTemplate: kendo.template("# var item = data.item, r = data.r; # <li class='k-item'>#=r(item)#</li>", { useWithBlock: false }),
+                itemTemplate: kendo.template("# var item = data.item, r = data.r; # <li class='k-item' role='option'>#=r(item)#</li>", { useWithBlock: false }),
                 itemContent: template,
                 toolbar: "<div class='" + TOOLBAR_CLASS + "'></div>"
             };
@@ -867,7 +871,7 @@ var __meta__ = { // jshint ignore:line
             var i;
 
             for (i = 0; i < viewLength; i++) {
-                items.eq(i).attr(kendoAttr(UNIQUE_ID), view[i].uid);
+                items.eq(i).attr(kendoAttr(UNIQUE_ID), view[i].uid).attr("id", view[i].uid);
             }
         },
 
@@ -1350,7 +1354,7 @@ var __meta__ = { // jshint ignore:line
             this.templates = {
                 tool: kendoTemplate(
                     "<li>" +
-                        "<a href='\\\\#' class='k-button k-button-icon k-tool' data-command='#= command #'>" +
+                        "<a href='\\\\#' class='k-button k-button-icon k-tool' data-command='#= command #' role='button'>" +
                             "<span class='k-icon #= iconClass #'></span>" +
                         "</a>" +
                     "</li>")
