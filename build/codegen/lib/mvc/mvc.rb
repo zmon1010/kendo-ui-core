@@ -147,6 +147,7 @@ module CodeGen::MVC::Wrappers
         'listbox.selectable',
         'listbox.toolbar.position',
         'listbox.toolbar.tools',
+        'listbox.draggable.placeholder',
         'editor.filebrowser',
         'editor.imagebrowser',
         'editor.tag',

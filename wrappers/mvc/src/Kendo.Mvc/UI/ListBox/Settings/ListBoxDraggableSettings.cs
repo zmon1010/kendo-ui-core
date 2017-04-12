@@ -17,23 +17,23 @@ namespace Kendo.Mvc.UI
         //<< Initialization
         }
 
+        public ClientHandlerDescriptor Placeholder { get; set; }
+
         public bool Enabled { get; set; }
 
         //>> Fields
-        
-        public string Placeholder { get; set; }
         
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
         {
-            //>> Serialization
-        
-            if (Placeholder.HasValue())
+            if (Placeholder != null)
             {
                 json["placeholder"] = Placeholder;
             }
-            
+
+            //>> Serialization
+        
         //<< Serialization
         }
     }
