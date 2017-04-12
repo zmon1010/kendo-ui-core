@@ -4,7 +4,8 @@
 
 (function () {
 
-(function (exports) {
+window.kendo.dataviz = window.kendo.dataviz || {};
+
 var BAR_GAP = 1.5;
 var BAR_SPACING = 0.4;
 var BLACK = '#000';
@@ -307,10 +308,9 @@ var baseTheme = function (options) {
 });
 };
 
-kendo.deepExtend(exports, {
+kendo.deepExtend(kendo.dataviz, {
     chartBaseTheme: baseTheme
 });
-}((this.kendo.dataviz = this.kendo.dataviz || {})));
 
 })();
 
