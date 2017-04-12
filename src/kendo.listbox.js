@@ -43,6 +43,7 @@ var __meta__ = { // jshint ignore:line
     var DROP_HINT_CLASS = "k-drop-hint";
     var LIST_CLASS = "k-reset k-list";
     var LIST_SELECTOR = ".k-reset.k-list";
+    var RESET = "k-reset";
 
     var CLICK = "click" + NS;
     var KEYDOWN = "keydown" + NS;
@@ -96,7 +97,10 @@ var __meta__ = { // jshint ignore:line
     }
 
     function defaultHint(element) {
-        return element.clone().addClass(DRAG_CLUE_CLASS).width(element.width()).height(element.height());
+        return element.clone()
+            .removeClass(DRAGGEDCLASS)
+            .addClass(kendo.format("{0} {1} {2}",SELECTED_STATE_CLASS, RESET, DRAG_CLUE_CLASS))
+            .width(element.width());
     }
 
     function defaultPlaceholder() {
@@ -171,7 +175,6 @@ var __meta__ = { // jshint ignore:line
             reorderable: false,
             draggable: null,
             dropSources : [],
-            disabled: null,
             connectWith: "",
             navigatable: false,
             toolbar: {
@@ -387,7 +390,6 @@ var __meta__ = { // jshint ignore:line
         _dragstart: function(e) {
             var that = this;
             var draggedElement = that.draggedElement = e.currentTarget;
-            var disabled = that.options.disabled;
             var placeholder = that.options.draggable.placeholder;
             var dataItem = that.dataItem(draggedElement);
             var eventData = { dataItems: dataItem, items: $(draggedElement), draggableEvent: e };
@@ -398,7 +400,7 @@ var __meta__ = { // jshint ignore:line
 
             that.placeholder = kendo.isFunction(placeholder) ? $(placeholder.call(that, draggedElement)) : $(placeholder);
 
-            if(disabled && draggedElement.is(disabled)) {
+            if(draggedElement.is(DOT + DISABLED_STATE_CLASS)) {
                 e.preventDefault();
             } else {
                 if(that.trigger(DRAGSTART, eventData)) {
@@ -412,6 +414,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clear: function() {
+            this.draggedElement.removeClass(DRAGGEDCLASS);
             this.placeholder.remove();
         },
 

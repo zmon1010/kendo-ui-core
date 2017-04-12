@@ -158,4 +158,17 @@
 
         ok(listD.dataSource.view().length === 1);
     });
+
+    test("Drag and drop classes are set and removed correctly", 2, function() {
+        var draggedElement = listA.items().first();
+        var draggableOffset = kendo.getOffset(draggedElement);
+        var targetElement = listD._getList();
+        var targetOffset = kendo.getOffset(targetElement);
+        
+        press(draggedElement, draggableOffset.left, draggableOffset.top);
+        move(draggedElement, targetOffset.left, targetOffset.top + 100);
+        ok($("body").find(".k-item.k-state-selected.k-reset.k-drag-clue").length === 1);
+        release(draggedElement, targetOffset.left, targetOffset.top + 100);
+        ok(listA.items().find(".k-ghost").length === 0);
+    });
 })();
