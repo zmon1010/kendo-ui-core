@@ -1621,7 +1621,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the major grid lines. By default the major grid lines are visible.</description>
+            <description>If set to false the chart will not display the major grid lines. By default the major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -7688,7 +7688,7 @@ body of the chart.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the major grid lines. By default the major grid lines are visible.</description>
+            <description>If set to false the chart will not display the major grid lines. By default the major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -9079,7 +9079,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
+            <description>If set to false the chart will not display the x major grid lines. By default the x major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -10465,7 +10465,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
+            <description>If set to false the chart will not display the y major grid lines. By default the y major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
