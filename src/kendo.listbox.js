@@ -180,6 +180,17 @@ var __meta__ = { // jshint ignore:line
             toolbar: {
                 position: RIGHT,
                 tools: []
+            },
+            messages: {
+                tools: {
+                    remove: "Delete",
+                    moveUp: "Move Up",
+                    moveDown: "Move Down",
+                    transferTo: "To Right",
+                    transferFrom: "To Left",
+                    transferAllTo: "All to Right",
+                    transferAllFrom: "All to Left"
+                }
             }
         },
 
@@ -574,13 +585,13 @@ var __meta__ = { // jshint ignore:line
             var eventData = { dataItems: [dataItem], items: $(draggedItem) };
             var connectedListBox = that.placeholder.closest(".k-list-scroller.k-selectable").next().getKendoListBox();
 
-            if(that.trigger(DROP, $.extend({}, eventData, { draggableEvent: e }))) {
+            if(that.trigger(DROP, extend({}, eventData, { draggableEvent: e }))) {
                 e.preventDefault();
                 return;
             }
 
             if(placeholderIndex >= 0) {
-                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, $.extend({}, eventData, { offset: placeholderIndex }))) {
+                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, extend({}, eventData, { offset: placeholderIndex }))) {
                     draggedItem.removeClass(DRAGGEDCLASS);
                     that.reorder(draggedItem, placeholderIndex);
                 }
@@ -597,7 +608,7 @@ var __meta__ = { // jshint ignore:line
             that._clear();
             that._draggable.dropped = true;
 
-            that.trigger(DRAGEND, $.extend({}, eventData, { draggableEvent: e }));
+            that.trigger(DRAGEND, extend({}, eventData, { draggableEvent: e }));
         },
 
         reorder: function(item, index) {
@@ -920,11 +931,12 @@ var __meta__ = { // jshint ignore:line
             var toolbarInsertion = position === BOTTOM ? "insertAfter" : "insertBefore";
             var toolbarElement = $(that.templates.toolbar)[toolbarInsertion](that._innerWrapper);
             var tools = toolbarOptions.tools || [];
+            var messages = that.options.messages;
 
             that._destroyToolbar();
 
             if (tools.length && tools.length > 0) {
-                that.toolbar = new ToolBar(toolbarElement, extend({}, toolbarOptions, { listBox: that }));
+                that.toolbar = new ToolBar(toolbarElement, extend({}, toolbarOptions, { listBox: that, messages: messages }));
                 that.wrapper.removeClass(TOOLBAR_POSITION_CLASS_NAMES.join(SPACE))
                             .addClass(TOOLBAR_CLASS + DASH + position);
             }
@@ -1354,7 +1366,7 @@ var __meta__ = { // jshint ignore:line
             this.templates = {
                 tool: kendoTemplate(
                     "<li>" +
-                        "<a href='\\\\#' class='k-button k-button-icon k-tool' data-command='#= command #' role='button'>" +
+                        "<a href='\\\\#' class='k-button k-button-icon k-tool' data-command='#= command #' title='#= text #' aria-label='#= text #' role='button'>" +
                             "<span class='k-icon #= iconClass #'></span>" +
                         "</a>" +
                     "</li>")
@@ -1365,12 +1377,13 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var tools = that.options.tools;
             var toolsLength = tools.length;
+            var toolsMessages = that.options.messages.tools;
             var toolList = that._createToolList();
             var tool;
             var i;
 
             for (i = 0; i < toolsLength; i++) {
-                tool = ToolBar.defaultTools[tools[i]];
+                tool = extend({}, ToolBar.defaultTools[tools[i]], { text: toolsMessages[tools[i]] });
 
                 if (tool) {
                     toolList.append($(that.templates.tool(tool)));
@@ -1438,37 +1451,30 @@ var __meta__ = { // jshint ignore:line
     ToolBar.defaultTools = {
         remove: {
             command: REMOVE,
-            text: REMOVE,
             iconClass: "k-i-x"
         },
         moveUp: {
             command: MOVE_UP,
-            text: MOVE_UP,
             iconClass: "k-i-arrow-60-up"
         },
         moveDown: {
             command: MOVE_DOWN,
-            text: MOVE_DOWN,
             iconClass: "k-i-arrow-60-down"
         },
         transferTo: {
             command: TRANSFER_TO,
-            text: TRANSFER_TO,
             iconClass: "k-i-arrow-60-right"
         },
         transferFrom: {
             command: TRANSFER_FROM,
-            text: TRANSFER_FROM,
             iconClass: "k-i-arrow-60-left"
         },
         transferAllTo: {
             command: TRANSFER_ALL_TO,
-            text: TRANSFER_ALL_TO,
             iconClass: "k-i-arrow-double-60-right"
         },
         transferAllFrom: {
             command: TRANSFER_ALL_FROM,
-            text: TRANSFER_ALL_FROM,
             iconClass: "k-i-arrow-double-60-left"
         }
     };

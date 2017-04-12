@@ -3,19 +3,19 @@
         keys = kendo.keys,
         listA;
 
-    module("ListBox - dragdrop", {
+
+    module("ListBox aria", {
         setup: function() {
-           
             QUnit.fixture.append(
                 '<select id="listA"></select>'
             );
 
-            listA  = $("#listA").kendoListBox({ 
-                    dataSource: [ {name: "Tim", id:4 }, {name: "Johny", id:5 }, {name: "Dicky", id:6 }],
+            listA  = createListBoxWithToolbar({
+                    dataSource: [ { name: "Tim", id:4 }, { name: "Johny", id:5 }, { name: "Dicky", id:6 }],
                     dataTextField: "name",
                     selectable: true,
-                    navigatable:true
-            }).getKendoListBox();
+                    navigatable: true
+            }, "#listA");
 
             $(document.body).append(QUnit.fixture);
         },
@@ -60,7 +60,7 @@
     test("blur clears aria-activedescendant", 1, function() {
         listA.focus();
         listA._keyDown({ keyCode: keys.DOWN, preventDefault: $.noop });
-        listA._blur();   
+        listA._blur();
         ok(!listA._getList().attr("aria-activedescendant"));
     });
 
@@ -68,5 +68,18 @@
         listA._click({ currentTarget: listA.items().first() });
         ok(listA._getList().attr("aria-activedescendant") === listA.items().first().attr("id"));
     });
-    
+
+    test("toolbar's tools have aria-label", function () {
+        var toolsButtons = listA.toolbar.element.find("a.k-button");
+        var ariaLabelAttr = "aria-label";
+
+        equal(toolsButtons.filter('[data-command="remove"]').attr(ariaLabelAttr), "Delete");
+        equal(toolsButtons.filter('[data-command="moveUp"]').attr(ariaLabelAttr), "Move Up");
+        equal(toolsButtons.filter('[data-command="moveDown"]').attr(ariaLabelAttr), "Move Down");
+        equal(toolsButtons.filter('[data-command="transferTo"]').attr(ariaLabelAttr), "To Right");
+        equal(toolsButtons.filter('[data-command="transferFrom"]').attr(ariaLabelAttr), "To Left");
+        equal(toolsButtons.filter('[data-command="transferAllTo"]').attr(ariaLabelAttr), "All to Right");
+        equal(toolsButtons.filter('[data-command="transferAllFrom"]').attr(ariaLabelAttr), "All to Left");
+    });
+
 })();

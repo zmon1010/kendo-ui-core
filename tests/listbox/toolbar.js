@@ -68,6 +68,19 @@
         equal(listbox.select().length, 0);
     });
 
+    test("tools have title", function () {
+        var toolsButtons = listbox.toolbar.element.find("a.k-button");
+        var titleAttr = "title";
+
+        equal(toolsButtons.filter('[data-command="remove"]').attr(titleAttr), "Delete");
+        equal(toolsButtons.filter('[data-command="moveUp"]').attr(titleAttr), "Move Up");
+        equal(toolsButtons.filter('[data-command="moveDown"]').attr(titleAttr), "Move Down");
+        equal(toolsButtons.filter('[data-command="transferTo"]').attr(titleAttr), "To Right");
+        equal(toolsButtons.filter('[data-command="transferFrom"]').attr(titleAttr), "To Left");
+        equal(toolsButtons.filter('[data-command="transferAllTo"]').attr(titleAttr), "All to Right");
+        equal(toolsButtons.filter('[data-command="transferAllFrom"]').attr(titleAttr), "All to Left");
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             listbox = createListBoxWithToolbar();
