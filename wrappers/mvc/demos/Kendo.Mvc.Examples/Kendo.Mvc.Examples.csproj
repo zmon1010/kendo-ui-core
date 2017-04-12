@@ -1012,6 +1012,7 @@
     <Content Include="Views\calendar\disable_dates.cshtml" />
     <Content Include="Views\box_plot_charts\vertical.cshtml" />
     <Content Include="Views\calendar\week_column.cshtml" />
+    <Compile Include="Controllers\ListBox\TemplatesController.cs" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3020,6 +3021,7 @@
     <Content Include="Views\upload\directoryupload.cshtml" />
     <Content Include="Views\listbox\index.cshtml" />
     <Content Include="Views\listbox\events.cshtml" />
+    <Content Include="Views\listbox\templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
