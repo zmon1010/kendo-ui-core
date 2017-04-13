@@ -1227,14 +1227,14 @@ var __meta__ = { // jshint ignore:line
             var defaultTemplate;
 
             if (checkboxes) {
-                defaultTemplate = "<input type='checkbox' tabindex='-1' #= (item.enabled === false) ? 'disabled' : '' # #= item.checked ? 'checked' : '' #";
+                defaultTemplate = "<input aria-label='#=item.text#' type='checkbox' tabindex='-1' #= (item.enabled === false) ? 'disabled' : '' # #= item.checked ? 'checked' : '' #";
 
 
                 if (checkboxes.name) {
                     defaultTemplate += " name='" + checkboxes.name + "'";
                 }
 
-                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><label for='_#= item.uid #' class='k-checkbox-label'></label>";
+                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><span onclick='this.previousSibling.click();' class='k-checkbox-label'></span>";
 
                 checkboxes = extend({
                     template: defaultTemplate
