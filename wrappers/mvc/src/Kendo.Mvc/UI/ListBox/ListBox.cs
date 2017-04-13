@@ -58,8 +58,6 @@ namespace Kendo.Mvc.UI
         
         public string[] DropSources { get; set; }
         
-        public double? Height { get; set; }
-        
         public bool? Navigatable { get; set; }
         
         public ListBoxMessagesSettings Messages
@@ -126,11 +124,6 @@ namespace Kendo.Mvc.UI
                 json["dropSources"] = DropSources;
             }
             
-            if (Height.HasValue)
-            {
-                json["height"] = Height;
-            }
-                
             if (Navigatable.HasValue)
             {
                 json["navigatable"] = Navigatable;

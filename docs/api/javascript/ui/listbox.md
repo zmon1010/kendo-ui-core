@@ -278,25 +278,6 @@ Array of id strings which determines the ListBox widgets that can drag and drop 
         });
     </script>
 
-### height `Number|String`
-
-The height of the listbox. Numeric values are treated as pixels.
-
-#### Example - set the height as a number
-
-    <select id="listBox"></select>
-    <script>
-    $("#listBox").kendoListBox({
-        height: 100,
-        dataSource: [
-            { name: "Item 1", id: 1 },
-            { name: "Item 2", id: 2 }
-        ],
-        dataTextField: "name",
-        dataValueField: "id"
-    });
-    </script>
-
 ### navigatable `Boolean` *(default: false)*
 Indicates whether keyboard navigation is enabled/disabled.
 

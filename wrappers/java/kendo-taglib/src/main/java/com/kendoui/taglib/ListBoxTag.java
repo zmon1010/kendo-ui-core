@@ -152,14 +152,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("dropSources", value);
     }
 
-    public java.lang.Object getHeight() {
-        return (java.lang.Object)getProperty("height");
-    }
-
-    public void setHeight(java.lang.Object value) {
-        setProperty("height", value);
-    }
-
     public java.lang.String getHint() {
         return (java.lang.String)getProperty("hint");
     }

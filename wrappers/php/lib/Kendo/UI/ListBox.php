@@ -86,15 +86,6 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * The height of the listbox. Numeric values are treated as pixels.
-    * @param float|string $value
-    * @return \Kendo\UI\ListBox
-    */
-    public function height($value) {
-        return $this->setProperty('height', $value);
-    }
-
-    /**
     * Indicates whether keyboard navigation is enabled/disabled.
     * @param boolean $value
     * @return \Kendo\UI\ListBox

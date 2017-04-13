@@ -114,16 +114,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The height of the listbox. Numeric values are treated as pixels.
-        /// </summary>
-        /// <param name="value">The value for Height</param>
-        public ListBoxBuilder Height(double value)
-        {
-            Container.Height = value;
-            return this;
-        }
-
-        /// <summary>
         /// Indicates whether keyboard navigation is enabled/disabled.
         /// </summary>
         /// <param name="value">The value for Navigatable</param>
