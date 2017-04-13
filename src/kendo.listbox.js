@@ -597,7 +597,7 @@ var __meta__ = { // jshint ignore:line
                 }
             } else if(connectedListBox) {
                 if(!that.trigger(REMOVE, eventData)) {
-                    that.remove([draggedItem]);
+                    that.remove($(draggedItem));
                 }
 
                 if(!connectedListBox.trigger(ADD, eventData)) {
@@ -630,12 +630,13 @@ var __meta__ = { // jshint ignore:line
 
         remove: function (items) {
             var that = this;
-            var itemsLength = (items || []).length;
+            var listItems = that._getItems(items);
+            var itemsLength = listItems.length;
             var i;
 
             that._unbindDataSource();
             for (i = 0; i < itemsLength; i++) {
-                that._removeItem($(items[i]));
+                that._removeItem($(listItems[i]));
             }
             that._bindDataSource();
             that._syncElement();
@@ -713,11 +714,12 @@ var __meta__ = { // jshint ignore:line
         enable: function(items, enable) {
             var that = this;
             var enabled = isUndefined(enable) ? true : !!enable;
-            var itemsLength = $(items).length;
+            var listItems = that._getItems(items);
+            var itemsLength = listItems.length;
             var i;
 
             for (i = 0; i < itemsLength; i++) {
-                that._enableItem($(items[i]), enabled);
+                that._enableItem($(listItems[i]), enabled);
             }
         },
 
@@ -922,6 +924,10 @@ var __meta__ = { // jshint ignore:line
 
         _getList: function() {
             return this.wrapper.find(LIST_SELECTOR);
+        },
+
+        _getItems: function(items) {
+            return this.items().filter(items);
         },
 
         _createToolbar: function () {

@@ -1,9 +1,6 @@
 (function() {
     var listbox;
-    var listbox1;
-    var listbox2;
     var dataSource;
-    var data;
     var item;
     var item1;
     var item2;
@@ -23,6 +20,7 @@
         text: "item4"
     }];
 
+    var FIRST_ITEM_SELECTOR = ".k-item:first";
     var DISABLED_STATE_CLASS = "k-state-disabled";
     var SELECTED_STATE_CLASS = "k-state-selected";
     var DOT = ".";
@@ -140,6 +138,13 @@
         listbox.remove(listbox.items());
 
         equal(listbox.items().length, 0);
+    });
+
+    test("remove() should work with selector", function() {
+        listbox.remove(FIRST_ITEM_SELECTOR);
+
+        equal(listbox.dataSource.data().length, 3);
+        equal(listbox.items().length, 3);
     });
 
     module("ListBox api", {
@@ -343,5 +348,11 @@
 
         equal(item1.hasClass(SELECTED_STATE_CLASS), false);
         equal(item1.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("enable() should work with selector", function() {
+        listbox.enable(FIRST_ITEM_SELECTOR, false);
+
+        equal(listbox.items().eq(0).hasClass(DISABLED_STATE_CLASS), true);
     });
 })();

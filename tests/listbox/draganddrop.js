@@ -7,6 +7,7 @@
 
     module("ListBox - dragdrop", {
         setup: function() {
+            $(document.body).append(QUnit.fixture);
 
             QUnit.fixture.append(
                 '<select id="listA"></select>'
@@ -55,8 +56,6 @@
                     dataSource: [],
                     dropSources: ["listA"]
             }).getKendoListBox();
-
-            $(document.body).append(QUnit.fixture);
         },
         teardown: function() {
             if(listA) {
