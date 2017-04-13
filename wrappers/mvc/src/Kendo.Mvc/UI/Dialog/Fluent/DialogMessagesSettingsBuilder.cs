@@ -30,6 +30,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// The title of the prompt input.
+        /// </summary>
+        /// <param name="value">The value that configures the promptinput.</param>
+        public DialogMessagesSettingsBuilder PromptInput(string value)
+        {
+            container.PromptInput = value;
+
+            return this;
+        }
+        
         //<< Fields
     }
 }

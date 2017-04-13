@@ -71,7 +71,7 @@ The callback function to be called after pressing the action button.
 
 ### actions.primary `Boolean`
 
-A boolean property indicating whether the action button will be decorated as primary button or not. 
+A boolean property indicating whether the action button will be decorated as primary button or not.
 
 #### Example
 
@@ -314,6 +314,21 @@ Defines the text of the labels that are shown within the dialog. Used primarily 
 ### messages.close `String` *(default: "Close")*
 
 The title of the close button.
+
+### messages.promptInput `String` *(default: "Input")*
+
+The title of the prompt input.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      messages:{
+        promptInput: "Input!"
+      }
+    });
+    </script>
 
 #### Example
 
