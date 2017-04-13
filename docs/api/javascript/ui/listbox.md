@@ -313,6 +313,247 @@ Indicates whether keyboard navigation is enabled/disabled.
     });
     </script>
 
+### messages `Object`
+
+Defines the localization texts for the ListBox. Used primarily for localization.
+
+### messages.tools `Object`
+
+Defines the localization texts for tools in the ListBox. Texts are used for tooltip and accessibility purpose.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "moveUp", "moveDown", "remove", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom" ]
+            },
+            messages: {
+                tools: {
+                    moveUp: "MoveUp",
+                    moveDown: "MoveDown",
+                    remove: "Remove",
+                    transferTo: "TransferTo",
+                    transferFrom: "TransferFrom",
+                    transferAllTo: "TransferAllTo",
+                    transferAllFrom: "TransferAllFrom"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.moveDown `String`
+
+Defines the text of the "Move Down" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "moveDown" ]
+            },
+            messages: {
+                tools: {
+                    moveUp: "MoveDown"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.moveUp `String`
+
+Defines the text of the "Move Up" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "moveUp" ]
+            },
+            messages: {
+                tools: {
+                    moveUp: "MoveUp"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.remove `String`
+
+Defines the text of the "Delete" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "remove" ]
+            },
+            messages: {
+                tools: {
+                    remove: "Remove"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.transferAllFrom `String`
+
+Defines the text of the "All to Left" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "transferAllFrom" ]
+            },
+            messages: {
+                tools: {
+                    transferAllFrom: "TransferAllFrom"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.transferAllTo `String`
+
+Defines the text of the "All to Right" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "transferAllTo" ]
+            },
+            messages: {
+                tools: {
+                    transferAllTo: "TransferAllTo"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.transferFrom `String`
+
+Defines the text of the "To Left" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "transferFrom" ]
+            },
+            messages: {
+                tools: {
+                    transferFrom: "TransferFrom"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
+### messages.tools.transferTo `String`
+
+Defines the text of the "To Right" button located in the toolbar of the widget.
+
+#### Example
+
+    <select id="listBoxA"></select>
+    <select id="listBoxB"></select>
+
+    <script>
+        $("#listBoxA").kendoListBox({
+            connectWith: "#listBoxB",
+            dataSource: [ "ItemA1", "ItemA2" ],
+            toolbar: {
+                tools: [ "transferTo" ]
+            },
+            messages: {
+                tools: {
+                    transferTo: "TransferTo"
+                }
+            }
+        });
+
+        $("#listBoxB").kendoListBox({
+            connectWith: "#listBoxA",
+            dataSource: [ "ItemB1", "ItemB2" ]
+        });
+    </script>
+
 ### reorderable `Boolean` *(default: false)*
 Indicates whether widget items can be reordered.
 

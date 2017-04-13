@@ -168,6 +168,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Defines the localization texts for the ListBox. Used primarily for localization.
+        /// </summary>
+        /// <param name="configurator">The action that configures the messages.</param>
+        public ListBoxBuilder Messages(Action<ListBoxMessagesSettingsBuilder> configurator)
+        {
+            configurator(new ListBoxMessagesSettingsBuilder(container.Messages));
+            return this;
+        }
+        
+        /// <summary>
         /// Indicates whether widget items can be reordered.
         /// </summary>
         /// <param name="value">The value that configures the reorderable.</param>

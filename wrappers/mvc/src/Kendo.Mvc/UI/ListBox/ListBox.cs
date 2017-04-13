@@ -31,6 +31,8 @@ namespace Kendo.Mvc.UI
         
             Draggable = new ListBoxDraggableSettings();
                 
+            Messages = new ListBoxMessagesSettings();
+                
             Toolbar = new ListBoxToolbarSettings();
                 
         //<< Initialization
@@ -61,6 +63,12 @@ namespace Kendo.Mvc.UI
         public double? Height { get; set; }
         
         public bool? Navigatable { get; set; }
+        
+        public ListBoxMessagesSettings Messages
+        {
+            get;
+            set;
+        }
         
         public bool? Reorderable { get; set; }
         
@@ -135,6 +143,11 @@ namespace Kendo.Mvc.UI
                 json["navigatable"] = Navigatable;
             }
                 
+            var messages = Messages.ToJson();
+            if (messages.Any())
+            {
+                json["messages"] = messages;
+            }
             if (Reorderable.HasValue)
             {
                 json["reorderable"] = Reorderable;

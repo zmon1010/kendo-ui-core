@@ -113,6 +113,15 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
+    * Defines the localization texts for the ListBox. Used primarily for localization.
+    * @param \Kendo\UI\ListBoxMessages|array $value
+    * @return \Kendo\UI\ListBox
+    */
+    public function messages($value) {
+        return $this->setProperty('messages', $value);
+    }
+
+    /**
     * Indicates whether widget items can be reordered.
     * @param boolean $value
     * @return \Kendo\UI\ListBox

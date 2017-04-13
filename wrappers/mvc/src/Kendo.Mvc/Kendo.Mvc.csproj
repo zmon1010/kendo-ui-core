@@ -2800,4 +2800,4 @@
     <Compile Include="UI\ListBox\Fluent\ListBoxEventBuilder.cs" />
     <Compile Include="UI\ListBox\Html\ListBoxHtmlBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\ListBox\Settings\ListBoxMessagesSettings.cs" /><Compile Include="UI\ListBox\Fluent\ListBoxMessagesSettingsBuilder.cs" /><Compile Include="UI\ListBox\Settings\ListBoxMessagesToolsSettings.cs" /><Compile Include="UI\ListBox\Fluent\ListBoxMessagesToolsSettingsBuilder.cs" /></ItemGroup></Project>

@@ -25858,6 +25858,69 @@ If placeholder function is not provided the widget will clone dragged item, remo
     </tag>
 
     <tag>
+        <description>Defines the localization texts for the ListBox. Used primarily for localization.</description>
+        <name>listBox-messages</name>
+        <tag-class>com.kendoui.taglib.listbox.MessagesTag</tag-class>
+        <body-content>JSP</body-content>
+
+
+    </tag>
+
+    <tag>
+        <description>Defines the localization texts for tools in the ListBox. Texts are used for tooltip and accessibility purpose.</description>
+        <name>listBox-messages-tools</name>
+        <tag-class>com.kendoui.taglib.listbox.MessagesToolsTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the text of the "Move Down" button located in the toolbar of the widget.</description>
+            <name>moveDown</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "Move Up" button located in the toolbar of the widget.</description>
+            <name>moveUp</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "Delete" button located in the toolbar of the widget.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "All to Left" button located in the toolbar of the widget.</description>
+            <name>transferAllFrom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "All to Right" button located in the toolbar of the widget.</description>
+            <name>transferAllTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "To Left" button located in the toolbar of the widget.</description>
+            <name>transferFrom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "To Right" button located in the toolbar of the widget.</description>
+            <name>transferTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
         <description>Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.</description>
         <name>listBox-toolbar</name>
         <tag-class>com.kendoui.taglib.listbox.ToolbarTag</tag-class>

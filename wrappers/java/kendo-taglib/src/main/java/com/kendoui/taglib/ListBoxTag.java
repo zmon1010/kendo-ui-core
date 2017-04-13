@@ -56,6 +56,10 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("draggable", value);
     }
 
+    public void setMessages(com.kendoui.taglib.listbox.MessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public void setToolbar(com.kendoui.taglib.listbox.ToolbarTag value) {
         setProperty("toolbar", value);
     }

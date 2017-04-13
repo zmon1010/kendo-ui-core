@@ -31,6 +31,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Navigatable { get; set; }
 
+        public ListBoxMessagesSettings Messages { get; } = new ListBoxMessagesSettings();
+
         public bool? Reorderable { get; set; }
 
         public ClientHandlerDescriptor Template { get; set; }
@@ -99,6 +101,12 @@ namespace Kendo.Mvc.UI
             if (Navigatable.HasValue)
             {
                 settings["navigatable"] = Navigatable;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
             }
 
             if (Reorderable.HasValue)
