@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the add event.</param>
         public ListBoxEventBuilder Add(string handler)
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ListBoxEventBuilder Add(Func<object, object> handler)
@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
         public ListBoxEventBuilder Change(string handler)
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ListBoxEventBuilder Change(Func<object, object> handler)
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
         public ListBoxEventBuilder DataBound(string handler)
@@ -69,7 +69,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ListBoxEventBuilder DataBound(Func<object, object> handler)
@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public ListBoxEventBuilder Remove(string handler)
@@ -179,7 +179,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ListBoxEventBuilder Remove(Func<object, object> handler)

@@ -25706,7 +25706,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.</description>
+            <description>A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25728,12 +25728,6 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <name>dataValueField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>If set to true the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.</description>
-            <name>disabled</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Indicates if the widget items can be draged and droped.</description>
@@ -25785,17 +25779,17 @@ If hint function is not provided the widget will clone dragged item and use it a
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>add</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>dataBound</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -25820,7 +25814,7 @@ If hint function is not provided the widget will clone dragged item and use it a
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -25921,19 +25915,19 @@ If placeholder function is not provided the widget will clone dragged item, remo
 
 
     <tag>
-        <description>Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.</description>
+        <description>Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.</description>
         <name>listBox-toolbar</name>
         <tag-class>com.kendoui.taglib.listbox.ToolbarTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The position relative to the ListBox element, at which the toolbar will be shown. Predefined values are "bottom", "top", "left", "right".</description>
+            <description>The position relative to the ListBox element, at which the toolbar will be shown. The possible values are "left", "right", "top" and "bottom".</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>An Array value with the list of tools displayed in the ListBox's Toolbar. Tools are built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" tool moves up the item that is currently selected by the end user.The "moveDown" tool moves down the item that is currently selected by the end user.The "remove" tool removes the item(s) that are currently selected by the end user.The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" tool moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" tool moves all selected items from target widget related with connectWith option to the current ListBox widget.</description>
+            <description>A collection of tools that are used to interact with the ListBox. The built-in tools are:</description>
             <name>tools</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -25944,19 +25938,19 @@ If placeholder function is not provided the widget will clone dragged item, remo
 
 
     <tag>
-        <description>Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-add</name>
         <tag-class>com.kendoui.taglib.listbox.AddFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-change</name>
         <tag-class>com.kendoui.taglib.listbox.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-dataBound</name>
         <tag-class>com.kendoui.taglib.listbox.DataBoundFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -25986,7 +25980,7 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>listBox-remove</name>
         <tag-class>com.kendoui.taglib.listbox.RemoveFunctionTag</tag-class>
         <body-content>JSP</body-content>

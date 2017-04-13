@@ -19,8 +19,6 @@ namespace Kendo.Mvc.UI
 
         public string DataValueField { get; set; }
 
-        public bool? Disabled { get; set; }
-
         public ClientHandlerDescriptor Hint { get; set; }
 
         public ListBoxDraggableSettings Draggable { get; } = new ListBoxDraggableSettings();
@@ -66,11 +64,6 @@ namespace Kendo.Mvc.UI
             if (DataValueField?.HasValue() == true)
             {
                 settings["dataValueField"] = DataValueField;
-            }
-
-            if (Disabled.HasValue)
-            {
-                settings["disabled"] = Disabled;
             }
 
             if (Hint?.HasValue() == true)

@@ -22,7 +22,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.
+    * A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -55,15 +55,6 @@ class ListBox extends \Kendo\UI\Widget {
     */
     public function dataValueField($value) {
         return $this->setProperty('dataValueField', $value);
-    }
-
-    /**
-    * If set to true the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.
-    * @param boolean $value
-    * @return \Kendo\UI\ListBox
-    */
-    public function disabled($value) {
-        return $this->setProperty('disabled', $value);
     }
 
     /**
@@ -154,7 +145,7 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.
+    * Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.
     * @param \Kendo\UI\ListBoxToolbar|array $value
     * @return \Kendo\UI\ListBox
     */
@@ -164,7 +155,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the add event of the ListBox.
-    * Fires before the list box item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -178,7 +169,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the change event of the ListBox.
-    * Fires when item's position is changed or when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -192,7 +183,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the dataBound event of the ListBox.
-    * Fires when the list box has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -262,7 +253,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the remove event of the ListBox.
-    * Fires before the list box item is removed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */

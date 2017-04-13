@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.
+        /// A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.
         /// </summary>
         /// <param name="value">The value that configures the connectwith.</param>
         public ListBoxBuilder ConnectWith(string value)
@@ -76,17 +76,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxBuilder DataValueField(string value)
         {
             container.DataValueField = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// If set to true the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.
-        /// </summary>
-        /// <param name="value">The value that configures the disabled.</param>
-        public ListBoxBuilder Disabled(bool value)
-        {
-            container.Disabled = value;
 
             return this;
         }
@@ -211,7 +200,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.
+        /// Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.
         /// </summary>
         /// <param name="configurator">The action that configures the toolbar.</param>
         public ListBoxBuilder Toolbar(Action<ListBoxToolbarSettingsBuilder> configurator)

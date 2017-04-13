@@ -136,14 +136,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("dataValueField", value);
     }
 
-    public boolean getDisabled() {
-        return (Boolean)getProperty("disabled");
-    }
-
-    public void setDisabled(boolean value) {
-        setProperty("disabled", value);
-    }
-
     public boolean getDraggable() {
         return (Boolean)getProperty("draggable");
     }

@@ -6,7 +6,7 @@ class ListBoxToolbar extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The position relative to the ListBox element, at which the toolbar will be shown. Predefined values are "bottom", "top", "left", "right".
+    * The position relative to the ListBox element, at which the toolbar will be shown. The possible values are "left", "right", "top" and "bottom".
     * @param string $value
     * @return \Kendo\UI\ListBoxToolbar
     */
@@ -15,7 +15,7 @@ class ListBoxToolbar extends \Kendo\SerializableObject {
     }
 
     /**
-    * An Array value with the list of tools displayed in the ListBox's Toolbar. Tools are built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" tool moves up the item that is currently selected by the end user.The "moveDown" tool moves down the item that is currently selected by the end user.The "remove" tool removes the item(s) that are currently selected by the end user.The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" tool moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" tool moves all selected items from target widget related with connectWith option to the current ListBox widget.
+    * A collection of tools that are used to interact with the ListBox. The built-in tools are:
     * @param array $value
     * @return \Kendo\UI\ListBoxToolbar
     */

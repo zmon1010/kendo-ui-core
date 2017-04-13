@@ -48,8 +48,6 @@ namespace Kendo.Mvc.UI
         
         public string DataValueField { get; set; }
         
-        public bool? Disabled { get; set; }
-        
         public string Hint { get; set; }
         
         public ListBoxDraggableSettings Draggable
@@ -110,11 +108,6 @@ namespace Kendo.Mvc.UI
                 json["dataValueField"] = DataValueField;
             }
             
-            if (Disabled.HasValue)
-            {
-                json["disabled"] = Disabled;
-            }
-                
             if (Hint.HasValue())
             {
                 json["hint"] = Hint;

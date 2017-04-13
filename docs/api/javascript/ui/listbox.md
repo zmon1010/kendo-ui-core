@@ -17,7 +17,7 @@ If set to `false` the widget will not bind to the data source during initializat
     <select id="listBox"></select>
     <script>
     var dataSource = new kendo.data.DataSource({
-      data: [ { name: "Jane Doe" }, { name: "John Doe" }]
+        data: [ { name: "Jane Doe" }, { name: "John Doe" }]
     });
     $("#listBox").kendoListBox({
          dataSource: dataSource,
@@ -29,9 +29,13 @@ If set to `false` the widget will not bind to the data source during initializat
 
 ### connectWith `String` *(default: null)*
 
-Selector which determines the target ListBox container that should be used when items are transferd from and to the current ListBox widget. The `connectWith` option describes **one way** relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.
+A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The `connectWith` option defines **one-way** relationship - if the developer wants a two-way connection, then the `connectWith` option should be set on both widgets.
+ 
+> **Important**: Setting the same `connectWith` option by more than one ListBox widgets is not recommended as the behavior of `transferFrom` and `transferAllFrom` [tools](/api/javascript/ui/listbox#configuration-toolbar.tools) is not deterministic.
 
-#### Example - set up a one way connection from ListBoxA to ListBoxB
+> **Important**: Configuring a bidirectional relationship between two ListBox widgets results in a duplicated behavior of their `transferTo` and `transferFrom` as well as `transferAllTo` and `transferAllFrom` tools. If this isn't necessary, you can remove some of them from the [tools](/api/javascript/ui/listbox#configuration-toolbar.tools) option.
+
+#### Example - set up a one-way connection from ListBoxA to ListBoxB
 
     <select id="listBoxA">
         <option>ItemA1</option>
@@ -46,7 +50,12 @@ Selector which determines the target ListBox container that should be used when 
         $("#listBoxA").kendoListBox({
             connectWith: "#listBoxB",
             toolbar: {
-                tools: [ "transferTo", "transferFrom", "transferAllTo", "transferAllFrom" ]
+                tools: [
+                    "transferTo",
+                    "transferFrom",
+                    "transferAllTo",
+                    "transferAllFrom"
+                ]
             }
         });
 
@@ -68,12 +77,25 @@ Selector which determines the target ListBox container that should be used when 
         $("#listBoxA").kendoListBox({
             connectWith: "#listBoxB",
             toolbar: {
-                tools: [ "transferTo", "transferFrom", "transferAllTo", "transferAllFrom" ]
+                tools: [
+                    "transferTo",
+                    "transferFrom",
+                    "transferAllTo",
+                    "transferAllFrom"
+                ]
             }
         });
 
         $("#listBoxB").kendoListBox({
-            connectWith: "#listBoxA"
+            connectWith: "#listBoxA",
+            toolbar: {
+                tools: [
+                    "transferTo",
+                    "transferFrom",
+                    "transferAllTo",
+                    "transferAllFrom"
+                ]
+            }
         });
     </script>
 
@@ -166,30 +188,11 @@ The field of the data item that provides the value of the widget.
     });
     </script>
 
-### disabled `Boolean`*(default: false)*
-
-If set to `true` the widget will be disabled and will not allow user interaction. The widget is enabled by default and allows user interaction.
-
-#### Example - disable the widget
-
-    <select id="listBox"></select>
-    <script>
-    $("#listBox").kendoListBox({
-        disabled: true,
-        dataSource: [
-            { name: "Item 1", id: 1 },
-            { name: "Item 2", id: 2 }
-        ],
-        dataTextField: "name",
-        dataValueField: "id"
-    });
-    </script>
-
 ### draggable `Boolean | Object` *(default: false)*
 
 Indicates if the widget items can be draged and droped.
 
-> **Important** When `draggable` is set to `true`, the `dropSources` option also should be set.
+> **Important:** When `draggable` is set to `true`, the `dropSources` option also should be set.
 
 ### hint `Function | String | jQuery`
 
@@ -224,7 +227,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
 If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.
 
-> **Important: The placeholder element is appended to the ListBox widget container.
+> **Important:** The placeholder element is appended to the ListBox widget container.
 
 #### Example - ListBox with custom placeholder
 
@@ -631,7 +634,7 @@ Specifies ListBox item template.
 
 ### toolbar `Object`
 
-Defines settings for displaing toolbar for current ListBox widget. By default, no toolbar is shown.
+Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the `tools` array will show the toolbar and the corresponding tools.
 
 #### Example
 
@@ -647,7 +650,7 @@ Defines settings for displaing toolbar for current ListBox widget. By default, n
 
 ### toolbar.position `String` *(default: "right")*
 
-The position relative to the ListBox element, at which the toolbar will be shown. Predefined values are "bottom", "top", "left", "right".
+The position relative to the ListBox element, at which the toolbar will be shown. The possible values are "left", "right", "top" and "bottom".
 
 #### Example
 
@@ -668,21 +671,16 @@ The position relative to the ListBox element, at which the toolbar will be shown
 
 ### toolbar.tools `Array`
 
-An `Array` value with the list of tools displayed in the ListBox's Toolbar. Tools are built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").
+A collection of tools that are used to interact with the ListBox. The built-in tools are:
 
-The "moveUp" tool moves up the item that is currently selected by the end user.
-
-The "moveDown" tool moves down the item that is currently selected by the end user.
-
-The "remove" tool removes the item(s) that are currently selected by the end user.
-
-The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with `connectWith` option.
-
-The "transferAllTo" tool moves all items from target widget related with `connectWith` option to the current ListBox widget.
-
-The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with `connectWith` option.
-
-The "transferTo" tool moves all selected items from target widget related with `connectWith` option to the current ListBox widget.
+- "moveUp" - moves up the selected ListBox item(s)
+- "moveDown" - moves down the selected ListBox item(s)
+- "moveDown" - moves down the selected ListBox item(s)
+- "remove" - removes the selected ListBox item(s)
+- "transferTo" - moves the selected item(s) from the current ListBox to the target defined in the [connectWith](/api/javascript/ui/listbox#configuration-connectWith) option
+- "transferFrom" - moves the selected item(s) from the ListBox defined in the [connectWith](/api/javascript/ui/listbox#configuration-connectWith) option to the current ListBox
+- "transferAllTo" - moves all items from the current ListBox to the target defined in the [connectWith](/api/javascript/ui/listbox#configuration-connectWith) option
+- "transferAllFrom" - moves all item(s) from the ListBox defined in the [connectWith](/api/javascript/ui/listbox#configuration-connectWith) option to the current ListBox
 
 #### Example
 
@@ -708,29 +706,29 @@ The "transferTo" tool moves all selected items from target widget related with `
 
 ### dataItem
 
-Returns the data item to which the specified node is bound.
+Returns the data item to which the specified list item is bound.
 
 #### Parameters
 
-##### node `jQuery|Element|String`
+##### element `jQuery|Element|String`
 
-A string, DOM element or jQuery object which represents the node. A string is treated as a jQuery selector.
+A string, DOM element or jQuery object which represents the item. A string is treated as a jQuery selector.
 
 #### Returns
 
-`kendo.data.Node` The model of the item that was passed as a parameter.
+`kendo.data.ObservableObject` The model of the item that was passed as a parameter.
 
 #### Example - get the data item of the first node
 
     <select id="listBox"></select>
     <script>
     $("#listBox").kendoListBox({
-      dataSource: [
-        { id: 1, name: "foo" },
-        { id: 2, name: "bar" }
-      ],
-      dataTextField: "name",
-      dataValueField: "id"
+        dataSource: [
+            { id: 1, name: "foo" },
+            { id: 2, name: "bar" }
+        ],
+        dataTextField: "name",
+        dataValueField: "id"
     });
 
     var listbox = $("#listBox").data("kendoListBox");
@@ -742,27 +740,27 @@ A string, DOM element or jQuery object which represents the node. A string is tr
 
 #### Returns
 
-`kendo.data.ObservableArray` Returns the observable array that is bound to the widget
+`kendo.data.ObservableArray` An array of data items that the widget is bound to.
 
 #### Example
 
     <select id="listBox"></select>
     <script>
-      var dataSource = new kendo.data.DataSource({
-        data: [ { name: "Jane Doe" }, { name: "John Doe" }]
-      });
-      var listBox = $("#listBox").kendoListBox({
-        dataSource: dataSource,
-        template: "<div>#:name#</div>"
-      }).data("kendoListBox")
-      console.log(listBox.dataItems()) //will output the bound array
+        var dataSource = new kendo.data.DataSource({
+            data: [{ name: "Jane Doe" }, { name: "John Doe" }]
+        });
+        var listBox = $("#listBox").kendoListBox({
+            dataSource: dataSource,
+            template: "<div>#:name#</div>"
+        }).data("kendoListBox");
+        console.log(listBox.dataItems()) //will output the bound array
     </script>
 
 ### destroy
 
 Prepares the **ListBox** for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
 
-> **Important:** This method does not remove the ListView element from DOM.
+> **Important:** This method does not remove the ListBox element from DOM.
 
 #### Example
 
@@ -784,46 +782,19 @@ Prepares the **ListBox** for safe removal from DOM. Detaches all event handlers 
 
 ### enable
 
-Enables or disables the widget.
+Enables or disables ListBox items.
 
 #### Parameters
 
-##### enable `Boolean`
+##### element `jQuery|Element|String`
 
-If set to `true` the widget will be enabled. If set to `false` the widget will be disabled.
+The item(s) that are to be enabled/disabled.
 
-#### Example - enable the widget
+##### enable `Boolean` *(optional, default: true)*
 
-    <select id="listBox"></select>
-    <script>
-    $("#listBox").kendoListBox({
-        disabled: true,
-        dataSource: {
-            data: [
-                { name: "Jane Doe" },
-                { name: "John Doe" }
-            ]
-        },
-        template: "<div>#:name#</div>"
-    });
-    // get a reference to the list view widget
-    var listBox = $("#listBox").data("kendoListBox");
-    listBox.enable(true);
-    </script>
+Whether the items should be enabled or disabled.
 
-### enable
-
-Enables or disables the widget items.
-
-#### Parameters
-
-##### node `jQuery|Element|String`
-
-A string, DOM element or jQuery object which represents the node. A string is treated as a jQuery selector.
-
-##### enable `Boolean`
-
-If set to `true` the widget item will be enabled. If set to `false` the widget item will be disabled.
+#### Example - disable the first list item
 
     <select id="listBox"></select>
     <script>
@@ -865,39 +836,8 @@ Obtains an Array of the DOM elements, which correspond to the data items from th
     console.log(items); // logs the items
     </script>
 
-### transfer
-
-Moves the spcified items from current ListBox to the target ListBox specified by the `connectWith` option.
-
-#### Parameters
-
-##### items `jQuery | Array`
-
-Items to select.
-
-    <select id="listBoxA">
-        <option>Orange</option>
-        <option>Apple</option>
-    </select>
-    <select id="listBoxB">
-        <option>Banana</option>
-    </select>
-    <script>
-    $("#listBoxA").kendoListBox({
-        connectWith: "#listBoxB"
-    });
-    $("#listBoxB").kendoListBox();
-
-    // get a reference to the first list box widget
-    var listBoxA = $("#listBoxA").data("kendoListBox");
-    // selects first list box item
-    listBoxA.select(".k-item:first");
-    // transfer selected items
-    listBoxA.transfer();
-    </script>
-
 ### refresh
-Reloads the data and repaints the list box. Triggers [dataBound](#events-dataBound) event
+Reloads the data and repaints the ListBox. Triggers [dataBound](#events-dataBound) event.
 
 #### Example
 
@@ -921,9 +861,9 @@ Moves the specified item at position set by zero-based index parameter. The rest
 
 #### Parameters
 
-##### item `jQuery`
+##### element `jQuery|Element|String`
 
-Item to select.
+The item to be reordered.
 
 ##### index `Number`
 
@@ -944,13 +884,13 @@ The new position of the item in the list.
 
 ### remove
 
-Removes a node from the widget.
+Removes item(s) from the widget.
 
 #### Parameters
 
-##### node `jQuery|Element|String`
+##### element `jQuery|Element|String`
 
-The node that is to be removed.
+The item(s) that will be removed.
 
 #### Example
 
@@ -965,12 +905,8 @@ The node that is to be removed.
         },
         template: "<div>#:name#</div>"
     });
-
     var listBox = $("#listBox").data("kendoListBox");
-
-    var selectedItems = listBox.select();
-
-    listBox.remove(selectedItems);
+    listBox.remove(listBox.items().first());
     </script>
 
 ### select
@@ -993,18 +929,18 @@ Get/set the selected ListBox item(s).
     // get a reference to the list box widget
     var listBox = $("#listBox").data("kendoListBox");
     // selects first list box item
-    listBox.select(listBox.element.children().first());
+    listBox.select(listBox.items().first());
     </script>
 
 #### Returns
 
-`jQuery` the selected items if called without arguments.
+`jQuery` the selected item(s) if called without arguments.
 
 #### Parameters
 
 ##### items `jQuery | Array`
 
-Items to select.
+The item(s) to select.
 
 ### setDataSource
 
@@ -1032,7 +968,7 @@ Sets the dataSource of an existing ListBox and rebinds it.
 
 ### add
 
-Fires before the list box item is added to the ListBox.
+Fires before an item is added to the ListBox.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1056,8 +992,8 @@ The event handler function context (available via the `this` keyword) will be se
         });
 
         $("#listBoxB").kendoListBox({
-            add: function (e) {
-                // handle add event
+            add: function(e) {
+                // handle event
             }
         });
     </script>
@@ -1066,14 +1002,15 @@ The event handler function context (available via the `this` keyword) will be se
 
 ##### e.items `Array`
 
-The item elements to be deleted.
+The item elements to be added.
 
 ##### e.dataItems `Array`
 
-The data items which to be deleted.
+The data items to be added.
 
 ### change
-Fires when item's position is changed or when the list view selection has changed.
+
+Fires when the ListBox selection has changed.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1106,7 +1043,7 @@ The event handler function context (available via the `this` keyword) will be se
 
 ### dataBound
 
-Fires when the list box has received data from the data source and it is already rendered.
+Fires when the ListBox has received data from the data source and it is already rendered.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1290,7 +1227,7 @@ The original draggable's drag event data.
 
 ### remove
 
-Fires before the list box item is removed.
+Fires before an item is removed from the ListBox.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1322,7 +1259,7 @@ The event handler function context (available via the `this` keyword) will be se
     });
     // get a reference to the list box
     var listBox = $("#listBox").data("kendoListBox");
-    listBox.remove(listBox.element.find("li:first"));
+    listBox.remove(listBox.items().first());
     </script>
 
 #### To set after initialization
@@ -1355,18 +1292,18 @@ The event handler function context (available via the `this` keyword) will be se
         console.log("remove");
         e.preventDefault();
     });
-    listBox.remove(listBox.element.find(".k-item:first"));
+    listBox.remove(listBox.items().first());
     </script>
 
 #### Event Data
 
 ##### e.items `Array`
 
-The item elements to be deleted.
+The item elements to be removed.
 
 ##### e.dataItems `Array`
 
-The data items which to be deleted.
+The data items to be removed.
 
 ### reorder
 
@@ -1393,13 +1330,13 @@ Fires when items in the widget are reordered.
 
 #### Event Data
 
-##### e.dataItems `Array`
-
-The data items to be reordered.
-
 ##### e.items `Array`
 
 The item elements to be reordered.
+
+##### e.dataItems `Array`
+
+The data items to be reordered.
 
 #### e.offset `Number`
 
