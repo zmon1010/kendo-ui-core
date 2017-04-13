@@ -65,28 +65,28 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         public void Should_output_init_statement()
         {
             data["foo"] = "foo";
-            initializer.Initialize("#foo", "Foo", data).ShouldEqual("jQuery(function(){jQuery(\"#foo\").kendoFoo({\"foo\":\"foo\"});});");
+            initializer.Initialize("#foo", "Foo", data).ShouldEqual("kendo.syncReady(function(){jQuery(\"#foo\").kendoFoo({\"foo\":\"foo\"});});");
         }
 
         [Fact]
         public void Should_escape_invalid_selector_characters_in_the_id()
         {
             data["foo"] = "foo";
-            initializer.Initialize("#foo.bar[0]", "Foo", data).ShouldEqual("jQuery(function(){jQuery(\"#foo\\\\.bar\\\\[0\\\\]\").kendoFoo({\"foo\":\"foo\"});});");
+            initializer.Initialize("#foo.bar[0]", "Foo", data).ShouldEqual("kendo.syncReady(function(){jQuery(\"#foo\\\\.bar\\\\[0\\\\]\").kendoFoo({\"foo\":\"foo\"});});");
         }
 
         [Fact]
         public void Should_output_init_statement_with_selector()
         {
             data["foo"] = "foo";
-            initializer.InitializeFor("#foo", "Foo", data).ShouldEqual("jQuery(function(){jQuery(\"#foo\").kendoFoo({\"foo\":\"foo\"});});");
+            initializer.InitializeFor("#foo", "Foo", data).ShouldEqual("kendo.syncReady(function(){jQuery(\"#foo\").kendoFoo({\"foo\":\"foo\"});});");
         }
 
         [Fact]
         public void Should_not_escape_invalid_selector_characters_in_the_selector()
         {
             data["foo"] = "foo";
-            initializer.InitializeFor("#foo.bar[0]", "Foo", data).ShouldEqual("jQuery(function(){jQuery(\"#foo.bar[0]\").kendoFoo({\"foo\":\"foo\"});});");
+            initializer.InitializeFor("#foo.bar[0]", "Foo", data).ShouldEqual("kendo.syncReady(function(){jQuery(\"#foo.bar[0]\").kendoFoo({\"foo\":\"foo\"});});");
         }
 
         [Fact]
