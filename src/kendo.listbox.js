@@ -169,8 +169,8 @@ var __meta__ = { // jshint ignore:line
             name: "ListBox",
             autoBind: true,
             template: "",
-            dataTextField: null,
-            dataValueField: null,
+            dataTextField: "",
+            dataValueField: "",
             selectable: "single",
             reorderable: false,
             draggable: null,
@@ -213,7 +213,11 @@ var __meta__ = { // jshint ignore:line
             var item = that.templates.itemTemplate({ item: dataItem, r: that.templates.itemContent });
 
             $(item).attr(kendoAttr(UNIQUE_ID), dataItem.uid).appendTo(that._getList());
-            that.dataSource.add(dataItem);
+            if (typeof dataItem === typeof "") {
+                that.dataSource._data.push(dataItem);
+            } else {
+                that.dataSource.add(dataItem);
+            }
         },
 
         _insertElementAt: function(item, index) {
@@ -620,8 +624,6 @@ var __meta__ = { // jshint ignore:line
 
             if (dataItem && itemAtIndex && dataItemAtIndex) {
                 that._unbindDataSource();
-                dataSource.remove(dataItem);
-                dataSource.insert(index, dataItem);
                 that._bindDataSource();
                 that._removeElement(item);
                 that._insertElementAt(item, index);
@@ -646,11 +648,22 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var dataSource = that.dataSource;
             var dataItem = that.dataItem(item);
-
-            if (dataItem) {
-                dataSource.remove(dataItem);
-                that._removeElement(item);
+            if (!dataItem || !dataSource) {
+                return;
             }
+            if (typeof dataItem === typeof "") {
+                var data = dataSource._data;
+                for (var i = 0; i < data.length; i++) {
+                    if (dataItem === data[i]) {
+                        data[i] = data[data.length - 1];
+                        data.pop();
+                        break;
+                    }
+                }
+            } else {
+                dataSource.remove(dataItem);
+            }
+            that._removeElement(item);
         },
 
         _removeElement: function(item) {
@@ -658,14 +671,18 @@ var __meta__ = { // jshint ignore:line
             $(item).off().remove();
         },
 
-        dataItem: function(element) {
+        dataItem: function (element) {
             var uniqueIdAttr = kendoAttr(UNIQUE_ID);
             var uid = $(element).attr(uniqueIdAttr) || $(element).closest("[" + uniqueIdAttr + "]").attr(uniqueIdAttr);
-
-           return this.dataSource.getByUid(uid);
+            if (uid) {
+                return this.dataSource.getByUid(uid);
+            }
+            else {
+                return $(element).html();
+            }
         },
 
-        _dataItems: function(items) {
+        _dataItems: function (items) {
             var dataItems = [];
             var listItems = $(items);
             var itemsLength = listItems.length;
@@ -850,7 +867,7 @@ var __meta__ = { // jshint ignore:line
             var options = "";
             var view = this.dataSource.view();
             for (var idx = 0; idx < view.length; idx++) {
-                options += this._option(view[idx][this.options.dataValueField], view[idx][this.options.dataTextField], true);
+                options += this._option(view[idx][this.options.dataValueField] || view[idx], view[idx][this.options.dataTextField] || view[idx], true);
             }
             this.element.html(options);
         },
