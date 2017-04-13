@@ -1681,6 +1681,24 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Scheduler_Next {
+            get {
+                return ResourceManager.GetString("Scheduler_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Scheduler_Previous {
+            get {
+                return ResourceManager.GetString("Scheduler_Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete only this event occurrence or the whole series?.
         /// </summary>
         public static string Scheduler_Recurrence_DeleteRecurring {
@@ -2176,6 +2194,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Upload_ClearSelectedFiles {
+            get {
+                return ResourceManager.GetString("Upload_ClearSelectedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to drop files here to upload.
         /// </summary>
         public static string Upload_DropFilesHere {
@@ -2199,6 +2226,42 @@ namespace Kendo.Mvc.Resources {
         public static string Upload_HeaderStatusUploading {
             get {
                 return ResourceManager.GetString("Upload_HeaderStatusUploading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File type not allowed..
+        /// </summary>
+        public static string Upload_InvalidFileExtension {
+            get {
+                return ResourceManager.GetString("Upload_InvalidFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Files.
+        /// </summary>
+        public static string Upload_InvalidFiles {
+            get {
+                return ResourceManager.GetString("Upload_InvalidFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size too large..
+        /// </summary>
+        public static string Upload_InvalidMaxFileSize {
+            get {
+                return ResourceManager.GetString("Upload_InvalidMaxFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size too small..
+        /// </summary>
+        public static string Upload_InvalidMinFileSize {
+            get {
+                return ResourceManager.GetString("Upload_InvalidMinFileSize", resourceCulture);
             }
         }
         
@@ -2262,53 +2325,6 @@ namespace Kendo.Mvc.Resources {
         public static string Upload_UploadSelectedFiles {
             get {
                 return ResourceManager.GetString("Upload_UploadSelectedFiles", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to invalid max file size in bytes.
-        /// </summary>
-        public static string Upload_InvalidMaxFileSize {
-            get {
-                return ResourceManager.GetString("Upload_InvalidMaxFileSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to invalid min file size in bytes.
-        /// </summary>
-        public static string Upload_InvalidMinFileSize {
-            get {
-                return ResourceManager.GetString("Upload_InvalidMinFileSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to invalid file extension.
-        /// </summary>
-        public static string Upload_InvalidFileExtension {
-            get {
-                return ResourceManager.GetString("Upload_InvalidFileExtension", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to invalid files.
-        /// </summary>
-        public static string Upload_InvalidFiles
-        {
-            get
-            {
-                return ResourceManager.GetString("Upload_InvalidFiles", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to clear files.
-        /// </summary>
-        public static string Upload_ClearSelectedFiles {
-            get {
-                return ResourceManager.GetString("Upload_ClearSelectedFiles", resourceCulture);
             }
         }
     }

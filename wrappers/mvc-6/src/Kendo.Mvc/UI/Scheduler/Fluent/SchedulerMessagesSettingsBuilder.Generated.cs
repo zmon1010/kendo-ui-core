@@ -101,12 +101,32 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The tooltip of the next navigation button.
+        /// </summary>
+        /// <param name="value">The value for Next</param>
+        public SchedulerMessagesSettingsBuilder<T> Next(string value)
+        {
+            Container.Next = value;
+            return this;
+        }
+
+        /// <summary>
         /// The text displayed by the PDF export button.
         /// </summary>
         /// <param name="value">The value for Pdf</param>
         public SchedulerMessagesSettingsBuilder<T> Pdf(string value)
         {
             Container.Pdf = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The tooltip of the previous navigation button.
+        /// </summary>
+        /// <param name="value">The value for Previous</param>
+        public SchedulerMessagesSettingsBuilder<T> Previous(string value)
+        {
+            Container.Previous = value;
             return this;
         }
 

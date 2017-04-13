@@ -87,12 +87,30 @@ class SchedulerMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The tooltip of the next navigation button.
+    * @param string $value
+    * @return \Kendo\UI\SchedulerMessages
+    */
+    public function next($value) {
+        return $this->setProperty('next', $value);
+    }
+
+    /**
     * The text displayed by the PDF export button.
     * @param string $value
     * @return \Kendo\UI\SchedulerMessages
     */
     public function pdf($value) {
         return $this->setProperty('pdf', $value);
+    }
+
+    /**
+    * The tooltip of the previous navigation button.
+    * @param string $value
+    * @return \Kendo\UI\SchedulerMessages
+    */
+    public function previous($value) {
+        return $this->setProperty('previous', $value);
     }
 
     /**

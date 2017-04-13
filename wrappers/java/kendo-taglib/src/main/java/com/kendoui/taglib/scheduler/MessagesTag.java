@@ -145,12 +145,28 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("event", value);
     }
 
+    public java.lang.String getNext() {
+        return (java.lang.String)getProperty("next");
+    }
+
+    public void setNext(java.lang.String value) {
+        setProperty("next", value);
+    }
+
     public java.lang.String getPdf() {
         return (java.lang.String)getProperty("pdf");
     }
 
     public void setPdf(java.lang.String value) {
         setProperty("pdf", value);
+    }
+
+    public java.lang.String getPrevious() {
+        return (java.lang.String)getProperty("previous");
+    }
+
+    public void setPrevious(java.lang.String value) {
+        setProperty("previous", value);
     }
 
     public java.lang.String getSave() {

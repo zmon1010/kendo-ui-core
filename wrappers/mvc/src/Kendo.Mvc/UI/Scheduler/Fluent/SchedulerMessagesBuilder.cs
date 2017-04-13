@@ -102,6 +102,20 @@
             return this;
         }
 
+        public SchedulerMessagesBuilder Next(string message)
+        {
+            messages.Next = message;
+
+            return this;
+        }
+
+        public SchedulerMessagesBuilder Previous(string message)
+        {
+            messages.Previous = message;
+
+            return this;
+        }
+
         /// <summary>
         /// Sets the View messages of the scheduler.
         /// </summary>
