@@ -29,8 +29,6 @@ namespace Kendo.Mvc.UI
 
         public ListBoxMessagesSettings Messages { get; } = new ListBoxMessagesSettings();
 
-        public bool? Reorderable { get; set; }
-
         public ClientHandlerDescriptor Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -93,11 +91,6 @@ namespace Kendo.Mvc.UI
             if (messages.Any())
             {
                 settings["messages"] = messages;
-            }
-
-            if (Reorderable.HasValue)
-            {
-                settings["reorderable"] = Reorderable;
             }
 
             if (TemplateId.HasValue())

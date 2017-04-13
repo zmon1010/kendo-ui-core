@@ -146,25 +146,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether widget items can be reordered.
-        /// </summary>
-        /// <param name="value">The value for Reorderable</param>
-        public ListBoxBuilder Reorderable(bool value)
-        {
-            Container.Reorderable = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Indicates whether widget items can be reordered.
-        /// </summary>
-        public ListBoxBuilder Reorderable()
-        {
-            Container.Reorderable = true;
-            return this;
-        }
-
-        /// <summary>
         /// Specifies ListBox item template.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>

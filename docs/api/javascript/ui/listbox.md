@@ -538,27 +538,6 @@ Defines the text of the "To Right" button located in the toolbar of the widget.
         });
     </script>
 
-### reorderable `Boolean` *(default: false)*
-Indicates whether widget items can be reordered.
-
-#### Example
-
-    <select id="listBox"></select>
-    <script>
-    $("#listBox").kendoListBox({
-        reorderable: true,
-        draggable: true,
-        dataSource: [
-            { name: "Item 1", id: 1 },
-            { name: "Item 2", id: 2 },
-            { name: "Item 3", id: 3 },
-            { name: "Item 4", id: 4 }
-        ],
-        dataTextField: "name",
-        dataValueField: "id"
-    });
-    </script>
-
 ### selectable `String` *(default: "single")*
 
 Indicates whether selection is enabled/disabled. Possible values:
@@ -1073,7 +1052,6 @@ If invoked prevents the drag start action. The element will remain at its origin
     <script>
     $("#listBox").kendoListBox({
          draggable: true,
-         reorderable: true,
          dragstart: function(e) {
              if (e.item.text() === "Orange") {
                  e.preventDefault();
@@ -1115,7 +1093,6 @@ The original draggable's drag event data.
     <script>
     $("#listBox").kendoListBox({
          draggable: true,
-         reorderable: true,
          drag: function(e) {
              console.log("drag event");
          }
@@ -1146,7 +1123,6 @@ The data items which to be droped.
     <script>
     $("#listBox").kendoListBox({
          draggable: true,
-         reorderable: true,
          drop: function(e) {
              console.log("drop event");
          }
@@ -1194,7 +1170,6 @@ The original draggable's drag event data.
     <script>
     $("#listBox").kendoListBox({
         draggable: true,
-        reorderable: true,
         dragend: function(e) {
             console.log("from " + e.oldIndex + " to " + e.newIndex);
 

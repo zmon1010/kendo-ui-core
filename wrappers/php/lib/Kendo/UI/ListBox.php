@@ -104,15 +104,6 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * Indicates whether widget items can be reordered.
-    * @param boolean $value
-    * @return \Kendo\UI\ListBox
-    */
-    public function reorderable($value) {
-        return $this->setProperty('reorderable', $value);
-    }
-
-    /**
     * Indicates whether selection is enabled/disabled. Possible values:
     * @param string $value
     * @return \Kendo\UI\ListBox

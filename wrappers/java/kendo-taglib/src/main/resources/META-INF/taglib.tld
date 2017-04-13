@@ -25755,12 +25755,6 @@ If hint function is not provided the widget will clone dragged item and use it a
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Indicates whether widget items can be reordered.</description>
-            <name>reorderable</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
             <description>Indicates whether selection is enabled/disabled. Possible values:</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>

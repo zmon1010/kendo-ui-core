@@ -168,14 +168,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("navigatable", value);
     }
 
-    public boolean getReorderable() {
-        return (Boolean)getProperty("reorderable");
-    }
-
-    public void setReorderable(boolean value) {
-        setProperty("reorderable", value);
-    }
-
     public java.lang.String getSelectable() {
         return (java.lang.String)getProperty("selectable");
     }

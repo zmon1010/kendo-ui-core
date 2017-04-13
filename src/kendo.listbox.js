@@ -172,7 +172,6 @@ var __meta__ = { // jshint ignore:line
             dataTextField: "",
             dataValueField: "",
             selectable: "single",
-            reorderable: false,
             draggable: null,
             dropSources : [],
             connectWith: "",
@@ -458,10 +457,6 @@ var __meta__ = { // jshint ignore:line
             var node;
 
             if($.contains(list, element)) {
-                if(!that.options.reorderable) {
-                    return null;
-                }
-
                 items = that.items();
                 node = items.filter(element)[0] || items.has(element)[0];
                 return node && !$(node).hasClass(SELECTED_STATE_CLASS) ? { element: $(node) } : null;

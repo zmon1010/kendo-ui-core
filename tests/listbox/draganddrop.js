@@ -30,8 +30,7 @@
                     dataTextField: "name",
                     selectable: true,
                     draggable:true,
-                    dropSources: ["listB"],
-                    reorderable: true
+                    dropSources: ["listB"]
             }).getKendoListBox();
 
 
@@ -40,7 +39,6 @@
                     dataTextField: "name",
                     selectable: true,
                     dropSources: ["listA"],
-                    reorderable: true,
                     draggable:true
             }).getKendoListBox();
 
@@ -75,8 +73,8 @@
         }
     });
 
-    test("Reorderable is false by default", 1, function() {
-        ok(kendo.ui.ListBox.prototype.options.reorderable === false);
+    test("Draggable is not enabled by default", 1, function() {
+        ok(kendo.ui.ListBox.prototype.options.draggable === null);
     });
 
     test("Placeholder moves across connected listboxes", 1, function() {
@@ -116,19 +114,6 @@
         release(draggedElement, targetOffset.left, targetOffset.top + 10);
 
         ok(listB.items().filter(":eq(1)").html() === "Tom");
-    });
-
-    test("Item is not reordered if reordable is false", 1, function() {
-        var draggedElement = listC.items().first();
-        var draggableOffset = kendo.getOffset(draggedElement);
-        var targetElement = listC.items().last(),
-            targetOffset = kendo.getOffset(targetElement);
-
-        press(draggedElement, draggableOffset.left, draggableOffset.top);
-        move(draggedElement, targetOffset.left, targetOffset.top + 10);
-        release(draggedElement, targetOffset.left, targetOffset.top + 10);
-
-        ok(listC.items().filter(":eq(2)").html() === "Dino");
     });
 
     test("Item is not dropped if dropSources is not set", 1, function() {
