@@ -929,7 +929,11 @@ var __meta__ = { // jshint ignore:line
 
         _onUploadError: function(e, xhr) {
             var that = this;
+            var module = that._module;
             var fileEntry = getFileEntry(e);
+            var fileUid = fileEntry.data("uid");
+
+            module._decreasePosition(fileUid);
 
             that._setUploadErrorState(fileEntry);
 
@@ -1922,11 +1926,6 @@ var __meta__ = { // jshint ignore:line
 
         onRequestError: function(e, fileEntry) {
             var xhr = e.target;
-            var fileUid = fileEntry.data("uid");
-
-            if(this.retries[fileUid] || this.resume[fileUid] || (this.metaData[fileUid] && !this.metaData[fileUid].chunkIndex)){
-                this._decreasePosition(fileUid);
-            }
 
             this.upload._onUploadError({ target : $(fileEntry, this.upload.wrapper) }, xhr);
         },
