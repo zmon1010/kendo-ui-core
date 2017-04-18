@@ -14,9 +14,7 @@
             .TemplateId("customer-item-template")
             .Draggable(true)
             .DropSources("selected")
-            .Reorderable(true)
             .ConnectWith("#selected")
-            .Height(400)
             .Toolbar(toolbar =>
             {
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
@@ -39,9 +37,7 @@
             .TemplateId("customer-item-template")
             .Draggable(true)
             .DropSources("optional")
-            .Reorderable(true)
             .ConnectWith("#optional")
-            .Height(400)
             .BindTo(new List<CustomerViewModel>())
         )
     </div>
@@ -53,19 +49,21 @@
 </script>
 
 <style>
-    #example .k-listbox:nth-of-type(1) {
+    #example .k-listbox {
         width: 49%;
+        height: 400px;
+    }
+
+    #example .k-listbox:nth-of-type(1) {
         float: left;
     }
 
     #example .k-listbox:nth-of-type(2) {
-        width: 49%;
         float: right;
     }
 
     #example .k-item {
         line-height: 1em;
-        min-width: 300px;
     }
 
     /* Material Theme padding adjustment*/

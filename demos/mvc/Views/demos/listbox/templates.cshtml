@@ -21,9 +21,7 @@
                 },
                 draggable: true,
                 dropSources: ["selected"],
-                reorderable: true,
                 connectWith: "#selected",
-                height: 400,
                 toolbar: {
                     position: "right",
                     tools: ["moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo"]
@@ -36,14 +34,16 @@
                 template: customerTemplate,
                 draggable: true,
                 dropSources: ["optional"],
-                reorderable: true,
-                connectWith: "#optional",
-                height: 400
+                connectWith: "#optional"
             });
         });
     </script>
 </div>
 <style>
+    #example .k-listbox {
+        height: 400px;
+    }
+
     #example .k-listbox:nth-child(1) {
         width: 49%;
         float: left;
@@ -56,7 +56,6 @@
 
     #example .k-item {
         line-height: 1em;
-        min-width: 300px;
     }
 
     /* Material Theme padding adjustment*/
