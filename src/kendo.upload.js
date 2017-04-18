@@ -959,8 +959,6 @@ var __meta__ = { // jshint ignore:line
                 setTimeout(function(){
                     that._module.performUpload(fileEntry);
                 },this.options.async.autoRetryAfter);
-            }else{
-                retries[fileEntry.data("uid")] = 0;
             }
         },
         _setUploadErrorState: function(fileEntry) {
@@ -1773,9 +1771,10 @@ var __meta__ = { // jshint ignore:line
 
         onRetry: function(e) {
             var fileEntry = getFileEntry(e);
+            var async = this.upload.options.async;
 
-            if(this.upload.options.async.chunkSize){
-                this.retries[fileEntry.data("uid")] = 1;
+            if(async.chunkSize){
+                this.retries[fileEntry.data("uid")] = async.maxAutoRetries + 1;
                 delete this.paused[fileEntry.data("uid")];
             }
 
@@ -1910,7 +1909,7 @@ var __meta__ = { // jshint ignore:line
             var xhr = e.target;
             var fileUid = fileEntry.data("uid");
 
-            if(this.retries[fileUid] || this.resume[fileUid] || !this.metaData[fileUid].chunkIndex){
+            if(this.retries[fileUid] || this.resume[fileUid] || (this.metaData[fileUid] && !this.metaData[fileUid].chunkIndex)){
                 this._decreasePosition(fileUid);
             }
 
