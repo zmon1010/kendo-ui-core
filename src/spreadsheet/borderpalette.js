@@ -123,7 +123,7 @@
             _customColorPalette: function() {
                 var element = $("<div />", {
                     "class": "k-spreadsheet-window",
-                    "html": "<div aria-label='" + BORDER_PALETTE_MESSAGES.customColor + "'></div>" +
+                    "html": "<div></div>" +
                             "<div class='k-action-buttons'>" +
                                 "<button class='k-button k-primary' data-bind='click: apply'>" + BORDER_PALETTE_MESSAGES.apply + "</button>" +
                                 "<button class='k-button' data-bind='click: close'>" + BORDER_PALETTE_MESSAGES.cancel + "</button>" +
