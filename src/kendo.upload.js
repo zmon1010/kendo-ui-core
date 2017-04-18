@@ -970,6 +970,15 @@ var __meta__ = { // jshint ignore:line
 
             if(!this.options.async.chunkSize){
                 $('.k-progress', fileEntry).width("100%");
+            }else{
+                var fileUid = fileEntry.data("uid");
+                var fileMetaData = that._module.metaData[fileUid];
+
+                if(fileMetaData){
+                    var percentComplete = ((fileMetaData.chunkIndex)/fileMetaData.totalChunks)*100;
+
+                    that._onFileProgress({ target : $(fileEntry, that.wrapper) }, percentComplete);
+                }
             }
 
             if (uploadPercentage.length > 0) {
