@@ -38,6 +38,7 @@
     };
 
     kendo.spreadsheet.messages.view = {
+        nameBox: "Name Box",
         errors: {
             openUnsupported: "Unsupported format. Please select an .xlsx file.",
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
@@ -561,7 +562,7 @@
             var wrapper = $("<div class='k-spreadsheet-action-bar' />").prependTo(this.element);
 
             var nameEditor = $("<div class='k-spreadsheet-name-editor' />").appendTo(wrapper);
-            this.nameEditor = new kendo.spreadsheet.NameEditor(nameEditor);
+            this.nameEditor = new kendo.spreadsheet.NameEditor(nameEditor, this.options);
 
             var formulaBar = $("<div />").appendTo(wrapper);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);

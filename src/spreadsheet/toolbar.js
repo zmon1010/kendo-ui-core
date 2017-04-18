@@ -78,6 +78,7 @@
         },
         exportAs: "Export...",
         toggleGridlines: "Toggle gridlines",
+        sort: "Sort",
         sortAsc: "Sort ascending",
         sortDesc: "Sort descending",
         sortButtons: {
@@ -208,7 +209,10 @@
                     name: options.name || toolName,
                     text: MESSAGES[options.name || toolName],
                     icon: options.iconClass,
-                    attributes: { title: MESSAGES[options.name || toolName] }
+                    attributes: {
+                        title: MESSAGES[options.name || toolName],
+                        "aria-label":   MESSAGES[options.name || toolName]
+                    }
                 }, typeDefaults[type], options);
 
                 if (type == "splitButton") {
@@ -366,9 +370,12 @@
 
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
-            var dropDownList = $("<select />").kendoDropDownList({
-                height: "auto"
-            }).data("kendoDropDownList");
+            var dropDownList = $("<select />")
+                .attr("title", options.attributes.title)
+                .attr("aria-label", options.attributes.title)
+                .kendoDropDownList({
+                    height: "auto"
+                }).data("kendoDropDownList");
 
             this.dropDownList = dropDownList;
             this.element = dropDownList.wrapper;
@@ -491,9 +498,13 @@
             this._dialogName = options.dialogName;
 
             this.toolbar = toolbar;
-            this.element = $("<button class='k-button k-button-icon' title='" + options.attributes.title + "'>" +
+            this._title = options.attributes.title;
+            this.element = $("<button class='k-button k-button-icon'>" +
                                  "<span class='k-icon k-i-file-excel' />" +
-                             "</button>").data("instance", this);
+                             "</button>")
+                             .attr("title", this._title)
+                             .attr("aria-label", this._title)
+                             .data("instance", this);
 
             this.element.bind("click", this.open.bind(this))
                         .data("instance", this);
@@ -580,12 +591,14 @@
 
     var FontSize = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
-            var comboBox = $("<input />").kendoComboBox({
-                change: this._valueChange.bind(this),
-                clearButton: false,
-                dataSource: options.fontSizes || FONT_SIZES,
-                value: DEFAULT_FONT_SIZE
-            }).data("kendoComboBox");
+            var comboBox = $("<input />")
+                .attr("aria-label", options.attributes.title)
+                .kendoComboBox({
+                    change: this._valueChange.bind(this),
+                    clearButton: false,
+                    dataSource: options.fontSizes || FONT_SIZES,
+                    value: DEFAULT_FONT_SIZE
+                }).data("kendoComboBox");
 
             this.comboBox = comboBox;
             this.element = comboBox.wrapper;
@@ -1087,6 +1100,7 @@
 
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
                 .attr("title", this._title)
+                .attr("aria-label", this._title)
                 .one("change", this._change.bind(this))
                 .appendTo(this.element);
         },
@@ -1154,7 +1168,7 @@
                 { title: MESSAGES.quickAccess.undo, iconClass: "undo", action: "undo" },
                 { title: MESSAGES.quickAccess.redo, iconClass: "redo", action: "redo" }
             ];
-            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon'><span class='k-icon k-i-#=iconClass#'></span></a>");
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon' aria-label='#= title #'><span class='k-icon k-i-#=iconClass#'></span></a>");
 
             this.quickAccessToolBar = $("<div />", {
                 "class": "k-spreadsheet-quick-access-toolbar",

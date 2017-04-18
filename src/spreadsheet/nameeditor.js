@@ -19,6 +19,7 @@
             kendo.ui.Widget.call(this, element, options);
             element.addClass(CLASS_NAMES.input);
 
+            var comboBoxTitle = options.messages.nameBox || "Name Box";
             var dataSource = new kendo.data.DataSource({
                 transport: {
                     read: function(options) {
@@ -34,7 +35,11 @@
                 }
             });
 
-            this.combo = $("<input />").appendTo(element)
+            var comboElement = $("<input />")
+                .attr("title", comboBoxTitle)
+                .attr("aria-label", comboBoxTitle);
+
+            this.combo = comboElement.appendTo(element)
                 .kendoComboBox({
                     clearButton: false,
                     dataTextField: "name",

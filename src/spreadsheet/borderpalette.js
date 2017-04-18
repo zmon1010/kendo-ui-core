@@ -123,7 +123,7 @@
             _customColorPalette: function() {
                 var element = $("<div />", {
                     "class": "k-spreadsheet-window",
-                    "html": "<div></div>" +
+                    "html": "<div aria-label='" + BORDER_PALETTE_MESSAGES.customColor + "'></div>" +
                             "<div class='k-action-buttons'>" +
                                 "<button class='k-button k-primary' data-bind='click: apply'>" + BORDER_PALETTE_MESSAGES.apply + "</button>" +
                                 "<button class='k-button' data-bind='click: close'>" + BORDER_PALETTE_MESSAGES.cancel + "</button>" +
@@ -220,7 +220,7 @@
             _borderTypePalette: function() {
                 var messages = BORDER_PALETTE_MESSAGES;
                 var buttons = BORDER_TYPES.map(function(type) {
-                    return '<a title="' + messages[type] + '" href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
+                    return '<a title="' + messages[type] + '" aria-label="' + messages[type] + '" href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
                                 '<span class="k-icon k-i-' + kendo.toHyphens(type) + '"></span>' +
                            '</a>';
                 }).join("");
