@@ -307,6 +307,30 @@ var __meta__ = { // jshint ignore:line
             return current.length ? current : null;
         },
 
+        _scroll: function (item) {
+            if (!item) {
+                return;
+            }
+
+            if (item[0]) {
+                item = item[0];
+            }
+
+            var list = this._getList().parent()[0];
+            var itemOffsetTop = item.offsetTop;
+            var contentScrollTop = list.scrollTop;
+            var contentOffsetHeight = list.clientHeight;
+            var bottomDistance = itemOffsetTop + item.offsetHeight;
+
+            if (contentScrollTop > itemOffsetTop) {
+                contentScrollTop = itemOffsetTop;
+            } else if (bottomDistance > (contentScrollTop + contentOffsetHeight)) {
+                contentScrollTop = (bottomDistance - contentOffsetHeight);
+            }
+
+            list.scrollTop = contentScrollTop;
+        },
+
         _keyDown: function(e) {
             var that = this;
             var key = e.keyCode;
@@ -339,8 +363,13 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
                 that._target = current;
-                that._target.addClass(FOCUSED_CLASS);
-                that._getList().attr("aria-activedescendant", that._target.attr("id"));
+                if(that._target) {
+                    that._target.addClass(FOCUSED_CLASS);
+                    that._scroll(that._target);
+                    that._getList().attr("aria-activedescendant", that._target.attr("id"));
+                } else {
+                    that._getList().removeAttr("aria-activedescendant");
+                }
                 shouldPreventDefault = true;
             } else if(key == keys.SPACEBAR) {
                 if(e.ctrlKey && that._target) {
