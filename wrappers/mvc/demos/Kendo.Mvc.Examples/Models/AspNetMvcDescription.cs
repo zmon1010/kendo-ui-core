@@ -62,12 +62,21 @@ namespace Kendo.Mvc.Examples.Models
                             };
                         }
 
-                        if (source.Contains("taskService"))
+                        if (source.Contains("SchedulerTaskService"))
                         {
                             yield return new ExampleFile
                             {
                                 Name = "SchedulerTaskService.cs",
                                 Url = "~/Models/Scheduler/SchedulerTaskService.cs"
+                            };
+                        }
+
+                        if (source.Contains("GanttTaskService"))
+                        {
+                            yield return new ExampleFile
+                            {
+                                Name = "GanttTaskService.cs",
+                                Url = "~/Models/Gantt/GanttTaskService.cs"
                             };
                         }
 
