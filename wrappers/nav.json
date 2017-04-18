@@ -2146,6 +2146,16 @@
                 "meta": {
                     "aspnet-mvc": "This demo for $FRAMEWORK ListBox component shows how you can customize the widget apperience."
                 }
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "listbox/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK ListBox"
+                },
+                "meta": {
+                    "aspnet-mvc": "In this example we will look at the supported keys and user actions in $FRAMEWORK ListBox control."
+                }
             }
         ],
         "category": "Data Management"

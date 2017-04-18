@@ -1013,6 +1013,7 @@
     <Content Include="Views\box_plot_charts\vertical.cshtml" />
     <Content Include="Views\calendar\week_column.cshtml" />
     <Compile Include="Controllers\ListBox\TemplatesController.cs" />
+    <Compile Include="Controllers\ListBox\KeyboardNavigationController.cs" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3022,6 +3023,7 @@
     <Content Include="Views\listbox\index.cshtml" />
     <Content Include="Views\listbox\events.cshtml" />
     <Content Include="Views\listbox\templates.cshtml" />
+    <Content Include="Views\listbox\keyboard_navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
