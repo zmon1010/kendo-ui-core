@@ -190,11 +190,11 @@
         equalListItems(listbox.items().eq(1), item1);
     });
 
-    test("reorder() should move the data item of a list item in the dataSource", function() {
+    test("reorder() should not move the data item of a list item in the dataSource", function() {
         listbox.reorder(item1, 1);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
     });
 
     test("reorder() should not reorder at invalid index", function() {

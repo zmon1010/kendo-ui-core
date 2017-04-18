@@ -120,13 +120,13 @@
         equalListItems(listbox.items().eq(1), item1);
     });
 
-    test("moveup action should move the data item of a list item in the dataSource", function() {
+    test("moveup action should not move the data item of a list item in the dataSource", function() {
         listbox.select(item2);
 
         clickMoveUpButton(listbox);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
     });
 
     test("moveup action should reorder the html elements of multiple list items", function() {
@@ -140,14 +140,14 @@
         equalListItems(listbox.items().eq(3), item4);
     });
 
-    test("moveup action should reorder the data items of multiple list items in the dataSource", function() {
+    test("moveup action should not reorder the data items of multiple list items in the dataSource", function() {
         listbox.select(item2.add(item3));
 
         clickMoveUpButton(listbox);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item3));
-        equal(listbox.dataSource.at(2).uid, getId(item1));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
+        equal(listbox.dataSource.at(2).uid, getId(item3));
         equal(listbox.dataSource.at(3).uid, getId(item4));
     });
 
@@ -162,15 +162,15 @@
         equalListItems(listbox.items().eq(3), item3);
     });
 
-    test("moveup action should reorder the data items of non-adjacent list items in the dataSource", function() {
+    test("moveup action should not reorder the data items of non-adjacent list items in the dataSource", function() {
         listbox.select(item4.add(item2));
 
         clickMoveUpButton(listbox);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-        equal(listbox.dataSource.at(2).uid, getId(item4));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
+        equal(listbox.dataSource.at(2).uid, getId(item3));
+        equal(listbox.dataSource.at(3).uid, getId(item4));
     });
 
     test("moveup action should not reorder the html elements of multiple list items at the top", function() {
@@ -257,13 +257,13 @@
         equalListItems(listbox.items().eq(1), item1);
     });
 
-    test("movedown action should move the data item of a list item in the dataSource", function() {
+    test("movedown action should not move the data item of a list item in the dataSource", function() {
         listbox.select(item1);
 
         clickMoveDownButton(listbox);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
     });
 
     test("movedown action should reorder the html elements of multiple list items", function() {
@@ -277,15 +277,15 @@
         equalListItems(listbox.items().eq(3), item3);
     });
 
-    test("movedown action should reorder the data items of multiple list items in the dataSource", function() {
+    test("movedown action should not reorder the data items of multiple list items in the dataSource", function() {
         listbox.select(item2.add(item3));
 
         clickMoveDownButton(listbox);
 
         equal(listbox.dataSource.at(0).uid, getId(item1));
-        equal(listbox.dataSource.at(1).uid, getId(item4));
-        equal(listbox.dataSource.at(2).uid, getId(item2));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
+        equal(listbox.dataSource.at(2).uid, getId(item3));
+        equal(listbox.dataSource.at(3).uid, getId(item4));
     });
 
     test("movedown action should reorder the html elements of non-adjacent list items", function() {
@@ -299,15 +299,15 @@
         equalListItems(listbox.items().eq(3), item3);
     });
 
-    test("movedown action should reorder the data items of non-adjacent list items in the dataSource", function() {
+    test("movedown action should not reorder the data items of non-adjacent list items in the dataSource", function() {
         listbox.select(item1.add(item3));
 
         clickMoveDownButton(listbox);
 
-        equal(listbox.dataSource.at(0).uid, getId(item2));
-        equal(listbox.dataSource.at(1).uid, getId(item1));
-        equal(listbox.dataSource.at(2).uid, getId(item4));
-        equal(listbox.dataSource.at(3).uid, getId(item3));
+        equal(listbox.dataSource.at(0).uid, getId(item1));
+        equal(listbox.dataSource.at(1).uid, getId(item2));
+        equal(listbox.dataSource.at(2).uid, getId(item3));
+        equal(listbox.dataSource.at(3).uid, getId(item4));
     });
 
     test("movedown action should not reorder the html elements of multiple list items at the bottom", function() {
