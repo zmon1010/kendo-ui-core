@@ -1910,7 +1910,7 @@ var __meta__ = { // jshint ignore:line
             var xhr = e.target;
             var fileUid = fileEntry.data("uid");
 
-            if(this.retries[fileUid] || this.resume[fileUid]){
+            if(this.retries[fileUid] || this.resume[fileUid] || !this.metaData[fileUid].chunkIndex){
                 this._decreasePosition(fileUid);
             }
 
