@@ -865,6 +865,7 @@ var __meta__ = { // jshint ignore:line
 
         _onFileProgress: function(e, percentComplete) {
             var progressPct;
+            var warningPct;
 
             if (percentComplete > 100) {
                 percentComplete = 100;
@@ -872,7 +873,11 @@ var __meta__ = { // jshint ignore:line
 
             if (!this.options.template) {
                 progressPct = $(".k-upload-pct", e.target);
-                if (progressPct.length === 0) {
+                warningPct = $(".k-i-warning", e.target);
+
+                if(warningPct.length){
+                    warningPct.removeClass("k-i-warning").removeClass("k-icon").addClass("k-upload-pct");
+                }else if (progressPct.length === 0) {
                     $(".k-upload-status", e.target).prepend("<span class='k-upload-pct'></span>");
                 }
 
@@ -983,8 +988,9 @@ var __meta__ = { // jshint ignore:line
 
             if (uploadPercentage.length > 0) {
                 if(!uploadPercentage.parent().find(".k-i-warning").length){
-                    uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-i-warning');
+                    uploadPercentage.removeClass('k-upload-pct').addClass('k-icon k-i-warning');
                 }
+                uploadPercentage.empty();
             } else {
                 $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-i-warning'></span>");
             }
