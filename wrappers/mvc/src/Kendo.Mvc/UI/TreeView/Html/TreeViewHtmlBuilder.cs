@@ -84,12 +84,13 @@ namespace Kendo.Mvc.UI
             new HtmlElement("input", TagRenderMode.SelfClosing)
                 .AddClass("k-checkbox")
                 .Attributes(new { type = "checkbox", name = Component.Checkboxes.Name })
+                .Attribute("aria-label", item.Text)
                 .ToggleAttribute("value", item.Id, item.Id != null)
                 .ToggleAttribute("checked", "checked", item.Checked)
                 .ToggleAttribute("disabled", "disabled", !item.Enabled)
                 .AppendTo(checkboxWrapper);
 
-            new HtmlElement("label")
+            new HtmlElement("span")
                 .AddClass("k-checkbox-label")
                 .AppendTo(checkboxWrapper);
 
