@@ -11638,6 +11638,12 @@ original value.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Allows customization of the "Color Hexadecimal Code" preview input title.</description>
+            <name>previewInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
