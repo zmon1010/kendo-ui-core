@@ -3318,8 +3318,19 @@
           "!jsp",
           "!php"
         ]
+      },
+      {
+        "text": "RTL support",
+        "url": "listbox/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI ListBox widget",
+          "aspnet-mvc": "RTL support in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the right-to-left feature is supported in Kendo UI ListBox component.",
+          "aspnet-mvc": "This demo shows how the right-to-left feature is supported in ASP.NET MVC ListBox component."
+        }
       }
-	  
     ],
     "category": "Data Management"
   },

@@ -1,0 +1,65 @@
+﻿<div id="example" role="application">
+    <div class="demo-section k-content wide">
+        <select id="source">
+            <option>Argentina</option>
+            <option>Australia</option>
+            <option>Brazil</option>
+            <option>Canada</option>
+            <option>Chile</option>
+            <option>China</option>
+            <option>Egypt</option>
+            <option>England</option>
+            <option>France</option>
+            <option>Germany</option>
+            <option>India</option>
+            <option>Indonesia</option>
+            <option>Kenya</option>
+            <option>Mexico</option>
+            <option>New Zealand</option>
+            <option>South Africa</option>
+            <option>USA</option>
+        </select>
+        <select id="destination"></select>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#source").kendoListBox({
+                connectWith: "#destination",
+                toolbar: {
+                    position: "left",
+                    tools: ["transferFrom", "transferTo", "transferAllFrom", "transferAllTo"]
+                }
+            });
+
+            $("#destination").kendoListBox({
+                toolbar: {
+                    position: "left",
+                    tools: ["moveUp", "moveDown", "remove"]
+                }
+            });
+        });
+    </script>
+</div>
+<style>
+    #example .demo-section {
+        max-width: none;
+        width: 695px;
+    }
+
+    #example .k-listbox {
+        width: 326px;
+        height: 200px;
+    }
+
+    #example .k-listbox:nth-child(1) {
+        float: right;
+    }
+
+    #example .k-listbox:nth-child(2) {
+        float: left;
+    }
+
+    #example .k-listbox .k-item {
+            text-align: right;
+    }
+</style>
