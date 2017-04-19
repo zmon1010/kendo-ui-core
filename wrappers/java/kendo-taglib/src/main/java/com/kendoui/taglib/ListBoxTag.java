@@ -3,8 +3,8 @@ package com.kendoui.taglib;
 
 
 import com.kendoui.taglib.listbox.*;
-
-
+import com.kendoui.taglib.html.Element;
+import com.kendoui.taglib.html.Select;
 import com.kendoui.taglib.json.Function;
 
 
