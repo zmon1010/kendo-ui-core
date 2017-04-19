@@ -142,7 +142,7 @@ namespace Kendo.Mvc.Rendering
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-			return GenerateInput(viewContext, modelExplorer, id, name, value, format, "date", htmlAttributes);
+			return GenerateInput(viewContext, modelExplorer, id, name, value, format, "text", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateDateTimeInput(
@@ -154,7 +154,7 @@ namespace Kendo.Mvc.Rendering
             string format,
             IDictionary<string, object> htmlAttributes)
         {            
-            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "datetime", htmlAttributes);
+            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "text", htmlAttributes);
 		}
 
         public virtual TagBuilder GenerateTimeInput(
@@ -166,7 +166,7 @@ namespace Kendo.Mvc.Rendering
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "time", htmlAttributes);
+            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "text", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateNumericInput(
