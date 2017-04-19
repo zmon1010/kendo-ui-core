@@ -2537,6 +2537,17 @@
                     "aspnet-mvc": "In this example we will see how the orientation of the $FRAMEWORK Menu can be easily modified through the orientation settings."
                 }
             },
+			{
+                "text": "Scrollable",
+                "new": "true",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Menu scrollable demo"
+                },
+                "url": "menu/scrollable",
+                "meta": {
+                    "aspnet-mvc": "This $FRAMEWORK Menu example shows the feature that allows you to scroll the menu items."
+                }
+            },
             {
                 "text": "SiteMapBinding",
                 "url": "menu/sitemapbinding",

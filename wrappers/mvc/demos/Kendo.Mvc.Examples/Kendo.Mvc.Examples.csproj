@@ -271,6 +271,7 @@
     <Compile Include="Controllers\MediaPlayer\EventsController.cs" />
     <Compile Include="Controllers\MediaPlayer\IndexController.cs" />
     <Compile Include="Controllers\MediaPlayer\PlaylistController.cs" />
+    <Compile Include="Controllers\Menu\ScrollableController.cs" />
     <Compile Include="Controllers\Menu\Menu_Bind_AttributesController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\PanelBar\Local_Data_BindingController.cs" />
@@ -3024,6 +3025,7 @@
     <Content Include="Views\listbox\events.cshtml" />
     <Content Include="Views\listbox\templates.cshtml" />
     <Content Include="Views\listbox\keyboard_navigation.cshtml" />
+    <Content Include="Views\menu\scrollable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

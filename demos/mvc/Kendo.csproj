@@ -1291,6 +1291,7 @@
     <Content Include="Views\demos\listbox\events.cshtml" />
     <Content Include="Views\demos\listbox\templates.cshtml" />
     <Content Include="Views\demos\listbox\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\menu\scrollable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

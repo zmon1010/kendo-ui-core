@@ -1796,7 +1796,7 @@
           "kendo-ui": "TreeView in Dialog (AngularJS)| Kendo UI Dialog Demo"
         },
         "meta": {
-          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."          
+          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."
         },
 		"packages": [
           "!mvc",
@@ -3896,6 +3896,19 @@
         }
       },
       {
+        "text": "Scrollable",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Kendo UI Menu scrollable demo",
+          "aspnet-mvc": "ASP.NET MVC Menu scrollable demo"
+        },
+        "url": "menu/scrollable",
+        "meta": {
+          "kendo-ui": "This Kendo UI Menu example shows the feature that allows you to scroll the menu items.",
+          "aspnet-mvc": "This ASP.NET MVC Menu example shows the feature that allows you to scroll the menu items."
+        }
+      },
+      {
         "text": "Bind Custom Attributes",
         "new": "true",
         "title": {
@@ -3907,7 +3920,7 @@
         },
         "description": {
           "kendo-ui": "<p>The <strong>Menu</strong> widget enables you to bind JSON data through the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/menu#configuration-dataSource' target='_blank'>dataSource option</a> exposed.</p><p>This demo shows how you can process data fecthed through remote binding, using <strong>DataSource</strong>, and populate the <strong>Menu Items</strong> with it. Additionally, to accomplish specific functionality requirments you can bind the items' attributes in order and use the values bound later to run operations based on the end user's selection.</p>"
-        }   
+        }
       },
       {
         "packages": [
@@ -4667,7 +4680,7 @@
         "packages": [
           "!jsp",
           "!php"
-        ]      
+        ]
       },
       {
         "text": "Templates",
