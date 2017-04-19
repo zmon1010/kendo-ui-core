@@ -1285,6 +1285,8 @@
     <Content Include="Views\demos\dateinput\localization-globalization.cshtml" />
     <Content Include="Views\demos\listbox\angular.cshtml" />
     <Content Include="Views\demos\listbox\index.cshtml" />
+	<Content Include="Views\demos\listbox\api.cshtml" />
+	<Content Include="Views\demos\listbox\mvvm.cshtml" />
     <Content Include="Views\demos\listbox\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\listbox\events.cshtml" />
     <Content Include="Views\demos\listbox\templates.cshtml" />

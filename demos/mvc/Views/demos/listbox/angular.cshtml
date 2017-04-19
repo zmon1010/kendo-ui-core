@@ -14,7 +14,7 @@
             connectWith: "#selected",
             toolbar: {
                 position: "right",
-                tools: ["moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo"]
+                tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
             },
             dataSource: {
                 type: "odata",
@@ -34,17 +34,18 @@
 </script>
 
 <style>
+    #example .demo-section {
+        max-width: none;
+        width: 515px;
+    }
+
     #example .k-listbox {
-        height: 320px;
+        width: 236px;
+        height: 310px;
     }
 
-    #example .k-listbox:nth-child(1) {
-        width: 49%;
-        float: left;
-    }
-
-    #example .k-listbox:nth-child(2) {
-        width: 49%;
-        float: right;
-    }
+        #example .k-listbox:first-child {
+            width: 270px;
+            margin-right: 1px;
+        }
 </style>

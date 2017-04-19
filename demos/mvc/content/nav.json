@@ -3239,21 +3239,6 @@
         }
       },
       {
-        "text": "AngularJS",
-        "url": "listbox/angular",
-        "title": {
-          "kendo-ui": "AngularJS support in Kendo UI ListBox"
-        },
-        "meta": {
-          "kendo-ui": "AngularJS directive support for Kendo UI ListBox"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "Events",
         "url": "listbox/events",
         "title": {
@@ -3288,7 +3273,53 @@
           "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
           "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
         }
+      },
+	  {
+        "text": "API",
+        "url": "listbox/api",
+        "title": {
+          "kendo-ui": "API Functions Demo for Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "API Functions Demo for Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+	  {
+        "text": "MVVM",
+        "url": "listbox/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "MVVM support in Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "listbox/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       }
+	  
     ],
     "category": "Data Management"
   },
