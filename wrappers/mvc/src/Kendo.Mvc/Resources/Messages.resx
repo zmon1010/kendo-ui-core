@@ -865,7 +865,7 @@
     <value>File type not allowed.</value>
   </data>
   <data name="Upload_InvalidFiles" xml:space="preserve">
-    <value>Invalid Files</value>
+    <value>Invalid file(s). Please check file upload requirements.</value>
   </data>
   <data name="Upload_InvalidMaxFileSize" xml:space="preserve">
     <value>File size too large.</value>

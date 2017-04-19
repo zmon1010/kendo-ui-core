@@ -2239,7 +2239,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Files.
+        ///   Looks up a localized string similar to Invalid file(s). Please check file upload requirements..
         /// </summary>
         public static string Upload_InvalidFiles {
             get {
