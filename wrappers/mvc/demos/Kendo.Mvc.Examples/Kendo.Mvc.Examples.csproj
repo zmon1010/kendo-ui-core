@@ -263,6 +263,8 @@
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\Grid\Editing_Remote_ValidationController.cs" />
     <Compile Include="Controllers\Grid\ServerExportController.cs" />
+    <Compile Include="Controllers\ListBox\EventsController.cs" />
+    <Compile Include="Controllers\ListBox\IndexController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -1010,6 +1012,8 @@
     <Content Include="Views\calendar\disable_dates.cshtml" />
     <Content Include="Views\box_plot_charts\vertical.cshtml" />
     <Content Include="Views\calendar\week_column.cshtml" />
+    <Compile Include="Controllers\ListBox\TemplatesController.cs" />
+    <Compile Include="Controllers\ListBox\KeyboardNavigationController.cs" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3016,6 +3020,10 @@
     <Content Include="Views\dateinput\right_to_left_support.cshtml" />
     <Content Include="Views\dateinput\events.cshtml" />
     <Content Include="Views\upload\directoryupload.cshtml" />
+    <Content Include="Views\listbox\index.cshtml" />
+    <Content Include="Views\listbox\events.cshtml" />
+    <Content Include="Views\listbox\templates.cshtml" />
+    <Content Include="Views\listbox\keyboard_navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

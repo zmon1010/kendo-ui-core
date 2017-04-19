@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="contenk-type" content="text/html; charset=utf-8">
+        <title>ListBox</title>
+        <script src="../src/jquery.js"></script>
+        <script src="../src/kendo.core.js"></script>
+        <script src="../src/kendo.data.js"></script>
+        <script src="../src/kendo.userevents.js"></script>
+        <script src="../src/kendo.selectable.js"></script>
+        <script src="../src/kendo.listbox.js" type="text/javascript" charset="utf-8"></script>
+
+        <link rel="stylesheet/less" href="../styles/web/kendo.common.less" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet/less" href="../styles/web/kendo.default.less" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        
+        <select id="listbox1"></select>
+
+        <select id="dataTextFieldListBox"></select>
+
+        <select id="templateListBox"></select>
+
+        <script type="text/x-kendo-template" id="template">
+            <div class="item">
+                <h1>#:name#</h1>
+                <p>#:id#</p>
+            </div>
+        </script>
+
+        <script>
+            $(document).ready(function() {
+
+                $("#listbox1").kendoListBox({ dataSource: ["John", "Jane", "Jack"],selectable: "multiple" });
+
+                $("#dataTextFieldListBox").kendoListBox({ 
+                        dataSource: [ {name: "Tom", id:1 }, {name: "Jerry", id:2 }, {name: "Donald", id:3 }],
+                        dataTextField: "name"
+                });
+
+                 $("#templateListBox").kendoListBox({ 
+                        dataSource: [ {name: "Tom", id:1 }, {name: "Jerry", id:2 }, {name: "Donald", id:3 }],
+                        template:$("#template").html(),
+                        selectable: "multiple"
+                });
+
+            });
+        </script>
+    </body>
+</html>

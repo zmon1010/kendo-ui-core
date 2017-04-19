@@ -867,6 +867,10 @@
     <Compile Include="UI\Grid\Fluent\GridNoRecordsSettingsBuilder.cs" />
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
     <Compile Include="UI\Grid\Settings\GridNoRecordsSettings.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxToolbarPosition.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxToolFactory.cs" />
+    <Compile Include="UI\ListBox\ListBoxSelectable.cs" />
+    <Compile Include="UI\ListBox\ListBoxSettingsSerializer.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerEventBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerMediaBuilder.cs" />
@@ -2786,4 +2790,14 @@
     <Compile Include="UI\DateInput\Settings\DateInputMessagesSettings.cs" />
     <Compile Include="UI\DateInput\Fluent\DateInputMessagesSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+  <ItemGroup>
+    <Compile Include="UI\ListBox\ListBox.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxBuilder.cs" />
+    <Compile Include="UI\ListBox\Settings\ListBoxDraggableSettings.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxDraggableSettingsBuilder.cs" />
+    <Compile Include="UI\ListBox\Settings\ListBoxToolbarSettings.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxToolbarSettingsBuilder.cs" />
+    <Compile Include="UI\ListBox\Fluent\ListBoxEventBuilder.cs" />
+    <Compile Include="UI\ListBox\Html\ListBoxHtmlBuilder.cs" />
+  </ItemGroup>
+<ItemGroup><Compile Include="UI\ListBox\Settings\ListBoxMessagesSettings.cs" /><Compile Include="UI\ListBox\Fluent\ListBoxMessagesSettingsBuilder.cs" /><Compile Include="UI\ListBox\Settings\ListBoxMessagesToolsSettings.cs" /><Compile Include="UI\ListBox\Fluent\ListBoxMessagesToolsSettingsBuilder.cs" /></ItemGroup></Project>

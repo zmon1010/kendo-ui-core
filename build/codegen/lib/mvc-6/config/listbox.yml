@@ -1,0 +1,42 @@
+:options:
+    - :name: DropSources
+      :merge: true
+      :type: string[]
+
+    - :name: Toolbar.Tools
+      :merge: true
+      :type: string[]
+
+    - :name: selectable
+      :type: String
+      :enum_type: ListBoxSelectable
+      :description: Represents the selectable options.
+      :values:
+          - :value: single
+            :member: Single
+            :description: Single selection
+
+          - :value: multiple
+            :member: Multiple
+            :description: Multiple selections
+
+    - :name: toolbar.position
+      :type: String
+      :enum_type: ListBoxToolbarPosition
+      :description: Represents the listbox toolbar positions.
+      :values:
+          - :value: top
+            :member: Top
+            :description: The listbox's toolbar is positioned on the top
+
+          - :value: bottom
+            :member: Bottom
+            :description: The listbox's toolbar is positioned on the bottom
+
+          - :value: left
+            :member: Left
+            :description: The listbox's toolbar is positioned on the left
+
+          - :value: right
+            :member: Right
+            :description: The listbox's toolbar is positioned on the right

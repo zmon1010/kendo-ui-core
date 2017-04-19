@@ -40,6 +40,7 @@
         "./kendo.columnsorter",
         "./kendo.grid",
         "./kendo.listview",
+        "./kendo.listbox",
         "./kendo.filebrowser",
         "./kendo.imagebrowser",
         "./kendo.editor",

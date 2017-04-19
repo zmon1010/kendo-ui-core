@@ -5,6 +5,7 @@ module CodeGen::MVC6::Wrappers
         include Rake::DSL
         include CodeGen::MVC6::Wrappers::ChartGenerator
         include CodeGen::MVC6::Wrappers::EditorGenerator
+        include CodeGen::MVC6::Wrappers::ListBoxGenerator
         include CodeGen::MVC6::Wrappers::EnumGenerator
         include CodeGen::MVC6::Wrappers::ModelGenerator
         
@@ -13,6 +14,7 @@ module CodeGen::MVC6::Wrappers
 
             generate_chart
             generate_editor
+            generate_listbox
             generate_enums
         end
 
