@@ -984,7 +984,7 @@ var __meta__ = { // jshint ignore:line
                 var fileMetaData = that._module.metaData[fileUid];
 
                 if(fileMetaData){
-                    var percentComplete = ((fileMetaData.chunkIndex)/fileMetaData.totalChunks)*100;
+                    var percentComplete = fileMetaData.totalChunks ? Math.round(((fileMetaData.chunkIndex + 1)/fileMetaData.totalChunks)*100):100;
 
                     that._onFileProgress({ target : $(fileEntry, that.wrapper) }, percentComplete);
                 }
@@ -1064,6 +1064,7 @@ var __meta__ = { // jshint ignore:line
             var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
+            var currentlyFailed = $('.k-file-error', that.wrapper);
             var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play");
             var failedUploads, headerUploadStatusIcon;
 
@@ -1076,7 +1077,7 @@ var __meta__ = { // jshint ignore:line
 
                 headerUploadStatus.html(headerUploadStatusIcon)
                                   .append(that.localization.headerStatusPaused);
-            }else if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
+            }else if (currentlyUploading.length === 0 || currentlyInvalid.length > 0 || currentlyFailed.length > 0) {
                 failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
@@ -1601,7 +1602,7 @@ var __meta__ = { // jshint ignore:line
                             prev = this.prev();
 
                             if(upload.options.async.concurrent || (index === 0 && !prev.length) ||
-                             (index === 0 && prev.hasClass("k-file-success") || prev.hasClass("k-file-error"))){
+                             (index === 0 && prev.hasClass("k-file-success"))){
                                 module.performUpload(this);
                             }
                         }else{

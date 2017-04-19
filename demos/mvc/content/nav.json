@@ -3192,6 +3192,107 @@
     "category": "Data Management"
   },
   {
+    "text": "ListBox",
+    "name": "listbox",
+    "new": true,
+    "api": {
+      "all": "web/listbox"
+    },
+    "documentation": {
+      "kendo-ui": "getting-started/web/listbox/overbox",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listbox/overbox",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/listbox/overbox",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/listbox/overbox"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/listbox",
+      "aspnet-mvc": "aspnet-mvc/listbox",
+      "jsp-ui": "jsp/listbox",
+      "php-ui": "php/listbox"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/listbox",
+      "aspnet-mvc": "aspnet-mvc/listbox",
+      "jsp-ui": "jsp/listbox",
+      "php-ui": "php/listbox"
+    },
+    "spriteCssClass": "listBoxIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "listbox/index",
+        "title": {
+          "kendo-ui": "jQuery ListBox control example| KendoListBox Demo",
+          "aspnet-mvc": "ASP.NET MVC ListBox demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "AngularJS",
+        "url": "listbox/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Events",
+        "url": "listbox/events",
+        "title": {
+          "kendo-ui": "ListBox Events",
+          "aspnet-mvc": "ASP.NET MVC ListBox events demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "Templates",
+        "url": "listbox/templates",
+        "title": {
+          "kendo-ui": "ListBox templates",
+          "aspnet-mvc": "ASP.NET MVC ListBox templates demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "listbox/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI ListBox widget",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
+          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
+        }
+      }
+    ],
+    "category": "Data Management"
+  },
+  {
     "text": "ListView",
     "name": "listview",
     "api": { "all": "web/listview" },

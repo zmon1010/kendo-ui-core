@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for adding items to Editor.
+    /// </summary>
+    public partial class ListBoxToolFactory
+    {
+% LISTBOX_TOOLS.each do |tool|
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual ListBoxToolFactory <%= tool[:name] %>()
+        {
+            Container.Add("<%= serialize_tool_name(tool) %>");
+            return this;
+        }
+% end
+    }
+}
