@@ -1,4 +1,4 @@
-namespace Kendo.Mvc.UI.Tests.Upload
+﻿namespace Kendo.Mvc.UI.Tests.Upload
 {
     using Moq;
     using System.IO;
@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
         {
             upload.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("kendo.syncReady(\"#Upload\").kendoUpload({});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#Upload\").kendoUpload({});});");
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
             upload.Async.Save.ControllerName = "Home";
             upload.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("kendo.syncReady(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});});");
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
             upload.Async.Save.ControllerName = "Home";
             upload.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("kendo.syncReady(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});});");
         }
 
         [Fact]
@@ -188,7 +188,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
             upload.Async.Save.ControllerName = "Home";
             upload.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("kendo.syncReady(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#Upload\").kendoUpload({\"async\":{\"saveUrl\":\"Home/Index\"}});});");
         }
 
         [Fact]
