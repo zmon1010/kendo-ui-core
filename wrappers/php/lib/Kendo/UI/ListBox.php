@@ -58,16 +58,6 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If hint function is not provided the widget will clone dragged item and use it as a hint.
-    * @param \Kendo\JavaScriptFunction|string| $value
-    * @return \Kendo\UI\ListBox
-    */
-    public function hint($value) {
-        return $this->setProperty('hint', $value);
-    }
-
-    /**
     * Indicates if the widget items can be draged and droped.
     * @param boolean|\Kendo\UI\ListBoxDraggable|array $value
     * @return \Kendo\UI\ListBox
@@ -104,7 +94,7 @@ If hint function is not provided the widget will clone dragged item and use it a
     }
 
     /**
-    * Indicates whether selection is enabled/disabled. Possible values:
+    * Indicates whether selection is single or multiple. Possible values:
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -221,7 +211,7 @@ If hint function is not provided the widget will clone dragged item and use it a
 
     /**
     * Sets the dragend event of the ListBox.
-    * Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+    * Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */

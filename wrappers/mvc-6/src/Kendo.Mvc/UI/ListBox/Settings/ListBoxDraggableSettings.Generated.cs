@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ListBoxDraggableSettings 
     {
+        public ClientHandlerDescriptor Hint { get; set; }
+
         public ClientHandlerDescriptor Placeholder { get; set; }
 
         public bool? Enabled { get; set; }
@@ -20,6 +22,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Hint?.HasValue() == true)
+            {
+                settings["hint"] = Hint;
+            }
 
             if (Placeholder?.HasValue() == true)
             {

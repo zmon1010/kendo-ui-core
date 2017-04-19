@@ -19,8 +19,6 @@ namespace Kendo.Mvc.UI
 
         public string DataValueField { get; set; }
 
-        public ClientHandlerDescriptor Hint { get; set; }
-
         public ListBoxDraggableSettings Draggable { get; } = new ListBoxDraggableSettings();
 
         public string[] DropSources { get; set; }
@@ -60,11 +58,6 @@ namespace Kendo.Mvc.UI
             if (DataValueField?.HasValue() == true)
             {
                 settings["dataValueField"] = DataValueField;
-            }
-
-            if (Hint?.HasValue() == true)
-            {
-                settings["hint"] = Hint;
             }
 
             var draggable = Draggable.Serialize();

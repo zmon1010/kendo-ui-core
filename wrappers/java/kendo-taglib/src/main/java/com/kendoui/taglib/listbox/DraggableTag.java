@@ -55,8 +55,20 @@ public class DraggableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "listBox-draggable";
     }
 
+    public void setHint(DraggableHintFunctionTag value) {
+        setEvent("hint", value.getBody());
+    }
+
     public void setPlaceholder(DraggablePlaceholderFunctionTag value) {
         setEvent("placeholder", value.getBody());
+    }
+
+    public java.lang.String getHint() {
+        return (java.lang.String)getProperty("hint");
+    }
+
+    public void setHint(java.lang.String value) {
+        setProperty("hint", value);
     }
 
     public java.lang.String getPlaceholder() {

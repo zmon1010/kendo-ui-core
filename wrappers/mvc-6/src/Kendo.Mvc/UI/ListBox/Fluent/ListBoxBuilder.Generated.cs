@@ -50,27 +50,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-		/// If hint function is not provided the widget will clone dragged item and use it as a hint.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ListBoxBuilder Hint(string handler)
-        {
-            Container.Hint = new ClientHandlerDescriptor { HandlerName = handler };
-            return this;
-        }
-
-        /// <summary>
-        /// Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-		/// If hint function is not provided the widget will clone dragged item and use it as a hint.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ListBoxBuilder Hint(Func<object, object> handler)
-        {
-            Container.Hint = new ClientHandlerDescriptor { TemplateDelegate = handler };
-            return this;
-        }
-        /// <summary>
         /// Indicates if the widget items can be draged and droped.
         /// </summary>
         /// <param name="configurator">The configurator for the draggable setting.</param>

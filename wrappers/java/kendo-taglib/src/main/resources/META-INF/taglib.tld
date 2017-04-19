@@ -25748,20 +25748,13 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If hint function is not provided the widget will clone dragged item and use it as a hint.</description>
-            <name>hint</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description>Indicates whether keyboard navigation is enabled/disabled.</description>
             <name>navigatable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Indicates whether selection is enabled/disabled. Possible values:</description>
+            <description>Indicates whether selection is single or multiple. Possible values:</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25803,7 +25796,7 @@ If hint function is not provided the widget will clone dragged item and use it a
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.</description>
             <name>dragend</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -25827,8 +25820,15 @@ If hint function is not provided the widget will clone dragged item and use it a
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint is not provided the widget will clone dragged item and use it as a hint.</description>
+            <name>hint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+If placeholder is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25838,8 +25838,15 @@ If placeholder function is not provided the widget will clone dragged item, remo
 
 
     <tag>
+        <description>Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint is not provided the widget will clone dragged item and use it as a hint.</description>
+        <name>listBox-draggable-hint</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggableHintFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+If placeholder is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
         <name>listBox-draggable-placeholder</name>
         <tag-class>com.kendoui.taglib.listbox.DraggablePlaceholderFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -25968,7 +25975,7 @@ If placeholder function is not provided the widget will clone dragged item, remo
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.</description>
+        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.</description>
         <name>listBox-dragend</name>
         <tag-class>com.kendoui.taglib.listbox.DragendFunctionTag</tag-class>
         <body-content>JSP</body-content>

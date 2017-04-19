@@ -152,14 +152,6 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("dropSources", value);
     }
 
-    public java.lang.String getHint() {
-        return (java.lang.String)getProperty("hint");
-    }
-
-    public void setHint(java.lang.String value) {
-        setProperty("hint", value);
-    }
-
     public boolean getNavigatable() {
         return (Boolean)getProperty("navigatable");
     }

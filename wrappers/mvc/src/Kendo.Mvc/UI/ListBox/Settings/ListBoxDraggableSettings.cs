@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public string Hint { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -34,6 +36,11 @@ namespace Kendo.Mvc.UI
 
             //>> Serialization
         
+            if (Hint.HasValue())
+            {
+                json["hint"] = Hint;
+            }
+            
         //<< Serialization
         }
     }

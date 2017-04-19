@@ -146,7 +146,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+        /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dragend event.</param>
         public ListBoxEventBuilder DragEnd(string handler)
@@ -157,7 +157,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the sort action.
+        /// Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ListBoxEventBuilder DragEnd(Func<object, object> handler)

@@ -28,54 +28,52 @@ namespace Kendo.Mvc.UI
             DataSource = new DataSource();
 
 //>> Initialization
-
+        
             Draggable = new ListBoxDraggableSettings();
-
+                
             Messages = new ListBoxMessagesSettings();
-
+                
             Toolbar = new ListBoxToolbarSettings();
-
+                
         //<< Initialization
         }
 
 //>> Fields
-
+        
         public bool? AutoBind { get; set; }
-
+        
         public string ConnectWith { get; set; }
-
+        
         public string DataTextField { get; set; }
-
+        
         public string DataValueField { get; set; }
-
-        public string Hint { get; set; }
-
+        
         public ListBoxDraggableSettings Draggable
         {
             get;
             set;
         }
-
+        
         public string[] DropSources { get; set; }
-
+        
         public bool? Navigatable { get; set; }
-
+        
         public ListBoxMessagesSettings Messages
         {
             get;
             set;
         }
-
+        
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
-
+        
         public ListBoxToolbarSettings Toolbar
         {
             get;
             set;
         }
-
+        
         //<< Fields
 
         public override void WriteInitializationScript(TextWriter writer)
@@ -83,32 +81,27 @@ namespace Kendo.Mvc.UI
             var json = new Dictionary<string, object>(Events);
 
 //>> Serialization
-
+        
             if (AutoBind.HasValue)
             {
                 json["autoBind"] = AutoBind;
             }
-
+                
             if (ConnectWith.HasValue())
             {
                 json["connectWith"] = ConnectWith;
             }
-
+            
             if (DataTextField.HasValue())
             {
                 json["dataTextField"] = DataTextField;
             }
-
+            
             if (DataValueField.HasValue())
             {
                 json["dataValueField"] = DataValueField;
             }
-
-            if (Hint.HasValue())
-            {
-                json["hint"] = Hint;
-            }
-
+            
             var draggable = Draggable.ToJson();
             if (draggable.Any())
             {
@@ -121,18 +114,17 @@ namespace Kendo.Mvc.UI
             {
                 json["dropSources"] = DropSources;
             }
-
+            
             if (Navigatable.HasValue)
             {
                 json["navigatable"] = Navigatable;
             }
-
+                
             var messages = Messages.ToJson();
             if (messages.Any())
             {
                 json["messages"] = messages;
             }
-
             if (!string.IsNullOrEmpty(TemplateId))
             {
                 json["template"] = new ClientHandlerDescriptor {
@@ -146,7 +138,7 @@ namespace Kendo.Mvc.UI
             {
                 json["template"] = Template;
             }
-
+                
             var toolbar = Toolbar.ToJson();
             if (toolbar.Any())
             {

@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Fluent
 
 
         //>> Fields
-
+        
         /// <summary>
         /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// The field of the data item that provides the value of the widget.
         /// </summary>
@@ -79,19 +79,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
-        /// <summary>
-        /// Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-		/// If hint function is not provided the widget will clone dragged item and use it as a hint.
-        /// </summary>
-        /// <param name="value">The value that configures the hint.</param>
-        public ListBoxBuilder Hint(string value)
-        {
-            container.Hint = value;
-
-            return this;
-        }
-
+        
         /// <summary>
         /// Indicates if the widget items can be draged and droped.
         /// </summary>
@@ -110,7 +98,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-
+        
         /// <summary>
         /// Indicates if the widget items can be draged and droped.
         /// </summary>
@@ -118,11 +106,11 @@ namespace Kendo.Mvc.UI.Fluent
         public ListBoxBuilder Draggable(Action<ListBoxDraggableSettingsBuilder> configurator)
         {
             container.Draggable.Enabled = true;
-
+            
             configurator(new ListBoxDraggableSettingsBuilder(container.Draggable));
             return this;
         }
-
+        
         /// <summary>
         /// Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
         /// </summary>
@@ -133,7 +121,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// Indicates whether keyboard navigation is enabled/disabled.
         /// </summary>
@@ -144,7 +132,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// Defines the localization texts for the ListBox. Used primarily for localization.
         /// </summary>
@@ -154,7 +142,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new ListBoxMessagesSettingsBuilder(container.Messages));
             return this;
         }
-
+        
         /// <summary>
         /// Specifies ListBox item template.
         /// </summary>
@@ -176,7 +164,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.
         /// </summary>
@@ -186,7 +174,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new ListBoxToolbarSettingsBuilder(container.Toolbar));
             return this;
         }
-
+        
         //<< Fields
 
 
