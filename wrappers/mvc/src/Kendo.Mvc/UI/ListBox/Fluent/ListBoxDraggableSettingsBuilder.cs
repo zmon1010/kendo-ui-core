@@ -42,6 +42,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Indicates whether dragging is enabled.
+        /// </summary>
+        /// <param name="value">The value that configures the enabled.</param>
+        public ListBoxDraggableSettingsBuilder Enabled(bool value)
+        {
+            container.Enabled = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
 		/// If hint is not provided the widget will clone dragged item and use it as a hint.
         /// </summary>

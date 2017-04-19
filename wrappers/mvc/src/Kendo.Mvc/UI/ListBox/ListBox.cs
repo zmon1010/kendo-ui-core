@@ -106,8 +106,6 @@ namespace Kendo.Mvc.UI
             if (draggable.Any())
             {
                 json["draggable"] = draggable;
-            } else if (Draggable.Enabled != false) {
-                json["draggable"] = Draggable.Enabled;
             }
 
             if (DropSources != null)

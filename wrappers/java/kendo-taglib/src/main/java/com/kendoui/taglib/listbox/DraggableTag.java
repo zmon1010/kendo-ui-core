@@ -63,6 +63,14 @@ public class DraggableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setEvent("placeholder", value.getBody());
     }
 
+    public boolean getEnabled() {
+        return (Boolean)getProperty("enabled");
+    }
+
+    public void setEnabled(boolean value) {
+        setProperty("enabled", value);
+    }
+
     public java.lang.String getHint() {
         return (java.lang.String)getProperty("hint");
     }

@@ -19,10 +19,8 @@ namespace Kendo.Mvc.UI
 
         public ClientHandlerDescriptor Placeholder { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
-        //>> Fields
-        
         public string Hint { get; set; }
         
         //<< Fields
@@ -36,6 +34,11 @@ namespace Kendo.Mvc.UI
 
             //>> Serialization
         
+            if (Enabled.HasValue)
+            {
+                json["enabled"] = Enabled;
+            }
+                
             if (Hint.HasValue())
             {
                 json["hint"] = Hint;

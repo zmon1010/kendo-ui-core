@@ -23,6 +23,11 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
+            if (Enabled.HasValue)
+            {
+                settings["enabled"] = Enabled;
+            }
+
             if (Hint?.HasValue() == true)
             {
                 settings["hint"] = Hint;

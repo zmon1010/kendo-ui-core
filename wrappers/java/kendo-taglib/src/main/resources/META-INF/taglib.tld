@@ -25832,6 +25832,12 @@ Any valid CSS color string will work here, including hex and rgb.</description>
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>Indicates whether dragging is enabled.</description>
+            <name>enabled</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
 If hint is not provided the widget will clone dragged item and use it as a hint.</description>
             <name>hint</name>

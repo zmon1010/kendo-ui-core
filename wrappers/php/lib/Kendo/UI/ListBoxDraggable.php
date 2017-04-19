@@ -6,6 +6,15 @@ class ListBoxDraggable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Indicates whether dragging is enabled.
+    * @param boolean $value
+    * @return \Kendo\UI\ListBoxDraggable
+    */
+    public function enabled($value) {
+        return $this->setProperty('enabled', $value);
+    }
+
+    /**
     * Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
 If hint is not provided the widget will clone dragged item and use it as a hint.
     * @param \Kendo\JavaScriptFunction|string| $value
