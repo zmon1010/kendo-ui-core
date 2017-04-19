@@ -946,7 +946,9 @@ var __meta__ = { // jshint ignore:line
             if(!that.options.async.chunkSize){
                 that._hideUploadProgress(fileEntry);
             }else{
-                module._decreasePosition(fileUid);
+                if(module._decreasePosition){
+                    module._decreasePosition(fileUid);
+                }
             }
 
            that._checkAllComplete();
@@ -958,6 +960,10 @@ var __meta__ = { // jshint ignore:line
         _autoRetryAfter: function(fileEntry){
             var that = this;
             var retries = this._module.retries;
+
+            if(!retries){
+                return;
+            }
 
             if(!retries[fileEntry.data("uid")]){
                 retries[fileEntry.data("uid")] = 1;
