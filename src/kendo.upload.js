@@ -981,12 +981,14 @@ var __meta__ = { // jshint ignore:line
                 $('.k-progress', fileEntry).width("100%");
             }else{
                 var fileUid = fileEntry.data("uid");
-                var fileMetaData = that._module.metaData[fileUid];
+                if(that._module.metaData){
+                    var fileMetaData = that._module.metaData[fileUid];
 
-                if(fileMetaData){
-                    var percentComplete = fileMetaData.totalChunks ? Math.round(((fileMetaData.chunkIndex + 1)/fileMetaData.totalChunks)*100):100;
+                    if(fileMetaData){
+                        var percentComplete = fileMetaData.totalChunks ? Math.round(((fileMetaData.chunkIndex + 1)/fileMetaData.totalChunks)*100):100;
 
-                    that._onFileProgress({ target : $(fileEntry, that.wrapper) }, percentComplete);
+                        that._onFileProgress({ target : $(fileEntry, that.wrapper) }, percentComplete);
+                    }
                 }
             }
 
