@@ -933,8 +933,6 @@ var __meta__ = { // jshint ignore:line
             var fileEntry = getFileEntry(e);
             var fileUid = fileEntry.data("uid");
 
-            module._decreasePosition(fileUid);
-
             that._setUploadErrorState(fileEntry);
 
             that.trigger(ERROR, {
@@ -945,8 +943,10 @@ var __meta__ = { // jshint ignore:line
 
             logToConsole("Server response: " + xhr.responseText);
 
-            if(!this.options.async.chunkSize){
+            if(!that.options.async.chunkSize){
                 that._hideUploadProgress(fileEntry);
+            }else{
+                module._decreasePosition(fileUid);
             }
 
            that._checkAllComplete();
