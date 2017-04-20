@@ -263,8 +263,10 @@
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\Grid\Editing_Remote_ValidationController.cs" />
     <Compile Include="Controllers\Grid\ServerExportController.cs" />
+    <Compile Include="Controllers\ListBox\ApiController.cs" />
     <Compile Include="Controllers\ListBox\EventsController.cs" />
     <Compile Include="Controllers\ListBox\IndexController.cs" />
+    <Compile Include="Controllers\ListBox\RightToLeftSupportController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -3026,6 +3028,8 @@
     <Content Include="Views\listbox\templates.cshtml" />
     <Content Include="Views\listbox\keyboard_navigation.cshtml" />
     <Content Include="Views\menu\scrollable.cshtml" />
+    <Content Include="Views\listbox\api.cshtml" />
+    <Content Include="Views\listbox\right_to_left_support.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -4,15 +4,16 @@
             .Name("optional")
             .Toolbar(toolbar =>
             {
-                toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Bottom);
+                toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
                 toolbar.Tools(tools => tools
                     .MoveUp()
                     .MoveDown()
-                    .Remove()
-                    .TransferAllFrom()
-                    .TransferAllTo()
+                    .TransferTo()
                     .TransferFrom()
-                    .TransferTo());
+                    .TransferAllTo()
+                    .TransferAllFrom()
+                    .Remove()
+                );
             })
             .ConnectWith("#selected")
             .BindTo(ViewBag.Attendees)
@@ -23,17 +24,22 @@
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Multiple)
         )
-
     </div>
-    <style>
-        #example .k-listbox:nth-of-type(1) {
-            width: 49%;
-            float: left;
-        }
-
-        #example .k-listbox:nth-of-type(2) {
-            width: 49%;
-            float: right;
-        }
-    </style>
 </div>
+
+<style>
+    #example .demo-section {
+        max-width: none;
+        width: 515px;
+    }
+
+    #example .k-listbox {
+        width: 236px;
+        height: 310px;
+    }
+
+        #example .k-listbox:first-child {
+            width: 270px;
+            margin-right: 1px;
+        }
+</style>

@@ -7,17 +7,17 @@
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
                 toolbar.Tools(tools => tools
                     .MoveUp()
-                    .MoveDown()
-                    .Remove()
-                    .TransferFrom()
+                    .MoveDown()                    
                     .TransferTo()
-                    .TransferAllFrom()
+                    .TransferFrom()
                     .TransferAllTo()
+                    .TransferAllFrom()
+                    .Remove()
                 );
             })
             .ConnectWith("#selected")
             .Selectable(ListBoxSelectable.Multiple)
-            .Draggable(draggable => draggable.Placeholder((func) => "placeholder"))
+            .Draggable()
             .DropSources("selected")
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
@@ -45,10 +45,19 @@
             .Name("selected")
             .ConnectWith("#optional")
             .Selectable(ListBoxSelectable.Multiple)
-            .Draggable(draggable => draggable.Placeholder((func) => "placeholder"))
+            .Draggable()
             .DropSources("optional")
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .Toolbar(toolbar =>
+            {
+                toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
+                toolbar.Tools(tools => tools
+                    .MoveUp()
+                    .MoveDown()  
+                    .Remove()
+                );
+            })
             .Events(events => events
                 .Add("onAdd")
                 .Change("onChange")
@@ -113,18 +122,20 @@
             });
         }
     </script>
-    <style>
-        #example .k-listbox {
-            width: 49%;
-            height: 320px;
-        }
-
-        #example .k-listbox:nth-of-type(1) {
-            float: left;
-        }
-
-        #example .k-listbox:nth-of-type(2) {
-            float: right;
-        }
-    </style>
 </div>
+
+<style>
+    #example .demo-section {
+        max-width: none;
+        width: 580px;
+    }
+
+    #example .k-listbox {
+        width: 285px;
+        height: 310px;
+    }
+
+        #example .k-listbox:first-child {
+            margin-right: 1px;
+        }
+</style>

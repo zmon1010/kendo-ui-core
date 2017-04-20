@@ -2128,6 +2128,16 @@
                 }
             },
             {
+                "text": "Templates",
+                "url": "listbox/templates",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox templates demo | Telerik UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo for $FRAMEWORK ListBox component shows how you can customize the widget apperience."
+                }
+            },
+            {
                 "text": "Events",
                 "url": "listbox/events",
                 "title": {
@@ -2138,13 +2148,23 @@
                 }
             },
             {
-                "text": "Templates",
-                "url": "listbox/templates",
+                "text": "API",
+                "url": "listbox/api",
                 "title": {
-                    "aspnet-mvc": "$FRAMEWORK ListBox templates demo | Telerik UI for $FRAMEWORK demos"
+                    "aspnet-mvc": "$FRAMEWORK ListBox API demo | Telerik UI for $FRAMEWORK demos"
                 },
                 "meta": {
-                    "aspnet-mvc": "This demo for $FRAMEWORK ListBox component shows how you can customize the widget apperience."
+                    "aspnet-mvc": "This example shows how to use the API of the $FRAMEWORK ListBox component."
+                }
+            },
+			{
+                "text": "RTL support",
+                "url": "listbox/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "RTL support in $FRAMEWORK ListBox"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control."
                 }
             },
             {
