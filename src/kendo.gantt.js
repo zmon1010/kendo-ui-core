@@ -78,7 +78,7 @@ var __meta__ = { // jshint ignore:line
         '</div>');
 
     var DATERANGEEDITOR = function(container, options) {
-        var attr = { name: options.field };
+        var attr = { name: options.field, title: options.title };
         var validationRules = options.model.fields[options.field].validation;
 
         if (validationRules && isPlainObject(validationRules) && validationRules.message) {
