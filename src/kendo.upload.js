@@ -989,9 +989,7 @@ var __meta__ = { // jshint ignore:line
             that._fileState(fileEntry, "failed");
             fileEntry.removeClass('k-file-progress').addClass('k-file-error');
 
-            if(!that.options.async.chunkSize){
-                $('.k-progress', fileEntry).width("100%");
-            }
+            that._updateUploadProgress(fileEntry);
 
             uploadPercentage = $('.k-upload-pct', fileEntry);
             if (uploadPercentage.length > 0) {
@@ -1006,6 +1004,25 @@ var __meta__ = { // jshint ignore:line
             this._updateHeaderUploadStatus();
             this._fileAction(fileEntry, "retry");
             this._fileAction(fileEntry, REMOVE, true);
+        },
+
+       _updateUploadProgress: function(fileEntry){
+            var that = this;
+
+            if(!that.options.async.chunkSize){
+                $('.k-progress', fileEntry).width("100%");
+            }else{
+                var fileUid = fileEntry.data("uid");
+                if(that._module.metaData){
+                    var fileMetaData = that._module.metaData[fileUid];
+
+                    if(fileMetaData){
+                        var percentComplete = fileMetaData.totalChunks ? Math.round(((fileMetaData.chunkIndex)/fileMetaData.totalChunks)*100):100;
+
+                        that._onFileProgress({ target : $(fileEntry, that.wrapper) }, percentComplete);
+                    }
+                }
+            }
         },
 
         _hideUploadProgress: function(fileEntry) {
