@@ -106,6 +106,8 @@ namespace Kendo.Mvc.UI
         
         public string TableWizard { get; set; }
         
+        public string Units { get; set; }
+        
         public string Width { get; set; }
         
         public string WrapText { get; set; }
@@ -324,6 +326,11 @@ namespace Kendo.Mvc.UI
             if (TableWizard.HasValue())
             {
                 json["tableWizard"] = TableWizard;
+            }
+            
+            if (Units.HasValue())
+            {
+                json["units"] = Units;
             }
             
             if (Width.HasValue())

@@ -183,6 +183,8 @@ namespace Kendo.Mvc.UI
 
         public string Underline { get; set; }
 
+        public string Units { get; set; }
+
         public string Unlink { get; set; }
 
         public string ViewHtml { get; set; }
@@ -626,6 +628,11 @@ namespace Kendo.Mvc.UI
             if (Underline?.HasValue() == true)
             {
                 settings["underline"] = Underline;
+            }
+
+            if (Units?.HasValue() == true)
+            {
+                settings["units"] = Units;
             }
 
             if (Unlink?.HasValue() == true)

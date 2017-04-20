@@ -741,6 +741,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("underline", value);
     }
 
+    public java.lang.String getUnits() {
+        return (java.lang.String)getProperty("units");
+    }
+
+    public void setUnits(java.lang.String value) {
+        setProperty("units", value);
+    }
+
     public java.lang.String getUnlink() {
         return (java.lang.String)getProperty("unlink");
     }

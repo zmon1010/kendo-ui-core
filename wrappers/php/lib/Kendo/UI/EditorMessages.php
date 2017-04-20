@@ -780,6 +780,15 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The label of the Units dropdowns in TableWizard dialog.
+    * @param string $value
+    * @return \Kendo\UI\EditorMessages
+    */
+    public function units($value) {
+        return $this->setProperty('units', $value);
+    }
+
+    /**
     * The title of the tool that removes hyperlinks.
     * @param string $value
     * @return \Kendo\UI\EditorMessages

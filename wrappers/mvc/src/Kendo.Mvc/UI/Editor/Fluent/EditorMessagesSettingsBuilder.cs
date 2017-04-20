@@ -797,6 +797,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The label of the Units dropdowns in TableWizard dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the units.</param>
+        public EditorMessagesSettingsBuilder Units(string value)
+        {
+            container.Units = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The title of the Width fields.
         /// </summary>
         /// <param name="value">The value that configures the width.</param>

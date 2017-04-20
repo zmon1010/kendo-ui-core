@@ -871,6 +871,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The label of the Units dropdowns in TableWizard dialog.
+        /// </summary>
+        /// <param name="value">The value for Units</param>
+        public EditorMessagesSettingsBuilder Units(string value)
+        {
+            Container.Units = value;
+            return this;
+        }
+
+        /// <summary>
         /// The title of the tool that removes hyperlinks.
         /// </summary>
         /// <param name="value">The value for Unlink</param>

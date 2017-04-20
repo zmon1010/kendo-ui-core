@@ -20938,6 +20938,12 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The label of the Units dropdowns in TableWizard dialog.</description>
+            <name>units</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that removes hyperlinks.</description>
             <name>unlink</name>
             <rtexprvalue>true</rtexprvalue>
