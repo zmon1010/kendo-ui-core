@@ -214,11 +214,17 @@ var __meta__ = { // jshint ignore:line
         },
         pause: function(fileEntry){
             this._module.onPause({ target: $(fileEntry, this.wrapper) });
-            fileEntry.find(".k-i-pause").removeClass("k-i-pause").addClass("k-i-play");
+
+            var pauseIcon = fileEntry.find(".k-i-pause");
+            pauseIcon.removeClass("k-i-pause").addClass("k-i-play").attr("title", this.localization.resume);
+            $(pauseIcon).parent().attr("aria-label", this.localization.resume);
         },
         resume: function(fileEntry){
             this._module.onResume({ target: $(fileEntry, this.wrapper) });
-            fileEntry.find(".k-i-play").removeClass("k-i-play").addClass("k-i-pause");
+
+            var playIcon = fileEntry.find(".k-i-play");
+            playIcon.removeClass("k-i-play").addClass("k-i-pause").attr("title", this.localization.pause);
+            $(playIcon).parent().attr("aria-label", this.localization.pause);
         },
         upload: function() {
             var that = this;
