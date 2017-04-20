@@ -341,6 +341,21 @@ The title of the prompt input.
     });
     </script>
 
+### messages.promptInput `String` *(default: "Input")*
+
+The title of the prompt input.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      messages:{
+        promptInput: "Input!"
+      }
+    });
+    </script>
+
 ### minHeight `Number` *(default: 50)*
 
 The minimum height (in pixels) that may be achieved by resizing the dialog.
