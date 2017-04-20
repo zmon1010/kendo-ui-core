@@ -315,6 +315,17 @@ Defines the text of the labels that are shown within the dialog. Used primarily 
 
 The title of the close button.
 
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      messages:{
+        close: "Close Me!"
+      }
+    });
+    </script>
+
 ### messages.promptInput `String` *(default: "Input")*
 
 The title of the prompt input.
@@ -326,17 +337,6 @@ The title of the prompt input.
     $("#dialog").kendoDialog({
       messages:{
         promptInput: "Input!"
-      }
-    });
-    </script>
-
-#### Example
-
-    <div id="dialog"></div>
-    <script>
-    $("#dialog").kendoDialog({
-      messages:{
-        close: "Close Me!"
       }
     });
     </script>
