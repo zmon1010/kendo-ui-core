@@ -496,7 +496,7 @@ var __meta__ = { // jshint ignore:line
             },
 
             _getNumberOfWeeksBetweenDates: function(first, second){
-                 var weeks = (second - first) / 604800000;                  
+                 var weeks = (second - first) / 604800000;
                  var exactWeeks = Math.floor(weeks);
 
                 //this is happening when weeks pass DST change
@@ -1518,7 +1518,7 @@ var __meta__ = { // jshint ignore:line
     var RECURRENCE_VIEW_TEMPLATE = kendo.template(
        '# if (frequency !== "never") { #' +
            '<div class="k-edit-label"><label>#:messages.repeatEvery#</label></div>' +
-           '<div class="k-edit-field"><input class="k-recur-interval"/>#:messages.interval#</div>' +
+           '<div class="k-edit-field"><input class="k-recur-interval" title="#:messages.interval#"/>#:messages.interval#</div>' +
        '# } #' +
        '# if (frequency === "weekly") { #' +
            '<div class="k-edit-label"><label>#:messages.repeatOn#</label></div>' +
@@ -1528,12 +1528,12 @@ var __meta__ = { // jshint ignore:line
            '<div class="k-edit-field">' +
                '<ul class="k-reset">' +
                    '<li>' +
-                       '<label><input class="k-recur-month-radio" type="radio" name="month" value="monthday" />#:messages.day#</label>' +
-                       '<input class="k-recur-monthday" />' +
+                       '<label><input class="k-recur-month-radio" type="radio" name="month" value="monthday" title="#:messages.day#" />#:messages.day#</label>' +
+                       '<input class="k-recur-monthday" title="#:messages.day#" />' +
                    '</li>' +
                    '<li>' +
-                        '<input class="k-recur-month-radio" type="radio" name="month" value="weekday" />' +
-                        '<input class="k-recur-weekday-offset" /><input class="k-recur-weekday" />' +
+                        '<input class="k-recur-month-radio" type="radio" name="month" value="weekday" title="#:messages.repeatOn#" />' +
+                        '<input class="k-recur-weekday-offset" title="#:messages.repeatOn#" /><input class="k-recur-weekday" title="#:messages.day#" />' +
                    '</li>' +
                '</ul>' +
            '</div>' +
@@ -1542,12 +1542,12 @@ var __meta__ = { // jshint ignore:line
            '<div class="k-edit-field">' +
                '<ul class="k-reset">' +
                    '<li>' +
-                       '<input class="k-recur-year-radio" type="radio" name="year" value="monthday" />' +
-                       '<input class="k-recur-month" /><input class="k-recur-monthday" />' +
+                       '<input class="k-recur-year-radio" type="radio" name="year" value="monthday" title="#:messages.repeatOn#" />' +
+                       '<input class="k-recur-month" title="#:messages.repeatOn#" /><input class="k-recur-monthday" title="#:messages.day#" />' +
                    '</li>' +
                    '<li>' +
-                       '<input class="k-recur-year-radio" type="radio" name="year" value="weekday" />' +
-                       '<input class="k-recur-weekday-offset" /><input class="k-recur-weekday" />#:messages.of#<input class="k-recur-month" />' +
+                       '<input class="k-recur-year-radio" type="radio" name="year" value="weekday" title="#:messages.repeatOn#" />' +
+                       '<input class="k-recur-weekday-offset" title="#:messages.repeatOn#" /><input class="k-recur-weekday" title="#:messages.day#"  />#:messages.of#<input class="k-recur-month" title="#:messages.of#"/>' +
                    '</li>' +
                '</ul>' +
            '</div>' +
@@ -1561,11 +1561,11 @@ var __meta__ = { // jshint ignore:line
                    '</li>' +
                    '<li>' +
                        '<label><input class="k-recur-end-count" type="radio" name="end" value="count" />#:end.after#</label>' +
-                       '<input class="k-recur-count" />#:end.occurrence#' +
+                       '<input class="k-recur-count" title="#:end.occurrence#" />#:end.occurrence#' +
                    '</li>' +
                    '<li>' +
                        '<label><input class="k-recur-end-until" type="radio" name="end" value="until" />#:end.on#</label>' +
-                       '<input class="k-recur-until" />' +
+                       '<input class="k-recur-until" title="#:end.on#" />' +
                    '</li>' +
                '</ul>' +
            '</div>' +
@@ -1638,6 +1638,7 @@ var __meta__ = { // jshint ignore:line
             ],
             mobile: false,
             messages: {
+                recurrenceEditorTitle:"Recurence editor",
                 frequencies: {
                     never: "Never",
                     hourly: "Hourly",
@@ -2011,7 +2012,7 @@ var __meta__ = { // jshint ignore:line
                 options = that.options,
                 frequencies = options.frequencies,
                 messages = options.messages.frequencies,
-                ddl = $('<input />'),
+                ddl = $('<input />').attr({title: options.messages.recurrenceEditorTitle}),
                 frequency;
 
             frequencies = $.map(frequencies, function(frequency) {
@@ -2273,29 +2274,29 @@ var __meta__ = { // jshint ignore:line
            '<div class="k-edit-field k-scheduler-toolbar k-repeat-rule"></div>' +
            '<div class="k-monthday-view" style="display:none">' +
                '<div class="k-edit-label"><label>#:messages.day#</label></div>' +
-               '<div class="k-edit-field"><input class="k-recur-monthday" pattern="\\\\d*"/></div>' +
+               '<div class="k-edit-field"><input class="k-recur-monthday" title="#:messages.day#" pattern="\\\\d*"/></div>' +
            '</div>' +
            '<div class="k-weekday-view" style="display:none">' +
                '<div class="k-edit-label"><label>#:messages.every#</label></div>' +
-               '<div class="k-edit-field"><select class="k-recur-weekday-offset"></select></div>' +
+               '<div class="k-edit-field"><select class="k-recur-weekday-offset" title="#:messages.every#"></select></div>' +
                '<div class="k-edit-label"><label>#:messages.day#</label></div>' +
-               '<div class="k-edit-field"><select class="k-recur-weekday"></select></div>' +
+               '<div class="k-edit-field"><select class="k-recur-weekday" title="#:messages.day#"></select></div>' +
            '</div>' +
        '# } else if (frequency === "yearly") { #' +
            '<div class="k-edit-label"><label>#:messages.repeatBy#</label></div>' +
            '<div class="k-edit-field k-scheduler-toolbar k-repeat-rule"></div>' +
            '<div class="k-monthday-view" style="display:none">' +
                '<div class="k-edit-label"><label>#:messages.day#</label></div>' +
-               '<div class="k-edit-field"><input class="k-recur-monthday" pattern="\\\\d*"/></div>' +
+               '<div class="k-edit-field"><input class="k-recur-monthday" title="#:messages.day#" pattern="\\\\d*"/></div>' +
            '</div>' +
            '<div class="k-weekday-view" style="display:none">' +
                '<div class="k-edit-label"><label>#:messages.every#</label></div>' +
-               '<div class="k-edit-field"><select class="k-recur-weekday-offset"></select></div>' +
+               '<div class="k-edit-field"><select class="k-recur-weekday-offset" title="#:messages.every#"></select></div>' +
                '<div class="k-edit-label"><label>#:messages.day#</label></div>' +
-               '<div class="k-edit-field"><select class="k-recur-weekday"></select></div>' +
+               '<div class="k-edit-field"><select class="k-recur-weekday" title="#:messages.day#"></select></div>' +
            '</div>' +
            '<div class="k-edit-label"><label>#:messages.month#</label></div>' +
-           '<div class="k-edit-field"><select class="k-recur-month"></select></div>' +
+           '<div class="k-edit-field"><select class="k-recur-month" title="#:messages.month#"></select></div>' +
        '# } #'
     );
 

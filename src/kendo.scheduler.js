@@ -146,7 +146,7 @@ var __meta__ = { // jshint ignore:line
                 '</ul>' +
             '</div>'),
         MOBILEDATERANGEEDITOR = function(container, options) {
-            var attr = { name: options.field };
+            var attr = { name: options.field, title: options.title };
             var datepicker_role = !input_support.date ? kendo.attr("role") + '="datepicker" ' : "";
             var datetimepicker_role = kendo.attr("role") + '="datetimepicker" ';
             var isAllDay = options.model.isAllDay;
@@ -167,7 +167,7 @@ var __meta__ = { // jshint ignore:line
             $('<span ' + kendo.attr("for") + '="' + options.field + '" class="k-invalid-msg"/>').hide().appendTo(container);
         },
         DATERANGEEDITOR = function(container, options) {
-            var attr = { name: options.field },
+            var attr = { name: options.field, title: options.title },
                 isAllDay = options.model.isAllDay,
                 dateTimeValidate = kendo.attr("validate") + "='" + (!isAllDay) + "' ",
                 dateValidate = kendo.attr("validate") + "='" + isAllDay + "' ";
@@ -856,7 +856,7 @@ var __meta__ = { // jshint ignore:line
         var attr = createValidationAttributes(model, resource.field);
 
         return function(container) {
-           $(kendo.format('<select data-{0}bind="value:{1}">', kendo.ns, resource.field))
+           $(kendo.format('<select data-{0}bind="value:{1}" title="' + model.title + '">', kendo.ns, resource.field))
              .appendTo(container)
              .attr(attr)
              .kendoDropDownList({
@@ -873,8 +873,8 @@ var __meta__ = { // jshint ignore:line
     function descriptionEditor(options) {
         var attr = createValidationAttributes(options.model, options.field);
 
-        return function(container) {
-            $('<textarea name="description" class="k-textbox"/>').attr(attr)
+        return function(container, model) {
+            $('<textarea name="description" class="k-textbox" title="' + model.title + '"/>').attr(attr)
                 .appendTo(container);
         };
     }
@@ -3422,7 +3422,7 @@ var __meta__ = { // jshint ignore:line
 
         _renderView: function(name) {
             var view = this._initializeView(name);
-          
+
             this._bindView(view);
 
             this._model.set("formattedDate", view.dateForTitle());
