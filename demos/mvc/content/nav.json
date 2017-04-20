@@ -3239,18 +3239,6 @@
         }
       },
       {
-        "text": "Events",
-        "url": "listbox/events",
-        "title": {
-          "kendo-ui": "ListBox Events",
-          "aspnet-mvc": "ASP.NET MVC ListBox events demo | Telerik UI for ASP.NET MVC demos"
-        },
-        "meta": {
-          "kendo-ui": "",
-          "aspnet-mvc": ""
-        }
-      },
-      {
         "text": "Templates",
         "url": "listbox/templates",
         "title": {
@@ -3263,18 +3251,18 @@
         }
       },
       {
-        "text": "Keyboard navigation",
-        "url": "listbox/keyboard-navigation",
+        "text": "Events",
+        "url": "listbox/events",
         "title": {
-          "kendo-ui": "Keyboard navigation in Kendo UI ListBox widget",
-          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListBox"
+          "kendo-ui": "ListBox Events",
+          "aspnet-mvc": "ASP.NET MVC ListBox events demo | Telerik UI for ASP.NET MVC demos"
         },
         "meta": {
-          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
-          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
+          "kendo-ui": "",
+          "aspnet-mvc": ""
         }
       },
-	  {
+      {
         "text": "API",
         "url": "listbox/api",
         "title": {
@@ -3289,7 +3277,31 @@
           "!php"
         ]
       },
-	  {
+      {
+        "text": "RTL support",
+        "url": "listbox/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI ListBox widget",
+          "aspnet-mvc": "RTL support in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the right-to-left feature is supported in Kendo UI ListBox component.",
+          "aspnet-mvc": "This demo shows how the right-to-left feature is supported in ASP.NET MVC ListBox component."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "listbox/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI ListBox widget",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
+          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
+        }
+      },
+      {
         "text": "MVVM",
         "url": "listbox/mvvm",
         "title": {
@@ -3318,18 +3330,6 @@
           "!jsp",
           "!php"
         ]
-      },
-      {
-        "text": "RTL support",
-        "url": "listbox/right-to-left-support",
-        "title": {
-          "kendo-ui": "RTL support in Kendo UI ListBox widget",
-          "aspnet-mvc": "RTL support in ASP.NET MVC ListBox"
-        },
-        "meta": {
-          "kendo-ui": "This demo shows how the right-to-left feature is supported in Kendo UI ListBox component.",
-          "aspnet-mvc": "This demo shows how the right-to-left feature is supported in ASP.NET MVC ListBox component."
-        }
       }
     ],
     "category": "Data Management"

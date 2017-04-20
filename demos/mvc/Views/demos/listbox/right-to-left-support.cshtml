@@ -1,4 +1,4 @@
-﻿<div id="example" role="application">
+﻿<div id="example" role="application" dir="rtl">
     <div class="demo-section k-content wide">
         <select id="source">
             <option>Argentina</option>
@@ -28,6 +28,14 @@
                 toolbar: {
                     position: "left",
                     tools: ["transferFrom", "transferTo", "transferAllFrom", "transferAllTo"]
+                },
+                messages: {
+                    tools: {
+                        "transferFrom": "To Right",
+                        "transferTo": "To Left",
+                        "transferAllFrom": "All to Right",
+                        "transferAllTo": "All to Left"
+                    }
                 }
             });
 
@@ -41,25 +49,28 @@
     </script>
 </div>
 <style>
+    .k-i-arrow-60-right:before, .k-i-arrow-60-left:before,
+    .k-i-arrow-double-60-right:before, .k-i-arrow-double-60-left:before {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+
+    .k-i-arrow-60-right:before,
+    .k-i-arrow-double-60-right:before{
+        margin-left: -2px;
+    }
+
     #example .demo-section {
         max-width: none;
         width: 695px;
     }
 
     #example .k-listbox {
-        width: 326px;
+        width: 342px;
         height: 200px;
-    }
-
-    #example .k-listbox:nth-child(1) {
-        float: right;
-    }
-
-    #example .k-listbox:nth-child(2) {
-        float: left;
-    }
-
-    #example .k-listbox .k-item {
-            text-align: right;
     }
 </style>
