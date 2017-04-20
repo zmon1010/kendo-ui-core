@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
 
         public ListBoxMessagesSettings Messages { get; } = new ListBoxMessagesSettings();
 
-        public ClientHandlerDescriptor Template { get; set; }
+        public string Template { get; set; }
 
         public string TemplateId { get; set; }
 

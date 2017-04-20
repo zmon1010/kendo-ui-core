@@ -168,16 +168,12 @@ public class ListBoxTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("selectable", value);
     }
 
-    public String getTemplate() {
-        Function property = ((Function)getProperty("template"));
-        if (property != null) {
-            return property.getBody();
-        }
-        return null;
+    public java.lang.String getTemplate() {
+        return (java.lang.String)getProperty("template");
     }
 
-    public void setTemplate(String value) {
-        setProperty("template", new Function(value));
+    public void setTemplate(java.lang.String value) {
+        setProperty("template", value);
     }
 
     public String getAdd() {

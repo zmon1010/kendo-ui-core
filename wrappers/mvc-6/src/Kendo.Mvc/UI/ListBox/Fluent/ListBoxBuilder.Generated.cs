@@ -127,22 +127,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies ListBox item template.
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ListBoxBuilder Template(string handler)
+        /// <param name="value">The value for Template</param>
+        public ListBoxBuilder Template(string value)
         {
-            Container.Template = new ClientHandlerDescriptor { HandlerName = handler };
+            Container.Template = value;
             return this;
         }
 
-        /// <summary>
-        /// Specifies ListBox item template.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ListBoxBuilder Template(Func<object, object> handler)
-        {
-            Container.Template = new ClientHandlerDescriptor { TemplateDelegate = handler };
-            return this;
-        }
         /// <summary>
         /// Specifies ListBox item template.
         /// </summary>
