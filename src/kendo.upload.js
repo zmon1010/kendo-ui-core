@@ -978,12 +978,32 @@ var __meta__ = { // jshint ignore:line
         },
         _setUploadErrorState: function(fileEntry) {
             var that = this;
-            var uploadPercentage = $('.k-upload-pct', fileEntry);
+            var uploadPercentage;
 
             that._fileState(fileEntry, "failed");
             fileEntry.removeClass('k-file-progress').addClass('k-file-error');
 
-            if(!this.options.async.chunkSize){
+            that._updateUploadProgress(fileEntry);
+
+            uploadPercentage = $('.k-upload-pct', fileEntry);
+            if (uploadPercentage.length > 0) {
+                if(!uploadPercentage.parent().find(".k-i-warning").length){
+                    uploadPercentage.removeClass('k-upload-pct').addClass('k-icon k-i-warning');
+                }
+                uploadPercentage.empty();
+            } else {
+                $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-i-warning'></span>");
+            }
+
+            this._updateHeaderUploadStatus();
+            this._fileAction(fileEntry, "retry");
+            this._fileAction(fileEntry, REMOVE, true);
+        },
+
+        _updateUploadProgress: function(fileEntry){
+            var that = this;
+
+            if(!that.options.async.chunkSize){
                 $('.k-progress', fileEntry).width("100%");
             }else{
                 var fileUid = fileEntry.data("uid");
@@ -997,19 +1017,6 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
             }
-
-            if (uploadPercentage.length > 0) {
-                if(!uploadPercentage.parent().find(".k-i-warning").length){
-                    uploadPercentage.removeClass('k-upload-pct').addClass('k-icon k-i-warning');
-                }
-                uploadPercentage.empty();
-            } else {
-                $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-i-warning'></span>");
-            }
-
-            this._updateHeaderUploadStatus();
-            this._fileAction(fileEntry, "retry");
-            this._fileAction(fileEntry, REMOVE, true);
         },
 
         _hideUploadProgress: function(fileEntry) {
