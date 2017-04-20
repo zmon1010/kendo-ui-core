@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
         
         public string Close { get; set; }
         
+        public string PromptInput { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -28,6 +30,11 @@ namespace Kendo.Mvc.UI
             if (Close.HasValue())
             {
                 json["close"] = Close;
+            }
+            
+            if (PromptInput.HasValue())
+            {
+                json["promptInput"] = PromptInput;
             }
             
         //<< Serialization
