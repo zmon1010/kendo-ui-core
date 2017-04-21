@@ -12,6 +12,13 @@
                     .TransferAllTo()
                 );
             })
+            .Messages(messages => messages.Tools(tools =>
+            {
+                tools.TransferFrom("To Right");
+                tools.TransferTo("To Left");
+                tools.TransferAllFrom("All to Right");
+                tools.TransferAllTo("All to Left");
+            }))
             .ConnectWith("#destination")
             .BindTo(ViewBag.Countries)
         )

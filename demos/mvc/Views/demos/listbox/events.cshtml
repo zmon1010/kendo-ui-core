@@ -13,42 +13,48 @@
         $(document).ready(function () {
 
             function onAdd(e) {
-                kendoConsole.log("event: add. " + e.dataItems.length + " item(s) added.");
-            };
+                kendoConsole.log("add : " + getWidgetName(e) + " : " + e.dataItems.length + " item(s)");
+            }
 
             function onChange(e) {
-                kendoConsole.log("event: change");
-            };
+                kendoConsole.log("change : " + getWidgetName(e));
+            }
 
             function onDataBound(e) {
                 if ("kendoConsole" in window) {
-                    kendoConsole.log("event :: dataBound");
+                    kendoConsole.log("dataBound : " + getWidgetName(e));
                 }
-            };
+            }
 
             function onRemove(e) {
-                kendoConsole.log("event: remove. " + e.dataItems.length + " item(s) removed.");
+                kendoConsole.log("remove : " + getWidgetName(e) + " : " + e.dataItems.length + " item(s)");
             };
 
             function onReorder(e) {
-                kendoConsole.log("event: reorder");
-            };
+                kendoConsole.log("reorder : " + getWidgetName(e));
+            }
 
             function onDragStart(e) {
-                kendoConsole.log("event: dragstart");
-            };
+                kendoConsole.log("dragstart : " + getWidgetName(e));
+            }
 
             function onDrag(e) {
-                kendoConsole.log("event: drag");
-            };
+                kendoConsole.log("drag : " + getWidgetName(e));
+            }
 
             function onDrop(e) {
-                kendoConsole.log("event: drop");
-            };
+                kendoConsole.log("drop : " + getWidgetName(e));
+            }
 
             function onDragEnd(e) {
-                kendoConsole.log("event: dragend");
-            };
+                kendoConsole.log("dragend : " + getWidgetName(e));
+            }
+
+            function getWidgetName(e) {
+                var listBoxId = e.sender.element.attr("id");
+                var widgetName = listBoxId === "optional" ? "left widget" : "right widget";
+                return widgetName;
+            }
 
             $("#optional").kendoListBox({
                 connectWith: "#selected",

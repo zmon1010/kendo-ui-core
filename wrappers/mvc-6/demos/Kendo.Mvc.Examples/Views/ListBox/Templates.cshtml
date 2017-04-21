@@ -5,11 +5,7 @@
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
             .DataSource(source => source
-                .Custom()
-                .Type("aspnetmvc-ajax")
-                .Transport(transport => transport
-                    .Read(read => read.Action("GetCustomers", "ListBox"))
-                )
+                .Read(read => read.Action("GetCustomers", "ListBox"))
             )
             .TemplateId("customer-item-template")
             .Draggable(draggable => draggable.Placeholder("customPlaceholder"))

@@ -7,11 +7,7 @@
             .DataValueField("ProductID")
             .DataTextField("ProductName")
             .DataSource(source => source
-                .Custom()
-                .Type("aspnetmvc-ajax")
-                .Transport(transport => transport
-                    .Read(read => read.Action("GetProducts", "ListBox"))
-                )
+                .Read(read => read.Action("GetProducts", "ListBox"))
             )
             .Navigatable(true)
         )
