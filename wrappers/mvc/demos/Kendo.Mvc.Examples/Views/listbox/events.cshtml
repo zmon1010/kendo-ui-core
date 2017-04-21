@@ -46,7 +46,7 @@
             .ConnectWith("#optional")
             .Selectable(ListBoxSelectable.Multiple)
             .Draggable()
-            .DropSources("optional")
+            .DropSources(new string[]{"optional"})
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
             .Toolbar(toolbar =>
@@ -113,13 +113,6 @@
 
         function onDragEnd(e) {
             kendoConsole.log("event: dragend");
-        }
-
-        function placeholder(element) {
-            return element.clone().css({
-                "opacity": 0.3,
-                "border": "1px dashed #000000"
-            });
         }
     </script>
 </div>

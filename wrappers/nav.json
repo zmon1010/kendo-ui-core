@@ -2127,6 +2127,16 @@
                     "aspnet-mvc": "Play with this basic example of Telerik ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
                 }
             },
+			{
+                "text": "Drag & Drop",
+                "url": "listbox/drag-and-drop",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox Drag & Drop demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the Drag & Drop functionality of ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
+                }
+            },
             {
                 "text": "Templates",
                 "url": "listbox/templates",

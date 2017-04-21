@@ -264,6 +264,7 @@
     <Compile Include="Controllers\Grid\Editing_Remote_ValidationController.cs" />
     <Compile Include="Controllers\Grid\ServerExportController.cs" />
     <Compile Include="Controllers\ListBox\ApiController.cs" />
+    <Compile Include="Controllers\ListBox\DragAndDropController.cs" />
     <Compile Include="Controllers\ListBox\EventsController.cs" />
     <Compile Include="Controllers\ListBox\IndexController.cs" />
     <Compile Include="Controllers\ListBox\RightToLeftSupportController.cs" />
@@ -3030,6 +3031,7 @@
     <Content Include="Views\menu\scrollable.cshtml" />
     <Content Include="Views\listbox\api.cshtml" />
     <Content Include="Views\listbox\right_to_left_support.cshtml" />
+    <Content Include="Views\listbox\drag_and_drop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

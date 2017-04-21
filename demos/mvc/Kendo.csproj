@@ -1284,6 +1284,7 @@
     <Content Include="Views\demos\dateinput\angular.cshtml" />
     <Content Include="Views\demos\dateinput\localization-globalization.cshtml" />
     <Content Include="Views\demos\listbox\angular.cshtml" />
+	<Content Include="Views\demos\listbox\drag-and-drop.cshtml" />
     <Content Include="Views\demos\listbox\index.cshtml" />
 	<Content Include="Views\demos\listbox\api.cshtml" />
 	<Content Include="Views\demos\listbox\mvvm.cshtml" />
