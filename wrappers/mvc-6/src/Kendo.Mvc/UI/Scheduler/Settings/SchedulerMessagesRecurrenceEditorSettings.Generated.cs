@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public SchedulerMessagesRecurrenceEditorOffsetPositionsSettings<T> OffsetPositions { get; } = new SchedulerMessagesRecurrenceEditorOffsetPositionsSettings<T>();
 
+        public string RecurrenceEditorTitle { get; set; }
+
         public SchedulerMessagesRecurrenceEditorWeeklySettings<T> Weekly { get; } = new SchedulerMessagesRecurrenceEditorWeeklySettings<T>();
 
         public SchedulerMessagesRecurrenceEditorWeekdaysSettings<T> Weekdays { get; } = new SchedulerMessagesRecurrenceEditorWeekdaysSettings<T>();
@@ -62,6 +64,11 @@ namespace Kendo.Mvc.UI
             if (offsetPositions.Any())
             {
                 settings["offsetPositions"] = offsetPositions;
+            }
+
+            if (RecurrenceEditorTitle?.HasValue() == true)
+            {
+                settings["recurrenceEditorTitle"] = RecurrenceEditorTitle;
             }
 
             var weekly = Weekly.Serialize();

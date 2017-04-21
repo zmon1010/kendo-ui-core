@@ -1933,6 +1933,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recurrence editor.
+        /// </summary>
+        public static string Scheduler_Recurrence_Editor_RecurrenceEditorTitle {
+            get {
+                return ResourceManager.GetString("Scheduler_Recurrence_Editor_RecurrenceEditorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to day.
         /// </summary>
         public static string Scheduler_Recurrence_Editor_Weekdays_Day {

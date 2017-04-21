@@ -121,5 +121,16 @@
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the Recurrence Editor Weekdays messages of the scheduler.
+        /// </summary>
+        /// <param name="addViewAction">The lambda which configures the scheduler recurrence editor weekdays messages</param>
+        public SchedulerRecurrenceEditorMessagesBuilder RecurrenceEditorTitle(string value)
+        {
+            editorMessages.RecurrenceEditorTitle = value;
+
+            return this;
+        }
     }
 }

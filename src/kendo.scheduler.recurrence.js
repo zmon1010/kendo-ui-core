@@ -1638,7 +1638,7 @@ var __meta__ = { // jshint ignore:line
             ],
             mobile: false,
             messages: {
-                recurrenceEditorTitle:"Recurence editor",
+                recurrenceEditorTitle:"Recurrence editor",
                 frequencies: {
                     never: "Never",
                     hourly: "Hourly",

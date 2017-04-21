@@ -873,4 +873,7 @@
   <data name="Upload_InvalidMinFileSize" xml:space="preserve">
     <value>File size too small.</value>
   </data>
+  <data name="Scheduler_Recurrence_Editor_RecurrenceEditorTitle" xml:space="preserve">
+    <value>Recurrence editor</value>
+  </data>
 </root>
