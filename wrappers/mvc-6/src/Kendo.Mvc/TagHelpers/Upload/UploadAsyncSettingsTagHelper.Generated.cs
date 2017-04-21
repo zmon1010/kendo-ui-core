@@ -69,6 +69,12 @@ namespace Kendo.Mvc.TagHelpers
         public string SaveUrl { get; set; }
 
         /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        public bool? UseArrayBuffer { get; set; }
+
+        /// <summary>
         /// Controls whether to send credentials (cookies, headers) for cross-site requests.
 		/// This option will be ignored if the browser doesn't support File API.
         /// </summary>
@@ -131,6 +137,11 @@ namespace Kendo.Mvc.TagHelpers
             if (SaveUrl?.HasValue() == true)
             {
                 settings["saveUrl"] = SaveUrl;
+            }
+
+            if (UseArrayBuffer.HasValue)
+            {
+                settings["useArrayBuffer"] = UseArrayBuffer;
             }
 
             if (WithCredentials.HasValue)

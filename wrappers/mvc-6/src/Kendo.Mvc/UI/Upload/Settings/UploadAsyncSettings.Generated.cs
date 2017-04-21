@@ -33,6 +33,8 @@ namespace Kendo.Mvc.UI
 
         public string SaveUrl { get; set; }
 
+        public bool? UseArrayBuffer { get; set; }
+
         public bool? WithCredentials { get; set; }
 
 
@@ -95,6 +97,11 @@ namespace Kendo.Mvc.UI
             if (SaveUrl?.HasValue() == true)
             {
                 settings["saveUrl"] = SaveUrl;
+            }
+
+            if (UseArrayBuffer.HasValue)
+            {
+                settings["useArrayBuffer"] = UseArrayBuffer;
             }
 
             if (WithCredentials.HasValue)

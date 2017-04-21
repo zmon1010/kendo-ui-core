@@ -65,6 +65,10 @@ namespace Kendo.Mvc.UI
             {
                 settings["draggable"] = draggable;
             }
+            else if (Draggable.Enabled.HasValue)
+            {
+                settings["draggable"] = Draggable.Enabled;
+            }
 
             if (DropSources?.Any() == true)
             {

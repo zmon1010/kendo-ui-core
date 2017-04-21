@@ -145,6 +145,27 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        /// <param name="value">The value for UseArrayBuffer</param>
+        public UploadAsyncSettingsBuilder UseArrayBuffer(bool value)
+        {
+            Container.UseArrayBuffer = value;
+            return this;
+        }
+
+        /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        public UploadAsyncSettingsBuilder UseArrayBuffer()
+        {
+            Container.UseArrayBuffer = true;
+            return this;
+        }
+
+        /// <summary>
         /// Controls whether to send credentials (cookies, headers) for cross-site requests.
 		/// This option will be ignored if the browser doesn't support File API.
         /// </summary>

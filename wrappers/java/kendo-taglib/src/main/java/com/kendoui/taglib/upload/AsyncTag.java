@@ -138,6 +138,14 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("saveUrl", value);
     }
 
+    public boolean getUseArrayBuffer() {
+        return (Boolean)getProperty("useArrayBuffer");
+    }
+
+    public void setUseArrayBuffer(boolean value) {
+        setProperty("useArrayBuffer", value);
+    }
+
     public boolean getWithCredentials() {
         return (Boolean)getProperty("withCredentials");
     }

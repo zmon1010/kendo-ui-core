@@ -11,11 +11,12 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ListBoxDraggableSettings 
     {
+        public bool? Enabled { get; set; }
+
         public ClientHandlerDescriptor Hint { get; set; }
 
         public ClientHandlerDescriptor Placeholder { get; set; }
 
-        public bool? Enabled { get; set; }
 
         public ListBox ListBox { get; set; }
 

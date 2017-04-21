@@ -48540,6 +48540,13 @@ containing one or more fields with the same name as the original input name.</de
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+ this buffer is send in the request body.</description>
+            <name>useArrayBuffer</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Controls whether to send credentials (cookies, headers) for cross-site requests.
 This option will be ignored if the browser doesn't support File API.</description>
             <name>withCredentials</name>
