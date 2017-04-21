@@ -978,7 +978,9 @@ var __meta__ = { // jshint ignore:line
             if(retries[fileEntry.data("uid")] <= this.options.async.maxAutoRetries){
                 retries[fileEntry.data("uid")]++;
                 setTimeout(function(){
-                    that._module.performUpload(fileEntry);
+                    if(fileEntry){
+                        that._module.performUpload(fileEntry);
+                    }
                 },this.options.async.autoRetryAfter);
             }
         },
@@ -1840,7 +1842,7 @@ var __meta__ = { // jshint ignore:line
 
         postFormData: function(url, data, fileEntry, xhr) {
             var module = this;
-
+   
             fileEntry.data("request", xhr);
 
             xhr.addEventListener("load", function(e) {
