@@ -1795,8 +1795,10 @@ var __meta__ = { // jshint ignore:line
         onPause: function(e) {
             var fileEntry = getFileEntry(e);
             var fileUid = fileEntry.data("uid");
+            var async = this.upload.options.async;
 
-            if(this.upload.options.async.chunkSize){
+            if(async.chunkSize){
+                this.retries[fileUid] = async.maxAutoRetries + 1;
                 this.paused[fileUid] = true;
                 this.resume[fileUid] = false;
             }
