@@ -62,13 +62,30 @@
         $("#transfer").click(function () {
             var listbox1 = $("#listbox1").data("kendoListBox");
             var listbox2 = $("#listbox2").data("kendoListBox");
-            listbox2.add(listbox1.dataItem($(".k-item:first")));
-            listbox1.remove($(".k-item:first"));
+            if (!listbox1.wrapper.find(".k-item:first").hasClass("k-state-disabled")) {
+                if (listbox1.select().length > 0) { //Transfer selected item
+                    listbox2.add(listbox1.dataItem(listbox1.select()));
+                    listbox1.remove(listbox1.select());
+                }
+                else { //Transfer first item if there is no selection
+                    listbox2.add(listbox1.dataItem($(".k-item:first")));
+                    listbox1.remove($(".k-item:first"));
+                }
+            }
         });
+
         $("#reorder").click(function () {
             var listbox1 = $("#listbox1").data("kendoListBox");
-            listbox1.reorder(".k-item:first", listbox1.items().length - 1);
+            if (!listbox1.wrapper.find(".k-item:first").hasClass("k-state-disabled")) {
+                if (listbox1.select().length > 0) { //Move selected item at the end
+                    listbox1.reorder(listbox1.select(), listbox1.items().length - 1);
+                }
+                else { //Move the fisrt item at the end if there is no selection
+                    listbox1.reorder(".k-item:first", listbox1.items().length - 1);
+                }
+            }
         });
+
         $("#enable").click(function () {
             $("#listbox1").data("kendoListBox").enable(".k-item", true);
         });
