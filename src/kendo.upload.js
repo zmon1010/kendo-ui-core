@@ -978,9 +978,7 @@ var __meta__ = { // jshint ignore:line
             if(retries[fileEntry.data("uid")] <= this.options.async.maxAutoRetries){
                 retries[fileEntry.data("uid")]++;
                 setTimeout(function(){
-                    if(fileEntry){
-                        that._module.performUpload(fileEntry);
-                    }
+                    that._module.performUpload(fileEntry);
                 },this.options.async.autoRetryAfter);
             }
         },
@@ -1716,7 +1714,8 @@ var __meta__ = { // jshint ignore:line
                 e = {
                     files: fileEntry.data("fileNames"),
                     XMLHttpRequest: xhr
-                };
+                },
+                files;
 
             if (!upload.trigger(UPLOAD, e)) {
                 if(fileEntry.find(".k-i-cancel").length === 0){
@@ -1740,7 +1739,10 @@ var __meta__ = { // jshint ignore:line
                         formData.append(key, e.data[key]);
                     }
 
-                    this.populateFormData(formData, fileEntry.data("files"));
+                    files = fileEntry.data("files");
+                    if(files){
+                        this.populateFormData(formData, files);
+                    }
                 }
 
                 upload._fileState(fileEntry, "uploading");
@@ -1828,6 +1830,11 @@ var __meta__ = { // jshint ignore:line
             var module = this;
             var upload = module.upload;
             var fileEntry = getFileEntry(e);
+            var async = this.upload.options.async;
+            
+            if(async.chunkSize){
+                this.retries[fileEntry.data("uid")] = async.maxAutoRetries + 1;
+            }
 
             if (fileEntry.hasClass("k-file-success")) {
                 removeUploadedFile(fileEntry, upload, eventArgs, shouldSendRemoveRequest);
@@ -1842,7 +1849,7 @@ var __meta__ = { // jshint ignore:line
 
         postFormData: function(url, data, fileEntry, xhr) {
             var module = this;
-   
+
             fileEntry.data("request", xhr);
 
             xhr.addEventListener("load", function(e) {
