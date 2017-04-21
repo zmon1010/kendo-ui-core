@@ -8,12 +8,12 @@
     <div id="cap-view" class="demo-section k-content">
 	     <h4>Customize your Kendo Cap</h4>
 	     <div id="cap" class="black-cap"></div>
-	     <h4>Cap Color</h4>
+	     <h4><label for="color">Cap Color</label></h4>
     <kendo:dropDownList name="color" dataTextField="text" dataValueField="value" change="change" value="1" style="width: 100%;">
         <kendo:dataSource data="${colors}"></kendo:dataSource>
     </kendo:dropDownList>  
 
-    <h4 style="margin-top: 2em;">Cap Size</h4>
+    <h4 style="margin-top: 2em;"><label for="size">Cap Size</label></h4>
     <kendo:dropDownList name="size" style="width: 100%;">
         <kendo:dataSource data="${sizes}"></kendo:dataSource>
     </kendo:dropDownList>  

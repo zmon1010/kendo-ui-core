@@ -18,7 +18,7 @@
 			</kendo:toolBar-item-menuButtons>
 		</kendo:toolBar-item>
 		<kendo:toolBar-item type="separator"></kendo:toolBar-item>
-		<kendo:toolBar-item template="<label>Format:</label>"></kendo:toolBar-item>
+		<kendo:toolBar-item template="<label for='dropdown'>Format:</label>"></kendo:toolBar-item>
 		<kendo:toolBar-item template="<input id='dropdown' style='width: 150px' />" overflow="never"></kendo:toolBar-item>
 		<kendo:toolBar-item type="separator"></kendo:toolBar-item>
 		
@@ -31,9 +31,9 @@
 		</kendo:toolBar-item>
 		<kendo:toolBar-item type="buttonGroup">
 			<kendo:toolBar-item-buttons>
-				<kendo:toolBar-item-button text="Bold" togglable="true" showText="overflow" spriteCssClass="k-tool-icon k-bold"></kendo:toolBar-item-button>
-				<kendo:toolBar-item-button text="Italic" togglable="true" showText="overflow" spriteCssClass="k-tool-icon k-italic"></kendo:toolBar-item-button>
-				<kendo:toolBar-item-button text="Underline" togglable="true" showText="overflow" spriteCssClass="k-tool-icon k-underline"></kendo:toolBar-item-button>
+				<kendo:toolBar-item-button text="Bold" togglable="true" spriteCssClass="k-tool-icon k-bold"></kendo:toolBar-item-button>
+				<kendo:toolBar-item-button text="Italic" togglable="true" spriteCssClass="k-tool-icon k-italic"></kendo:toolBar-item-button>
+				<kendo:toolBar-item-button text="Underline" togglable="true" spriteCssClass="k-tool-icon k-underline"></kendo:toolBar-item-button>
 			</kendo:toolBar-item-buttons>
 		</kendo:toolBar-item>
 		<kendo:toolBar-item type="button" text="Action" overflow="always"></kendo:toolBar-item>

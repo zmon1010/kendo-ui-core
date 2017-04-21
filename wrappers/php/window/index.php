@@ -10,9 +10,10 @@ $window->title('About Alvar Aalto')
        ->close('onClose')
        ->startContent();
 ?>
+	<h4>Armchair 402</h4>
     <div class="armchair">
         <img src="../content/web/window/armchair-402.png"
-             alt="Artek Alvar Aalto - Armchair 402" />
+             alt="Armchair 402" />
             Artek Alvar Aalto - Armchair 402
     </div>
     <p>
