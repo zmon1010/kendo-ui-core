@@ -948,6 +948,10 @@
         "meta": {
           "kendo-ui": " ",
           "aspnet-mvc": " "
+        },
+        "description": {
+          "kendo-ui": "The DateInput widget enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format.",
+          "aspnet-mvc": "The DateInput helper enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format."
         }
       },
       {
@@ -958,11 +962,14 @@
           "aspnet-mvc": "API ASP.NET MVC Dateinput example"
         },
         "meta": {
-          "kendo-ui": "DateInput API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date input control or open/close the calendar.",
+          "kendo-ui": "DateInput API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date input control or set/get the value.",
           "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Dateinput can be configured to modify the features of the extension."
+        },
+        "description": {
+          "aspnet-mvc": "<p>Telerik ASP.NET MVC Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of <strong>value</strong>, <strong>enable</strong> and <strong>readonly</strong> methods.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#methods\">here</a>.</p>"
         }
       },
-	  {
+      {
         "text": "Events",
         "url": "dateinput/events",
         "title": {
@@ -972,6 +979,9 @@
         "meta": {
           "kendo-ui": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget.",
           "aspnet-mvc": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget."
+        },
+        "description": {
+          "aspnet-mvc": "<p>Telerik ASP.NET MVC Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of the <strong>change</strong> event. Note that the event is triggered after focus is removed from the component.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#events\">here</a>.</p>"
         }
       },
       {
@@ -984,6 +994,9 @@
         "meta": {
           "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DateInput widget.",
           "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DateInput control."
+        },
+        "description": {
+          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DateInput component."
         }
       },
       {
@@ -1011,6 +1024,9 @@
         "meta": {
           "kendo-ui": "See how Kendo UI DateInput component supports RTL functionality.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports RTL functionality."
+        },
+        "description": {
+          "aspnet-mvc": "This example shows how RTL functionality is supported in the ASP.NET MVC DateInput component ."
         }
       },
       {
@@ -1023,6 +1039,9 @@
         "meta": {
           "kendo-ui": "See how Kendo UI DateInput component supports Localization and Globalization.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports Localization and Globalization."
+        },
+        "description": {
+          "aspnet-mvc": "<p>This example shows Localization and Globalization supported by ASP.NET MVC DateInput.</p><p>Localization is responsible for specifying the language of the component. Changing that option will change the placeholders.</p><p>Globalization is responsible for defining the format of the dates. Thus, changing the culture will modify the format in which the date is displayed.</p>"
         }
       },
       {
