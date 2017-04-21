@@ -127,7 +127,8 @@ var __meta__ = { // jshint ignore:line
                 removeVerb: "POST",
                 autoUpload: true,
                 withCredentials: true,
-                accept: "*/*; q=0.5, application/json"
+                accept: "*/*; q=0.5, application/json",
+                useArrayBuffer: false
             },
             localization: {
                 "select": "Select files...",
@@ -1747,11 +1748,29 @@ var __meta__ = { // jshint ignore:line
 
                 upload._fileState(fileEntry, "uploading");
                 $(fileEntry).removeClass("k-file-error").addClass("k-file-progress");
-
-                this.postFormData(upload.options.async.saveUrl, formData, fileEntry, xhr);
+                if(upload.options.async.useArrayBuffer && window.FileReader){
+                    this._readFile(upload.options.async.saveUrl, formData, fileEntry, xhr);
+                }else{
+                    this.postFormData(upload.options.async.saveUrl, formData, fileEntry, xhr);
+                }
             } else {
                 this.removeFileEntry(fileEntry);
             }
+        },
+
+        _readFile: function(saveUrl, formData, fileEntry, xhr){
+            var that = this;
+            var upload = that.upload;
+            var file = fileEntry.data("files")[0];
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                that.postFormData(upload.options.async.saveUrl, e.target.result, fileEntry, xhr);
+            };
+            reader.onerror = function () {
+                upload._onUploadError({ target : $(fileEntry, upload.wrapper) }, xhr);
+            };
+            reader.readAsArrayBuffer(file.rawFile);
         },
 
         onSaveSelected: function() {
