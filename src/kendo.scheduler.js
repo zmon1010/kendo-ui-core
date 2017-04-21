@@ -243,7 +243,8 @@ var __meta__ = { // jshint ignore:line
                 .toggle(visible)
                 .appendTo(container)
                 .kendoTimezoneEditor({
-                    optionLabel: options.noTimezone
+                    optionLabel: options.noTimezone,
+                    title: options.title
                 });
         };
 
@@ -1042,7 +1043,6 @@ var __meta__ = { // jshint ignore:line
             var settings = extend({}, kendo.Template, this.options.templateSettings);
             var paramName = settings.paramName;
             var template = this.options.editable.template;
-
             var html = "";
 
             if (template) {
@@ -2292,7 +2292,7 @@ var __meta__ = { // jshint ignore:line
                     allDayEvent: "All day event",
                     description: "Description",
                     repeat: "Repeat",
-                    timezone: " ",
+                    timezone: "Timezone",
                     startTimezone: "Start timezone",
                     endTimezone: "End timezone",
                     separateTimezones: "Use separate start and end time zones",
@@ -3994,7 +3994,7 @@ var __meta__ = { // jshint ignore:line
 
         _zoneTitlePicker: function() {
             var that = this,
-                zoneTitle = $('<input id="' + that._zoneTitleId + '"/>').appendTo(that.wrapper);
+                zoneTitle = $('<input id="' + that._zoneTitleId + '" aria-label="' + that.options.title + '"/>').appendTo(that.wrapper);
 
             that._zoneTitle = new kendo.ui.DropDownList(zoneTitle, {
                 dataSource: kendo.timezone.zones_titles,
@@ -4006,7 +4006,7 @@ var __meta__ = { // jshint ignore:line
 
         _zonePicker: function() {
             var that = this,
-                zone = $('<input />').appendTo(this.wrapper);
+                zone = $('<input aria-label="' + that.options.title + '"/>').appendTo(this.wrapper);
 
             that._zone = new kendo.ui.DropDownList(zone, {
                 dataValueField: "zone",
