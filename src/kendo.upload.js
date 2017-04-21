@@ -1830,6 +1830,7 @@ var __meta__ = { // jshint ignore:line
             if(this.upload.options.async.chunkSize){
                 delete this.paused[fileUid];
                 this.resume[fileUid] = true;
+                this.retries[fileEntry.data("uid")] = 1;
                 this._increaseChunkIndex(fileUid);
                 this.performUpload(fileEntry);
             }
