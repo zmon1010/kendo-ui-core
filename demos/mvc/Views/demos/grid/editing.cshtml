@@ -54,10 +54,15 @@
                             "ProductName",
                             { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: 120 },
                             { field: "UnitsInStock", title: "Units In Stock", width: 120 },
-                            { field: "Discontinued", width: 120 },
+                            { field: "Discontinued", width: 120, editor: customBoolEditor },
                             { command: "destroy", title: "&nbsp;", width: 150 }],
                         editable: true
                     });
                 });
+
+                function customBoolEditor(container, options) {
+                    $('<input class="k-checkbox" type="checkbox" name="Discontinued" data-type="boolean" data-bind="checked:Discontinued">').appendTo(container);
+                    $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+                }
             </script>
         </div>
