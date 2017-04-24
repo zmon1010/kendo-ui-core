@@ -123,6 +123,7 @@ var __meta__ = { // jshint ignore:line
             files: [],
             async: {
                 autoRetryAfter: 0,
+                bufferChunkSize: 10000000,
                 maxAutoRetries: 1,
                 removeVerb: "POST",
                 autoUpload: true,
@@ -1765,12 +1766,36 @@ var __meta__ = { // jshint ignore:line
 
             var reader = new FileReader();
             reader.onload = function (e) {
-                that.postFormData(upload.options.async.saveUrl, e.target.result, fileEntry, xhr);
+                if(that.position[file.uid] > file.size){
+                     var result =  that.fileArrayBuffer || e.target.result;
+                     that.postFormData(upload.options.async.saveUrl, result, fileEntry, xhr);
+                }else{
+                    if(!that.fileArrayBuffer){
+                        that.fileArrayBuffer = e.target.result;
+                    }else{
+                         try {
+                            that.fileArrayBuffer = that._appendBuffer(that.fileArrayBuffer, e.target.result);
+                        }catch(err) {
+                            upload._onUploadError({ target : $(fileEntry, upload.wrapper) }, xhr);
+                            return;
+                        }
+                    }
+                    that._readFile(saveUrl, formData, fileEntry, xhr);
+                }
             };
             reader.onerror = function () {
                 upload._onUploadError({ target : $(fileEntry, upload.wrapper) }, xhr);
             };
-            reader.readAsArrayBuffer(file.rawFile);
+            reader.readAsArrayBuffer(that._getCurrentChunk(file.rawFile, file.uid));
+        },
+
+        _appendBuffer: function(buffer1, buffer2) {
+            var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+
+            tmp.set(new Uint8Array(buffer1), 0);
+            tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
+
+            return tmp.buffer;
         },
 
         onSaveSelected: function() {
@@ -2065,8 +2090,13 @@ var __meta__ = { // jshint ignore:line
         _getCurrentChunk: function (file, uid) {
             var oldPosition = this.position[uid];
             var methodToInvoke;
+            var async = this.upload.options.async;
+            var chunkSize = async.chunkSize || async.bufferChunkSize;
 
-            this.position[uid] += this.upload.options.async.chunkSize;
+            if(!this.position[uid]){
+                this.position[uid] = 0;
+            }
+            this.position[uid] += chunkSize;
 
             if (!!(methodToInvoke = this._getChunker(file))){
                 return file[methodToInvoke](oldPosition, this.position[uid]);
