@@ -191,4 +191,17 @@
         ok(firstItem === listA.items().first().html());
         ok(listA.items().eq(1).hasClass("k-state-disabled") === true);
     });
+
+    test("Change event is fired only once when initially selecting with shift", 1, function() {
+        var calls = 0;
+        listA.bind("change", function() {
+             calls++;
+        });
+        listA.focus();
+        listA._keyDown({ keyCode: keys.DOWN, preventDefault: $.noop });
+        listA._keyDown({ keyCode: keys.DOWN, shiftKey: true, preventDefault: $.noop });
+
+        ok(calls === 1);
+    });
+
 })();

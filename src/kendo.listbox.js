@@ -366,6 +366,9 @@ var __meta__ = { // jshint ignore:line
                 }
                 if (e.shiftKey) {
                     if(e.ctrlKey) {
+                        if(!that._target) {
+                            return;
+                        }
                         index = that.items().index(key === keys.DOWN ? that._target.next() : that._target.prev());
                         if(!that.trigger(REORDER, { dataItem: that.dataItem(that._target), item: $(that._target) })) {
                             that.reorder(that._target, index);
@@ -373,8 +376,7 @@ var __meta__ = { // jshint ignore:line
                             return;
                         }
                     } else {
-                        that.select(that._target);
-                        that.select(current);
+                        that.select($({}).add(that._target).add(current));
                     }
                 }
                 that._target = current;
