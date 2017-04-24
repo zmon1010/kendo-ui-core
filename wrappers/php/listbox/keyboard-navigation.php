@@ -6,20 +6,8 @@ require_once '../lib/Kendo/Autoload.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');
 
-    $request = json_decode(file_get_contents('php://input'));
-
     $result = new DataSourceResult('sqlite:..//sample.db');
-
-    $type = $_GET['type'];
-
-    $columns = array('ProductID', 'ProductName');
-
-    switch($type) {
-        case 'read':
-            $result = $result->read('Products', $columns, $request);
-            break;
-    }
-
+    $result = $result->read('Products', array('ProductID', 'ProductName'));
     echo json_encode($result['data'], JSON_NUMERIC_CHECK);
 
     exit;
