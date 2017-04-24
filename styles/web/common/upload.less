@@ -27,13 +27,13 @@ html .k-upload
 
 .k-dropzone em
 {
-    visibility: hidden;
+    display: none;
     margin-left: .6em;
 }
 
 .k-dropzone-active em
 {
-    visibility: visible;
+    display: inline-block;
 }
 
 .k-upload-button
@@ -144,6 +144,7 @@ html .k-upload
         background: 0 0;
         border-width: 0;
         box-shadow: none;
+        margin-right: 3px;
     }
 }
 
@@ -292,6 +293,23 @@ html .k-upload
     top: 0;
 }
 
+.k-upload-action,
+.k-button.k-upload-action:hover,
+.k-button.k-upload-action:active:hover,
+.k-button.k-upload-action.k-state-active:hover {
+    color: inherit;
+    background: transparent;
+    border: 0;
+}
+
+    .k-upload-action {
+        opacity: 0.6;
+    }
+
+    .k-upload-action:hover {
+        opacity: 1;
+    }
+
 .k-upload-status .k-button
 {
     vertical-align: text-bottom;
@@ -300,7 +318,12 @@ html .k-upload
 
 .k-dropzone .k-upload-status
 {
-    line-height: 2.4;
+    position: static;
+    margin-left: 10px;
+}
+
+.k-dropzone-active .k-upload-status {
+    display: none;
 }
 
 .k-upload-pct {
