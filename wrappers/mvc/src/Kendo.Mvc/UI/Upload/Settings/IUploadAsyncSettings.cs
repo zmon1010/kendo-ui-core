@@ -56,6 +56,12 @@ namespace Kendo.Mvc.UI
         double? AutoRetryAfter { get; set; }
 
         /// <summary>
+        /// Gets or sets a value whether to read the file as file buffer by using FileReader and
+        /// send it in the request body.
+        /// </summary>
+        bool? UseArrayBuffer { get; set; }
+
+        /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests
         /// </summary>
         bool? WithCredentials { get; set; }

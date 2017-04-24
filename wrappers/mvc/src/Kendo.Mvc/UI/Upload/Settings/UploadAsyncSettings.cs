@@ -83,6 +83,12 @@ namespace Kendo.Mvc.UI
         public double? AutoRetryAfter { get; set; }
 
         /// <summary>
+        /// Gets or sets a value whether to read the file as file buffer by using FileReader and
+        /// send it in the request body.
+        /// </summary>
+        public bool? UseArrayBuffer { get; set; }
+
+        /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests
         /// </summary>
         public bool? WithCredentials { get; set; }
@@ -110,6 +116,7 @@ namespace Kendo.Mvc.UI
                     .Add("concurrent", Concurrent, () => Concurrent.HasValue)
                     .Add("maxAutoRetries", MaxAutoRetries, () => MaxAutoRetries.HasValue)
                     .Add("autoRetryAfter", AutoRetryAfter, () => AutoRetryAfter.HasValue)
+                    .Add("useArrayBuffer", UseArrayBuffer, () => UseArrayBuffer.HasValue)
                     .Add("withCredentials", WithCredentials, () => WithCredentials.HasValue);
 
                 if (Remove.HasValue())
