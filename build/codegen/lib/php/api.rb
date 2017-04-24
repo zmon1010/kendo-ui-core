@@ -71,6 +71,8 @@ module CodeGen::PHP::API
 
         return "new \\Kendo\\JavaScriptFunction('function() { }')" if type == '\Kendo\JavaScriptFunction'
 
+        return 'array()' if type == 'array'
+
         "new #{type}()"
     end
 
