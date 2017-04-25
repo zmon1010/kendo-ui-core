@@ -49,7 +49,7 @@ $countries = array(
     $listBox1->toolbar($toolbar1)
              ->dataSource($countries)
              ->messages($messages)
-             ->connectWith("destination");
+             ->connectWith("destination")
              ->attr("title", "Source");
 
     echo $listBox1->render();
