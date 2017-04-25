@@ -1981,6 +1981,7 @@ var __meta__ = { // jshint ignore:line
                     module._increaseChunkIndex(fileUid);
                     module.performUpload(fileEntry);
                 }else if(chunkSize && !batch && !concurrent && fileEntry.next().length && !fileEntry.next().hasClass("k-toupload")) {
+                        module.upload._onFileProgress({ target : $(fileEntry, module.upload.wrapper) }, 100);
                         module._resetChunkIndex(fileUid);
                         module.upload._onUploadSuccess({ target : $(fileEntry, module.upload.wrapper) }, jsonResult, xhr);
 
