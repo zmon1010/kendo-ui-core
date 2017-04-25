@@ -15,6 +15,7 @@ obj/
 .JustCode
 .bundle/
 .idea/
+.vscode/
 .livereload
 deploy/
 dist/
