@@ -206,11 +206,16 @@ var __meta__ = { // jshint ignore:line
         },
         pause: function(fileEntry){
             this._module.onPause({ target: $(fileEntry, this.wrapper) });
-            fileEntry.find(".k-i-pause-sm").removeClass("k-i-pause-sm").addClass("k-i-play-sm");
+           var pauseIcon = fileEntry.find(".k-i-pause-sm");
+            pauseIcon.removeClass("k-i-pause-sm").addClass("k-i-play-sm").attr("title", this.localization.resume);
+            $(pauseIcon).parent().attr("aria-label", this.localization.resume);
         },
         resume: function(fileEntry){
             this._module.onResume({ target: $(fileEntry, this.wrapper) });
-            fileEntry.find(".k-i-play-sm").removeClass("k-i-play-sm").addClass("k-i-pause-sm");
+
+            var playIcon = fileEntry.find(".k-i-play-sm");
+            playIcon.removeClass("k-i-play-sm").addClass("k-i-pause-sm").attr("title", this.localization.pause);
+            $(playIcon).parent().attr("aria-label", this.localization.pause);
         },
         upload: function() {
             var that = this;
