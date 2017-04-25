@@ -586,6 +586,60 @@
         equalListItems(listbox1.items()[0], item2);
     });
 
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            var element3 = $('<select id="listbox3"></select>').appendTo(QUnit.fixture);
+            var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
+            var element1 = $('<select id="listbox1"></select>').appendTo(QUnit.fixture);
+
+            listbox3 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 7,
+                        text: "item7"
+                    }, {
+                        id: 8,
+                        text: "item8"
+                    }]
+                },
+                connectWith: "#listbox2"
+            }, element3);
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: []
+                },
+                connectWith: "#listbox1"
+            }, element2);
+
+            listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }]
+                }
+            }, element1);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            destroyListBox(listbox3);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferAllTo tool should be enabled in connected listbox after transfer", function() {
+        clickTransferAllToButton(listbox3);
+
+        equal(getToolElement(listbox2, TRANSFER_ALL_TO).hasClass(DISABLED_STATE_CLASS), false);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             $(document.body).append(QUnit.fixture);
@@ -1210,7 +1264,7 @@
         equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
     });
 
-    test("transferFrom tool should be enabled in multiple listboxes when item is selected", function() {
+    test("transferAllFrom tool should be enabled in multiple listboxes when item is selected", function() {
         listbox1.select(listbox1.items().eq(0));
 
         equal(getToolElement(listbox2, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
@@ -1222,5 +1276,53 @@
 
         equal(getToolElement(listbox2, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), true);
         equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            var element3 = $('<select id="listbox3"></select>').appendTo(QUnit.fixture);
+            var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
+            var element1 = $('<select id="listbox1"></select>').appendTo(QUnit.fixture);
+
+            listbox3 = createListBoxWithToolbar({
+                dataSource: {
+                    data: []
+                },
+                connectWith: "#listbox2"
+            }, element3);
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: []
+                }
+            }, element2);
+
+            listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }]
+                },
+                connectWith: "#listbox2"
+            }, element1);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            destroyListBox(listbox3);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferAllFrom tool should be enabled in connected listbox after transfer", function() {
+        clickTransferAllToButton(listbox1);
+
+        equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
     });
 })();

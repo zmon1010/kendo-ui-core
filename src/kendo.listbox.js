@@ -702,7 +702,7 @@ var __meta__ = { // jshint ignore:line
             that._bindDataSource();
             that._syncElement();
             that._updateToolbar();
-            that._updateConnectedToolbars();
+            that._updateAllToolbars();
         },
 
         _removeItem: function (item) {
@@ -922,7 +922,7 @@ var __meta__ = { // jshint ignore:line
             that._createToolbar();
             that._syncElement();
             that._updateToolbar();
-            that._updateConnectedToolbars();
+            that._updateAllToolbars();
             that.trigger(DATABOUND);
         },
 
@@ -985,7 +985,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             that._updateToolbar();
-            that._updateConnectedToolbars();
+            that._updateAllToolbars();
             that.trigger(CHANGE);
         },
 
@@ -1040,7 +1040,7 @@ var __meta__ = { // jshint ignore:line
             if (command) {
                 command.execute();
                 that._updateToolbar();
-                that._updateConnectedToolbars();
+                that._updateAllToolbars();
             }
         },
 
@@ -1052,18 +1052,17 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _updateConnectedToolbars: function() {
+        _updateAllToolbars: function() {
             var listBoxElements = $("select[data-role='listbox']");
             var elementsLength = listBoxElements.length;
-            var connectedListBox;
-            var id = "#" + this.element.attr("id");
+            var listBox;
             var i;
 
             for (i = 0; i < elementsLength; i++) {
-                connectedListBox = $(listBoxElements[i]).data(KENDO_LISTBOX);
+                listBox = $(listBoxElements[i]).data(KENDO_LISTBOX);
 
-                if (connectedListBox && id === connectedListBox.options.connectWith) {
-                    connectedListBox._updateToolbar();
+                if (listBox) {
+                    listBox._updateToolbar();
                 }
             }
         }
