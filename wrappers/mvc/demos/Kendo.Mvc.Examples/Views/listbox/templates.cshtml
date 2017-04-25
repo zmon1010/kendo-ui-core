@@ -11,6 +11,7 @@
             .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
             .DropSources("selected")
             .ConnectWith("#selected")
+            .HtmlAttributes(new { title = "Optional"})
             .Toolbar(toolbar =>
             {
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
@@ -30,6 +31,7 @@
             .Name("selected")
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .HtmlAttributes(new { title = "Selected"})
             .TemplateId("customer-item-template")
             .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
             .DropSources("optional")

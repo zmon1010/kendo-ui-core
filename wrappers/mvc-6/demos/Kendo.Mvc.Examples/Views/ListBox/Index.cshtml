@@ -1,10 +1,13 @@
 ﻿<div id="example" role="application">
     <div class="demo-section k-content wide">
+        <label for="optional">Employees</label>
+        <label for="selected">Developers</label>
+        <br />
         @(Html.Kendo().ListBox()
             .Name("optional")
             .Toolbar(toolbar =>
             {
-                toolbar.Position(ListBoxToolbarPosition.Right);
+                toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
                 toolbar.Tools(tools => tools
                     .MoveUp()
                     .MoveDown()
@@ -15,12 +18,14 @@
                     .Remove()
                 );
             })
+            .HtmlAttributes(new { title = "Optional"})
             .ConnectWith("#selected")
             .BindTo(ViewBag.Attendees)
         )
 
         @(Html.Kendo().ListBox()
             .Name("selected")
+            .HtmlAttributes(new { title = "Selected"})
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Multiple)
         )
@@ -28,6 +33,13 @@
 </div>
 
 <style>
+    .demo-section label {
+        padding-left: 8px;
+        margin-bottom: 8px;
+        font-weight: bold;
+        display: inline-block;
+        width: 236px;
+    }
     #example .demo-section {
         max-width: none;
         width: 515px;
@@ -38,8 +50,8 @@
         height: 310px;
     }
 
-    #example .k-listbox:first-child {
-        width: 270px;
-        margin-right: 1px;
-    }
+        #example .k-listbox:first-child {
+            width: 270px;
+            margin-right: 1px;
+        }
 </style>

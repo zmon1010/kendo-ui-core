@@ -6,6 +6,7 @@
             .Selectable(ListBoxSelectable.Multiple)
             .DataValueField("ProductID")
             .DataTextField("ProductName")
+            .HtmlAttributes(new { title = "ListBox1"})
             .DataSource(source => source
                 .Read(read => read.Action("GetProducts", "ListBox"))
             )
@@ -17,6 +18,7 @@
             .BindTo(new List<ProductViewModel>())
             .DataValueField("ProductID")
             .DataTextField("ProductName")
+            .HtmlAttributes(new { title = "ListBox2"})
             .Selectable(ListBoxSelectable.Single)
             .Navigatable(true)
         )

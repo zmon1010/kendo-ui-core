@@ -8,6 +8,9 @@ require_once '../include/header.php';
 
 <div id="example" role="application">
     <div class="demo-section k-content wide">
+	    <label for="optional">Employees</label>
+        <label for="selected">Developers</label>
+        <br />
 <?php
     $attendees = array(
         "Steven White",
@@ -27,13 +30,15 @@ require_once '../include/header.php';
 
     $listBoxOptional->toolbar($listBoxToolbar)
                     ->dataSource($attendees)
-                    ->connectWith("#selected");
+                    ->connectWith("#selected")
+					->attr('title', 'Optional');
 
     echo $listBoxOptional->render();
 
     $listBoxSelected = new \Kendo\UI\ListBox('selected');
     $listBoxSelected->dataSource(array())
-                    ->selectable("multiple");
+                    ->selectable("multiple")
+					->attr('title', 'Selected');
 
     echo $listBoxSelected->render();
 ?>
@@ -41,6 +46,13 @@ require_once '../include/header.php';
 </div>
 
 <style>
+    .demo-section label {
+        padding-left: 8px;
+        margin-bottom: 8px;
+        font-weight: bold;
+        display: inline-block;
+        width: 236px;
+    }
     #example .demo-section {
         max-width: none;
         width: 515px;
@@ -51,9 +63,9 @@ require_once '../include/header.php';
         height: 310px;
     }
 
-    #example .k-listbox:first-child {
-        width: 270px;
-        margin-right: 1px;
-    }
+        #example .k-listbox:first-child {
+            width: 270px;
+            margin-right: 1px;
+        }
 </style>
 <?php require_once '../include/footer.php'; ?>

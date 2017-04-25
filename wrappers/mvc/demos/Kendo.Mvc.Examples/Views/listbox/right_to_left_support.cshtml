@@ -12,6 +12,7 @@
                     .TransferAllTo()
                 );
             })
+            .HtmlAttributes(new { title = "Source"})
             .Messages(messages => messages.Tools(tools =>
             {
                 tools.TransferFrom("To Right");
@@ -25,6 +26,7 @@
 
         @(Html.Kendo().ListBox()
             .Name("destination")
+            .HtmlAttributes(new { title = "Destination"})
             .Toolbar(toolbar =>
             {
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Left);

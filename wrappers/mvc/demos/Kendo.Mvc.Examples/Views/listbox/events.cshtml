@@ -21,6 +21,7 @@
             .DropSources("selected")
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .HtmlAttributes(new { title = "Optional"})
             .DataSource(source => source
                 .Read(read => read.Action("GetCustomers", "ListBox"))
             )
@@ -45,6 +46,7 @@
             .DropSources(new string[]{"optional"})
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .HtmlAttributes(new { title = "Selected"})
             .Toolbar(toolbar =>
             {
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
