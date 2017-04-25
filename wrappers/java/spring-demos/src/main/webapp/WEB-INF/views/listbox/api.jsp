@@ -58,13 +58,13 @@
 <script>
     $(document).ready(function () {
         var notification = $("#staticNotification").kendoNotification({
-            allowHideAfter: 400, appendTo: "#appendto",
+            autoHideAfter: 4000, appendTo: "#appendto",
             animation: {
                 open: {
-                    effects: "slideIn:left"
+                    effects: "fade:in"
                 },
                 close: {
-                    effects: "fade:out"
+                    effects: "none"
                 }
             }
         }).data("kendoNotification");
@@ -74,7 +74,8 @@
         var listbox2 = $("#listbox2").data("kendoListBox");
 
         function showMessage(message) {
-            notification.show(message);
+            notification.hide();
+            notification.error(message);
         }
 
         $("#transfer-left").click(function () {
@@ -178,10 +179,10 @@
 
     #appendto {
         margin-top: 5px;
-        height: 35px;
+        height: 15px;
     }
 
-        #appendto .k-i-info {
+        #appendto .k-i-error {
             padding-right: 8px;
         }
 
@@ -204,7 +205,7 @@
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
+        #example .k-listbox:first-of-type {
             margin-right: 1px;
         }
 </style>
