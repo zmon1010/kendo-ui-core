@@ -36,7 +36,6 @@
         teardown: function() {
             destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -68,7 +67,7 @@
         equal(listbox.select().length, 0);
     });
 
-    test("tools have title", function () {
+    test("tools have title", function() {
         var toolsButtons = listbox.toolbar.element.find("a.k-button");
         var titleAttr = "title";
 
@@ -220,7 +219,7 @@
     module("ListBox toolbar", {
         setup: function() {
             var element = $('<select id="list"></select>').appendTo(QUnit.fixture);
-            listbox = createListBoxWithToolbar({},element);
+            listbox = createListBoxWithToolbar({}, element);
             item1 = listbox.items().eq(0);
             item2 = listbox.items().eq(1);
             item3 = listbox.items().eq(2);
@@ -231,7 +230,6 @@
             listbox.destroy();
             item1 = item2 = item3 = item4 = null;
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -379,7 +377,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -468,7 +465,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -548,7 +544,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -621,7 +616,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -725,7 +719,6 @@
         teardown: function() {
             destroyListBox(listbox);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -830,7 +823,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -885,7 +877,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -965,7 +956,6 @@
             destroyListBox(listbox2);
             destroyListBox(listbox3);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -983,6 +973,74 @@
         listbox1.select(item1);
 
         equal(tool.hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            var element3 = $('<select id="listbox3"></select>').appendTo(QUnit.fixture);
+            var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
+            var element1 = $('<select id="listbox1"></select>').appendTo(QUnit.fixture);
+
+            listbox3 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 7,
+                        text: "item7"
+                    }, {
+                        id: 8,
+                        text: "item8"
+                    }]
+                },
+                connectWith: "#listbox1"
+            }, element3);
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                },
+                connectWith: "#listbox1"
+            }, element2);
+
+            listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }]
+                }
+            }, element1);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            destroyListBox(listbox3);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferFrom tool should be disabled in multiple listboxes when no item is selected", function() {
+        listbox1.clearSelection();
+
+        equal(getToolElement(listbox2, TRANSFER_FROM).hasClass(DISABLED_STATE_CLASS), true);
+        equal(getToolElement(listbox3, TRANSFER_FROM).hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("transferFrom tool should be enabled in multiple listboxes when item is selected", function() {
+        listbox1.select(listbox1.items().eq(0));
+
+        equal(getToolElement(listbox2, TRANSFER_FROM).hasClass(DISABLED_STATE_CLASS), false);
+        equal(getToolElement(listbox3, TRANSFER_FROM).hasClass(DISABLED_STATE_CLASS), false);
     });
 
     module("ListBox toolbar tools", {
@@ -1011,7 +1069,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -1065,7 +1122,6 @@
             destroyListBox(listbox1);
             destroyListBox(listbox2);
             kendo.destroy(QUnit.fixture);
-            
         }
     });
 
@@ -1091,5 +1147,80 @@
         clickTransferAllFromButton(listbox1);
 
         equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    module("ListBox toolbar tools", {
+        setup: function() {
+            $(document.body).append(QUnit.fixture);
+
+            var element3 = $('<select id="listbox3"></select>').appendTo(QUnit.fixture);
+            var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
+            var element1 = $('<select id="listbox1"></select>').appendTo(QUnit.fixture);
+
+            listbox3 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 7,
+                        text: "item7"
+                    }, {
+                        id: 8,
+                        text: "item8"
+                    }]
+                },
+                connectWith: "#listbox1"
+            }, element3);
+
+            listbox2 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 5,
+                        text: "item5"
+                    }, {
+                        id: 6,
+                        text: "item6"
+                    }]
+                },
+                connectWith: "#listbox1"
+            }, element2);
+
+            listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }]
+                }
+            }, element1);
+        },
+        teardown: function() {
+            destroyListBox(listbox1);
+            destroyListBox(listbox2);
+            destroyListBox(listbox3);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("transferAllFrom tool should be disabled in multiple listboxes when no item is selected", function() {
+        listbox1.clearSelection();
+
+        equal(getToolElement(listbox2, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
+        equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferFrom tool should be enabled in multiple listboxes when item is selected", function() {
+        listbox1.select(listbox1.items().eq(0));
+
+        equal(getToolElement(listbox2, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
+        equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), false);
+    });
+
+    test("transferAllFrom tool should be disabled after executing transferAllFrom", function() {
+        clickTransferAllFromButton(listbox2);
+
+        equal(getToolElement(listbox2, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), true);
+        equal(getToolElement(listbox3, TRANSFER_ALL_FROM).hasClass(DISABLED_STATE_CLASS), true);
     });
 })();
