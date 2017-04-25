@@ -501,11 +501,11 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var element = that._findElementUnderCursor(e);
             var elementNode = $(element);
-            var list = that._getList()[0];
+            var list = that._getList();
             var items;
             var node;
 
-            if($.contains(list, element)) {
+            if($.contains(list[0], element)) {
                 items = that.items();
                 element = elementNode.is("li") ? element: elementNode.closest("li")[0];
                 node = items.filter(element)[0] || items.has(element)[0];
@@ -515,7 +515,7 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     return null;
                 }
-            } else if (list == element && !that.items().length) {
+            } else if (list[0] == element || list.parent()[0] == element) {
                 return { element: $(list), appendToBottom: true, listBox: that };
             } else {
                 return that._searchConnectedListBox(elementNode);
@@ -643,7 +643,7 @@ var __meta__ = { // jshint ignore:line
             var draggedItem = that.draggedElement;
             var items = that.items();
             var placeholderIndex = items.not(that.draggedElement).index(that.placeholder);
-            var draggedIndex = items.index(that.draggedElement);
+            var draggedIndex = items.not(that.placeholder).index(that.draggedElement);
             var dataItem = that.dataItem(draggedItem);
             var eventData = { dataItems: [dataItem], items: $(draggedItem) };
             var connectedListBox = that.placeholder.closest(".k-widget.k-listbox").find("[data-role='listbox']").getKendoListBox();
@@ -655,7 +655,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if(placeholderIndex >= 0) {
-                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, extend({}, eventData, { offset: placeholderIndex }))) {
+                if(placeholderIndex !== draggedIndex && !that.trigger(REORDER, extend({}, eventData, { offset: placeholderIndex - draggedIndex }))) {
                     draggedItem.removeClass(DRAGGEDCLASS);
                     that.reorder(draggedItem, placeholderIndex);
                 }

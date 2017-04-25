@@ -1354,7 +1354,7 @@ The data items that are to be reordered.
 
 ##### e.offset `Number`
 
-When moving up, the offset is `-1`. When moving down, the offset is `1`.
+The offset from the initial position of the item.
 
 #### Example
 

@@ -604,14 +604,14 @@
                         text: "item8"
                     }]
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element3);
 
             listbox2 = createListBoxWithToolbar({
                 dataSource: {
                     data: []
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element2);
 
             listbox1 = createListBoxWithToolbar({
@@ -1047,7 +1047,7 @@
                         text: "item8"
                     }]
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element3);
 
             listbox2 = createListBoxWithToolbar({
@@ -1060,7 +1060,7 @@
                         text: "item6"
                     }]
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element2);
 
             listbox1 = createListBoxWithToolbar({
@@ -1221,7 +1221,7 @@
                         text: "item8"
                     }]
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element3);
 
             listbox2 = createListBoxWithToolbar({
@@ -1234,7 +1234,7 @@
                         text: "item6"
                     }]
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element2);
 
             listbox1 = createListBoxWithToolbar({
@@ -1290,7 +1290,7 @@
                 dataSource: {
                     data: []
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element3);
 
             listbox2 = createListBoxWithToolbar({
@@ -1309,7 +1309,7 @@
                         text: "item2"
                     }]
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
         },
         teardown: function() {
