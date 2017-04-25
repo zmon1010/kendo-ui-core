@@ -6,7 +6,7 @@
 <demo:header />
 <div id="example" role="application">
 	<div class="demo-section k-content wide">
-		<kendo:listBox name="listbox1" dataTextField="productName" dataValueField="productID" connectWith="#listbox2">
+		<kendo:listBox name="listbox1" dataTextField="productName" dataValueField="productID" connectWith="listbox2">
 		   <kendo:dataSource pageSize="10">
 				<kendo:dataSource-transport>
 				<kendo:dataSource-transport-parameterMap>

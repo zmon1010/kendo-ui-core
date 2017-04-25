@@ -30,8 +30,8 @@ require_once '../include/header.php';
 
     $listBoxOptional->toolbar($listBoxToolbar)
                     ->dataSource($attendees)
-                    ->connectWith("#selected")
-					->attr('title', 'Optional');
+					->attr('title', 'Optional')
+                    ->connectWith("selected");
 
     echo $listBoxOptional->render();
 

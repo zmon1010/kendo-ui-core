@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A selector which determines whether the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines a one-way relationship. If you want a two-way connection, then set the connectWith option on both widgets.
+        /// The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.
         /// </summary>
         /// <param name="value">The value for ConnectWith</param>
         public ListBoxBuilder ConnectWith(string value)

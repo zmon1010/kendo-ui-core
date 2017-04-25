@@ -6,7 +6,7 @@
 <demo:header />
 
 <div class="demo-section k-content wide">
-      <kendo:listBox name="listbox1" connectWith="#listbox2" selectable="multiple"
+      <kendo:listBox name="listbox1" connectWith="listbox2" selectable="multiple"
       navigatable="true" dataTextField="productName" dataValueField="productId" dropSources="${dropSources1}">   
       <kendo:listBox-toolbar tools="${tools}"></kendo:listBox-toolbar>   
         <kendo:dataSource>

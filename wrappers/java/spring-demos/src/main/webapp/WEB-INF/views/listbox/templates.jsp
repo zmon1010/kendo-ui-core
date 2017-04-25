@@ -11,7 +11,7 @@
     %>
 
 <div class="demo-section k-content wide">
-      <kendo:listBox name="optional" connectWith="#selected" template="<%=template%>" dropSources="${dropSources1}">      
+      <kendo:listBox name="optional" connectWith="selected" template="<%=template%>" dropSources="${dropSources1}">      
         <kendo:listBox-draggable>
         	<kendo:listBox-draggable-placeholder>
         	<script>

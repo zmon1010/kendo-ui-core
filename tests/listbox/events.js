@@ -218,7 +218,7 @@
             var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
 
             listbox2 = createListBoxWithToolbar({
@@ -349,7 +349,7 @@
                 dataSource: {
                     data: []
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
 
             listbox2 = createListBoxWithToolbar({
@@ -483,7 +483,7 @@
             var element2 = $('<select id="listbox2"></select>').appendTo(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
 
             listbox2 = createListBoxWithToolbar({
@@ -592,7 +592,7 @@
                 dataSource: {
                     data: []
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
 
             listbox2 = createListBoxWithToolbar({

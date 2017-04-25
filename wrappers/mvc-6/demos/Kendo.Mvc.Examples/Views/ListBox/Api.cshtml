@@ -2,7 +2,7 @@
     <div class="demo-section k-content">
        @(Html.Kendo().ListBox()
             .Name("listbox1")
-            .ConnectWith("#listbox2")
+            .ConnectWith("listbox2")
             .DataValueField("ProductID")
             .DataTextField("ProductName")
             .HtmlAttributes(new { title = "ListBox1"})

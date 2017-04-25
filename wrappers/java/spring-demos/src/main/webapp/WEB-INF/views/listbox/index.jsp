@@ -8,7 +8,7 @@
 	<label for="optional" id="employees">Employees</label>
     <label for="selected">Developers</label>
     <br />
-    <kendo:listBox name="optional" connectWith="#selected" title="Optional">
+    <kendo:listBox name="optional" connectWith="selected" title="Optional">
         <kendo:listBox-toolbar tools="${tools}"></kendo:listBox-toolbar>
         <kendo:dataSource data="${data}"></kendo:dataSource>    
     </kendo:listBox> 

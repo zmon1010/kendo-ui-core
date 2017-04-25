@@ -38,7 +38,7 @@ require_once '../include/header.php';
     $listbox->dataSource($dataSource)
             ->dataValueField("ProductID")
             ->dataTextField("ProductName")
-            ->connectWith("#listbox2")
+            ->connectWith("listbox2")
             ->selectable("Multiple")
             ->navigatable(true);
 

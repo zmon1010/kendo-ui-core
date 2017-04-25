@@ -37,7 +37,7 @@ require_once '../include/header.php';
 
     $listbox1 = new \Kendo\UI\ListBox('listbox1');
     $listbox1->dataSource($dataSource)
-             ->connectWith("#listbox2")
+             ->connectWith("listbox2")
              ->dataValueField("ProductID")
              ->dataTextField("ProductName");
 

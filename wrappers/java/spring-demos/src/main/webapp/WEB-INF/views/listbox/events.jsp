@@ -7,7 +7,7 @@
 <demo:header />
 
 <div class="demo-section k-content wide">
-    <kendo:listBox name="optional" connectWith="#selected"
+    <kendo:listBox name="optional" connectWith="selected"
      add="onAdd" change="onChange" dataBound="onDataBound" dragstart="onDragStart" drag="onDrag"
      drop="onDrop" dragend="onDragEnd" remove="onRemove" reorder="onReorder" draggable="true"
      dataTextField="contactName" dataValueField="customerID">

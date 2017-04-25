@@ -5,13 +5,13 @@
 
 <div class="demo-section k-content wide">
     <kendo:listBox name="listbox1" dataTextField="ProductName" dataValueField="ProductID"
-      connectWith="#listbox2" add="onAdd" remove="onRemove" draggable="true" dropSources="${list1Source}">   
+      connectWith="listbox2" add="onAdd" remove="onRemove" draggable="true" dropSources="${list1Source}">   
       <kendo:listBox-toolbar position="left" tools="${sourceTools}"></kendo:listBox-toolbar>   
       <kendo:dataSource data="${data}">
       </kendo:dataSource> 
     </kendo:listBox>
     <kendo:listBox name="listbox2" dataTextField="ProductName" dataValueField="ProductID" 
-    	connectWith="#listbox1" draggable="true" dropSources="${list2Source}">
+    	connectWith="listbox1" draggable="true" dropSources="${list2Source}">
     	<kendo:listBox-toolbar position="left" tools="${destinationTools}"></kendo:listBox-toolbar>   
     	<kendo:dataSource data="${data}"></kendo:dataSource>   	 
     </kendo:listBox>

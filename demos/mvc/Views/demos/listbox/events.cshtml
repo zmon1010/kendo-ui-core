@@ -57,7 +57,7 @@
             }
 
             $("#optional").kendoListBox({
-                connectWith: "#selected",
+                connectWith: "selected",
                 draggable: true,
                 dropSources: ["selected"],
                 toolbar: {
@@ -85,7 +85,7 @@
             });
 
             $("#selected").kendoListBox({
-                connectWith: "#optional",
+                connectWith: "optional",
                 draggable: {
                     placeholder: function (element) {
                         return element.clone().css({

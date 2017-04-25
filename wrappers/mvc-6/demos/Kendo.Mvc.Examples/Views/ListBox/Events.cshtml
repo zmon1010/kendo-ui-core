@@ -15,7 +15,7 @@
                     .Remove()
                 );
             })
-            .ConnectWith("#selected")
+            .ConnectWith("selected")
             .Selectable(ListBoxSelectable.Multiple)
             .Draggable()
             .DropSources("selected")
@@ -43,7 +43,7 @@
 
         @(Html.Kendo().ListBox()
             .Name("selected")
-            .ConnectWith("#optional")
+            .ConnectWith("optional")
             .Selectable(ListBoxSelectable.Multiple)
             .Draggable()
             .DropSources("optional")

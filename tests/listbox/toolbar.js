@@ -360,7 +360,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
@@ -439,7 +439,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
@@ -528,7 +528,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
@@ -648,7 +648,7 @@
                 dataSource: {
                     data: []
                 },
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBox({
@@ -856,7 +856,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
@@ -922,7 +922,7 @@
             }, "<select id='listbox2' />");
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             item1 = listbox2.items().eq(0);
@@ -984,7 +984,7 @@
                         text: "item8"
                     }]
                 },
-                connectWith: "#listbox1"
+                connectWith: "listbox1"
             }, element3);
 
             listbox2 = createListBoxWithToolbar({
@@ -1000,7 +1000,7 @@
             }, element2);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, element1);
 
             item1 = listbox1.items().eq(0);
@@ -1102,7 +1102,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
@@ -1155,7 +1155,7 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
-                connectWith: "#listbox2"
+                connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({

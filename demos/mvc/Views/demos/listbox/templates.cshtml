@@ -21,7 +21,7 @@
                 },
                 draggable: { placeholder: customPlaceholder },
                 dropSources: ["selected"],
-                connectWith: "#selected",
+                connectWith: "selected",
                 toolbar: {
                     position: "right",
                     tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
@@ -34,7 +34,7 @@
                 template: customerTemplate,
                 draggable: { placeholder: customPlaceholder },
                 dropSources: ["optional"],
-                connectWith: "#optional"
+                connectWith: "optional"
             });
 
             function customPlaceholder(draggedItem) {

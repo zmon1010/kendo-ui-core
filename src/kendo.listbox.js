@@ -29,6 +29,7 @@ var __meta__ = { // jshint ignore:line
     var DASH = "-";
     var DOT = ".";
     var SPACE = " ";
+    var HASH = "#";
 
     var KENDO_LISTBOX = "kendoListBox";
     var NS = DOT + KENDO_LISTBOX;
@@ -1290,7 +1291,7 @@ var __meta__ = { // jshint ignore:line
 
         getDestinationListBox: function() {
             var sourceListBox = this.getSourceListBox();
-            return sourceListBox ? $(sourceListBox.options.connectWith).data(KENDO_LISTBOX) : null;
+            return sourceListBox ? $(HASH + sourceListBox.options.connectWith).data(KENDO_LISTBOX) : null;
         },
 
         getItems: function() {
@@ -1309,7 +1310,7 @@ var __meta__ = { // jshint ignore:line
 
         getSourceListBox: function() {
             var destinationListBox = this.getDestinationListBox();
-            return destinationListBox ? $(destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
+            return destinationListBox ? $(HASH + destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
         },
 
         getDestinationListBox: function() {

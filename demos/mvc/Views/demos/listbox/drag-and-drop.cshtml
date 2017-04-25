@@ -57,7 +57,7 @@
 
         $("#discontinued").kendoListBox({
             draggable: true,
-            connectWith: "#available",
+            connectWith: "available",
             dropSources: ["available"],
             dataTextField: "ProductName",
             dataValueField: "ProductID",
@@ -71,7 +71,7 @@
 
         $("#available").kendoListBox({
             draggable: true,
-            connectWith: "#discontinued",
+            connectWith: "discontinued",
             dropSources: ["discontinued"],
             dataTextField: "ProductName",
             dataValueField: "ProductID"

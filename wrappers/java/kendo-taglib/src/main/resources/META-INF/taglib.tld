@@ -25724,7 +25724,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>A selector which determines whether the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines a one-way relationship. If you want a two-way connection, then set the connectWith option on both widgets.</description>
+            <description>The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25766,13 +25766,9 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-<<<<<<< 6d37dc3468c43aa28566edd1cd828e75cf4f69e9
-            <description>Indicates whether a single or multiple items are selected. The possible values are:</description>
-=======
             <description>Indicates whether selection is single or multiple. Possible values:
 - "single" - Single item selection.
 - "multiple" - Multiple item selection.</description>
->>>>>>> docs(listBox): php api docs updates #7020
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25814,11 +25810,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-<<<<<<< 6d37dc3468c43aa28566edd1cd828e75cf4f69e9
             <description>Fires when the dragging of the item ends but before its position is changed in the DOM. This event is suitable for preventing the drag action.</description>
-=======
-            <description>Fires when item dragging ends but before the item's position is changed in the DOM.</description>
->>>>>>> docs(listBox): php api docs updates #7020
             <name>dragend</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

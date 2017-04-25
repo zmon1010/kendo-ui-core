@@ -11,7 +11,7 @@ require_once '../include/header.php';
              ->dataTextField("ProductName")
              ->draggable(true)
              ->dropSources(array("listbox2"))
-             ->connectWith("#listbox2")
+             ->connectWith("listbox2")
              ->selectable("Single");
 
     $listbox1->addEvent("function(e){setDiscontinued(e, true)}")
@@ -28,7 +28,7 @@ require_once '../include/header.php';
              ->dataTextField("ProductName")
              ->draggable(true)
              ->dropSources(array("listbox1"))
-             ->connectWith("#listbox1")
+             ->connectWith("listbox1")
              ->selectable("single");
 
     echo $listbox2->render();
