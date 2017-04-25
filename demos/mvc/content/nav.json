@@ -948,6 +948,10 @@
         "meta": {
           "kendo-ui": " ",
           "aspnet-mvc": " "
+        },
+        "description": {
+          "kendo-ui": "The DateInput widget enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format.",
+          "aspnet-mvc": "The DateInput helper enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format."
         }
       },
       {
@@ -958,11 +962,14 @@
           "aspnet-mvc": "API ASP.NET MVC Dateinput example"
         },
         "meta": {
-          "kendo-ui": "DateInput API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date input control or open/close the calendar.",
+          "kendo-ui": "DateInput API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date input control or set/get the value.",
           "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Dateinput can be configured to modify the features of the extension."
+        },
+        "description": {
+          "aspnet-mvc": "<p>Telerik ASP.NET MVC Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of <strong>value</strong>, <strong>enable</strong> and <strong>readonly</strong> methods.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#methods\">here</a>.</p>"
         }
       },
-	  {
+      {
         "text": "Events",
         "url": "dateinput/events",
         "title": {
@@ -972,6 +979,9 @@
         "meta": {
           "kendo-ui": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget.",
           "aspnet-mvc": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget."
+        },
+        "description": {
+          "aspnet-mvc": "<p>Telerik ASP.NET MVC Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of the <strong>change</strong> event. Note that the event is triggered after focus is removed from the component.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#events\">here</a>.</p>"
         }
       },
       {
@@ -984,6 +994,9 @@
         "meta": {
           "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DateInput widget.",
           "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DateInput control."
+        },
+        "description": {
+          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DateInput component."
         }
       },
       {
@@ -1011,6 +1024,9 @@
         "meta": {
           "kendo-ui": "See how Kendo UI DateInput component supports RTL functionality.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports RTL functionality."
+        },
+        "description": {
+          "aspnet-mvc": "This example shows how RTL functionality is supported in the ASP.NET MVC DateInput component ."
         }
       },
       {
@@ -1023,6 +1039,9 @@
         "meta": {
           "kendo-ui": "See how Kendo UI DateInput component supports Localization and Globalization.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports Localization and Globalization."
+        },
+        "description": {
+          "aspnet-mvc": "<p>This example shows Localization and Globalization supported by ASP.NET MVC DateInput.</p><p>Localization is responsible for specifying the language of the component. Changing that option will change the placeholders.</p><p>Globalization is responsible for defining the format of the dates. Thus, changing the culture will modify the format in which the date is displayed.</p>"
         }
       },
       {
@@ -1254,7 +1273,6 @@
       {
         "text": "Basic usage",
         "url": "datetimepicker/index",
-        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI Date and Time picker example",
           "aspnet-mvc": "ASP.NET MVC Date and Time picker example"
@@ -1797,7 +1815,7 @@
           "kendo-ui": "TreeView in Dialog (AngularJS)| Kendo UI Dialog Demo"
         },
         "meta": {
-          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."          
+          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."
         },
 		"packages": [
           "!mvc",
@@ -3193,6 +3211,159 @@
     "category": "Data Management"
   },
   {
+    "text": "ListBox",
+    "name": "listbox",
+    "new": true,
+    "api": {
+      "all": "web/listbox"
+    },
+    "documentation": {
+      "kendo-ui": "getting-started/web/listbox/overbox",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listbox/overbox",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/listbox/overbox",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/listbox/overbox"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/listbox",
+      "aspnet-mvc": "aspnet-mvc/listbox",
+      "jsp-ui": "jsp/listbox",
+      "php-ui": "php/listbox"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/listbox",
+      "aspnet-mvc": "aspnet-mvc/listbox",
+      "jsp-ui": "jsp/listbox",
+      "php-ui": "php/listbox"
+    },
+    "spriteCssClass": "listBoxIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "listbox/index",
+        "title": {
+          "kendo-ui": "jQuery ListBox control example| KendoListBox Demo",
+          "aspnet-mvc": "ASP.NET MVC ListBox demo | Kendo UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        },
+		"description": {
+         "kendo-ui": "<p>The <strong>Kendo UI ListBox</strong> is a widget that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multipl ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
+        }
+      },
+	  {
+        "text": "Drag & Drop",
+        "url": "listbox/drag-and-drop",
+        "title": {
+          "kendo-ui": "ListBox Drag & drop",
+          "aspnet-mvc": "ASP.NET MVC ListBox Drag & Drop demo | Kendo UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "Templates",
+        "url": "listbox/templates",
+        "title": {
+          "kendo-ui": "ListBox templates",
+          "aspnet-mvc": "ASP.NET MVC ListBox templates demo | Kendo UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "Events",
+        "url": "listbox/events",
+        "title": {
+          "kendo-ui": "ListBox Events",
+          "aspnet-mvc": "ASP.NET MVC ListBox events demo | Kendo UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "",
+          "aspnet-mvc": ""
+        }
+      },
+      {
+        "text": "API",
+        "url": "listbox/api",
+        "title": {
+          "kendo-ui": "API Functions Demo for Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "API Functions Demo for Kendo UI ListBox"
+        }
+      },
+      {
+        "text": "RTL support",
+        "url": "listbox/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI ListBox widget",
+          "aspnet-mvc": "RTL support in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the right-to-left feature is supported in Kendo UI ListBox component.",
+          "aspnet-mvc": "This demo shows how the right-to-left feature is supported in Kendo UI ListBox component."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "listbox/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI ListBox widget",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListBox"
+        },
+        "meta": {
+          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListBox control.",
+          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListBox control."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "listbox/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "MVVM support in Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "listbox/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI ListBox"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI ListBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Data Management"
+  },
+  {
     "text": "ListView",
     "name": "listview",
     "api": { "all": "web/listview" },
@@ -3754,6 +3925,19 @@
         }
       },
       {
+        "text": "Scrollable",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Kendo UI Menu scrollable demo",
+          "aspnet-mvc": "ASP.NET MVC Menu scrollable demo"
+        },
+        "url": "menu/scrollable",
+        "meta": {
+          "kendo-ui": "This Kendo UI Menu example shows the feature that allows you to scroll the menu items.",
+          "aspnet-mvc": "This ASP.NET MVC Menu example shows the feature that allows you to scroll the menu items."
+        }
+      },
+      {
         "text": "Bind Custom Attributes",
         "new": "true",
         "title": {
@@ -3765,7 +3949,7 @@
         },
         "description": {
           "kendo-ui": "<p>The <strong>Menu</strong> widget enables you to bind JSON data through the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/menu#configuration-dataSource' target='_blank'>dataSource option</a> exposed.</p><p>This demo shows how you can process data fecthed through remote binding, using <strong>DataSource</strong>, and populate the <strong>Menu Items</strong> with it. Additionally, to accomplish specific functionality requirments you can bind the items' attributes in order and use the values bound later to run operations based on the end user's selection.</p>"
-        }   
+        }
       },
       {
         "packages": [
@@ -4525,7 +4709,7 @@
         "packages": [
           "!jsp",
           "!php"
-        ]      
+        ]
       },
       {
         "text": "Templates",
@@ -6250,7 +6434,6 @@
       {
         "text": "Basic usage",
         "url": "timepicker/index",
-        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI jQuery Time Picker Example",
           "aspnet-mvc": "ASP.NET MVC TimePicker example | UI for ASP.NET MVC demos"
@@ -7156,6 +7339,7 @@
     "text": "Upload",
     "name": "upload",
     "pro": "true",
+     "new": true,
     "api": { "all": "web/upload" },
     "documentation": {
       "kendo-ui": "getting-started/web/upload/overview",
@@ -7235,6 +7419,19 @@
         "meta": {
           "kendo-ui": "This example shows the custom drop zone functionality of Kendo UI Upload control.",
           "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
+        }
+      },
+	 {
+        "text": "Directory Upload",
+        "url": "upload/directoryupload",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Directory upload demo for File Upload | Kendo UI Upload Demo",
+          "aspnet-mvc": "Directory upload demo for ASP.NET MVC File Upload"
+        },
+        "meta": {
+          "kendo-ui": "This example shows directory upload of Kendo UI Upload control.",
+          "aspnet-mvc": "This example shows directory upload functionality of ASP.NET MVC Upload control."
         }
       },
       {

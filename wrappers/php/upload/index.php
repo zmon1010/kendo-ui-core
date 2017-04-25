@@ -15,6 +15,7 @@ require_once '../include/header.php';
     <div class="demo-section k-content">
 <?php
 $upload = new \Kendo\UI\Upload('files[]');
+$upload->attr('aria-label', 'files');
 
 echo $upload->render();
 ?>

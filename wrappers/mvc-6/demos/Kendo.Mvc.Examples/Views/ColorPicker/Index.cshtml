@@ -3,7 +3,7 @@
 <div class="demo-section hidden-on-narrow k-content wide">
 	<div id="background">
 		<div class="column">
-			<h3 class="title">Select Wall Paint</h3>
+			<h3 class="title"><label for="palette">Select Wall Paint</label></h3>
 		@(Html.Kendo().ColorPalette()
 			.Name("palette")
 			.Columns(4)
@@ -20,7 +20,7 @@
 	</div>
 
 		<div class="column">
-			<h3 class="title">Choose Custom Color</h3>
+			<h3 class="title"><label for="picker">Choose Custom Color</label></h3>
 		@(Html.Kendo().ColorPicker()
 			.Name("picker")
 			.Value("#ffffff")

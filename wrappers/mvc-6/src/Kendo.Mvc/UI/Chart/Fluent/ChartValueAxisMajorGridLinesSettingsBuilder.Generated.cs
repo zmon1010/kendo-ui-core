@@ -41,21 +41,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will display the major grid lines. By default the major grid lines are visible.
+        /// If set to false the chart will not display the major grid lines. By default the major grid lines are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public ChartValueAxisMajorGridLinesSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true the chart will display the major grid lines. By default the major grid lines are visible.
-        /// </summary>
-        public ChartValueAxisMajorGridLinesSettingsBuilder<T> Visible()
-        {
-            Container.Visible = true;
             return this;
         }
 

@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public string Close { get; set; }
 
+        public string PromptInput { get; set; }
+
 
         public Dialog Dialog { get; set; }
 
@@ -23,6 +25,11 @@ namespace Kendo.Mvc.UI
             if (Close?.HasValue() == true)
             {
                 settings["close"] = Close;
+            }
+
+            if (PromptInput?.HasValue() == true)
+            {
+                settings["promptInput"] = PromptInput;
             }
 
             return settings;

@@ -8,7 +8,7 @@
         columns.Add().Field(e => e.Extension).Title("Ext").Format("{0:#}");
     })
     .DataSource(dataSource => dataSource
-        .Read(read => read.Action("All", "EmployeeDirectory"))
+        .Read(read => read.Action("Index", "EmployeeDirectory"))
         .Model(m => {
             m.Id(f => f.EmployeeId);
             m.ParentId(f => f.ReportsTo);

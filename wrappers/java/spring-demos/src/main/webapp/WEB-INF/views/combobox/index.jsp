@@ -7,14 +7,14 @@
 <demo:header />
     <div id="tshirt-view" class="demo-section k-content">
 	    <h4>Customize your Kendo T-shirt</h4>
-	    <img id="tshirt" src="<c:url value="/resources/web/combobox/tShirt.png"/>" />
-	    <h4>T-shirt Fabric</h4>
+	    <img id="tshirt" alt="T-shirt image" src="<c:url value="/resources/web/combobox/tShirt.png"/>" />
+	    <h4><label for="fabric">T-shirt Fabric</label></h4>
 	    <kendo:comboBox name="fabric" filter="contains" placeholder="Select fabric..." index="3" suggest="true" 
 	                    dataTextField="text" dataValueField="value" style="width: 100%;">
 	              <kendo:dataSource data="${fabrics}"></kendo:dataSource>
 	    </kendo:comboBox>
 	
-	    <h4 style="margin-top: 2em;">T-shirt Size</h4> 
+	    <h4 style="margin-top: 2em;"><label for="size">T-shirt Size</label></h4> 
 	    <kendo:comboBox name="size" placeholder="Select size..." index="0" suggest="true" style="width: 100%;">
 	              <kendo:dataSource data="${sizes}"></kendo:dataSource>
 	    </kendo:comboBox>

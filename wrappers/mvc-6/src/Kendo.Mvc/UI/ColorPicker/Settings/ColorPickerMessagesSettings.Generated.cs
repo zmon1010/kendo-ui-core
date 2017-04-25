@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public string Cancel { get; set; }
 
+        public string PreviewInput { get; set; }
+
 
         public ColorPicker ColorPicker { get; set; }
 
@@ -30,6 +32,11 @@ namespace Kendo.Mvc.UI
             if (Cancel?.HasValue() == true)
             {
                 settings["cancel"] = Cancel;
+            }
+
+            if (PreviewInput?.HasValue() == true)
+            {
+                settings["previewInput"] = PreviewInput;
             }
 
             return settings;

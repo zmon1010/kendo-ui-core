@@ -1621,7 +1621,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the major grid lines. By default the major grid lines are visible.</description>
+            <description>If set to false the chart will not display the major grid lines. By default the major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -7688,7 +7688,7 @@ body of the chart.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the major grid lines. By default the major grid lines are visible.</description>
+            <description>If set to false the chart will not display the major grid lines. By default the major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -9079,7 +9079,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
+            <description>If set to false the chart will not display the x major grid lines. By default the x major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -10465,7 +10465,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
+            <description>If set to false the chart will not display the y major grid lines. By default the y major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -11635,6 +11635,12 @@ original value.</description>
         <attribute>
             <description>Allows customization of the "Cancel" button text.</description>
             <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Allows customization of the "Color Hexadecimal Code" preview input title.</description>
+            <name>previewInput</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -13719,7 +13725,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. See the dataSource topic below for a concrete example.</description>
+            <description>The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. For an example, refer to the dataSource topic below.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13994,14 +14000,14 @@ data source is fired. By default the widget will bind to the data source specifi
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolTag</tag-class>
 
@@ -16276,7 +16282,7 @@ A diagram can have in general disconnected pieces, known as components, which ca
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <description>If set to true, the content is forwarded to proxyURL even if the browser supports the saving of files locally.</description>
             <name>forceProxy</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -16288,28 +16294,25 @@ A diagram can have in general disconnected pieces, known as components, which ca
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <description>If set to true, reverses the paper dimensions if needed to verify that the width corresponds to the longer side.</description>
             <name>landscape</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the paper size of the PDF document.
-The default "auto" means paper size is determined by content.Supported values:</description>
+            <description>Specifies the paper size of the PDF document. The default setting is auto and determines the paper size by content.The supported values are:</description>
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
-the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe, the proxy has to set the Content-Disposition header to inline; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyTarget</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+            <description>The URL of the server side proxy which will stream the file to the end user.When the browser is not capable of saving files locally, a proxy will be used. Such browsers are Internet Explorer version 9 (and older) and Safari. You are responsible for implementing the server-side proxy. The proxy receives a POST request with the following parameters in the request body:The proxy is expected to return the decoded file with a set Content-Disposition header.</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16330,32 +16333,31 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
     </tag>
 
     <tag>
-        <description>Specifies the margins of the page (numbers or strings with units). Supported
-units are "mm", "cm", "in" and "pt" (default).</description>
+        <description>Specifies the margins of the page (numbers or strings with units). The supported units are mm, cm, in, and pt (default).</description>
         <name>diagram-pdf-margin</name>
         <tag-class>com.kendoui.taglib.diagram.PdfMarginTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The bottom margin. Numbers are considered as "pt" units.</description>
+            <description>The bottom margin. Numbers are assumed to be in pt units.</description>
             <name>bottom</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The left margin. Numbers are considered as "pt" units.</description>
+            <description>The left margin. Numbers are assumed to be in pt units.</description>
             <name>left</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The right margin. Numbers are considered as "pt" units.</description>
+            <description>The right margin. Numbers are assumed to be in pt units.</description>
             <name>right</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The top margin. Numbers are considered as "pt" units.</description>
+            <description>The top margin. Numbers are assumed to be in pt units.</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -16436,19 +16438,19 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the height of the shape when added to the diagram.</description>
+            <description>Defines the height of the shape when added to the Diagram.</description>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -16478,25 +16480,25 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
+            <description>A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the width of the shape when added to the diagram.</description>
+            <description>Defines the width of the shape when added to the Diagram.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the x-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the x-coordinate of the shape when added to the Diagram.</description>
             <name>x</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the y-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the y-coordinate of the shape when added to the Diagram.</description>
             <name>y</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -16505,7 +16507,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Defines default options for the shape connectors.</description>
+        <description>Defines the default options for the shape connectors.</description>
         <name>diagram-shapeDefaults-connectorDefaults</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsTag</tag-class>
         <body-content>JSP</body-content>
@@ -16615,7 +16617,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16644,7 +16646,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The stroke dash type.</description>
+            <description>The dash type of the stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16692,7 +16694,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+            <description>The function that positions the connector. The function is passed a shape and should return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16835,7 +16837,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
-        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+        <description>The function that positions the connector. The function is passed a shape and should return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
         <name>diagram-shapeDefaults-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -16889,7 +16891,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The text displayed in the shape.</description>
+            <description>The text that is displayed in the shape.</description>
             <name>text</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16911,7 +16913,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies whether the connectors should appear on hover.</description>
+            <description>Specifies whether the connectors appear on hover.</description>
             <name>connect</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -16932,14 +16934,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options that are supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options that are supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTag</tag-class>
 
@@ -16987,7 +16989,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
+            <description>The name of the tool. The built-in tools are edit, delete, rotateClockwise, and rotateAnticlockwise.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17035,7 +17037,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The step of the rotateClockwise and rotateAnticlockwise tools.</description>
+            <description>The step of the rotateClockwise and  rotateAnticlockwise tools.</description>
             <name>step</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17314,15 +17316,15 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <description>The center of the radial gradient.The coordinates are relative to the shape-bounding box.
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>center</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>end</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -17335,13 +17337,13 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
         </attribute>
         <attribute>
             <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>start</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:</description>
+            <description>The type of the gradient. The supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17363,11 +17365,11 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The color in any of the following formats.| Format         | Description
+            <description>The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value
-| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent' or '' (empty string) will clear the fill.</description>
+| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent', or '' (empty string) clears the fill.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17398,7 +17400,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Hover's fill options.</description>
+            <description>Defines the hover fill options.</description>
             <name>fill</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17407,19 +17409,19 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
     </tag>
 
     <tag>
-        <description>Hover's fill options.</description>
+        <description>Defines the hover fill options.</description>
         <name>diagram-shapeDefaults-hover-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsHoverFillTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Hover's fill color.</description>
+            <description>Defines the hover fill color.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Hover's fill opacity.</description>
+            <description>Defines the hover fill opacity.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17452,7 +17454,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the color of the shape's stroke.</description>
+            <description>Defines the color of the shape stroke.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17464,7 +17466,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the thickness or width of the shape's stroke.</description>
+            <description>Defines the thickness or width of the shape stroke.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17475,7 +17477,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
 
 
     <tag>
-        <description>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
+        <description>A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</description>
         <name>diagram-shapeDefaults-visual</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17507,7 +17509,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the height of the shape when added to the diagram.</description>
+            <description>Defines the height of the shape when added to the Diagram.</description>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17519,13 +17521,13 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</description>
+            <description>Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.</description>
             <name>minWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17549,26 +17551,25 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function returning a visual element to render for this shape.
-See visual.</description>
+            <description>A function returning a visual element to render for this shape. For more information, refer to visual.</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the width of the shape when added to the diagram.</description>
+            <description>Defines the width of the shape when added to the Diagram.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the x-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the x-coordinate of the shape when added to the Diagram.</description>
             <name>x</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines the y-coordinate of the shape when added to the diagram.</description>
+            <description>Defines the y-coordinate of the shape when added to the Diagram.</description>
             <name>y</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -17686,7 +17687,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17715,7 +17716,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The stroke dash type.</description>
+            <description>The dash type of the stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17763,13 +17764,13 @@ See visual.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The connector name. Predefined names include:</description>
+            <description>The connector name. The predefined names are:</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+            <description>The function that positions the connector. The function is passed a shape and shhould return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17866,7 +17867,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The hover stroke dash type.</description>
+            <description>The dash type of the hover stroke.</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17912,7 +17913,7 @@ See visual.</description>
 
 
     <tag>
-        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
+        <description>The function that positions the connector. The function is passed a shape and shhould return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.</description>
         <name>diagram-shape-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17997,14 +17998,14 @@ See visual.</description>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shape-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Provides all options supported for toolbar.items. The predefined tools are:</description>
         <name>diagram-shape-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolTag</tag-class>
 
@@ -18052,7 +18053,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
+            <description>The name of the tool. The built-in tools are edit, delete, rotateClockwise, and rotateAnticlockwise.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18380,14 +18381,14 @@ See visual.</description>
 
         <attribute>
             <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>center</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>end</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -18400,13 +18401,13 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
         </attribute>
         <attribute>
             <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example [0, 0] is top left and [1, 1] is bottom right.</description>
+For example, [0, 0] is top left and [1, 1] is bottom right.</description>
             <name>start</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:</description>
+            <description>The type of the gradient. The supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18428,7 +18429,7 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The color in any of the following formats.| Format         | Description
+            <description>The color in any of the following formats:| Format         | Description
 | ---            | --- | ---
 | red            | Basic or Extended CSS Color name
 | #ff0000        | Hex RGB value
@@ -18463,7 +18464,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Hover's fill options.</description>
+            <description>Defines the hover fill options.</description>
             <name>fill</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18472,19 +18473,19 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
     </tag>
 
     <tag>
-        <description>Hover's fill options.</description>
+        <description>Defines the hover fill options.</description>
         <name>diagram-shape-hover-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeHoverFillTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Hover's fill color.</description>
+            <description>Defines the hover fill color.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Hover's fill opacity.</description>
+            <description>Defines the hover fill opacity.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -18517,7 +18518,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the color of the shape's stroke.</description>
+            <description>Defines the color of the shape stroke.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18529,7 +18530,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the thickness or width of the shape's stroke.</description>
+            <description>Defines the thickness or width of the shape stroke.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -18540,8 +18541,7 @@ Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
 
 
     <tag>
-        <description>A function returning a visual element to render for this shape.
-See visual.</description>
+        <description>A function returning a visual element to render for this shape. For more information, refer to visual.</description>
         <name>diagram-shape-visual</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -18892,6 +18892,12 @@ See visual.</description>
         <attribute>
             <description>The title of the close button.</description>
             <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the prompt input.</description>
+            <name>promptInput</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20860,6 +20866,12 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the tool that shows the overflow tools.</description>
+            <name>overflowAnchor</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the Print tool.</description>
             <name>print</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20922,6 +20934,12 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The title of the tool that underlines text.</description>
             <name>underline</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The label of the Units dropdowns in TableWizard dialog.</description>
+            <name>units</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -25687,6 +25705,311 @@ Any valid CSS color string will work here, including hex and rgb.</description>
 
 
 
+    <tag>
+        <description>ListBox</description>
+        <name>listBox</name>
+        <tag-class>com.kendoui.taglib.ListBoxTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.</description>
+            <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.</description>
+            <name>connectWith</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The data source of the widget which is used render listbox items. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
+            <name>dataSource</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.</description>
+            <name>dataTextField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The field of the data item that provides the value of the widget.</description>
+            <name>dataValueField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Indicates if the widget items can be draged and droped.</description>
+            <name>draggable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.</description>
+            <name>dropSources</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether keyboard navigation is enabled/disabled.</description>
+            <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether selection is single or multiple. Possible values:</description>
+            <name>selectable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies ListBox item template.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>add</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>dataBound</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when ListBox item(s) drag starts.</description>
+            <name>dragstart</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when ListBox's placeholder changes its position.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when ListBox item is dropped over one of the drop targets.</description>
+            <name>drop</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.</description>
+            <name>dragend</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when items in the widget are reordered.</description>
+            <name>reorder</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Indicates if the widget items can be draged and droped.</description>
+        <name>listBox-draggable</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggableTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Indicates whether dragging is enabled.</description>
+            <name>enabled</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint is not provided the widget will clone dragged item and use it as a hint.</description>
+            <name>hint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If placeholder is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+            <name>placeholder</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If hint is not provided the widget will clone dragged item and use it as a hint.</description>
+        <name>listBox-draggable-hint</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggableHintFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+If placeholder is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</description>
+        <name>listBox-draggable-placeholder</name>
+        <tag-class>com.kendoui.taglib.listbox.DraggablePlaceholderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Defines the localization texts for the ListBox. Used primarily for localization.</description>
+        <name>listBox-messages</name>
+        <tag-class>com.kendoui.taglib.listbox.MessagesTag</tag-class>
+        <body-content>JSP</body-content>
+
+
+    </tag>
+
+    <tag>
+        <description>Defines the localization texts for tools in the ListBox. Texts are used for tooltip and accessibility purpose.</description>
+        <name>listBox-messages-tools</name>
+        <tag-class>com.kendoui.taglib.listbox.MessagesToolsTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the text of the "Move Down" button located in the toolbar of the widget.</description>
+            <name>moveDown</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "Move Up" button located in the toolbar of the widget.</description>
+            <name>moveUp</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "Delete" button located in the toolbar of the widget.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "All to Left" button located in the toolbar of the widget.</description>
+            <name>transferAllFrom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "All to Right" button located in the toolbar of the widget.</description>
+            <name>transferAllTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "To Left" button located in the toolbar of the widget.</description>
+            <name>transferFrom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the text of the "To Right" button located in the toolbar of the widget.</description>
+            <name>transferTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
+        <description>Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.</description>
+        <name>listBox-toolbar</name>
+        <tag-class>com.kendoui.taglib.listbox.ToolbarTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The position relative to the ListBox element, at which the toolbar will be shown. The possible values are "left", "right", "top" and "bottom".</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A collection of tools that are used to interact with the ListBox. The built-in tools are:</description>
+            <name>tools</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-add</name>
+        <tag-class>com.kendoui.taglib.listbox.AddFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-change</name>
+        <tag-class>com.kendoui.taglib.listbox.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-dataBound</name>
+        <tag-class>com.kendoui.taglib.listbox.DataBoundFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when ListBox item(s) drag starts.</description>
+        <name>listBox-dragstart</name>
+        <tag-class>com.kendoui.taglib.listbox.DragstartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when ListBox's placeholder changes its position.</description>
+        <name>listBox-drag</name>
+        <tag-class>com.kendoui.taglib.listbox.DragFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when ListBox item is dropped over one of the drop targets.</description>
+        <name>listBox-drop</name>
+        <tag-class>com.kendoui.taglib.listbox.DropFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.</description>
+        <name>listBox-dragend</name>
+        <tag-class>com.kendoui.taglib.listbox.DragendFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>listBox-remove</name>
+        <tag-class>com.kendoui.taglib.listbox.RemoveFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when items in the widget are reordered.</description>
+        <name>listBox-reorder</name>
+        <tag-class>com.kendoui.taglib.listbox.ReorderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>ListView</description>
         <name>listView</name>
@@ -31359,8 +31682,20 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The tooltip of the next navigation button.</description>
+            <name>next</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text displayed by the PDF export button.</description>
             <name>pdf</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The tooltip of the previous navigation button.</description>
+            <name>previous</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -31507,6 +31842,12 @@ which field to update. The other option is to use MVVM bindings in order to bind
         <tag-class>com.kendoui.taglib.scheduler.MessagesRecurrenceEditorTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>The text of the Recurence editor dropdown title.</description>
+            <name>recurrenceEditorTitle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -48012,6 +48353,18 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support webkitdirectory.</description>
+            <name>directory</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support DataTransferItem and webkitGetAsEntry.</description>
+            <name>directoryDrop</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.</description>
             <name>dropZone</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48117,6 +48470,12 @@ for more details.</description>
         <body-content>empty</body-content>
 
         <attribute>
+            <description>If you set the property, the failed upload request is repeated after the declared amount of miliseconds.</description>
+            <name>autoRetryAfter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The selected files will be uploaded immediately by default. You can change this behavior by setting autoUpload to false.</description>
             <name>autoUpload</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48131,7 +48490,7 @@ Files selected one after the other will be uploaded in separate requests.</descr
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.</description>
+            <description>When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.You can use this property only when async.batch is set to false.</description>
             <name>chunkSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -48143,8 +48502,8 @@ Files selected one after the other will be uploaded in separate requests.</descr
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.</description>
-            <name>maxRetries</name>
+            <description>Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.</description>
+            <name>maxAutoRetries</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
@@ -48168,12 +48527,6 @@ requests containing one or more "fileNames" fields specifying the files to be de
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If you set the property, the failed upload request is repeated after the declared amount of ticks.</description>
-            <name>retryAfter</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
-        </attribute>
-        <attribute>
             <description>The name of the form field submitted to the save URL. The default value is the input name.</description>
             <name>saveField</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48185,6 +48538,13 @@ containing one or more fields with the same name as the original input name.</de
             <name>saveUrl</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+ this buffer is send in the request body.</description>
+            <name>useArrayBuffer</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Controls whether to send credentials (cookies, headers) for cross-site requests.
@@ -48272,6 +48632,12 @@ This option will be ignored if the browser doesn't support File API.</descriptio
         <attribute>
             <description>Sets the text for invalid file extension validation message.</description>
             <name>invalidFileExtension</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for the validation messages of invalid files when the batch property is true and when two or more files are not passing the validation.</description>
+            <name>invalidFiles</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

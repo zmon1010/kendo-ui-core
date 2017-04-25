@@ -40,6 +40,11 @@ namespace Kendo.Mvc.TagHelpers
         public string InvalidFileExtension { get; set; }
 
         /// <summary>
+        /// Sets the text for the validation messages of invalid files when the batch property is true and when two or more files are not passing the validation.
+        /// </summary>
+        public string InvalidFiles { get; set; }
+
+        /// <summary>
         /// Sets the text for an invalid maxFileSize validation message.
         /// </summary>
         public string InvalidMaxFileSize { get; set; }
@@ -116,6 +121,11 @@ namespace Kendo.Mvc.TagHelpers
             if (InvalidFileExtension?.HasValue() == true)
             {
                 settings["invalidFileExtension"] = InvalidFileExtension;
+            }
+
+            if (InvalidFiles?.HasValue() == true)
+            {
+                settings["invalidFiles"] = InvalidFiles;
             }
 
             if (InvalidMaxFileSize?.HasValue() == true)

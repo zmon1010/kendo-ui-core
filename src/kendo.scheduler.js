@@ -96,9 +96,9 @@ var __meta__ = { // jshint ignore:line
            '</ul>' +
            '# } #' +
             '<ul class="k-reset k-scheduler-navigation">' +
-               '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link">${messages.today}</a></li>' +
-               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
-               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link" title="${messages.today}">${messages.today}</a></li>' +
+               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link" title="${messages.previous}" aria-label="${messages.previous}"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link" title="${messages.next}" aria-label="${messages.next}"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
                '<li class="k-state-default k-nav-current">' +
                     '<a role="button" href="\\#" class="k-link">' +
                         '<span class="k-icon k-i-calendar"></span>' +
@@ -146,7 +146,7 @@ var __meta__ = { // jshint ignore:line
                 '</ul>' +
             '</div>'),
         MOBILEDATERANGEEDITOR = function(container, options) {
-            var attr = { name: options.field };
+            var attr = { name: options.field, title: options.title };
             var datepicker_role = !input_support.date ? kendo.attr("role") + '="datepicker" ' : "";
             var datetimepicker_role = kendo.attr("role") + '="datetimepicker" ';
             var isAllDay = options.model.isAllDay;
@@ -167,7 +167,7 @@ var __meta__ = { // jshint ignore:line
             $('<span ' + kendo.attr("for") + '="' + options.field + '" class="k-invalid-msg"/>').hide().appendTo(container);
         },
         DATERANGEEDITOR = function(container, options) {
-            var attr = { name: options.field },
+            var attr = { name: options.field, title: options.title },
                 isAllDay = options.model.isAllDay,
                 dateTimeValidate = kendo.attr("validate") + "='" + (!isAllDay) + "' ",
                 dateValidate = kendo.attr("validate") + "='" + isAllDay + "' ";
@@ -243,7 +243,8 @@ var __meta__ = { // jshint ignore:line
                 .toggle(visible)
                 .appendTo(container)
                 .kendoTimezoneEditor({
-                    optionLabel: options.noTimezone
+                    optionLabel: options.noTimezone,
+                    title: options.title
                 });
         };
 
@@ -856,7 +857,7 @@ var __meta__ = { // jshint ignore:line
         var attr = createValidationAttributes(model, resource.field);
 
         return function(container) {
-           $(kendo.format('<select data-{0}bind="value:{1}">', kendo.ns, resource.field))
+           $(kendo.format('<select data-{0}bind="value:{1}" title="' + model.title + '">', kendo.ns, resource.field))
              .appendTo(container)
              .attr(attr)
              .kendoDropDownList({
@@ -873,8 +874,8 @@ var __meta__ = { // jshint ignore:line
     function descriptionEditor(options) {
         var attr = createValidationAttributes(options.model, options.field);
 
-        return function(container) {
-            $('<textarea name="description" class="k-textbox"/>').attr(attr)
+        return function(container, model) {
+            $('<textarea name="description" class="k-textbox" title="' + model.title + '"/>').attr(attr)
                 .appendTo(container);
         };
     }
@@ -1042,7 +1043,6 @@ var __meta__ = { // jshint ignore:line
             var settings = extend({}, kendo.Template, this.options.templateSettings);
             var paramName = settings.paramName;
             var template = this.options.editable.template;
-
             var html = "";
 
             if (template) {
@@ -2259,6 +2259,8 @@ var __meta__ = { // jshint ignore:line
                 cancel: "Cancel",
                 destroy: "Delete",
                 deleteWindowTitle: "Delete event",
+                next: "Next",
+                previous: "Previous",
                 ariaSlotLabel: "Selected from {0:t} to {1:t}",
                 ariaEventLabel: "{0} on {1:D} at {2:t}",
                 views: {
@@ -2290,7 +2292,7 @@ var __meta__ = { // jshint ignore:line
                     allDayEvent: "All day event",
                     description: "Description",
                     repeat: "Repeat",
-                    timezone: " ",
+                    timezone: "Timezone",
                     startTimezone: "Start timezone",
                     endTimezone: "End timezone",
                     separateTimezones: "Use separate start and end time zones",
@@ -3420,7 +3422,7 @@ var __meta__ = { // jshint ignore:line
 
         _renderView: function(name) {
             var view = this._initializeView(name);
-          
+
             this._bindView(view);
 
             this._model.set("formattedDate", view.dateForTitle());
@@ -3992,7 +3994,7 @@ var __meta__ = { // jshint ignore:line
 
         _zoneTitlePicker: function() {
             var that = this,
-                zoneTitle = $('<input id="' + that._zoneTitleId + '"/>').appendTo(that.wrapper);
+                zoneTitle = $('<input id="' + that._zoneTitleId + '" aria-label="' + that.options.title + '"/>').appendTo(that.wrapper);
 
             that._zoneTitle = new kendo.ui.DropDownList(zoneTitle, {
                 dataSource: kendo.timezone.zones_titles,
@@ -4004,7 +4006,7 @@ var __meta__ = { // jshint ignore:line
 
         _zonePicker: function() {
             var that = this,
-                zone = $('<input />').appendTo(this.wrapper);
+                zone = $('<input aria-label="' + that.options.title + '"/>').appendTo(this.wrapper);
 
             that._zone = new kendo.ui.DropDownList(zone, {
                 dataValueField: "zone",

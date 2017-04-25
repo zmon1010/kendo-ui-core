@@ -1192,6 +1192,21 @@ The title of the tool that makes text italicized.
     });
     </script>
 
+### messages.overflowAnchor `String` *(default: "More tools")*
+
+The title of the tool that shows the overflow tools.
+
+#### Example
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      messages: {
+        overflowAnchor: "More tools"
+      }
+    });
+    </script>
+
 ### messages.justifyCenter `String` *(default: "Center text")*
 
 The title of the tool that aligns text in the center.
@@ -1473,6 +1488,21 @@ The title of the tool that underlines text.
     $("#editor").kendoEditor({
       messages: {
         underline: "Underline"
+      }
+    });
+    </script>
+
+### messages.units `String` *(default: "Units")*
+
+The label of the Units dropdowns in TableWizard dialog.
+
+#### Example
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      messages: {
+        units: "Units"
       }
     });
     </script>

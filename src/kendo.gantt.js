@@ -50,12 +50,13 @@ var __meta__ = { // jshint ignore:line
         }
     };
     var ARIA_DESCENDANT = "aria-activedescendant";
+    var ARIA_LABEL = "aria-label";
     var ACTIVE_CELL = "gantt_active_cell";
     var ACTIVE_OPTION = "action-option-focused";
     var DOT = ".";
     var TASK_DELETE_CONFIRM = "Are you sure you want to delete this task?";
     var DEPENDENCY_DELETE_CONFIRM = "Are you sure you want to delete this dependency?";
-    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#" type="button"><span class="#=styles.iconToggle#"></span></button>');
+    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#" type="button" '+ ARIA_LABEL + '="Toggle"><span class="#=styles.iconToggle#"></span></button>');
     var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" type="button" '+
             '#if (action) {#' +
                 'data-action="#=action#"' +
@@ -77,7 +78,7 @@ var __meta__ = { // jshint ignore:line
         '</div>');
 
     var DATERANGEEDITOR = function(container, options) {
-        var attr = { name: options.field };
+        var attr = { name: options.field, title: options.title };
         var validationRules = options.model.fields[options.field].validation;
 
         if (validationRules && isPlainObject(validationRules) && validationRules.message) {

@@ -6781,15 +6781,18 @@ var cloneNodes = (function($){
                 }
                 if (/^canvas$/i.test(el.tagName)) {
                     clone.getContext("2d").drawImage(el, 0, 0);
-                } else if (/^input$/i.test(el.tagName)) {
+                } else if (/^(?:input|select|textarea|option)$/i.test(el.tagName)) {
                     // drop the name attributes so that we don't affect the selection of the
                     // original nodes (i.e. checked status of radio buttons) when we insert our copy
                     // into the DOM.  https://github.com/telerik/kendo/issues/5409
-                    el.removeAttribute("name");
-                } else {
-                    for (i = el.firstChild; i; i = i.nextSibling) {
-                        clone.appendChild(cloneNodes(i));
-                    }
+                    clone.removeAttribute("id");
+                    clone.removeAttribute("name");
+                    clone.value = el.value;
+                    clone.checked = el.checked;
+                    clone.selected = el.selected;
+                }
+                for (i = el.firstChild; i; i = i.nextSibling) {
+                    clone.appendChild(cloneNodes(i));
                 }
             }
             return clone;
@@ -6809,8 +6812,13 @@ var cloneNodes = (function($){
 
             // remove "name" attributes from <input> elements -
             // https://github.com/telerik/kendo/issues/5409
-            slice$1(clone.querySelectorAll("input")).forEach(function(input){
-                input.removeAttribute("name");
+            var orig = el.querySelectorAll("input, select, textarea, option");
+            slice$1(clone.querySelectorAll("input, select, textarea, option")).forEach(function(el, i){
+                el.removeAttribute("id");
+                el.removeAttribute("name");
+                el.value = orig[i].value;
+                el.checked = orig[i].checked;
+                el.selected = orig[i].selected;
             });
 
             return clone;
@@ -7123,6 +7131,9 @@ function drawDOM(element, options) {
         }
 
         function splitElement(element) {
+            if (element.tagName == "TABLE") {
+                setCSS(element, { tableLayout: "fixed" });
+            }
             var style = getComputedStyle(element);
             var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
             var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));

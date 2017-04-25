@@ -645,6 +645,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("outdent", value);
     }
 
+    public java.lang.String getOverflowAnchor() {
+        return (java.lang.String)getProperty("overflowAnchor");
+    }
+
+    public void setOverflowAnchor(java.lang.String value) {
+        setProperty("overflowAnchor", value);
+    }
+
     public java.lang.String getPrint() {
         return (java.lang.String)getProperty("print");
     }
@@ -731,6 +739,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setUnderline(java.lang.String value) {
         setProperty("underline", value);
+    }
+
+    public java.lang.String getUnits() {
+        return (java.lang.String)getProperty("units");
+    }
+
+    public void setUnits(java.lang.String value) {
+        setProperty("units", value);
     }
 
     public java.lang.String getUnlink() {

@@ -1280,6 +1280,19 @@
     <Content Include="Views\demos\toolbar\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\toolbar\resizing.cshtml" />
     <Content Include="Views\demos\toolbar\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\upload\directoryupload.cshtml" />
+    <Content Include="Views\demos\dateinput\angular.cshtml" />
+    <Content Include="Views\demos\dateinput\localization-globalization.cshtml" />
+    <Content Include="Views\demos\listbox\angular.cshtml" />
+	<Content Include="Views\demos\listbox\drag-and-drop.cshtml" />
+    <Content Include="Views\demos\listbox\index.cshtml" />
+	<Content Include="Views\demos\listbox\api.cshtml" />
+	<Content Include="Views\demos\listbox\mvvm.cshtml" />
+    <Content Include="Views\demos\listbox\keyboard-navigation.cshtml" />
+    <Content Include="Views\demos\listbox\events.cshtml" />
+    <Content Include="Views\demos\listbox\templates.cshtml" />
+    <Content Include="Views\demos\listbox\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\menu\scrollable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

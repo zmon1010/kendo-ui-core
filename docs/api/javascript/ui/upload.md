@@ -70,6 +70,8 @@ Files selected one after the other will be uploaded in separate requests.
 
 When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the `chunkIndex`, `contentType`, `totalFileSize`, `totalChunks`, `uploadUid` properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the `uploaded` and `fileUid` properties, which notifies the client what is the next chunk.
 
+You can use this property only when [`async.batch`](#configuration-async.batch) is set to `false`.
+
 #### Example
 
     <input type="file" name="files" id="photos" />
@@ -103,11 +105,9 @@ This property is available when the [`async.chunkSize`](#configuration-async.chu
         });
     </script>
 
-### async.maxRetries `Number`*(default: 1)*
+### async.autoRetryAfter `Number`
 
-Sets the number of attempts that are performed if an upload is fails.
-
-The property is only used when the [`async.retryAfter`](#configuration-async.retryAfter) property is also defined.
+If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
 
 #### Example
 
@@ -118,15 +118,16 @@ The property is only used when the [`async.retryAfter`](#configuration-async.ret
                 saveUrl: "http://my-app.localhost/save",
                 removeUrl: "http://my-app.localhost/remove",
                 chunkSize: 2000,
-                retryAfter: 300,
-                maxRetries: 4
+                autoRetryAfter: 300
             }
         });
     </script>
 
-### async.retryAfter `Number`
+### async.maxAutoRetries `Number`*(default: 1)*
 
-If you set the property, the failed upload request is repeated after the declared amount of ticks.
+Sets the maximum number of attempts that are performed if an upload fails.
+
+The property is only used when the [`async.autoRetryAfter`](#configuration-async.autoRetryAfter) property is also defined.
 
 #### Example
 
@@ -137,7 +138,8 @@ If you set the property, the failed upload request is repeated after the declare
                 saveUrl: "http://my-app.localhost/save",
                 removeUrl: "http://my-app.localhost/remove",
                 chunkSize: 2000,
-                retryAfter: 300
+                autoRetryAfter: 300,
+                maxAutoRetries: 4
             }
         });
     </script>
@@ -227,10 +229,72 @@ containing one or more fields with the same name as the original input name.
         });
     </script>
 
+### async.useArrayBuffer `Boolean` *(default: false)*
+
+By default, the files are uploaded as filedata. When set to `true`, the files are read as file buffer by using [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader) and
+ this buffer is send in the request body.
+
+#### Example
+
+    <input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove",
+                useArrayBuffer: true
+            }
+        });
+    </script>
+
 ### async.withCredentials `Boolean` *(default: true)*
 
 Controls whether to send credentials (cookies, headers) for cross-site requests.
 This option will be ignored if the browser doesn't support File API.
+
+### directory `Boolean` *(default: false)*
+
+Enables the selection of folders instead of files. When the user selects a directory, its entire content hierarchy of files is included in the set of selected items. The setting supported only in browsers that support [webkitdirectory](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory).
+
+#### Example
+
+    <div>
+     	<input name="files" id="files" type="file" />
+     	<div class="dropZoneElement">Drag and drop file here</div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#files").kendoUpload({
+                async: {
+                    saveUrl: "http://my-app.localhost/save",
+                    removeUrl: "http://my-app.localhost/remove"
+                },
+                directory: true
+            });
+        });
+    </script
+
+### directoryDrop `Boolean` *(default: false)*
+
+Enables the dropping of folders over the Upload and its drop zone. When a directory is dropped, its entire content hierarchy of files is included in the set of selected items. This setting is supported only in browsers that support [DataTransferItem](https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem) and [webkitGetAsEntry](https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry).
+
+#### Example
+
+    <div>
+    	<input name="files" id="files" type="file" />
+    	<div class="dropZoneElement">Drag and drop file here</div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#files").kendoUpload({
+                async: {
+                    saveUrl: "http://my-app.localhost/save",
+                    removeUrl: "http://my-app.localhost/remove"
+                },
+                directoryDrop: true
+            });
+        });
+    </script
 
 ### dropZone `String`
 
@@ -441,6 +505,26 @@ Sets the text for invalid file extension validation message.
             },
             localization: {
                 invalidFileExtension: "customInvalidFileExtension"
+            }
+        });
+    </script>
+
+### localization.invalidFiles `String`
+
+Sets the text for the validation messages of invalid files when the `batch` property is `true` and when two or more files are not passing the validation.
+
+#### Example
+
+    <input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove"
+                batch:true
+            },
+            localization: {
+                invalidFiles: "customInvalidFiles"
             }
         });
     </script>
@@ -1455,6 +1539,10 @@ Lists the files that were uploaded or removed. Each file has:
         including the leading dot - ".jpg", ".png", etc.
 *   size - the file size in bytes (null if not available)
 *   uid - the unique identifier of the file or batch of files
+
+##### e.headers `Object`
+
+Additional headers that will be added to the remove request
 
 ##### data `Object`
 

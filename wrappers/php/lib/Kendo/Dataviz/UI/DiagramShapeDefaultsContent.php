@@ -82,7 +82,7 @@ class DiagramShapeDefaultsContent extends \Kendo\SerializableObject {
     }
 
     /**
-    * The text displayed in the shape.
+    * The text that is displayed in the shape.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsContent
     */

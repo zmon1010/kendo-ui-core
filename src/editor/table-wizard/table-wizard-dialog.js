@@ -111,14 +111,14 @@ var dialogTemplate =
                     '</div>' +
                     '<div class="k-edit-field">' +
                         '<input type="numeric" id="k-editor-table-width" />' +
-                        '<input id="k-editor-table-width-type" />' +
+                        '<input id="k-editor-table-width-type" aria-label="#= messages.units #" />' +
                     '</div>' +
                     '<div class="k-edit-label">' +
                         '<label for="k-editor-table-height">#= messages.height #</label>' +
                     '</div>' +
                     '<div class="k-edit-field">' +
                         '<input type="numeric" id="k-editor-table-height" />' +
-                        '<input id="k-editor-table-height-type" />' +
+                        '<input id="k-editor-table-height-type" aria-label="#= messages.units #" />' +
                     '</div>' +
 
                     '<div class="k-edit-label">' +
@@ -203,14 +203,14 @@ var dialogTemplate =
                     '</div>' +
                     '<div class="k-edit-field">' +
                         '<input type="numeric" id="k-editor-cell-width" />' +
-                        '<input id="k-editor-cell-width-type" />' +
+                        '<input id="k-editor-cell-width-type" aria-label="#= messages.units #" />' +
                     '</div>' +
                     '<div class="k-edit-label">' +
                         '<label for="k-editor-cell-height">#= messages.height #</label>' +
                     '</div>' +
                     '<div class="k-edit-field">' +
                         '<input type="numeric" id="k-editor-cell-height" />' +
-                        '<input id="k-editor-cell-height-type" />' +
+                        '<input id="k-editor-cell-height-type" aria-label="#= messages.units #" />' +
                     '</div>' +
                     '<div class="k-edit-label">' +
                         '<label for="k-editor-table-cell-margin">#= messages.cellMargin #</label>' +

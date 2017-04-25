@@ -15,7 +15,7 @@ class DiagramShapeConnector extends \Kendo\SerializableObject {
     }
 
     /**
-    * The connector name. Predefined names include:
+    * The connector name. The predefined names are:
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeConnector
     */
@@ -25,7 +25,7 @@ class DiagramShapeConnector extends \Kendo\SerializableObject {
 
     /**
     * Sets the position option of the DiagramShapeConnector.
-    * The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.
+    * The function that positions the connector. The function is passed a shape and shhould return kendo.dataviz.diagram. As a result, a point that holds the connector position appears.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShapeConnector
     */

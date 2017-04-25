@@ -2566,6 +2566,7 @@ div.k-window.k-state-focused
 }
 
 .k-list > .k-state-selected,
+.k-drag-clue.k-state-selected,
 .k-group > .k-item > .k-state-selected,
 .k-gantt .k-treelist .k-state-selected,
 .k-gantt .k-treelist .k-state-selected td,
@@ -3386,5 +3387,36 @@ div.k-window.k-state-focused
     .k-i-warning {
         margin-right: 0;
         margin-left: 2.8em;
+    }
+}
+
+.k-listbox {
+    .k-list-scroller {
+        border-color: @widget-border-color;
+        background-color: @widget-background-color;
+    }
+
+    .k-drop-hint {
+        height: 0;
+        border-top: 1px solid @accent;
+    }
+}
+
+.k-state-selected.k-drag-clue {
+    border-width: 0;
+}
+
+.k-grid-header {
+    .k-i-sort-asc-sm,
+    .k-i-sort-desc-sm,
+    .k-sort-order {
+        color: @accent;
+        opacity: 1;
+    }
+
+    .k-sort-order {
+        font-size: .7em;
+        vertical-align: text-top;
+        line-height: 1.5em;
     }
 }

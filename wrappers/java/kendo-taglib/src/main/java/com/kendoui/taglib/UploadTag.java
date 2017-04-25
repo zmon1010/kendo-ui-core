@@ -116,6 +116,22 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("upload", value.getBody());
     }
 
+    public boolean getDirectory() {
+        return (Boolean)getProperty("directory");
+    }
+
+    public void setDirectory(boolean value) {
+        setProperty("directory", value);
+    }
+
+    public boolean getDirectoryDrop() {
+        return (Boolean)getProperty("directoryDrop");
+    }
+
+    public void setDirectoryDrop(boolean value) {
+        setProperty("directoryDrop", value);
+    }
+
     public java.lang.String getDropZone() {
         return (java.lang.String)getProperty("dropZone");
     }

@@ -41,6 +41,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Allows customization of the "Color Hexadecimal Code" preview input title.
+        /// </summary>
+        /// <param name="value">The value that configures the previewinput.</param>
+        public ColorPickerMessagesSettingsBuilder PreviewInput(string value)
+        {
+            container.PreviewInput = value;
+
+            return this;
+        }
+        
         //<< Fields
     }
 }

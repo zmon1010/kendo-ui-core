@@ -36,6 +36,7 @@ namespace Kendo.Mvc.UI
 
         /// <summary>
         /// Gets or sets a value indicating the chunk size
+        /// This property is only in use when the async.batch is set false.
         /// </summary>
         double? ChunkSize { get; set; }
 
@@ -47,12 +48,18 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets or sets a value indicating how much retries will be performed when the upload fails
         /// </summary>
-        double? MaxRetries { get; set; }
+        double? MaxAutoRetries { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating after how many ticks the upload will be retried
         /// </summary>
-        double? RetryAfter { get; set; }
+        double? AutoRetryAfter { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value whether to read the file as file buffer by using FileReader and
+        /// send it in the request body.
+        /// </summary>
+        bool? UseArrayBuffer { get; set; }
 
         /// <summary>
         /// Gets or sets a value whether to send credentials as part of XHR requests

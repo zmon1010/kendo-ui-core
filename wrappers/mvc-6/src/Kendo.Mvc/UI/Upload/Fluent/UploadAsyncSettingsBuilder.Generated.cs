@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.
+        /// When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.You can use this property only when async.batch is set to false.
         /// </summary>
         /// <param name="value">The value for ChunkSize</param>
         public UploadAsyncSettingsBuilder ChunkSize(double value)
@@ -73,22 +73,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.
+        /// If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
         /// </summary>
-        /// <param name="value">The value for MaxRetries</param>
-        public UploadAsyncSettingsBuilder MaxRetries(double value)
+        /// <param name="value">The value for AutoRetryAfter</param>
+        public UploadAsyncSettingsBuilder AutoRetryAfter(double value)
         {
-            Container.MaxRetries = value;
+            Container.AutoRetryAfter = value;
             return this;
         }
 
         /// <summary>
-        /// If you set the property, the failed upload request is repeated after the declared amount of ticks.
+        /// Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.
         /// </summary>
-        /// <param name="value">The value for RetryAfter</param>
-        public UploadAsyncSettingsBuilder RetryAfter(double value)
+        /// <param name="value">The value for MaxAutoRetries</param>
+        public UploadAsyncSettingsBuilder MaxAutoRetries(double value)
         {
-            Container.RetryAfter = value;
+            Container.MaxAutoRetries = value;
             return this;
         }
 
@@ -141,6 +141,27 @@ namespace Kendo.Mvc.UI.Fluent
         public UploadAsyncSettingsBuilder SaveUrl(string value)
         {
             Container.SaveUrl = value;
+            return this;
+        }
+
+        /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        /// <param name="value">The value for UseArrayBuffer</param>
+        public UploadAsyncSettingsBuilder UseArrayBuffer(bool value)
+        {
+            Container.UseArrayBuffer = value;
+            return this;
+        }
+
+        /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        public UploadAsyncSettingsBuilder UseArrayBuffer()
+        {
+            Container.UseArrayBuffer = true;
             return this;
         }
 

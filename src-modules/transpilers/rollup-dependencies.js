@@ -6,7 +6,7 @@ const isUpperCase = utils.isUpperCase;
 const NEW_LINE = "\n";
 const EXPORTS_REGEX = /(^exports\.\w+ = (.*?);$\n)+/gm;
 const EXPORT_NAME_REGEX = /exports\.(\w+) = (.*?);/g;
-const DEPENDENCIES_REGEX = /\(function \(exports,(.*?)\)\s*{([\s\S]*)}\(\(this.(\w+(?:\.\w+)*) = this.(?:\w+(?:\.\w+)*) \|\| \{\}\),(.*?)\)\);/gm;
+const DEPENDENCIES_REGEX = /\(function \(exports,?(.*?)\)\s*{([\s\S]*)}\(\(this.(\w+(?:\.\w+)*) = this.(?:\w+(?:\.\w+)*) \|\| \{\}\),?(.*?)\)\);/gm;
 
 function replaceExports(options) {
     const assignExport = (options || {}).assignExport || [];

@@ -172,9 +172,9 @@ $scheduler->timezone("Etc/UTC")
 ?>
 <div id="team-schedule">
     <div id="people">
-        <input checked type="checkbox" id="alex" value="1">
-        <input checked type="checkbox" id="bob" value="2">
-        <input type="checkbox" id="charlie" value="3">
+        <input checked type="checkbox" id="alex" value="1" aria-label="Alex">
+        <input checked type="checkbox" id="bob" value="2" aria-label="Bob">
+        <input type="checkbox" id="charlie" value="3" aria-label="Charlie">
     </div>
 </div>
 

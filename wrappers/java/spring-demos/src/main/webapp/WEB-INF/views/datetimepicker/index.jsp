@@ -7,7 +7,7 @@
 
     <div class="demo-section k-content">
         <h4>Remind me on</h4>
-        <kendo:dateTimePicker name="datetimepicker" dateInput="true" value="${today}" style="width: 100%;"></kendo:dateTimePicker>
+        <kendo:dateTimePicker name="datetimepicker" value="${today}" style="width: 100%;" title="datetimepicker"></kendo:dateTimePicker>
     </div>
 
 <demo:footer />

@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring ChartCategoryAxisMajorGridLinesSettings
     /// </summary>
     public partial class ChartCategoryAxisMajorGridLinesSettingsBuilder<T>
-        where T : class 
+        where T : class
     {
         public ChartCategoryAxisMajorGridLinesSettingsBuilder(ChartCategoryAxisMajorGridLinesSettings<T> container)
         {
@@ -21,5 +21,14 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        /// <summary>
+        /// Makes the major grid lines visible.
+        /// </summary>
+        public ChartCategoryAxisMajorGridLinesSettingsBuilder<T> Visible()
+        {
+            Container.Visible = true;
+            return this;
+        }
     }
 }

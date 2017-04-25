@@ -1,3 +1,10 @@
+<div class="demo-section k-content">
+    <h4>Enter a date</h4>
+    @(Html.Kendo().DateInput()
+          .Name("dateinput")
+          .HtmlAttributes(new { style = "width: 100%" })
+    )
+</div>
 <div class="box wide">
     <div class="box-col">
         <h4>Set / Get Value</h4>
@@ -5,8 +12,6 @@
             <li>
                 <input id="value" value="10/10/2000" style="float:none" />
                 <button id="set" class="k-button">Set value</button>
-            </li>
-            <li style="text-align: right;">
                 <button id="get" class="k-button">Get value</button>
             </li>
         </ul>
@@ -22,14 +27,8 @@
         </ul>
     </div>
 </div>
-<div class="demo-section k-content">
-    @(Html.Kendo().DateInput()
-          .Name("dateinput")
-          .HtmlAttributes(new { style = "width: 100%" })
-    )
-</div>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#dateinput").closest(".k-widget")
                         .attr("id", "dateinput_wrapper");
 
@@ -39,26 +38,23 @@
             dateinput.value($("#value").val());
         };
 
-        $("#enable").click(function() {
+        $("#enable").click(function () {
             dateinput.enable();
         });
 
-        $("#disable").click(function() {
+        $("#disable").click(function () {
             dateinput.enable(false);
         });
 
-        $("#readonly").click(function() {
+        $("#readonly").click(function () {
             dateinput.readonly();
         });
 
-        $("#value").kendoDatePicker({
-            change: setValue,
-            dateinput: true
-        });
+        $("#value").kendoDatePicker();
 
         $("#set").click(setValue);
 
-        $("#get").click(function() {
+        $("#get").click(function () {
             alert(dateinput.value());
         });
     });

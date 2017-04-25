@@ -18,7 +18,7 @@ namespace Kendo.Mvc.UI.Tests
             var html = chart.ToHtmlString();
             var expectedHtml = 
                 "<span class=\"\" id=\"\" name=\"\"></span>" +
-                "<script>jQuery(function(){jQuery(\"#SparklineMock\").kendoSparkline({});});</script>";
+                "<script>kendo.syncReady(function(){jQuery(\"#SparklineMock\").kendoSparkline({});});</script>";
 
             html.ShouldEqual(expectedHtml);
         }

@@ -13,6 +13,17 @@ namespace Kendo.Mvc.UI.Fluent
         {
         }
 
+        /// <summary>
+        /// Fires when the selected date is changed
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public DateInputEventBuilder Change(Func<object, object> handler)
+        {
+            Handler("change", handler);
+
+            return this;
+        }
+
         //>> Handlers
         
         /// <summary>

@@ -16,6 +16,8 @@ The Kendo UI components also conform to the technical standards set out in Secti
 
 Applications built with components that adhere to these guidelines will not only be accessible to people with disabilities, but also to users of all kinds of devices and interfaces such as desktop browser, voice browser, mobile phone, automobile-based personal computer, and so on.
 
+The following table shows the Section 508 and WCAG 2.0 Compliance level of support for the Kendo UI widgets. The report is based on results from tests performed on our **Basic Usage** demos.
+
 **Table 1: 508 and WCAG 2.0 compliance with Kendo UI widgets**
 
 |Component |508|WCAG 2.0|Demo
@@ -24,9 +26,11 @@ Applications built with components that adhere to these guidelines will not only
 |TreeList	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/treelist/index)
 |PivotGrid	   |Yes | AAA |[Browse](http://demos.telerik.com/kendo-ui/pivotgrid/index)
 |ListView	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/listview/index)
+|ListBox     |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/listbox/index)
 |MediaPlayer   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/mediaplayer/index)
 |ScrollView	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/scrollview/index)
 |Calendar	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/calendar/index)
+|DateInput	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/dateinput/index)
 |DatePicker	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/datepicker/index)
 |DateTimePicker|Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/datetimepicker/index)
 |TimePicker	   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/timepicker/index)
@@ -39,7 +43,8 @@ Applications built with components that adhere to these guidelines will not only
 |LinearGauge   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/linear-gauge/index)
 |RadialGauge   |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/radial-gauge/index)
 |Charts        |Yes |AAA |[Browse](http://demos.telerik.com/kendo-ui/chart-api/index)
-|Map	       |Yes | AAA|[Browse](http://demos.telerik.com/kendo-ui/map/index)
+|Map	         |Yes | AAA|[Browse](http://demos.telerik.com/kendo-ui/map/index)
+|Slider	       |Yes | AAA|[Browse](http://demos.telerik.com/kendo-ui/slider/index)
 
 ## Special Considerations
 

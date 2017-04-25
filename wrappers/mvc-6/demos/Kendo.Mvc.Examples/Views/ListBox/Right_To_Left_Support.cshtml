@@ -1,0 +1,67 @@
+﻿<div id="example" role="application" dir="rtl">
+    <div class="demo-section k-content wide">
+        @(Html.Kendo().ListBox()
+          .Name("source")
+            .Toolbar(toolbar =>
+            {
+                toolbar.Position(ListBoxToolbarPosition.Left);
+                toolbar.Tools(tools => tools
+                    .TransferFrom()
+                    .TransferTo()
+                    .TransferAllFrom()
+                    .TransferAllTo()
+                );
+            })
+            .Messages(messages => messages.Tools(tools =>
+            {
+                tools.TransferFrom("To Right");
+                tools.TransferTo("To Left");
+                tools.TransferAllFrom("All to Right");
+                tools.TransferAllTo("All to Left");
+            }))
+            .ConnectWith("#destination")
+            .BindTo(ViewBag.Countries)
+        )
+
+        @(Html.Kendo().ListBox()
+            .Name("destination")
+            .Toolbar(toolbar =>
+            {
+                toolbar.Position(ListBoxToolbarPosition.Left);
+                toolbar.Tools(tools => tools
+                    .MoveUp()
+                    .MoveDown()
+                    .Remove()
+                );
+            })
+            .BindTo(new List<string>())
+            .Selectable(ListBoxSelectable.Multiple)
+        )
+    </div>
+</div>
+<style>
+    #example .demo-section {
+        max-width: none;
+        width: 695px;
+    }
+
+    #example .k-listbox {
+        width: 342px;
+        height: 250px;
+    }
+
+    .k-i-arrow-60-right:before,
+    .k-i-arrow-double-60-right:before {
+        margin-left: -2px;
+    }
+
+    .k-i-arrow-60-right:before, .k-i-arrow-60-left:before,
+    .k-i-arrow-double-60-right:before, .k-i-arrow-double-60-left:before {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+</style>

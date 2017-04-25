@@ -14,7 +14,7 @@
             </kendo:radialGauge-pointer>
             <kendo:radialGauge-scale minorUnit="5" startAngle="-30" endAngle="210" max="180" />
          </kendo:radialGauge>
-         <kendo:slider name="gauge-value" value="65" change="change" min="0" max="180" showButtons="false">
+         <kendo:slider name="gauge-value" title="slider" value="65" change="change" min="0" max="180" showButtons="false">
          </kendo:slider>
      </div>
 	<script>

@@ -46,7 +46,10 @@ module CodeGen::MVC::Wrappers
         'spreadsheet.sheets.mergedcells' => 'string[]',
         'spreadsheet.sheets.filter.columns.values' => 'object[]',
 
-        'dialog.actions.action' => 'ClientHandlerDescriptor'
+        'dialog.actions.action' => 'ClientHandlerDescriptor',
+
+        'listbox.dropsources' => 'string[]',
+        'listbox.toolbar.tools' => 'string[]'
     }
 
     SERIALIZATION_SKIP_LIST = [
@@ -140,6 +143,11 @@ module CodeGen::MVC::Wrappers
         'treeview.datasource',
         'treeview.checkboxes',
         'treeview.template',
+        'listbox.datasource',
+        'listbox.selectable',
+        'listbox.toolbar.position',
+        'listbox.toolbar.tools',
+        'listbox.draggable.placeholder',
         'editor.filebrowser',
         'editor.imagebrowser',
         'editor.tag',

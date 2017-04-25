@@ -4,7 +4,7 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 
 $tooltip = new \Kendo\UI\Tooltip('#agglomerations'); // select the container for the tooltip
-$tooltip->filter('a')
+$tooltip->filter('span')
     ->width(120)
     ->position('top');
 
@@ -12,17 +12,17 @@ echo $tooltip->render();
 ?>
 <div class="demo-section k-content wide">
     <div id="agglomerations">
-        <a href="#" title="Canton - 26,300,000" id="canton"></a>
-        <a href="#" title="Jakarta - 25,800,000" id="jakarta"></a>
-        <a href="#" title="Mexico City - 23,500,000" id="mexico"></a>
-        <a href="#" title="Delhi - 23,500,000" id="delhi"></a>
-        <a href="#" title="Karachi - 22,100,000" id="karachi"></a>
-        <a href="#" title="New York - 21,500,000" id="newyork"></a>
-        <a href="#" title="S�o Paulo - 21,300,000" id="saopaolo"></a>
-        <a href="#" title="Mumbay/Bombay - 21,100,000" id="bombay"></a>
-        <a href="#" title="Los Angeles - 17,100,000" id="losangeles"></a>
-        <a href="#" title="Osaka - 16,800,000" id="osaka"></a>
-        <a href="#" title="Moscow - 16,200,000" id="moscow"></a>
+        <span href="#" title="Canton - 26,300,000" id="canton"></span>
+        <span href="#" title="Jakarta - 25,800,000" id="jakarta"></span>
+        <span href="#" title="Mexico City - 23,500,000" id="mexico"></span>
+        <span href="#" title="Delhi - 23,500,000" id="delhi"></span>
+        <span href="#" title="Karachi - 22,100,000" id="karachi"></span>
+        <span href="#" title="New York - 21,500,000" id="newyork"></span>
+        <span href="#" title="S�o Paulo - 21,300,000" id="saopaolo"></span>
+        <span href="#" title="Mumbay/Bombay - 21,100,000" id="bombay"></span>
+        <span href="#" title="Los Angeles - 17,100,000" id="losangeles"></span>
+        <span href="#" title="Osaka - 16,800,000" id="osaka"></span>
+        <span href="#" title="Moscow - 16,200,000" id="moscow"></span>
     </div>
 </div>
     <script>
@@ -49,7 +49,7 @@ echo $tooltip->render();
             background: url('../content/web/tooltip/world-map.jpg') no-repeat 0 0;
         }
 
-        #agglomerations a {
+        #agglomerations span {
             position: absolute;
             display: block;
             width: 12px;
@@ -67,7 +67,7 @@ echo $tooltip->render();
             transition:  box-shadow .3s;
         }
 
-        #agglomerations a:hover {
+        #agglomerations span:hover {
             -moz-box-shadow: 0 0 0 15px rgba(0,0,0,0.5);
             -webkit-box-shadow: 0 0 0 15px rgba(0,0,0,0.5);
             box-shadow: 0 0 0 15px rgba(0,0,0,0.5);

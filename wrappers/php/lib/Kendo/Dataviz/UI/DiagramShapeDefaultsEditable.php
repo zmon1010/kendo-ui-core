@@ -6,7 +6,7 @@ class DiagramShapeDefaultsEditable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Specifies whether the connectors should appear on hover.
+    * Specifies whether the connectors appear on hover.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsEditable
     */

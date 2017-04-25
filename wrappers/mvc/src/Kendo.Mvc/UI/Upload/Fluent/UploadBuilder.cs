@@ -60,6 +60,46 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Enables selection of folders instead of files. When a directory is selected, its entire hierarchy of contents
+        /// files is included in the set of selected items. It is only supported in browsers that support webkitdirectory.
+        /// </summary>
+        /// <param name="value">true allows directory upload.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Directory(true)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadBuilder Directory(bool value)
+        {
+            Component.Directory = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables dropping folders over the upload and its drop zone. When a directory is dropped, its 
+        /// entire hierarchy of contents files is included in the set of selected items. It is only supported in browsers that support DataTransferItem and webkitGetAsEntry.
+        /// </summary>
+        /// <param name="value">true allows directory drop.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .DirectoryDrop(true)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadBuilder DirectoryDrop(bool value)
+        {
+            Component.DirectoryDrop = value;
+
+            return this;
+        }
+
+        /// <summary>
         /// Enables or disables multiple file selection.
         /// </summary>
         /// <param name="value">true if multiple file selection should be enabled, false otherwise; the default is true.</param>

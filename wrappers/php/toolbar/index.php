@@ -21,7 +21,7 @@ $toolbar->addItem(
         )
     ),
     array("type" => "separator"),
-    array("template" => "<label>Format:</label>"),
+    array("template" => "<label for='dropdown'>Format:</label>"),
     array("template" => "<input id='dropdown' style='width: 150px;' />", "overflow" => "never"),
     array("type" => "separator"),
     array(
@@ -35,9 +35,9 @@ $toolbar->addItem(
     array(
         "type" => "buttonGroup",
         "buttons" => array(
-            array("spriteCssClass" => "k-tool-icon k-bold", "text" => "Bold", "togglable" => true, "showText" => "overflow"),
-            array("spriteCssClass" => "k-tool-icon k-italic", "text" => "Italic", "togglable" => true, "showText" => "overflow"),
-            array("spriteCssClass" => "k-tool-icon k-underline", "text" => "Underline", "togglable" => true, "showText" => "overflow")
+            array("spriteCssClass" => "k-tool-icon k-bold", "text" => "Bold", "togglable" => true),
+            array("spriteCssClass" => "k-tool-icon k-italic", "text" => "Italic", "togglable" => true),
+            array("spriteCssClass" => "k-tool-icon k-underline", "text" => "Underline", "togglable" => true)
         )
     ),
     array("type" => "button", "text" => "Action", "overflow" => "always"),

@@ -10,7 +10,7 @@
             .SmallStep(2)
             .LargeStep(5)
             .Value(0)
-            .HtmlAttributes(new { @class = "balSlider" }))
+            .HtmlAttributes(new { @class = "balSlider" , title = "slider" }))
     <div id="equalizer">
         @(Html.Kendo().Slider()
                 .Name("eqSlider1")
@@ -21,7 +21,7 @@
                 .LargeStep(20)
                 .ShowButtons(false)
                 .Value(10)
-                .HtmlAttributes(new { @class = "eqSlider" }))
+                .HtmlAttributes(new { @class = "eqSlider" , title = "eqSlider1" }))
 
         @(Html.Kendo().Slider()
                 .Name("eqSlider2")
@@ -32,7 +32,7 @@
                 .LargeStep(20)
                 .ShowButtons(false)
                 .Value(5)
-                .HtmlAttributes(new { @class = "eqSlider" }))
+                .HtmlAttributes(new { @class = "eqSlider", title = "eqSlider2" }))
 
         @(Html.Kendo().Slider()
                 .Name("eqSlider3")
@@ -43,7 +43,7 @@
                 .LargeStep(20)
                 .ShowButtons(false)
                 .Value(0)
-                .HtmlAttributes(new { @class = "eqSlider" }))
+                .HtmlAttributes(new { @class = "eqSlider", title = "eqSlider3" }))
 
         @(Html.Kendo().Slider()
                 .Name("eqSlider4")
@@ -54,7 +54,7 @@
                 .LargeStep(20)
                 .ShowButtons(false)
                 .Value(10)
-                .HtmlAttributes(new { @class = "eqSlider" }))
+                .HtmlAttributes(new { @class = "eqSlider", title = "eqSlider4" }))
 
         @(Html.Kendo().Slider()
                 .Name("eqSlider5")
@@ -65,7 +65,7 @@
                 .LargeStep(20)
                 .ShowButtons(false)
                 .Value(15)
-                .HtmlAttributes(new { @class = "eqSlider" }))
+                .HtmlAttributes(new { @class = "eqSlider", title = "eqSlider5" }))
     </div>
 </div>
 

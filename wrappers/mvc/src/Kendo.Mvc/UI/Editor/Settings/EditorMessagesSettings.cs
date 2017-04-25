@@ -94,6 +94,8 @@ namespace Kendo.Mvc.UI
         
         public string ImageWidth { get; set; }
         
+        public string OverflowAnchor { get; set; }
+        
         public string Rows { get; set; }
         
         public string SelectAllCells { get; set; }
@@ -103,6 +105,8 @@ namespace Kendo.Mvc.UI
         public string TableTab { get; set; }
         
         public string TableWizard { get; set; }
+        
+        public string Units { get; set; }
         
         public string Width { get; set; }
         
@@ -294,6 +298,11 @@ namespace Kendo.Mvc.UI
                 json["imageWidth"] = ImageWidth;
             }
             
+            if (OverflowAnchor.HasValue())
+            {
+                json["overflowAnchor"] = OverflowAnchor;
+            }
+            
             if (Rows.HasValue())
             {
                 json["rows"] = Rows;
@@ -317,6 +326,11 @@ namespace Kendo.Mvc.UI
             if (TableWizard.HasValue())
             {
                 json["tableWizard"] = TableWizard;
+            }
+            
+            if (Units.HasValue())
+            {
+                json["units"] = Units;
             }
             
             if (Width.HasValue())

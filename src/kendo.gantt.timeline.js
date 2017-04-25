@@ -621,7 +621,7 @@ var __meta__ = { // jshint ignore:line
             if (editable) {
                 if (editable.destroy !== false) {
                     content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
-                        kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#" }, [
+                        kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#", "aria-label": "Delete" }, [
                             kendoDomElement("span", { className: styles.icon + " " + styles.iconDelete })
                         ])
                     ]));

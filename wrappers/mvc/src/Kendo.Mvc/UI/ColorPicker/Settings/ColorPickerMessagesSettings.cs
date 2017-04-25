@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
         
         public string Cancel { get; set; }
         
+        public string PreviewInput { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -35,6 +37,11 @@ namespace Kendo.Mvc.UI
             if (Cancel.HasValue())
             {
                 json["cancel"] = Cancel;
+            }
+            
+            if (PreviewInput.HasValue())
+            {
+                json["previewInput"] = PreviewInput;
             }
             
         //<< Serialization

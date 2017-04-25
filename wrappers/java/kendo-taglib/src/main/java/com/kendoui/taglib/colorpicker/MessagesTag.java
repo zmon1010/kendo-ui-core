@@ -69,6 +69,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("cancel", value);
     }
 
+    public java.lang.String getPreviewInput() {
+        return (java.lang.String)getProperty("previewInput");
+    }
+
+    public void setPreviewInput(java.lang.String value) {
+        setProperty("previewInput", value);
+    }
+
 //<< Attributes
 
 }

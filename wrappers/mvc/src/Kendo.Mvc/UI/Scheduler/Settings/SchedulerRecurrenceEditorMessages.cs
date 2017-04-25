@@ -1,11 +1,16 @@
 ﻿namespace Kendo.Mvc.UI
 {
+    using Kendo.Mvc.Resources;
     using System.Collections.Generic;
 
     public class SchedulerRecurrenceEditorMessages : JsonObject
     {
+        private const string DefaultPrevious = "Recurrence editor";
+
         public SchedulerRecurrenceEditorMessages()
         {
+            RecurrenceEditorTitle = Messages.Scheduler_Recurrence_Editor_RecurrenceEditorTitle;
+
             FrequenciesMessages = new SchedulerRecurrenceEditorFrequenciesMessages();
 
             DailyMessages = new SchedulerRecurrenceEditorDailyMessages();
@@ -39,8 +44,13 @@
 
         public SchedulerRecurrenceEditorWeekdaysMessages WeekdaysMessages { get; set; }
 
+        public string RecurrenceEditorTitle { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
+            if (RecurrenceEditorTitle != DefaultPrevious) {
+                json["recurrenceEditorTitle"] = RecurrenceEditorTitle;
+            }
 
             IDictionary<string, object> frequenciesMessages = FrequenciesMessages.ToJson();
             if (frequenciesMessages.Count > 0)

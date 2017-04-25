@@ -6,7 +6,7 @@
 <c:url value="/resources/web/autocomplete/shipping.png" var="shippingImg"/>
 <demo:header />
     <div class="demo-section k-content">
-    <h4>Choose shipping countries:</h4>
+    <h4><label for="countries">Choose shipping countries:</label></h4>
 		   
 		<%
 		String[] countries = {

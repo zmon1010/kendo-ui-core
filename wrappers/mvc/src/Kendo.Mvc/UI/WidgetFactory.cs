@@ -1484,6 +1484,21 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Creates a <see cref="ListBox"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListBox()
+        ///             .Name("ListBox")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual ListBoxBuilder ListBox()
+        {
+            return new ListBoxBuilder(new ListBox(ViewContext, Initializer, UrlGenerator));
+        }
+        
+        /// <summary>
         /// Creates a <see cref="Map"/>
         /// </summary>
         /// <example>

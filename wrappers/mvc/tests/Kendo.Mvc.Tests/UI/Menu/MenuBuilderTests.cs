@@ -64,6 +64,15 @@ namespace Kendo.Mvc.Tests.Menu
         }
 
         [Fact]
+        public void Not_Setting_Scrollable_Does_Not_Throw_Exception()
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                string html = builder.Name("menu").ToHtmlString();
+            });
+        }
+
+        [Fact]
 		public void Setting_items_sets_menu_items()
 		{
 			builder.Items(root => root.Add().Text("Menu Item"));
@@ -242,7 +251,7 @@ namespace Kendo.Mvc.Tests.Menu
         }
 	}
 }
-public class TestObject 
+public class TestObject
 {
     public int ID { get; set; }
     public string Text { get; set; }
@@ -250,13 +259,13 @@ public class TestObject
     public IEnumerable<ChildObject> childObjects { get; set; }
 }
 
-public class ChildObject 
+public class ChildObject
 {
     public int ID { get; set; }
     public string Text { get; set; }
 }
 
-public class Repository 
+public class Repository
 {
     public static Repository repository = new Repository();
 

@@ -746,7 +746,6 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
-                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -2103,6 +2102,113 @@
         "category": "Data Management"
     },
     {
+        "text": "ListBox",
+        "name": "listbox",
+        "api": "web/listbox",
+        "new": "true",
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listbox/overview"
+        },
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/listbox"
+        },
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/listbox"
+        },
+        "spriteCssClass": "listBoxIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "listbox/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "Play with this basic example of Kendo UI ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
+                },
+				"description": {
+					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> is a helper that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multipl ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
+				}
+            },
+			{
+                "text": "Drag & Drop",
+                "url": "listbox/drag-and-drop",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox Drag & Drop demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the Drag & Drop functionality of ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
+                },
+				"description": {
+					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> allows Drag & Drop between two ListBoxes (for transfer) or within a single one (for reordering). This example demonstrates how you could use the Drag & Drop functionality with two ListBox widgets and furthermore, update the underlying data by handling the <strong>Add</strong> and <strong>Remove</strong> events."
+				}
+            },
+            {
+                "text": "Templates",
+                "url": "listbox/templates",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox templates demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo for $FRAMEWORK ListBox component shows how you can customize the widget apperience."
+                },
+				"description": {
+					"aspnet-mvc": "<p>This demo demonstrates how to configure a template for the <strong>ListBox for $FRAMEWORK</strong> items. It also demonstrates how to customize the draggable placeholder</p>"
+				}
+            },
+            {
+                "text": "Events",
+                "url": "listbox/events",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox events demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows events which are triggered in $FRAMEWORK ListBox component."
+                },
+				"description": {
+					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features.</p><p>This particular example shows how to intercept the Change, DataBound, Reorder, DragStart, DragEnd, Drag, Drop, Add and Remove events of the ListBox to output messages in the console when these events are raised. They can also be hooked for customizations or to execute custom logic, if necessary.</p>"
+				}
+            },
+            {
+                "text": "API",
+                "url": "listbox/api",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK ListBox API demo | Kendo UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows how to use the API of the $FRAMEWORK ListBox component."
+                },
+				"description": {
+					"aspnet-mvc": "<p>This demo demonstrates how you could use the <strong>ListBox for $FRAMEWORK</strong> API for modify the its items and how to transfer items between two ListBox instances</p>"
+				}
+            },
+			{
+                "text": "RTL support",
+                "url": "listbox/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "RTL support in $FRAMEWORK ListBox"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control."
+                },
+				"description": {
+					"aspnet-mvc": "<p>This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control.</p>"
+				}
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "listbox/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK ListBox"
+                },
+                "meta": {
+                    "aspnet-mvc": "In this example we will look at the supported keys and user actions in $FRAMEWORK ListBox control."
+                }
+            }
+        ],
+        "category": "Data Management"
+    },
+    {
         "text": "ListView",
         "name": "listview",
         "api": "web/listview",
@@ -2477,6 +2583,17 @@
                 "url": "menu/orientation",
                 "meta": {
                     "aspnet-mvc": "In this example we will see how the orientation of the $FRAMEWORK Menu can be easily modified through the orientation settings."
+                }
+            },
+			{
+                "text": "Scrollable",
+                "new": "true",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Menu scrollable demo"
+                },
+                "url": "menu/scrollable",
+                "meta": {
+                    "aspnet-mvc": "This $FRAMEWORK Menu example shows the feature that allows you to scroll the menu items."
                 }
             },
             {
@@ -3979,7 +4096,6 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
-                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },
@@ -4522,6 +4638,7 @@
         "text": "Upload",
         "name": "upload",
         "api": "web/upload",
+        "new": true,
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview"
         },
@@ -4561,7 +4678,8 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows the chunk upload functionality of $FRAMEWORK Upload control."
-                }
+                },
+            "new": true
             },
             {
             "text": "Custom Drop Zone",
@@ -4571,6 +4689,16 @@
             },
             "meta": {
               "aspnet-mvc": "This example shows the custom drop zone functionality of $FRAMEWORK Upload control."
+            }
+          },
+          {
+            "text": "Directory Upload",
+            "url": "upload/directoryupload",
+            "title": {
+              "aspnet-mvc": "Directory upload demo for $FRAMEWORK File Upload"
+            },
+            "meta": {
+              "aspnet-mvc": "This example shows the directory upload functionality of $FRAMEWORK Upload control."
             },
             "new": true
           },
@@ -4582,8 +4710,7 @@
             },
             "meta": {
               "aspnet-mvc": "This example shows the validation functionality of $FRAMEWORK Upload control."
-            },
-            "new": true
+            }
           },
           {
               "text": "Events",

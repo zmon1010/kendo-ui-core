@@ -75,6 +75,7 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "style": "Styles",
   "emptyFolder": "Empty Folder",
   "uploadFile": "Upload",
+  "overflowAnchor": "More tools",
   "orderBy": "Arrange by:",
   "orderBySize": "Size",
   "orderByName": "Name",
@@ -113,6 +114,7 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "summary": "Summary",
   "width": "Width",
   "height": "Height",
+  "units": "Units",
   "cellSpacing": "Cell Spacing",
   "cellPadding": "Cell Padding",
   "cellMargin": "Cell Margin",
@@ -920,6 +922,23 @@ kendo.ui.Slider.prototype.options =
 $.extend(true, kendo.ui.Slider.prototype.options,{
   "increaseButtonTitle": "Increase",
   "decreaseButtonTitle": "Decrease"
+});
+}
+
+/* ListBox messaages */
+
+if (kendo.ui.ListBox) {
+kendo.ui.ListBox.prototype.options.messages =
+$.extend(true, kendo.ui.ListBox.prototype.options.messages,{
+  tools: {
+    remove: "Delete",
+    moveUp: "Move Up",
+    moveDown: "Move Down",
+    transferTo: "To Right",
+    transferFrom: "To Left",
+    transferAllTo: "All to Right",
+    transferAllFrom: "All to Left"
+  }
 });
 }
 

@@ -59,7 +59,7 @@ var __meta__ = { // jshint ignore:line
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete" title="${data.messages.destroy}" aria-label="${data.messages.destroy}"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                     '# if(data.head || data.middle) {#' +
                         '<span class="k-icon k-i-arrow-60-right"></span>' +
@@ -91,7 +91,7 @@ var __meta__ = { // jshint ignore:line
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete" title="${data.messages.destroy}" aria-label="${data.messages.destroy}"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                 '</span>' +
                 '<span class="k-event-top-actions">' +
@@ -730,7 +730,7 @@ var __meta__ = { // jshint ignore:line
             minorTickCount: 2,
             majorTick: 60,
             majorTimeHeaderTemplate: "#=kendo.toString(date, 't')#",
-            minorTimeHeaderTemplate: "&nbsp;",
+            minorTimeHeaderTemplate: "&\\#8203;",
             groupHeaderTemplate: "#=text#",
             slotTemplate: "&nbsp;",
             allDaySlotTemplate: "&nbsp;",
@@ -1534,7 +1534,8 @@ var __meta__ = { // jshint ignore:line
                 tail: tail,
                 singleDay: this._dates.length == 1,
                 resources: resources,
-                inverseColor: resources && resources[0] ? this._shouldInverseResourceColor(resources[0]) : false
+                inverseColor: resources && resources[0] ? this._shouldInverseResourceColor(resources[0]) : false,
+                messages: options.messages
             }, event, {
                 start: eventStartDate,
                 end: eventEndDate

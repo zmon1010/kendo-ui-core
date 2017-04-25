@@ -15,7 +15,7 @@ class DiagramShapeConnectorHoverStroke extends \Kendo\SerializableObject {
     }
 
     /**
-    * The hover stroke dash type.
+    * The dash type of the hover stroke.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeConnectorHoverStroke
     */

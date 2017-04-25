@@ -11,19 +11,19 @@
               <ul id="fieldlist">
                   <li>
                       <label for="currency">Price:</label>
-        <kendo:numericTextBox name="currency" format="c" min="0" max="100" value="30" style="width: 100%;"></kendo:numericTextBox>
+        <kendo:numericTextBox name="currency" title="currency" format="c" min="0" max="100" value="30" style="width: 100%;"></kendo:numericTextBox>
     </li>
      <li>
          <label for="percentage">Price Discount:</label>
-        <kendo:numericTextBox name="percentage" format="p0" min="0" max="0.9" value="0.05" step="0.01" style="width: 100%;"></kendo:numericTextBox>
+        <kendo:numericTextBox name="percentage" title="percentage" format="p0" min="0" max="0.9" value="0.05" step="0.01" style="width: 100%;"></kendo:numericTextBox>
     </li>
      <li>
          <label for="custom">Weight:</label>
-        <kendo:numericTextBox name="custom" format="#.00 kg" value="2" style="width: 100%;"></kendo:numericTextBox>
+        <kendo:numericTextBox name="custom" title="custom" format="#.00 kg" value="2" style="width: 100%;"></kendo:numericTextBox>
   </li>
    <li>
        <label for="numeric">Currently in stock:</label>
-        <kendo:numericTextBox name="numeric" placeholder="Enter numeric value" value="17" style="width: 100%;"></kendo:numericTextBox>
+        <kendo:numericTextBox name="numeric" title="numeric" placeholder="Enter numeric value" value="17" style="width: 100%;"></kendo:numericTextBox>
    </li>
   </ul>
 </div>

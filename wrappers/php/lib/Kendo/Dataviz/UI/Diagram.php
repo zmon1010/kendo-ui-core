@@ -119,7 +119,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * Sets the template option of the Diagram.
-    * The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. See the dataSource topic below for a concrete example.
+    * The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. For an example, refer to the dataSource topic below.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\Diagram
     */
@@ -131,7 +131,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * Sets the template option of the Diagram.
-    * The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. See the dataSource topic below for a concrete example.
+    * The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. For an example, refer to the dataSource topic below.
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\Diagram
     */

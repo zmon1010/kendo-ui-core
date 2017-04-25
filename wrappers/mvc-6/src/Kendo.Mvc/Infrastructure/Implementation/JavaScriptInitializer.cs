@@ -24,7 +24,7 @@ namespace Kendo.Mvc.Infrastructure
 
         public virtual string InitializeFor(string selector, string name, IDictionary<string, object> options)
         {   
-            return new StringBuilder().Append("jQuery(function(){jQuery(\"")
+            return new StringBuilder().Append("kendo.syncReady(function(){jQuery(\"")
                 .Append(selector)
                 .Append("\").kendo")
                 .Append(name)

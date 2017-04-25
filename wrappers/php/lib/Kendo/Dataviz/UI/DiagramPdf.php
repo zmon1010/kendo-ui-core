@@ -42,7 +42,7 @@ class DiagramPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
+    * If set to true, the content is forwarded to proxyURL even if the browser supports the saving of files locally.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -60,7 +60,7 @@ class DiagramPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * Set to true to reverse the paper dimensions if needed such that width is the larger edge.
+    * If set to true, reverses the paper dimensions if needed to verify that the width corresponds to the longer side.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -69,8 +69,7 @@ class DiagramPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the margins of the page (numbers or strings with units). Supported
-units are "mm", "cm", "in" and "pt" (default).
+    * Specifies the margins of the page (numbers or strings with units). The supported units are mm, cm, in, and pt (default).
     * @param \Kendo\Dataviz\UI\DiagramPdfMargin|array $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -79,8 +78,7 @@ units are "mm", "cm", "in" and "pt" (default).
     }
 
     /**
-    * Specifies the paper size of the PDF document.
-The default "auto" means paper size is determined by content.Supported values:
+    * Specifies the paper size of the PDF document. The default setting is auto and determines the paper size by content.The supported values are:
     * @param string|array $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -89,8 +87,7 @@ The default "auto" means paper size is determined by content.Supported values:
     }
 
     /**
-    * The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
+    * The URL of the server side proxy which will stream the file to the end user.When the browser is not capable of saving files locally, a proxy will be used. Such browsers are Internet Explorer version 9 (and older) and Safari. You are responsible for implementing the server-side proxy. The proxy receives a POST request with the following parameters in the request body:The proxy is expected to return the decoded file with a set Content-Disposition header.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -99,8 +96,7 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
     }
 
     /**
-    * A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
-the proxy should set the "Content-Disposition" header to inline; filename="<fileName.pdf>".
+    * A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe, the proxy has to set the Content-Disposition header to inline; filename="<fileName.pdf>".
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */

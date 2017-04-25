@@ -29,6 +29,10 @@
 
         private const string DefaultDefaultRowText = "All events";
 
+        private const string DefaultNext = "Next";
+
+        private const string DefaultPrevious = "Previous";
+
         public SchedulerMessages()
         {
             Today = Messages.Scheduler_Today;
@@ -54,6 +58,10 @@
             ShowFullDay = Messages.Scheduler_ShowFullDay;
 
             ShowWorkDay = Messages.Scheduler_ShowWorkDay;
+
+            Next = Messages.Scheduler_Next;
+
+            Previous = Messages.Scheduler_Previous;
 
             ViewMessages = new SchedulerViewMessages();
 
@@ -87,6 +95,10 @@
         public string ShowWorkDay { get; set; }
 
         public string DefaultRowText { get; set; }
+
+        public string Next { get; set; }
+
+        public string Previous { get; set; }
 
         public SchedulerViewMessages ViewMessages { get; set; }
 
@@ -156,6 +168,16 @@
             if (ShowWorkDay != DefaultShowWorkDay)
             {
                 json["showWorkDay"] = ShowWorkDay;
+            }
+
+            if (Next != DefaultNext)
+            {
+                json["next"] = Next;
+            }
+
+            if (Previous != DefaultPrevious)
+            {
+                json["previous"] = Previous;
             }
 
             IDictionary<string, object> viewMessages = ViewMessages.ToJson();

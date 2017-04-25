@@ -56,7 +56,7 @@ var __meta__ = { // jshint ignore:line
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete" title="${data.messages.destroy}" aria-label="${data.messages.destroy}"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                     '# if(data.head) {#' +
                         '<span class="k-icon k-i-arrow-60-right"></span>' +
@@ -1385,7 +1385,7 @@ var __meta__ = { // jshint ignore:line
             var minorTickSlots = [];
             for (var minorTickIndex = 0; minorTickIndex < that.options.minorTickCount; minorTickIndex++) {
                 minorTickSlots.push({
-                    text: "",
+                    text: "&#8203;",
                     className: "k-last",
                     minorTicks: true
                 });
@@ -1938,7 +1938,8 @@ var __meta__ = { // jshint ignore:line
                 tail: tail,
                 singleDay: this._dates.length == 1,
                 resources: resources,
-                inverseColor: resources && resources[0] ? this._shouldInverseResourceColor(resources[0]) : false
+                inverseColor: resources && resources[0] ? this._shouldInverseResourceColor(resources[0]) : false,
+                messages: this.options.messages
             }, event, {
                 start: eventStartDate,
                 end: eventEndDate

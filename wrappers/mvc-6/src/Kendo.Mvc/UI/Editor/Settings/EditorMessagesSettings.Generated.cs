@@ -143,6 +143,8 @@ namespace Kendo.Mvc.UI
 
         public string Italic { get; set; }
 
+        public string OverflowAnchor { get; set; }
+
         public string JustifyCenter { get; set; }
 
         public string JustifyFull { get; set; }
@@ -180,6 +182,8 @@ namespace Kendo.Mvc.UI
         public string TableWizard { get; set; }
 
         public string Underline { get; set; }
+
+        public string Units { get; set; }
 
         public string Unlink { get; set; }
 
@@ -526,6 +530,11 @@ namespace Kendo.Mvc.UI
                 settings["italic"] = Italic;
             }
 
+            if (OverflowAnchor?.HasValue() == true)
+            {
+                settings["overflowAnchor"] = OverflowAnchor;
+            }
+
             if (JustifyCenter?.HasValue() == true)
             {
                 settings["justifyCenter"] = JustifyCenter;
@@ -619,6 +628,11 @@ namespace Kendo.Mvc.UI
             if (Underline?.HasValue() == true)
             {
                 settings["underline"] = Underline;
+            }
+
+            if (Units?.HasValue() == true)
+            {
+                settings["units"] = Units;
             }
 
             if (Unlink?.HasValue() == true)

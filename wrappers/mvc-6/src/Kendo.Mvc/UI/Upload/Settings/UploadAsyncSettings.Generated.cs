@@ -19,9 +19,9 @@ namespace Kendo.Mvc.UI
 
         public bool? Concurrent { get; set; }
 
-        public double? MaxRetries { get; set; }
+        public double? AutoRetryAfter { get; set; }
 
-        public double? RetryAfter { get; set; }
+        public double? MaxAutoRetries { get; set; }
 
         public string RemoveField { get; set; }
 
@@ -32,6 +32,8 @@ namespace Kendo.Mvc.UI
         public string SaveField { get; set; }
 
         public string SaveUrl { get; set; }
+
+        public bool? UseArrayBuffer { get; set; }
 
         public bool? WithCredentials { get; set; }
 
@@ -62,14 +64,14 @@ namespace Kendo.Mvc.UI
                 settings["concurrent"] = Concurrent;
             }
 
-            if (MaxRetries.HasValue)
+            if (AutoRetryAfter.HasValue)
             {
-                settings["maxRetries"] = MaxRetries;
+                settings["autoRetryAfter"] = AutoRetryAfter;
             }
 
-            if (RetryAfter.HasValue)
+            if (MaxAutoRetries.HasValue)
             {
-                settings["retryAfter"] = RetryAfter;
+                settings["maxAutoRetries"] = MaxAutoRetries;
             }
 
             if (RemoveField?.HasValue() == true)
@@ -95,6 +97,11 @@ namespace Kendo.Mvc.UI
             if (SaveUrl?.HasValue() == true)
             {
                 settings["saveUrl"] = SaveUrl;
+            }
+
+            if (UseArrayBuffer.HasValue)
+            {
+                settings["useArrayBuffer"] = UseArrayBuffer;
             }
 
             if (WithCredentials.HasValue)

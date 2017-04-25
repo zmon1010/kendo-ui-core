@@ -8,7 +8,7 @@ require_once '../lib/Kendo/Autoload.php';
 <div class="demo-section hidden-on-narrow k-content wide">
         <div id="background">
             <div class="column">
-                <h3 class="title">Select Wall Paint</h3>
+                <h3 class="title"><label for="palette">Select Wall Paint</label></h3>
 <?php
     $palette = new \Kendo\UI\ColorPalette('palette');
 
@@ -32,7 +32,7 @@ require_once '../lib/Kendo/Autoload.php';
           </div>
 
             <div class="column">
-                <h3 class="title">Choose Custom Color</h3>
+                <h3 class="title"><label for="picker">Choose Custom Color</label></h3>
 <?php
     $picker = new \Kendo\UI\ColorPicker('picker');
 
@@ -45,8 +45,8 @@ require_once '../lib/Kendo/Autoload.php';
       </div>
         </div>
     </div>
-    
-    <div class="responsive-message"></div> 
+
+    <div class="responsive-message"></div>
 
 
 <script>

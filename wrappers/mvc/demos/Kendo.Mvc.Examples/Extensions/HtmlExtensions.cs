@@ -33,8 +33,7 @@ namespace Kendo.Extensions
             var currentAction = routeData.Values["action"].ToString().ToLower().Replace("_", "-");
             var currentController = routeData.Values["controller"].ToString().ToLower().Replace("_", "-");
 
-            if (href.EndsWith(currentController) && currentAction == "index" ||
-                href.EndsWith(currentController + "/" + currentAction))
+            if (href.EndsWith(currentController + "/" + currentAction))
             {
                 className += " active";
             }

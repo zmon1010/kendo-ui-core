@@ -29,7 +29,11 @@ namespace Kendo.Mvc.UI
 
         public string DefaultRowText { get; set; }
 
+        public string Next { get; set; }
+
         public string Pdf { get; set; }
+
+        public string Previous { get; set; }
 
         public string Save { get; set; }
 
@@ -103,9 +107,19 @@ namespace Kendo.Mvc.UI
                 settings["defaultRowText"] = DefaultRowText;
             }
 
+            if (Next?.HasValue() == true)
+            {
+                settings["next"] = Next;
+            }
+
             if (Pdf?.HasValue() == true)
             {
                 settings["pdf"] = Pdf;
+            }
+
+            if (Previous?.HasValue() == true)
+            {
+                settings["previous"] = Previous;
             }
 
             if (Save?.HasValue() == true)

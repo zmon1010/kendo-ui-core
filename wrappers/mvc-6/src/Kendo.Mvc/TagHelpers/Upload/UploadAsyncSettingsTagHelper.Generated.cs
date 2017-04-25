@@ -22,7 +22,7 @@ namespace Kendo.Mvc.TagHelpers
         public bool? Batch { get; set; }
 
         /// <summary>
-        /// When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.
+        /// When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.You can use this property only when async.batch is set to false.
         /// </summary>
         public double? ChunkSize { get; set; }
 
@@ -32,14 +32,14 @@ namespace Kendo.Mvc.TagHelpers
         public bool? Concurrent { get; set; }
 
         /// <summary>
-        /// Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.
+        /// If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
         /// </summary>
-        public double? MaxRetries { get; set; }
+        public double? AutoRetryAfter { get; set; }
 
         /// <summary>
-        /// If you set the property, the failed upload request is repeated after the declared amount of ticks.
+        /// Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.
         /// </summary>
-        public double? RetryAfter { get; set; }
+        public double? MaxAutoRetries { get; set; }
 
         /// <summary>
         /// The name of the form field submitted to the Remove URL.
@@ -67,6 +67,12 @@ namespace Kendo.Mvc.TagHelpers
 		/// containing one or more fields with the same name as the original input name.
         /// </summary>
         public string SaveUrl { get; set; }
+
+        /// <summary>
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+		///  this buffer is send in the request body.
+        /// </summary>
+        public bool? UseArrayBuffer { get; set; }
 
         /// <summary>
         /// Controls whether to send credentials (cookies, headers) for cross-site requests.
@@ -98,14 +104,14 @@ namespace Kendo.Mvc.TagHelpers
                 settings["concurrent"] = Concurrent;
             }
 
-            if (MaxRetries.HasValue)
+            if (AutoRetryAfter.HasValue)
             {
-                settings["maxRetries"] = MaxRetries;
+                settings["autoRetryAfter"] = AutoRetryAfter;
             }
 
-            if (RetryAfter.HasValue)
+            if (MaxAutoRetries.HasValue)
             {
-                settings["retryAfter"] = RetryAfter;
+                settings["maxAutoRetries"] = MaxAutoRetries;
             }
 
             if (RemoveField?.HasValue() == true)
@@ -131,6 +137,11 @@ namespace Kendo.Mvc.TagHelpers
             if (SaveUrl?.HasValue() == true)
             {
                 settings["saveUrl"] = SaveUrl;
+            }
+
+            if (UseArrayBuffer.HasValue)
+            {
+                settings["useArrayBuffer"] = UseArrayBuffer;
             }
 
             if (WithCredentials.HasValue)

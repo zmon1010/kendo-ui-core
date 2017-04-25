@@ -1,17 +1,60 @@
+<style>
+    .box {
+        padding: 1rem;
+    }
+    .box-col {
+        padding: 0;
+    }
+    .box-col + .box-col {
+        padding: 0;
+        margin-left: 10px;
+    }
+</style>
 <div id="example" ng-app="KendoDemos">
-    <div class="demo-section k-content" ng-controller="MyCtrl">
+    <div ng-controller="MyCtrl">
+    <div class="demo-section k-content" >
         <div>
-            <h4>Select date:</h4>
+            <h4>Enter a date</h4>
             <input kendo-date-input
-             k-ng-model="dateObject"
-             style="width: 100%;" />
-<pre>
-dateObject: {{ dateObject | date:"EEEE, MMMM d, yyyy" }}
-typeof dateObject: {{ getType(dateObject) }}
-dateObject instanceof Date: {{ isDate(dateObject) }}
-</pre>            
+            k-ng-model="dateObject"
+            style="width: 100%;" />
         </div>
     </div>
+    <div class="box">
+            <div class="box-col">
+                <ul>
+                    <li>
+                        <span class="button-descr">typeof dateObject:</span>
+                    </li>
+                    <li>
+                        <span class="button-descr">dateObject instanceof Date:</span>
+                    </li>
+                    <li>
+                        <span class="button-descr">dateObject:</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <ul>
+                    <li>
+                        <span class="button-descr">
+                            {{ getType(dateObject) }}
+                        </span>
+                    </li>
+                    <li>
+                        <span class="button-descr">
+                            {{ isDate(dateObject) }}
+                        </span>
+                    </li>
+                    <li>
+                        <span class="button-descr">
+                            {{ dateObject | date:"EEEE, MMMM d, yyyy" }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+   </div>
 </div>
 
 <script>

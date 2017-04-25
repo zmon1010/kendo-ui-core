@@ -36,7 +36,7 @@
         public string Position { get; set; }
 
         [ScaffoldColumn(false)]
-        public bool hasChildren { get; set; }
+        public bool hasChildren { get { return true; } set { } }
 
         private DateTime? birthDate;
         [DataType(DataType.Date)]

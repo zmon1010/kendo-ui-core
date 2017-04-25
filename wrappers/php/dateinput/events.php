@@ -4,10 +4,12 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
  <div class="demo-section k-content">
-    <h4>Select date</h4>
+    <h4>Enter a date</h4>
 <?php
 $dateInput = new \Kendo\UI\DateInput('dateinput');
-$dateInput->change('change');
+$dateInput
+            ->value(new DateTime('10/10/2011', new DateTimeZone('UTC')))
+            ->change('change');
 
 echo $dateInput->render();
 ?>
@@ -16,14 +18,6 @@ echo $dateInput->render();
      <div class="console"></div>
 </div>
 <script>
-    function open() {
-        kendoConsole.log("Open");
-    }
-
-    function close() {
-        kendoConsole.log("Close");
-    }
-
     function change() {
         kendoConsole.log("Change :: " + kendo.toString(this.value(), 'd'));
     }

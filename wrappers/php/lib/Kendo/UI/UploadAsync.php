@@ -26,7 +26,7 @@ Files selected one after the other will be uploaded in separate requests.
     }
 
     /**
-    * When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.
+    * When the property is set, the selected files are uploaded with the declared size chunk by chunk. Each request sends a separate file blob and additional string metadata to the server. This metadata is in a stringified JSON format and contains the chunkIndex, contentType, totalFileSize, totalChunks, uploadUid properties. These properties enable the validation and combination of the file on the server side. The response also returns a JSON object with the uploaded and fileUid properties, which notifies the client what is the next chunk.You can use this property only when async.batch is set to false.
     * @param float $value
     * @return \Kendo\UI\UploadAsync
     */
@@ -44,21 +44,21 @@ Files selected one after the other will be uploaded in separate requests.
     }
 
     /**
-    * Sets the number of attempts that are performed if an upload is fails.The property is only used when the async.retryAfter property is also defined.
+    * If you set the property, the failed upload request is repeated after the declared amount of miliseconds.
     * @param float $value
     * @return \Kendo\UI\UploadAsync
     */
-    public function maxRetries($value) {
-        return $this->setProperty('maxRetries', $value);
+    public function autoRetryAfter($value) {
+        return $this->setProperty('autoRetryAfter', $value);
     }
 
     /**
-    * If you set the property, the failed upload request is repeated after the declared amount of ticks.
+    * Sets the maximum number of attempts that are performed if an upload fails.The property is only used when the async.autoRetryAfter property is also defined.
     * @param float $value
     * @return \Kendo\UI\UploadAsync
     */
-    public function retryAfter($value) {
-        return $this->setProperty('retryAfter', $value);
+    public function maxAutoRetries($value) {
+        return $this->setProperty('maxAutoRetries', $value);
     }
 
     /**
@@ -106,6 +106,16 @@ containing one or more fields with the same name as the original input name.
     */
     public function saveUrl($value) {
         return $this->setProperty('saveUrl', $value);
+    }
+
+    /**
+    * By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
+ this buffer is send in the request body.
+    * @param boolean $value
+    * @return \Kendo\UI\UploadAsync
+    */
+    public function useArrayBuffer($value) {
+        return $this->setProperty('useArrayBuffer', $value);
     }
 
     /**

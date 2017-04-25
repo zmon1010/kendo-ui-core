@@ -63,9 +63,17 @@
         margin: 0 auto;
     }
 
-    #middle-pane { background-color: rgba(60, 70, 80, 0.10); }
-    #bottom-pane { background-color: rgba(60, 70, 80, 0.15); }
-    #left-pane, #center-pane, #right-pane  { background-color: rgba(60, 70, 80, 0.05); }
+    #middle-pane { 
+        color: #000; background-color: #ccc; 
+    }
+
+    #bottom-pane { 
+        color: #000; background-color: #aaa; 
+    }
+
+    #left-pane, #center-pane, #right-pane  { 
+        color: #000; background-color: #eee; 
+    }
 
     .pane-content {
         padding: 0 10px;

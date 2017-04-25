@@ -63,8 +63,9 @@
             '<span class="k-separator" />',
 
         overflowAnchorTemplate:
-            '<a href="" role="button" class="k-tool k-overflow-anchor" data-popup' +
-            ' unselectable="on"><span unselectable="on" class="k-icon k-i-more-vertical"></span></a>',
+            '<a tabindex="0" role="button" class="k-tool k-overflow-anchor" data-popup' +
+            ' unselectable="on" title="#= data.title #" aria-haspopup="true" aria-expanded="false">' +
+            '<span unselectable="on" class="k-icon k-i-more-vertical"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         formatByName: function(name, format) {
             for (var i = 0; i < format.length; i++) {
@@ -166,6 +167,7 @@
         emptyFolder: "Empty Folder",
         editAreaTitle: "Editable area. Press F10 for toolbar.",
         uploadFile: "Upload",
+        overflowAnchor: "More tools",
         orderBy: "Arrange by:",
         orderBySize: "Size",
         orderByName: "Name",
@@ -205,6 +207,7 @@
         summary: "Summary",
         width: "Width",
         height: "Height",
+        units: "Units",
         cellSpacing: "Cell Spacing",
         cellPadding: "Cell Padding",
         cellMargin: "Cell Margin",

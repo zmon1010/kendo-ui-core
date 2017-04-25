@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI.Tests
         private readonly Func<object, object> contentFunction;
         private const string HTML_CONTENT = "<p>text</p>";
         private const string EDITOR_SCRIPT_DEFINITION =
-            "<script>jQuery(" +
+            "<script>kendo.syncReady(" +
                 "function(){" +
                     "jQuery(\"#EditorMock\").kendoEditor({" +
                         "\"imageBrowser\":{\"fileTypes\":\"*.png,*.gif,*.jpg,*.jpeg\"}," +

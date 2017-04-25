@@ -655,6 +655,22 @@
         equal(rows.filter("[aria-selected=false]").length, rows.length);
     });
 
+    test("renders events' delete with ARIA attribute", function() {
+        var agenda = agendaView({ date: new Date("2013/06/06 00:00"),  messages: {destroy: "Delete"} });
+
+        var event = new Event({
+            start: new Date("2013/06/06 00:00"),
+            end: new Date("2013/06/06 01:00"),
+            title: "",
+            recurrenceRule: "FREQ=DAILY"
+        });
+
+        agenda.render([event]);
+        var deleteBtn = agenda.content.find(".k-event-delete");
+        console.log(deleteBtn.is("[aria-label='Delete']"))
+        ok(deleteBtn.is("[aria-label='Delete']"));
+    });
+
     test("Name is the same case as the class name", function() {
         var agenda = agendaView({ date: new Date("2013/06/06 00:00") });
 

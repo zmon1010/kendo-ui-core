@@ -5,7 +5,7 @@
 
 <demo:header />
 
-<kendo:editor name="editor" resizable="true" style="height:440px">
+<kendo:editor name="editor" resizable="true" style="height:440px" aria-label="editor">
     <kendo:editor-value>
          &lt;p&gt;
                &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;

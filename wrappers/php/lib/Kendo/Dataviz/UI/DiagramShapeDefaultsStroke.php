@@ -6,7 +6,7 @@ class DiagramShapeDefaultsStroke extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Defines the color of the shape's stroke.
+    * Defines the color of the shape stroke.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsStroke
     */
@@ -24,7 +24,7 @@ class DiagramShapeDefaultsStroke extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the thickness or width of the shape's stroke.
+    * Defines the thickness or width of the shape stroke.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsStroke
     */

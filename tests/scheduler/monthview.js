@@ -682,6 +682,18 @@
         equal(events.filter("[aria-selected=false]").length, events.length);
     });
 
+    test("View renders events' delete button with aria-label attribute", function() {
+        var view = setup();
+
+        view.render([
+            new kendo.data.SchedulerEvent({ start: new Date("2013/1/28 12:00 AM"), end: new Date("2013/1/29 12:00 AM"),  isAllDay: true, title: '["my event"]' })
+        ]);
+
+        var eventBtn = view.element.find(".k-event-delete");
+
+        ok(eventBtn.is("[aria-label=Delete]"));
+    });
+
     test("event which end date is the first day of the month is not rendered", function() {
         var view = setup({ date: new Date("2013/12/1") });
 

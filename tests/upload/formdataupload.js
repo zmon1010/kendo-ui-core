@@ -830,24 +830,24 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         equal(clearFileAction.calls("_clearFileAction"), 0);
     });
 
-      test("_retryAfter is called when retryAfter is set", function() {
+      test("_autoRetryAfter is called when autoRetryAfter is set", function() {
         uploadInstance = createUpload({
            async: {
                 saveUrl:"javascript:;",
                 removeUrl:"/removeAction",
                 autoUpload: true,
-                retryAfter:300,
+                autoRetryAfter:300,
                 chunkSize:1000
         }
         });
 
-        var retryAfter = stub(uploadInstance, "_retryAfter");
+        var autoRetryAfter = stub(uploadInstance, "_autoRetryAfter");
         uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
 
-        equal(retryAfter.calls("_retryAfter"), 1);
+        equal(autoRetryAfter.calls("_autoRetryAfter"), 1);
     });
 
-      test("_retryAfter is not called when retryAfter is not set", function() {
+      test("_autoRetryAfter is not called when autoRetryAfter is not set", function() {
         uploadInstance = createUpload({
            async: {
                 saveUrl:"javascript:;",
@@ -857,10 +857,10 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         }
         });
 
-        var retryAfter = stub(uploadInstance, "_retryAfter");
+        var autoRetryAfter = stub(uploadInstance, "_autoRetryAfter");
         uploadInstance._onUploadError({target:{}}, {responseText:"sometext"});
 
-        equal(retryAfter.calls("_retryAfter"), 0);
+        equal(autoRetryAfter.calls("_autoRetryAfter"), 0);
     });
 
     test("onCancel adds canceled uid", function() {

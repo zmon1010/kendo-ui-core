@@ -600,6 +600,15 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The title of the tool that shows the overflow tools.
+    * @param string $value
+    * @return \Kendo\UI\EditorMessages
+    */
+    public function overflowAnchor($value) {
+        return $this->setProperty('overflowAnchor', $value);
+    }
+
+    /**
     * The title of the tool that aligns text in the center.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
@@ -768,6 +777,15 @@ class EditorMessages extends \Kendo\SerializableObject {
     */
     public function underline($value) {
         return $this->setProperty('underline', $value);
+    }
+
+    /**
+    * The label of the Units dropdowns in TableWizard dialog.
+    * @param string $value
+    * @return \Kendo\UI\EditorMessages
+    */
+    public function units($value) {
+        return $this->setProperty('units', $value);
     }
 
     /**

@@ -26,6 +26,8 @@ namespace Kendo.Mvc.UI
             Async = new UploadAsyncSettings(this);
             Messages = new UploadMessages();
             TemplateId = string.Empty;
+            Directory = false;
+            DirectoryDrop = false;
             DropZone = string.Empty;
             Files = new List<UploadFile>();
 
@@ -39,6 +41,30 @@ namespace Kendo.Mvc.UI
         /// true if the component should be enabled, false otherwise; the default is true.
         /// </value>
         public bool Enabled
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating if directories can be selected.
+        /// </summary>
+        /// <value>
+        /// true allows directory upload.
+        /// </value>
+        public bool Directory
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating if directories can be dropped.
+        /// </summary>
+        /// <value>
+        /// true allows directory drop.
+        /// </value>
+        public bool DirectoryDrop
         {
             get;
             set;
@@ -146,6 +172,16 @@ namespace Kendo.Mvc.UI
             if (!Enabled)
             {
                 options.Add("enabled", Enabled);
+            }
+
+            if (Directory)
+            {
+                options.Add("directory", Directory);
+            }
+
+            if (DirectoryDrop)
+            {
+                options.Add("directoryDrop", DirectoryDrop);
             }
 
             if (!Multiple)

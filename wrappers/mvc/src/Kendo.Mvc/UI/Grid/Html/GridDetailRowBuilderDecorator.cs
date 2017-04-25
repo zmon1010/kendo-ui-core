@@ -16,9 +16,14 @@ namespace Kendo.Mvc.UI.Html
 
             if ((CurrentGridItem.State & GridItemStates.Master) == GridItemStates.Master)
             {
+                var ariaLabelText = CurrentGridItem.Expanded
+                    ? "Collapse"
+                    : "Expand";
+
                 td.Html(string.Empty);
                 var a = new HtmlElement("a")
                         .Attribute("href", "#")
+                        .Attribute("aria-label", ariaLabelText)
                         .AddClass(UIPrimitives.Icon)
                         .ToggleClass("k-i-expand", !CurrentGridItem.Expanded)
                         .ToggleClass("k-i-collapse", CurrentGridItem.Expanded);

@@ -852,4 +852,28 @@
   <data name="MediaPlayer_Unmute" xml:space="preserve">
     <value>Unmute</value>
   </data>
+  <data name="Scheduler_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Scheduler_Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Upload_ClearSelectedFiles" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Upload_InvalidFileExtension" xml:space="preserve">
+    <value>File type not allowed.</value>
+  </data>
+  <data name="Upload_InvalidFiles" xml:space="preserve">
+    <value>Invalid file(s). Please check file upload requirements.</value>
+  </data>
+  <data name="Upload_InvalidMaxFileSize" xml:space="preserve">
+    <value>File size too large.</value>
+  </data>
+  <data name="Upload_InvalidMinFileSize" xml:space="preserve">
+    <value>File size too small.</value>
+  </data>
+  <data name="Scheduler_Recurrence_Editor_RecurrenceEditorTitle" xml:space="preserve">
+    <value>Recurrence editor</value>
+  </data>
 </root>

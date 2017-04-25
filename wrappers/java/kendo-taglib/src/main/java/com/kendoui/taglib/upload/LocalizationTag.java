@@ -98,6 +98,14 @@ public class LocalizationTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("invalidFileExtension", value);
     }
 
+    public java.lang.String getInvalidFiles() {
+        return (java.lang.String)getProperty("invalidFiles");
+    }
+
+    public void setInvalidFiles(java.lang.String value) {
+        setProperty("invalidFiles", value);
+    }
+
     public java.lang.String getInvalidMaxFileSize() {
         return (java.lang.String)getProperty("invalidMaxFileSize");
     }

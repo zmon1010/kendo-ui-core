@@ -306,11 +306,11 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void TreeViewStart_should_render_label_in_checkbox_wrapper()
+        public void TreeViewStart_should_render_span_in_checkbox_wrapper()
         {
             IHtmlNode tag = renderer.CheckboxFor(item).Children[1];
 
-            Assert.Equal("label", tag.TagName);
+            Assert.Equal("span", tag.TagName);
             Assert.Equal("k-checkbox-label", tag.Attribute("class"));
         }
     }

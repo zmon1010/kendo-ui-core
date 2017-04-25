@@ -1,13 +1,21 @@
+<div class="demo-section k-content">
+    <h4>Select time</h4>
+    @(Html.Kendo().TimePicker()
+        .Name("timepicker")
+        .HtmlAttributes(new { style = "width: 100%" })
+    )
+</div>
+
 <div class="box wide">
     <div class="box-col">
     <h4>API Functions</h4>
     <ul class="options">
         <li>
-            <button id="get" class="k-button">Get value</button>
-        </li>
-        <li>
             <input id="value" value="10:30 AM" style="float:none" />
             <button id="set" class="k-button">Set value</button>
+        </li>
+        <li style="text-align: right;">
+            <button id="get" class="k-button">Get value</button>
         </li>
     </ul>
     </div>
@@ -37,13 +45,6 @@
     </ul>
     </div>
 </div>            
-<div class="demo-section k-content">
-    <h4>Select time</h4>
-    @(Html.Kendo().TimePicker()
-        .Name("timepicker")
-        .HtmlAttributes(new { style = "width: 100%" })
-    )
-</div>
 <script>
     $(document).ready(function() {
         $("#timepicker").closest(".k-widget")
@@ -75,9 +76,7 @@
             timepicker.close();
         });
 
-        $("#value").kendoTimePicker({
-            change: setValue
-        });
+        $("#value").kendoTimePicker();
 
         $("#set").click(setValue);
 

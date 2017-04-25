@@ -35,6 +35,8 @@ namespace Kendo.Mvc.UI
 
         private const string DefaultInvalidFileExtension = "File type not allowed.";
 
+        private const string DefaultInvalidFiles = "Invalid file(s). Please check file upload requirements.";
+
         private const string DefaultClearSelectedFiles = "Clear";
 
         public UploadMessages()
@@ -53,6 +55,7 @@ namespace Kendo.Mvc.UI
             InvalidMaxFileSize = Messages.Upload_InvalidMaxFileSize;
             InvalidMinFileSize = Messages.Upload_InvalidMinFileSize;
             InvalidFileExtension = Messages.Upload_InvalidFileExtension;
+            InvalidFiles = Messages.Upload_InvalidFiles;
             ClearSelectedFiles = Messages.Upload_ClearSelectedFiles;
         }
 
@@ -84,6 +87,8 @@ namespace Kendo.Mvc.UI
 
 		public string InvalidFileExtension { get; set; }
 
+        public string InvalidFiles { get; set; }
+
 		public string ClearSelectedFiles { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -103,6 +108,7 @@ namespace Kendo.Mvc.UI
                 .Add("invalidMaxFileSize", InvalidMaxFileSize, DefaultInvalidMaxFileSize)
                 .Add("invalidMinFileSize", InvalidMinFileSize, DefaultInvalidMinFileSize)
                 .Add("invalidFileExtension", InvalidFileExtension, DefaultInvalidFileExtension)
+                .Add("invalidFileExtension", InvalidFiles, DefaultInvalidFiles)
                 .Add("clearSelectedFiles", ClearSelectedFiles, DefaultClearSelectedFiles);
         }
     }

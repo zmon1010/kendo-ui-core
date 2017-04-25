@@ -8,9 +8,10 @@
 <demo:header />
 	<kendo:window name="window" title="About Alvar Aalto" draggable="true" resizable="true" width="600" close="onClose">
 		<kendo:window-content>
+			<h4>Armchair 402</h4>
 			<div class="armchair">
 	            <img src="${armchair}"
-	                    alt="Artek Alvar Aalto - Armchair 402" />
+	                    alt="Armchair 402" />
 	            Artek Alvar Aalto - Armchair 402
 	        </div>
 	

@@ -216,6 +216,39 @@
         equal(sort[0].dir, "asc");
     });
 
+    test("multiple sorting on single column has no sort order label", function() {
+        var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple", allowUnsort: true } );
+
+        button.click();
+
+        dataSource.sort();
+
+        equal(button.find("span.k-sort-order").length, 0);
+    });
+
+    test("multiple sorting multiple columns has sort label in first column", function() {
+        var sorter = setup(button.attr("data-field", "bar"), { dataSource: dataSource, mode: "multiple", allowUnsort: true } );
+
+        dataSource.sort( [{ field: "bar", dir: "asc" }, { field: "foo", dir: "desc" } ] );
+
+        sorter.refresh();
+        var orderLabel = button.find("span.k-sort-order");
+        equal(orderLabel.length, 1);
+        equal(orderLabel.first().html(), "1");
+    });
+
+    test("multiple sorting multiple columns has sort label in last column", function() {
+        var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple", allowUnsort: true } );
+
+        dataSource.sort( [{ field: "bar", dir: "asc" }, { field: "foo", dir: "desc" } ] );
+
+        sorter.refresh();
+
+        var orderLabel = button.find("span.k-sort-order");
+        equal(orderLabel.length, 1);
+        equal(orderLabel.html(), "2");
+    });
+
     test("aria-sort is not set when not sorted", function() {
         var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, aria: true } );
 

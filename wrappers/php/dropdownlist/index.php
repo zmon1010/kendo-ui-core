@@ -6,7 +6,7 @@ require_once '../include/header.php';
 <div id="cap-view" class="demo-section k-content">
     <h4>Customize your Kendo Cap</h4>
     <div id="cap" class="black-cap"></div>
-    <h4>Cap Color</h4>
+    <h4><label for="color">Cap Color</label></h4>
 <?php
 $color = new \Kendo\UI\DropDownList('color');
 
@@ -23,7 +23,7 @@ $color->value(1)
 
 echo $color->render();
 ?>
-   <h4 style="margin-top: 2em;">Cap Size</h4>
+   <h4 style="margin-top: 2em;"><label for="size">Cap Size</label></h4>
 <?php
 $size = new \Kendo\UI\DropDownList('size');
 

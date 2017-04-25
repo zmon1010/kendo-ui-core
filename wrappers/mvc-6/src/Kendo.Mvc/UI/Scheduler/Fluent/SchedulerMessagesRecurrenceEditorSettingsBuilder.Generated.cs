@@ -76,6 +76,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The text of the Recurence editor dropdown title.
+        /// </summary>
+        /// <param name="value">The value for RecurrenceEditorTitle</param>
+        public SchedulerMessagesRecurrenceEditorSettingsBuilder<T> RecurrenceEditorTitle(string value)
+        {
+            Container.RecurrenceEditorTitle = value;
+            return this;
+        }
+
+        /// <summary>
         /// The configuration of the scheduler recurrence editor weekly messages. Use this option to customize or localize the scheduler recurrence editor weekly messages.
         /// </summary>
         /// <param name="configurator">The configurator for the weekly setting.</param>

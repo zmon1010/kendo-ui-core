@@ -15,7 +15,7 @@ class DiagramShapeConnectorDefaultsStroke extends \Kendo\SerializableObject {
     }
 
     /**
-    * The stroke dash type.
+    * The dash type of the stroke.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeConnectorDefaultsStroke
     */

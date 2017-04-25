@@ -49,7 +49,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
                 var trialKey = ConfigurationManager.AppSettings[APP_SETTINGS_TRIAL_KEY];
 
                 return !string.IsNullOrEmpty(trialKey) &&
-                    trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString()));
+                    trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.ToString()));
             }
         }
 

@@ -83,6 +83,14 @@ public class MessagesRecurrenceEditorTag extends  BaseTag  /* interfaces */ /* i
         setProperty("yearly", value);
     }
 
+    public java.lang.String getRecurrenceEditorTitle() {
+        return (java.lang.String)getProperty("recurrenceEditorTitle");
+    }
+
+    public void setRecurrenceEditorTitle(java.lang.String value) {
+        setProperty("recurrenceEditorTitle", value);
+    }
+
 //<< Attributes
 
 }

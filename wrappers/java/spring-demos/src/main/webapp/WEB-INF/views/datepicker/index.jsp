@@ -7,9 +7,9 @@
 
 <div class="demo-section k-content">
         <h4>Show e-mails from:</h4>
-        <kendo:datePicker name="datepicker" value="${date}" style="width:100%"></kendo:datePicker>
+        <kendo:datePicker name="datepicker" value="${date}" style="width:100%" title="datepicker"></kendo:datePicker>
 		<h4 style="margin-top: 2em;">Add to archive mail from:</h4>
-        <kendo:datePicker name="monthpicker" dateInput="true" value="${month}" start="year" depth="year" format="MMMM yyyy" style="width:100%">
+        <kendo:datePicker name="monthpicker" title="monthpicker" dateInput="true" value="${month}" start="year" depth="year" format="MMMM yyyy" style="width:100%">
         </kendo:datePicker>
 </div>
 

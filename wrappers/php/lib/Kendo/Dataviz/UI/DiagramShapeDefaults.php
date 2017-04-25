@@ -15,7 +15,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines default options for the shape connectors.
+    * Defines the default options for the shape connectors.
     * @param \Kendo\Dataviz\UI\DiagramShapeDefaultsConnectorDefaults|array $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -51,7 +51,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the height of the shape when added to the diagram.
+    * Defines the height of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -69,7 +69,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.
+    * Defines the minimum height the shape should have, that is, it cannot be resized to a value smaller than the given one.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -78,7 +78,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.
+    * Defines the minimum width the shape should have, that is, it cannot be resized to a value smaller than the given one.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -142,7 +142,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the DiagramShapeDefaults.
-    * A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:
+    * A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -155,7 +155,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the width of the shape when added to the diagram.
+    * Defines the width of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -164,7 +164,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the x-coordinate of the shape when added to the diagram.
+    * Defines the x-coordinate of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -173,7 +173,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the y-coordinate of the shape when added to the diagram.
+    * Defines the y-coordinate of the shape when added to the Diagram.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */

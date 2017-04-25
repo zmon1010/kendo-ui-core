@@ -3,16 +3,26 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
+<div class="demo-section k-content">
+    <h4>Select time</h4>
+<?php
+$timePicker = new \Kendo\UI\TimePicker('timepicker');
+$timePicker->attr('style', 'width: 100%');
+
+echo $timePicker->render();
+
+?>
+</div>
 <div class="box wide">
     <div class="box-col">
     <h4>API Functions</h4>
     <ul class="options">
        <li>
-           <button id="get" class="k-button">Get value</button>
-       </li>
-       <li>
            <input id="value" value="10:30 AM" style="float:none" />
            <button id="set" class="k-button">Set value</button>
+       </li>
+       <li  style="text-align: right;">
+           <button id="get" class="k-button">Get value</button>
        </li>
     </ul>
     </div>
@@ -42,15 +52,7 @@ require_once '../lib/Kendo/Autoload.php';
     </ul>
     </div>
 </div>            
-<div class="demo-section k-content">
-    <h4>Select time</h4>
-<?php
-$timePicker = new \Kendo\UI\TimePicker('timepicker');
-$timePicker->attr('style', 'width: 100%');
 
-echo $timePicker->render();
-
-?>
 <script>
     $(document).ready(function() {
         var timepicker = $("#timepicker").data("kendoTimePicker");
@@ -79,9 +81,7 @@ echo $timePicker->render();
             timepicker.close();
         });
 
-        $("#value").kendoTimePicker({
-            change: setValue
-        });
+        $("#value").kendoTimePicker();
 
         $("#set").click(setValue);
 

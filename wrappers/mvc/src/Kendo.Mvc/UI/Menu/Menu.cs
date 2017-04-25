@@ -159,7 +159,7 @@ namespace Kendo.Mvc.UI
             }
 
             var scrollSettings = Scrollable.ToJson();
-            if ((bool) scrollSettings["enabled"])
+            if (scrollSettings.ContainsKey("enabled") && (bool)scrollSettings["enabled"])
             {
                 scrollSettings.Remove("enabled");
                 if (scrollSettings.Keys.Any())

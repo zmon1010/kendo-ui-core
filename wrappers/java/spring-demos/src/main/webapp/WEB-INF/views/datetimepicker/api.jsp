@@ -5,6 +5,7 @@
 <demo:header />
 
 <div class="demo-section k-content">
+<h4>Select Date/Time</h4>
     <kendo:dateTimePicker name="datetimepicker" style="width: 100%;"></kendo:dateTimePicker>
 </div>
 
@@ -84,9 +85,7 @@
 			datetimepicker.close("time");
 		});
 
-		$("#value").kendoDateTimePicker({
-			change: setValue
-		});
+		$("#value").kendoDateTimePicker();
 
 		$("#set").click(setValue);
 

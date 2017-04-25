@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auto page breaks</title>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js"
+     ]);
+    </script>
+  </head>
+  <body>
+    <div id="example" class="content-wrapper">
+
+      <div class="box wide hidden-on-narrow">
+        <h4>Export page content</h4>
+        <div class="box-col">
+          <button class='export-pdf k-button'>Export as PDF</button>
+        </div>
+      </div>
+
+      <main>
+        <section class="row foodSect">
+          <div class="section">
+            <h1 class="col-md-5">Section</h1>
+          </div>
+          <div class="col-md-12 subsections">
+            <h2 class="col-md-5">Subsections</h2>
+            <div class="col-md-12 standards">
+              <h3 class="col-md-5">Standard</h3>
+              <div class="assessment">
+                <div class="title">
+                  <select id="ass111Sel" class="selassessment">
+                    <!--option value="assOK" selected>ASSESSMENT</option-->
+                    <option value="1ass" selected="selected">ASSESSMENT</option>
+                    <option value="1w">Warning</option>
+                    <option value="1minc">ASSESSMENT Minor Non-Compliance</option>
+                    <option value="1mjnc">ASSESSMENT Major Non-Compliance</option>
+                  </select>
+                </div>
+              </div>
+              <h3 class="col-md-5">Standard 2</h3>
+              <div class="assessment">
+                <div class="title">
+                  <select id="ass112Sel" class="selassessment">
+                    <!--option value="assOK" selected>ASSESSMENT</option-->
+                    <option value="1ass" selected="selected">ASSESSMENT</option>
+                    <option value="1w">Warning</option>
+                    <option value="1minc">ASSESSMENT Minor Non-Compliance</option>
+                    <option value="1mjnc">ASSESSMENT Major Non-Compliance</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </section>
+      </main>
+
+      <style>
+       /*
+          Use the DejaVu Sans font for display and embedding in the PDF file.
+          The standard PDF fonts have no support for Unicode characters.
+        */
+       .k-widget {
+         font-family: "DejaVu Sans", "Arial", sans-serif;
+         font-size: .9em;
+       }
+
+
+       .foodSect {
+         counter-reset: section;
+       }
+
+       .foodSect h1 {
+         counter-reset: subsection;
+       }
+
+       .foodSect h2 {
+         counter-reset: standards;
+       }
+
+
+
+       .foodSect h1:before {
+         counter-increment: section;
+         content: counter(section) ".";
+       }
+
+       .foodSect h2:before {
+         counter-increment: subsection;
+         content: counter(section) "." counter(subsection) " ";
+       }
+
+       .foodSect h3:before {
+         counter-increment: standards;
+         content: counter(section) "." counter(subsection) "." counter(standards) " ";
+       }
+
+      </style>
+
+      <script>
+       $(document).ready(function() {
+
+           $(".export-pdf").click(function() {
+               // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+               kendo.drawing.drawDOM($("#example"),{
+                   multiPage: true,
+                   paperSize: [1100, 1430], 
+                   landscape:true,
+                   date:true,
+                   page:true,
+                   title: true,
+                   author:true,
+                   margin: {left: "1cm", top: "1cm", right: "1cm", bottom: "1cm"}
+               })
+                    .then(function(group) {
+                        // Render the result as a PDF file
+                        return kendo.drawing.exportPDF(group, {
+                            title: true
+                        });
+                    })
+                    .done(function(data) {
+                        // Save the PDF file
+                        kendo.saveAs({
+                            dataURI: data,
+                            fileName: "HR-Dashboard.pdf",
+                            proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
+                        });
+                    });
+           });
+       });
+      </script>
+    </div>
+  </body>
+</html>

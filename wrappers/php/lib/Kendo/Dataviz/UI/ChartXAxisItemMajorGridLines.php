@@ -24,7 +24,7 @@ class ChartXAxisItemMajorGridLines extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.
+    * If set to false the chart will not display the x major grid lines. By default the x major grid lines are visible.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartXAxisItemMajorGridLines
     */
