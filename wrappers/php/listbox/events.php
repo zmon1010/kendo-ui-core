@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 
 ?>
-<div id="example" role="application">
+<div role="application">
     <div class="demo-section k-content wide">
 <?php
 
@@ -60,6 +60,9 @@ require_once '../include/header.php';
              ->reorder("onReorder");
 
     echo $listBox1->render();
+
+    // print space for design improvements
+    echo " ";
 
     $listBox2 = new \Kendo\UI\ListBox('selected');
 

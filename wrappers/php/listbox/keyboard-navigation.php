@@ -39,17 +39,22 @@ require_once '../include/header.php';
             ->dataValueField("ProductID")
             ->dataTextField("ProductName")
             ->connectWith("listbox2")
-            ->selectable("Multiple")
-            ->navigatable(true);
+            ->selectable("multiple")
+            ->navigatable(true)
+            ->attr("title", "ListBox1");
 
     echo $listbox->render();
+
+    // print space for design improvements
+    echo " ";
 
     $listbox2 = new \Kendo\UI\ListBox('listbox2');
     $listbox2->dataSource(array())
              ->dataValueField("ProductID")
              ->dataTextField("ProductName")
              ->selectable("single")
-             ->navigatable(true);
+             ->navigatable(true)
+             ->attr("title", "ListBox2");
 
     echo $listbox2->render();
 ?>

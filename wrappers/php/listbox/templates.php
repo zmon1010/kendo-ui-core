@@ -55,6 +55,9 @@ require_once '../include/header.php';
 
     echo $listbox1->render();
 
+    // print space for design improvements
+    echo " ";
+
     $listbox2 = new \Kendo\UI\ListBox('selected');
 
     $draggable2 = new \Kendo\UI\ListBoxDraggable();

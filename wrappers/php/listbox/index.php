@@ -1,14 +1,12 @@
 <?php
 
 require_once '../lib/Kendo/Autoload.php';
-
 require_once '../include/header.php';
 
 ?>
-
-<div id="example" role="application">
+<div role="application">
     <div class="demo-section k-content wide">
-	    <label for="optional">Employees</label>
+        <label for="optional" id="employees">Employees</label>
         <label for="selected">Developers</label>
         <br />
 <?php
@@ -35,10 +33,13 @@ require_once '../include/header.php';
 
     echo $listBoxOptional->render();
 
+    // print space for design improvements
+    echo " ";
+
     $listBoxSelected = new \Kendo\UI\ListBox('selected');
     $listBoxSelected->dataSource(array())
                     ->selectable("multiple")
-					->attr('title', 'Selected');
+                    ->attr('title', 'Selected');
 
     echo $listBoxSelected->render();
 ?>
@@ -51,8 +52,12 @@ require_once '../include/header.php';
         margin-bottom: 8px;
         font-weight: bold;
         display: inline-block;
-        width: 236px;
     }
+
+    #employees {
+        width: 270px;
+    }
+
     #example .demo-section {
         max-width: none;
         width: 515px;
@@ -63,9 +68,16 @@ require_once '../include/header.php';
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
-            width: 270px;
-            margin-right: 1px;
-        }
+    #example .k-listbox:first-of-type {
+        width: 270px;
+        margin-right: 1px;
+    }
+
+    .demo-section label {
+        padding-left: 8px;
+        margin-bottom: 8px;
+        font-weight: bold;
+        display: inline-block;
+    }
 </style>
 <?php require_once '../include/footer.php'; ?>

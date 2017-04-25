@@ -2,7 +2,7 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div id="example" role="application">
+<div role="application">
     <div class="demo-section k-content">
 <?php
     $listbox1 = new \Kendo\UI\ListBox('listbox1');
