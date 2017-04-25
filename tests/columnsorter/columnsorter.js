@@ -230,7 +230,7 @@
         var sorter = setup(button.attr("data-field", "bar"), { dataSource: dataSource, mode: "multiple", allowUnsort: true } );
 
         dataSource.sort( [{ field: "bar", dir: "asc" }, { field: "foo", dir: "desc" } ] );
-
+        sorter.options.showIndexes = true;
         sorter.refresh();
         var orderLabel = button.find("span.k-sort-order");
         equal(orderLabel.length, 1);
@@ -241,7 +241,7 @@
         var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple", allowUnsort: true } );
 
         dataSource.sort( [{ field: "bar", dir: "asc" }, { field: "foo", dir: "desc" } ] );
-
+        sorter.options.showIndexes = true;
         sorter.refresh();
 
         var orderLabel = button.find("span.k-sort-order");
@@ -249,6 +249,20 @@
         equal(orderLabel.html(), "2");
     });
 
+    test("showIndexes is false by default", function () {
+        var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple", allowUnsort: true });
+        equal(sorter.options.showIndexes, false);
+    });
+
+    test("Sequance indicators are not visible if showIndexes is false", function () {
+        var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple", allowUnsort: true });
+        dataSource.sort([{ field: "bar", dir: "asc" }, { field: "foo", dir: "desc" }]);
+        sorter.refresh();
+
+        var orderLabel = button.find("span.k-sort-order");
+        equal(orderLabel.length, 0);
+    });
+    
     test("aria-sort is not set when not sorted", function() {
         var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, aria: true } );
 

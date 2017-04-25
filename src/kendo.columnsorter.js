@@ -54,7 +54,8 @@ var __meta__ = { // jshint ignore:line
             allowUnsort: true,
             compare: null,
             filter: "",
-            initialDirection: ASC
+            initialDirection: ASC,
+            showIndexes: false
         },
 
         events: ["change"],
@@ -102,7 +103,7 @@ var __meta__ = { // jshint ignore:line
                 $('<span class="k-icon k-i-sort-desc-sm" />').appendTo(that.link);
                 element.attr(ARIASORT, "descending");
             }
-            if (sort.length > 1 && sortOrder) {
+            if (that.options.showIndexes && sort.length > 1 && sortOrder) {
                 $('<span class="k-sort-order" />').html(sortOrder).appendTo(that.link);
             }
         },
