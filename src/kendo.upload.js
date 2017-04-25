@@ -217,15 +217,15 @@ var __meta__ = { // jshint ignore:line
         pause: function(fileEntry){
             this._module.onPause({ target: $(fileEntry, this.wrapper) });
 
-            var pauseIcon = fileEntry.find(".k-i-pause");
-            pauseIcon.removeClass("k-i-pause").addClass("k-i-play").attr("title", this.localization.resume);
+            var pauseIcon = fileEntry.find(".k-i-pause-sm");
+            pauseIcon.removeClass("k-i-pause-sm").addClass("k-i-play-sm").attr("title", this.localization.resume);
             $(pauseIcon).parent().attr("aria-label", this.localization.resume);
         },
         resume: function(fileEntry){
             this._module.onResume({ target: $(fileEntry, this.wrapper) });
 
-            var playIcon = fileEntry.find(".k-i-play");
-            playIcon.removeClass("k-i-play").addClass("k-i-pause").attr("title", this.localization.pause);
+            var playIcon = fileEntry.find(".k-i-play-sm");
+            playIcon.removeClass("k-i-play-sm").addClass("k-i-pause-sm").attr("title", this.localization.pause);
             $(playIcon).parent().attr("aria-label", this.localization.pause);
         },
         upload: function() {
@@ -741,8 +741,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         _fileAction: function(fileElement, actionKey, skipClear) {
-            var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry", pause: "k-i-pause"};
-            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload-sm", pause: "k-i-pause"};
+            var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry", pause: "k-i-pause-sm"};
+            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload-sm", pause: "k-i-pause-sm"};
 
             if (!classDictionary.hasOwnProperty(actionKey)) {
                 return;
@@ -831,11 +831,11 @@ var __meta__ = { // jshint ignore:line
                     that._module.onCancel({ target: $(fileEntry, that.wrapper) });
                     that._checkAllComplete();
                     that._updateHeaderUploadStatus();
-                } else if (icon.hasClass("k-i-pause")) {
+                } else if (icon.hasClass("k-i-pause-sm")) {
                     that.trigger(PAUSE, eventArgs);
                     that.pause(fileEntry);
                     that._updateHeaderUploadStatus();
-                } else if (icon.hasClass("k-i-play")) {
+                } else if (icon.hasClass("k-i-play-sm")) {
                     that.trigger(RESUME, eventArgs);
                     that.resume(fileEntry);
                 }else if (icon.hasClass("k-i-retry")) {
@@ -1088,7 +1088,7 @@ var __meta__ = { // jshint ignore:line
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
             var currentlyFailed = $('.k-file-error', that.wrapper);
-            var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play");
+            var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play-sm");
             var failedUploads, headerUploadStatusIcon;
 
             if(currentlyPaused.length &&
@@ -1096,7 +1096,7 @@ var __meta__ = { // jshint ignore:line
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
                                 .removeClass()
                                 .addClass("k-icon")
-                                .addClass("k-i-pause");
+                                .addClass("k-i-pause-sm");
 
                 headerUploadStatus.html(headerUploadStatusIcon)
                                   .append(that.localization.headerStatusPaused);
