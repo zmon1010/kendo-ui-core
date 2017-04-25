@@ -1095,8 +1095,12 @@
           "aspnet-mvc": "ASP.NET MVC DatePicker sample"
         },
         "meta": {
-          "kendo-ui": "The demo shows how users can efforight-to-left-supportessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.",
+          "kendo-ui": "The demo shows how users can effortessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.",
           "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application."
+        },
+        "description": {
+          "kendo-ui": "<p>The demo shows how users can effortessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery DatePicker widget for your web application.</p><p>Since <strong>R2 2017</strong> the DatePicker can use <a href=\"http://demos.telerik.com/kendo-ui/dateinput/index\">DateInput</a> as a default input. The second DatePicker in the example is configured to use DateInput.</p>",
+          "aspnet-mvc": "<p>This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application.</p><p>Since <strong>R2 2017</strong> the DatePicker can use <a href=\"http://demos.telerik.com/aspnet-mvc/dateinput/index\">DateInput</a> as a default input. The second DatePicker in the example is configured to use DateInput.</p>"
         }
       },
       {
