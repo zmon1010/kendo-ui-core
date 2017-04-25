@@ -3674,3 +3674,22 @@ input.k-textbox:focus {
         vertical-align: bottom;
     }
 }
+
+.k-menu-scroll-button {
+    border-width: 0;
+    box-shadow: none;
+    border-color: @widget-border-color;
+    color: @header-text-color;
+    .composite-background(@widget-gradient);
+    background-position: 50% 50%;
+    background-color: @header-background-color;
+}
+
+.k-menu-scroll-wrapper.horizontal {
+    .k-scroll-left { border-right-width: 1px; }
+    .k-scroll-right { border-left-width: 1px; }
+}
+.k-menu-scroll-wrapper.vertical {
+    .k-scroll-up { border-bottom-width: 1px; }
+    .k-scroll-down { border-top-width: 1px; }
+}
