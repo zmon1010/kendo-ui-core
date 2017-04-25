@@ -759,6 +759,8 @@ var RestorePoint = Class.extend({
 
     restoreHtml: function() {
         var that = this;
+
+        dom.removeChildren(that.body);
         that.body.innerHTML = that.html;
         if (that.immutables && !that.serializedImmutables.empty) {
             Editor.Immutables.restoreImmutables(that.body, that.serializedImmutables);

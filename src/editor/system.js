@@ -113,11 +113,15 @@ var GenericCommand = Class.extend({
     },
 
     redo: function () {
+        dom.removeChildren(this.body);
+
         this.body.innerHTML = this.endRestorePoint.html;
         this.editor.selectRange(this.endRestorePoint.toRange());
     },
 
     undo: function () {
+        dom.removeChildren(this.body);
+
         this.body.innerHTML = this.startRestorePoint.html;
         this.editor.selectRange(this.startRestorePoint.toRange());
     }
