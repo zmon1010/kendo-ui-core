@@ -5,11 +5,20 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using System.Web.Routing;
     using Kendo.Mvc.Extensions;
+    using Resources;
 
     public class ListBoxMessagesToolsSettings : JsonObject
     {
         public ListBoxMessagesToolsSettings()
         {
+            MoveDown = Messages.ListBox_MoveDown;
+            MoveUp= Messages.ListBox_MoveUp;
+            Remove = Messages.ListBox_Remove;
+            TransferAllFrom = Messages.ListBox_TransferAllFrom;
+            TransferAllTo = Messages.ListBox_TransferAllTo;
+            TransferFrom = Messages.ListBox_TransferFrom;
+            TransferTo = Messages.ListBox_TransferTo;
+
             //>> Initialization
         
         //<< Initialization

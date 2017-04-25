@@ -798,4 +798,25 @@
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>Is null</value>
   </data>
+  <data name="ListBox_MoveDown" xml:space="preserve">
+    <value>Déplacer vers le bas</value>
+  </data>
+  <data name="ListBox_MoveUp" xml:space="preserve">
+    <value>Déplacer vers le haut</value>
+  </data>
+  <data name="ListBox_Remove" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ListBox_TransferAllFrom" xml:space="preserve">
+    <value>Transférer tout de</value>
+  </data>
+  <data name="ListBox_TransferAllTo" xml:space="preserve">
+    <value>Transférer tout à</value>
+  </data>
+  <data name="ListBox_TransferFrom" xml:space="preserve">
+    <value>Transférer de</value>
+  </data>
+  <data name="ListBox_TransferTo" xml:space="preserve">
+    <value>Transférer à</value>
+  </data>
 </root>

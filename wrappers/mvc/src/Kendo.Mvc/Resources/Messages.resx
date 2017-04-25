@@ -876,4 +876,25 @@
   <data name="Scheduler_Recurrence_Editor_RecurrenceEditorTitle" xml:space="preserve">
     <value>Recurrence editor</value>
   </data>
+  <data name="ListBox_MoveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="ListBox_MoveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="ListBox_Remove" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ListBox_TransferAllFrom" xml:space="preserve">
+    <value>Transfer All From</value>
+  </data>
+  <data name="ListBox_TransferAllTo" xml:space="preserve">
+    <value>Transfer All To</value>
+  </data>
+  <data name="ListBox_TransferFrom" xml:space="preserve">
+    <value>Transfer From</value>
+  </data>
+  <data name="ListBox_TransferTo" xml:space="preserve">
+    <value>Transfer To</value>
+  </data>
 </root>

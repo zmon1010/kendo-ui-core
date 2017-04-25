@@ -825,4 +825,25 @@
   <data name="Editor_Print" xml:space="preserve">
     <value>Print</value>
   </data>
+  <data name="ListBox_MoveDown" xml:space="preserve">
+    <value>Nach unten verschieben</value>
+  </data>
+  <data name="ListBox_MoveUp" xml:space="preserve">
+    <value>Nach oben verschieben</value>
+  </data>
+  <data name="ListBox_Remove" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ListBox_TransferAllFrom" xml:space="preserve">
+    <value>Übertragen sie alle von</value>
+  </data>
+  <data name="ListBox_TransferAllTo" xml:space="preserve">
+    <value>Übertragen sie alle zu</value>
+  </data>
+  <data name="ListBox_TransferFrom" xml:space="preserve">
+    <value>Übertragen von</value>
+  </data>
+  <data name="ListBox_TransferTo" xml:space="preserve">
+    <value>Übertragen zu</value>
+  </data>
 </root>
