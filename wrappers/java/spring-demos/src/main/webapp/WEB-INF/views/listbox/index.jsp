@@ -5,25 +5,28 @@
 <demo:header />
 
 <div class="demo-section k-content wide">
-	<label for="optional">Employees</label>
+	<label for="optional" id="employees">Employees</label>
     <label for="selected">Developers</label>
     <br />
     <kendo:listBox name="optional" connectWith="#selected" title="Optional">
         <kendo:listBox-toolbar tools="${tools}"></kendo:listBox-toolbar>
         <kendo:dataSource data="${data}"></kendo:dataSource>    
-    </kendo:listBox>
+    </kendo:listBox> 
+	
     <kendo:listBox name="selected" selectable="multiple" title="Selected">
     	<kendo:dataSource data="${selected}"></kendo:dataSource>
     </kendo:listBox>
 </div>
 
 <style>
-    .demo-section label {
+	.demo-section label {
         padding-left: 8px;
         margin-bottom: 8px;
         font-weight: bold;
-        display: inline-block;
-        width: 236px;
+        display: inline-block;        
+    }
+    #employees {
+        width: 270px;
     }
     #example .demo-section {
         max-width: none;
@@ -35,7 +38,7 @@
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
+        #example .k-listbox:first-of-type {
             width: 270px;
             margin-right: 1px;
         }

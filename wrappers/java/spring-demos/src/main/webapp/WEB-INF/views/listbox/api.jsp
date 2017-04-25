@@ -19,7 +19,7 @@
 					<kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json"/>
 				</kendo:dataSource-transport>
 			</kendo:dataSource>    
-		</kendo:listBox>
+		</kendo:listBox> 
 		<kendo:listBox name="listbox2" dataTextField="productName" dataValueField="productID">
 			<kendo:dataSource data="${selected}"></kendo:dataSource>
 		</kendo:listBox>
