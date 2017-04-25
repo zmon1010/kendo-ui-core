@@ -959,6 +959,7 @@ var __meta__ = { // jshint ignore:line
             var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
+            var currentlyFailed = $('.k-file-error', that.wrapper);
             var currentlyPaused = $('.k-file', that.wrapper).find(".k-i-play-sm");
             var failedUploads, headerUploadStatusIcon;
 

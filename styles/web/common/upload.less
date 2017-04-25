@@ -31,10 +31,16 @@ html .k-upload
     margin-left: .6em;
 }
 
-.k-dropzone-active em
-{
-    display: inline-block;
-}
+.k-dropzone-active {
+
+    em {
+        display: inline-block;
+    }
+
+    .k-upload-status {
+        display: none;
+    }
+} 
 
 .k-upload-button
 {
@@ -320,10 +326,6 @@ html .k-upload
 {
     position: static;
     margin-left: 10px;
-}
-
-.k-dropzone-active .k-upload-status {
-    display: none;
 }
 
 .k-upload-pct {
