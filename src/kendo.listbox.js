@@ -350,10 +350,12 @@ var __meta__ = { // jshint ignore:line
             var key = e.keyCode;
             var current = that._getNavigatableItem(key);
             var shouldPreventDefault;
-            var index;
 
+            if(that._target) {
+                that._target.removeClass(FOCUSED_CLASS);
+            }
             if(key == keys.DELETE) {
-                that.remove(that.select());
+                that._executeCommand(REMOVE);
                 if(that._target) {
                     that._target.removeClass(FOCUSED_CLASS);
                     that._getList().removeAttr("aria-activedescendant");
@@ -361,24 +363,17 @@ var __meta__ = { // jshint ignore:line
                 }
                 shouldPreventDefault = true;
             } else if(key === keys.DOWN || key === keys.UP) {
-                if(that._target) {
-                    that._target.removeClass(FOCUSED_CLASS);
-                }
-                if (e.shiftKey) {
-                    if(e.ctrlKey) {
-                        if(!that._target) {
-                            return;
-                        }
-                        index = that.items().index(key === keys.DOWN ? that._target.next() : that._target.prev());
-                        if(!that.trigger(REORDER, { dataItem: that.dataItem(that._target), item: $(that._target) })) {
-                            that.reorder(that._target, index);
-                            that._target.addClass(FOCUSED_CLASS);
-                            return;
-                        }
-                    } else {
-                        that.select($({}).add(that._target).add(current));
+                if (e.shiftKey && !e.ctrlKey) {
+                    that.select($({}).add(that._target).add(current));
+                } else if (e.shiftKey && e.ctrlKey) {
+                    that._executeCommand(key === keys.DOWN ? MOVE_DOWN : MOVE_UP);
+                } else if (!e.shiftKey && !e.ctrlKey) {
+                    if(that.options.selectable === "multiple"){
+                        that.clearSelection();
                     }
+                    that.select(current);
                 }
+
                 that._target = current;
                 if(that._target) {
                     that._target.addClass(FOCUSED_CLASS);
@@ -396,8 +391,8 @@ var __meta__ = { // jshint ignore:line
                        that.select(that._target);
                    }
                 } else {
-                    that.clearSelection();
-                    that.select(that._target);
+                   that.clearSelection();
+                   that.select(that._target);
                 }
                 shouldPreventDefault = true;
             } else if(e.ctrlKey && key == keys.RIGHT) {
@@ -405,6 +400,7 @@ var __meta__ = { // jshint ignore:line
                    that._executeCommand(TRANSFER_ALL_TO);
                 } else {
                    that._executeCommand(TRANSFER_TO);
+                   that._target = that.select();
                 }
                 shouldPreventDefault = true;
             } else if(e.ctrlKey && key == keys.LEFT) {
