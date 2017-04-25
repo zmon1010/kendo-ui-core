@@ -732,7 +732,7 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         };
 
         simulateFileSelect();
-        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
+        $(".k-i-pause-sm", uploadInstance.wrapper).trigger("click");
         uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
         
         equal(flag, true);
@@ -758,12 +758,12 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         };
 
         simulateFileSelect();
-        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
+        $(".k-i-pause-sm", uploadInstance.wrapper).trigger("click");
        
         uploadInstance._updateHeaderUploadStatus();
         uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
 
-        equal(uploadInstance.wrapper.find(".k-upload-status").find(".k-i-pause").length, 1);
+        equal(uploadInstance.wrapper.find(".k-upload-status").find(".k-i-pause-sm").length, 1);
     });
 
       test("resume event is triggered on click", function() {
@@ -792,8 +792,8 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
         };
 
         simulateFileSelect();
-        $(".k-i-pause", uploadInstance.wrapper).trigger("click");
-        $(".k-i-play", uploadInstance.wrapper).trigger("click");
+        $(".k-i-pause-sm", uploadInstance.wrapper).trigger("click");
+        $(".k-i-play-sm", uploadInstance.wrapper).trigger("click");
         uploadInstance._module.prepareUpload = uploadInstance._module._prepareUpload;
         equal(flag, true);
     });
