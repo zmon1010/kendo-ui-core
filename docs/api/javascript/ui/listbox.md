@@ -577,15 +577,9 @@ Defines the text of the **To Right** button that is located in the toolbar of th
 
 ### selectable `String` *(default: "single")*
 
-Indicates whether a single or multiple items are selected. The possible values are:
-
-#### *"single"*
-
-Indicates a single-item selection.
-
-#### *"multiple"*
-
-Indicates a multiple-item selection.
+Indicates whether selection is single or multiple. Possible values:
+- "single" - Single item selection.
+- "multiple" - Multiple item selection.
 
 #### Example
 

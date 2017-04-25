@@ -261,7 +261,7 @@ Sets the HTML content of the <%= owner.php_class %>.
 DATA_SOURCE_SECTION = ERB.new(%{
 ### dataSource
 
-Sets the data source of the <%= name %>.
+Sets the data source of the widget.
 
 #### Returns
 `<%= owner.php_type %>`
@@ -373,7 +373,7 @@ OPTION_SECTION_EXAMPLES = ERB.new(%{
     end
 
 EVENT_SECTION = ERB.new(%{
-### <%= php_name %>
+### <%= event_name = Event.php_event_method php_name %>
 
 <%= description %>
 
@@ -390,7 +390,7 @@ For additional information check the [<%= name %>](<%= owner.api_link %>#events-
 
     <?php
     <%= owner.variable %> = <%= owner.value %>;
-    <%= owner.variable %>-><%= php_name %>('function(e) { }');
+    <%= owner.variable %>-><%= event_name %>('function(e) { }');
     ?>
 
 #### Example - using string which defines a JavaScript name
@@ -401,19 +401,29 @@ For additional information check the [<%= name %>](<%= owner.api_link %>#events-
     </script>
     <?php
     <%= owner.variable %> = <%= owner.value %>;
-    <%= owner.variable %>-><%= php_name %>('on<%= name.pascalize %>');
+    <%= owner.variable %>-><%= event_name %>('on<%= name.pascalize %>');
     ?>
 
 #### Example - using \\Kendo\\JavaScriptFunction
 
     <?php
     <%= owner.variable %> = <%= owner.value %>;
-    <%= owner.variable %>-><%= php_name %>(new \\Kendo\\JavaScriptFunction('function(e) { }'));
+    <%= owner.variable %>-><%= event_name %>(new \\Kendo\\JavaScriptFunction('function(e) { }'));
     ?>
 }, 0, '<%>')
     class Event < CodeGen::PHP::Event
         def to_markdown_section(root)
             EVENT_SECTION.result(binding)
+        end
+
+        def self.php_event_method(name)
+            if (name == "add")
+                "addEvent"
+            elsif (name == "render")
+                "renderEvent"
+            else
+                name
+            end
         end
     end
 
