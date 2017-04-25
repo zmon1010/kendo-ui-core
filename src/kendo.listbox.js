@@ -184,10 +184,10 @@ var __meta__ = { // jshint ignore:line
                     remove: "Delete",
                     moveUp: "Move Up",
                     moveDown: "Move Down",
-                    transferTo: "To Right",
-                    transferFrom: "To Left",
-                    transferAllTo: "All to Right",
-                    transferAllFrom: "All to Left"
+                    transferTo: "Transfer To",
+                    transferFrom: "Transfer From",
+                    transferAllTo: "Transfer All To",
+                    transferAllFrom: "Transfer All From"
                 }
             }
         },
