@@ -9,6 +9,7 @@
     var REMOVE = "remove";
     var TRANSFER = "transfer";
     var ADD = "add";
+    var CHANGE = "change";
 
     module("ListBox events", {
         teardown: function() {
@@ -65,6 +66,32 @@
 
         equal(args.isDefaultPrevented(), true);
         equal(listbox.items().length, itemsLength);
+    });
+
+    test("remove action should not trigger change event", function() {
+        var called = false;
+        listbox = createListBoxWithToolbar();
+        listbox.select(listbox.items().eq(0));
+        listbox.bind(CHANGE, function() {
+            called = true;
+        });
+
+        clickRemoveButton(listbox);
+
+        equal(called, false);
+    });
+
+    test("remove action should not trigger change event for all items", function() {
+        var called = false;
+        listbox = createListBoxWithToolbar();
+        listbox.select(listbox.items());
+        listbox.bind(CHANGE, function() {
+            called = true;
+        });
+
+        clickRemoveButton(listbox);
+
+        equal(called, false);
     });
 
     module("ListBox events", {
