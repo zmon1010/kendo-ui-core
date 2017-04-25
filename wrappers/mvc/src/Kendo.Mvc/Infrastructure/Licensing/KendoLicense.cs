@@ -66,6 +66,20 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             }
         }
 
+        internal string ErrorCode
+        {
+            get
+            {
+                var start = GetTrialStart();
+
+                var code = (99 - start.Day).ToString() +
+                    (99 - start.Month).ToString() +
+                    (9999 - start.Year).ToString();
+
+                return code;
+            }
+        }
+
         internal int TrialDaysLeft
         {
             get
