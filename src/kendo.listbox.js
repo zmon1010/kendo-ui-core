@@ -906,7 +906,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             that.templates = {
-                itemTemplate: kendo.template("# var item = data.item, r = data.r; # <li class='k-item' role='option'>#=r(item)#</li>", { useWithBlock: false }),
+                itemTemplate: kendo.template("# var item = data.item, r = data.r; # <li class='k-item' role='option' aria-selected='false'>#=r(item)#</li>", { useWithBlock: false }),
                 itemContent: template,
                 toolbar: "<div class='" + TOOLBAR_CLASS + "'></div>"
             };
@@ -976,6 +976,10 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var selectable = that.options.selectable;
             var selectableOptions = Selectable.parseOptions(selectable);
+
+            if (selectableOptions.multiple) {
+                that.element.attr("aria-multiselectable", "true");
+            }
 
             that.selectable = new Selectable(that._innerWrapper, {
                 aria: true,
