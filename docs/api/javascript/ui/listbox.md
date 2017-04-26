@@ -311,7 +311,7 @@ Array of `id` strings which determines the ListBoxes that can drag and drop thei
         });
     </script>
 
-### navigatable `Boolean` *(default: false)*
+### navigatable `Boolean` *(default: true)*
 
 Indicates whether the keyboard navigation is enabled or disabled.
 

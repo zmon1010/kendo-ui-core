@@ -143,19 +143,4 @@
         release(draggedElement, targetOffset.left, targetOffset.top + 100);
         ok(listA.items().find(".k-ghost").length === 0);
     });
-
-    test("Offset parameter is correct in reorder event", 1, function() {
-        var draggedElement = listA.items().first();
-        var draggableOffset = kendo.getOffset(draggedElement);
-        var targetElement = listA.items().last();
-        var targetOffset = kendo.getOffset(targetElement);
-
-        listA.bind("reorder", function(e) {
-           ok(e.offset === 2);
-        });
-
-        press(draggedElement, draggableOffset.left, draggableOffset.top);
-        move(draggedElement, targetOffset.left, targetOffset.top + 20);
-        release(draggedElement, targetOffset.left, targetOffset.top + 20);
-    });
 })();

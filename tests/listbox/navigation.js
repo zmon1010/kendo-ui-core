@@ -32,8 +32,8 @@
         }
     });
 
-    test("Navigatable is false by default", 1, function() {
-        ok(kendo.ui.ListBox.prototype.options.navigatable === false);
+    test("Navigatable is true by default", 1, function() {
+        ok(kendo.ui.ListBox.prototype.options.navigatable === true);
     });
 
     test("List element has tab index", 1, function() {

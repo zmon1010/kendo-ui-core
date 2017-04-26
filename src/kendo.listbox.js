@@ -174,7 +174,7 @@ var __meta__ = { // jshint ignore:line
             draggable: null,
             dropSources: [],
             connectWith: "",
-            navigatable: false,
+            navigatable: true,
             toolbar: {
                 position: RIGHT,
                 tools: []
@@ -249,9 +249,6 @@ var __meta__ = { // jshint ignore:line
             var options = that.options;
 
             if(options.navigatable) {
-                if(!that.options.selectable) {
-                    throw new Error("Keyboard navigation requires selection to be enabled");
-                }
                 that._getList().on(CLICK, ENABLED_ITEM_SELECTOR, proxy(that._click, that))
                             .on(KEYDOWN, proxy(that._keyDown, that))
                             .on(BLUR, proxy(that._blur, that));

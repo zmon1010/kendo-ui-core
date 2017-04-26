@@ -103,15 +103,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether the keyboard navigation is enabled or disabled.
-        /// </summary>
-        public ListBoxBuilder Navigatable()
-        {
-            Container.Navigatable = true;
-            return this;
-        }
-
-        /// <summary>
         /// Defines the localization texts for the ListBox. Used primarily for localization.
         /// </summary>
         /// <param name="configurator">The configurator for the messages setting.</param>
