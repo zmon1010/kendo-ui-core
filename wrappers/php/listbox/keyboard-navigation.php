@@ -60,7 +60,7 @@ require_once '../include/header.php';
 ?>
     </div>
     <div class="box wide">
-        <div class="box-col">
+                <div class="box-col">
             <h4>Focus</h4>
             <ul class="keyboard-legend">
                 <li>
@@ -83,7 +83,7 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        highlights previous item
+                        selects previous item
                     </span>
                 </li>
                 <li>
@@ -91,15 +91,15 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        highlights next item
+                        selects next item
                     </span>
                 </li>
                 <li>
                     <span class="button-preview">
-                        <span class="key-button wider leftAlign">space</span>
+                        <span class="key-button">del</span>
                     </span>
                     <span class="button-descr">
-                        selects item
+                        deletes selected items
                     </span>
                 </li>
                 <li>
@@ -117,7 +117,7 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        selects previous item
+                        adds the previous item to the selected items
                     </span>
                 </li>
                 <li>
@@ -126,7 +126,7 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        selects next item
+                        adds the next item to the selected items
                     </span>
                 </li>
             </ul>
@@ -152,6 +152,24 @@ require_once '../include/header.php';
                         adds the selected items from the connected ListBox to the current
                     </span>
                 </li>
+                  <li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button wider leftAlign">up arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        moves the focus to the previous item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button wider leftAlign">down arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        moves the focus to the next item
+                    </span>
+                </li>
                 <li>
                     <span class="button-preview">
                         <span class="key-button">ctrl</span>
@@ -159,7 +177,7 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        reorders the current item with the previous one
+                        shifts selected items upwards
                     </span>
                 </li>
                 <li>
@@ -169,7 +187,7 @@ require_once '../include/header.php';
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        reorders the current item with the next one
+                        shifts selected items downwards
                     </span>
                 </li>
             </ul>
