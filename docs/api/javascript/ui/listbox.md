@@ -462,7 +462,7 @@ Defines the text of the **Delete** button that is located in the toolbar of the 
 
 ### messages.tools.transferAllFrom `String`
 
-Defines the text of the **All to Left** button that is located in the toolbar of the ListBox.
+Defines the text of the **Transfer All From** button that is located in the toolbar of the ListBox.
 
 #### Example
 
@@ -491,7 +491,7 @@ Defines the text of the **All to Left** button that is located in the toolbar of
 
 ### messages.tools.transferAllTo `String`
 
-Defines the text of the **All to Right** button that is located in the toolbar of the ListBox.
+Defines the text of the **Transfer All To** button that is located in the toolbar of the ListBox.
 
 #### Example
 
@@ -520,7 +520,7 @@ Defines the text of the **All to Right** button that is located in the toolbar o
 
 ### messages.tools.transferFrom `String`
 
-Defines the text of the **To Left** button that is located in the toolbar of the ListBox.
+Defines the text of the **Transfer From** button that is located in the toolbar of the ListBox.
 
 #### Example
 
@@ -548,7 +548,7 @@ Defines the text of the **To Left** button that is located in the toolbar of the
 
 ### messages.tools.transferTo `String`
 
-Defines the text of the **To Right** button that is located in the toolbar of the ListBox.
+Defines the text of the **Transfer All To** button that is located in the toolbar of the ListBox.
 
 #### Example
 
