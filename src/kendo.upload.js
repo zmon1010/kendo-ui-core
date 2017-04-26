@@ -1766,20 +1766,21 @@ var __meta__ = { // jshint ignore:line
 
             var reader = new FileReader();
             reader.onload = function (e) {
-                if(that.position[file.uid] > file.size){
-                     var result =  that.fileArrayBuffer || e.target.result;
-                     that.postFormData(upload.options.async.saveUrl, result, fileEntry, xhr);
-                }else{
+                try{
                     if(!that.fileArrayBuffer){
                         that.fileArrayBuffer = e.target.result;
                     }else{
-                         try {
-                            that.fileArrayBuffer = that._appendBuffer(that.fileArrayBuffer, e.target.result);
-                        }catch(err) {
-                            upload._onUploadError({ target : $(fileEntry, upload.wrapper) }, xhr);
-                            return;
-                        }
+                        that.fileArrayBuffer = that._appendBuffer(that.fileArrayBuffer, e.target.result);
                     }
+                }catch(err) {
+                    upload._onUploadError({ target : $(fileEntry, upload.wrapper) }, xhr);
+                    return;
+                }
+
+                if(that.position[file.uid] > file.size){
+                    that.postFormData(upload.options.async.saveUrl, that.fileArrayBuffer, fileEntry, xhr);
+                    that.fileArrayBuffer = null;
+                }else{
                     that._readFile(saveUrl, formData, fileEntry, xhr);
                 }
             };
