@@ -26,33 +26,62 @@
 		<div id="appendto"></div>
 	</div>
 	<span id="staticNotification"></span>
-	<div class="demo-section box wide">
-		<div class="box-col">
-			<h4>Transfer items</h4>
-			<ul class="options">
-				<li>
-					<button id="transfer" class="k-button">Transfer</button>
-				</li>
-			</ul>
-		</div>
-		<div class="box-col">
-			<h4>Reorder items</h4>
-			<ul class="options">
-				<li>
-					<button id="reorder" class="k-button">Reorder</button>
-				</li>
-			</ul>
-		</div>
-		<div class="box-col">
-			<h4>Enable / Disable items</h4>
-			<ul class="options">
-				<li>
-					<button id="enable" class="k-button">Enable</button>
-					<button id="disable" class="k-button">Disable</button>
-				</li>
-			</ul>
-		</div>
-	</div>
+
+    <div class="box wide">
+        <div class="box-col">
+            <h3>Working with selected items</h3>
+            <div class="box-col">
+                <ul class="options">
+                    <li>
+                        <h4>Transfer item</h4>
+                        <button id="transfer-right" class="k-button">To right</button>
+                        <button id="transfer-left" class="k-button">To left</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <ul class="options">
+                    <li>
+                        <h4>Move item</h4>
+                        <button id="move-up" class="k-button">Move Up</button>
+                        <button id="move-down" class="k-button">Move Down</button>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="box-col">
+                <ul class="options">
+                    <li>
+                        <h4>Enable/Disable item</h4>
+                        <button id="disable" class="k-button">Disable</button>
+                        <button id="enable" class="k-button">Enable</button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="box-col">
+            <h3 class="clear">Add/Remove items</h3>
+            <div class="box-col">
+                <ul class="options">
+                    <li>
+                        <h4>Add item</h4>
+                        <input type="text" id="add-textbox" class="k-input k-textbox" name="name" value="New Product" />
+                        <button id="add-item" class="k-button">Add</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <ul class="options">
+                    <li>
+                        <h4>Remove by text (Contains)</h4>
+                        <input type="text" id="remove-textbox" class="k-input k-textbox" name="name" value="Chef" />
+                        <button id="remove-item" class="k-button">Remove</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -144,9 +173,9 @@
         })
 
         var Product = kendo.data.Model.define({
-            id: "ProductID",
+            id: "productID",
             fields: {
-                "ProductName": {
+                "productName": {
                     type: "string"
                 }
             }
@@ -155,7 +184,7 @@
         $("#add-item").click(function () {
             var text = $("#add-textbox").val();
             var item = listbox1.add(new Product({
-                ProductName: text
+                productName: text
             }));
         })
 
@@ -164,7 +193,7 @@
             var items = listbox1.items();
             for (var i = 0; i < items.length; i++) {
                 var dataItem = listbox1.dataItem(items[i]);
-                if (dataItem.ProductName.toLowerCase().indexOf(text) >= 0) {
+                if (dataItem.productName.toLowerCase().indexOf(text) >= 0) {
                     listbox1.remove(items[i]);
                 }
             }

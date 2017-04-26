@@ -11,10 +11,10 @@ public class RightToLeftSupportController {
     @RequestMapping(value = {"/", "/right-to-left-support"}, method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("sourceTools", new String[] {           
-                "transferTo", 
                 "transferFrom", 
-                "transferAllTo", 
+                "transferTo",
                 "transferAllFrom",
+                "transferAllTo", 
         });
         model.addAttribute("destinationTools", new String[] {
                 "moveUp", 

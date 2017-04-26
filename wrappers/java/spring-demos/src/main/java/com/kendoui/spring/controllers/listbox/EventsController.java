@@ -32,7 +32,8 @@ public class EventsController {
                });
         List<Customer> products = new ArrayList<Customer>();
         model.addAttribute("selected", products);
-        model.addAttribute("dropSources", new String[] { "selected" });
+        model.addAttribute("dropSources1", new String[] { "selected" });
+        model.addAttribute("dropSources2", new String[] { "optional" });
         return "listbox/events";
     }
     

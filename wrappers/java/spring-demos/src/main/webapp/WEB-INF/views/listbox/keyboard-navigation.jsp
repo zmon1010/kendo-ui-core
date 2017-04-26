@@ -166,7 +166,7 @@
         $(document).ready(function () {
             $(document).on("keydown.examples", function (e) {
                 if (e.altKey && e.keyCode === 87) {
-                    $("#listbox").data("kendoListBox").focus();
+                    $("#listbox1").data("kendoListBox").focus();
                 }
             });
         });

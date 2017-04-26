@@ -10,23 +10,20 @@
       <kendo:dataSource data="${data}">
       </kendo:dataSource> 
     </kendo:listBox>
+    <span class="k-icon k-i-redo"></span>
+    <span class="k-icon k-i-redo flipped"></span>
     <kendo:listBox name="listbox2" dataTextField="ProductName" dataValueField="ProductID" 
     	connectWith="listbox1" draggable="true" dropSources="${list2Source}">
     	<kendo:listBox-toolbar position="left" tools="${destinationTools}"></kendo:listBox-toolbar>   
     	<kendo:dataSource data="${data}"></kendo:dataSource>   	 
     </kendo:listBox>
+    <button id="save-changes-btn">Save changes</button>
 </div>
 <script>
     var dataSource;
 	
     $(document).ready(function () {
         var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
-        
-        $("#button").kendoButton({
-            click: function (e) {
-                dataSource.sync();
-            }
-        });
                 
         dataSource = new kendo.data.DataSource({
             serverFiltering: false,
@@ -51,10 +48,7 @@
                     id: "ProductID",
                     fields: {
                         ProductID: { editable: false, nullable: true },
-                        ProductName: { validation: { required: true } },
-                        UnitPrice: { type: "number", validation: { required: true, min: 1 } },
                         Discontinued: { type: "boolean" },
-                        UnitsInStock: { type: "number", validation: { min: 0, required: true } }
                     }
                 }
             }
@@ -83,20 +77,26 @@
 		setDiscontinued(e, false);
 	}
 	
-    function setDiscontinued(ev, flag) {
-        var removedItems = ev.dataItems;
+    $("#save-changes-btn").kendoButton({
+        click: function (e) {
+            dataSource.sync();
+        }
+    });
+
+    function setDiscontinued(e, flag) {
+        var removedItems = e.dataItems;
         for (var i = 0; i < removedItems.length; i++) {
-            var item = dataSource.getByUid(removedItems[i].uid);
-            item["Discontinued"] = flag;
+            var item = dataSource.get(removedItems[i].ProductID);
+            item.Discontinued = flag;
             item.dirty = !item.dirty;
         }
     }
 </script>
 
 <style>
-    #button {
+    #save-changes-btn {
         float: right;
-        margin-top: 20px;    
+        margin-top: 20px;
     }
 
     #example .demo-section {
@@ -109,18 +109,14 @@
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
-            
-        }
-
     #example .k-i-redo {
         margin-bottom: 10px;
         opacity: 0.5;
     }
 
-    #example .k-i-redo:hover {
-        color: inherit!important;
-    }
+        #example .k-i-redo:hover {
+            color: inherit !important;
+        }
 
     #example .flipped {
         -webkit-transform: rotate(180deg);

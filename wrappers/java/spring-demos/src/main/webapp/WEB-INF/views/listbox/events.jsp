@@ -7,7 +7,7 @@
 <demo:header />
 
 <div class="demo-section k-content wide">
-    <kendo:listBox name="optional" connectWith="selected"
+    <kendo:listBox name="optional" connectWith="selected" dropSources="${dropSources1}"
      add="onAdd" change="onChange" dataBound="onDataBound" dragstart="onDragStart" drag="onDrag"
      drop="onDrop" dragend="onDragEnd" remove="onRemove" reorder="onReorder" draggable="true"
      dataTextField="contactName" dataValueField="customerID">
@@ -25,8 +25,18 @@
             </kendo:dataSource-transport>
         </kendo:dataSource>    
     </kendo:listBox>
-    <kendo:listBox name="selected" selectable="multiple">
+    <kendo:listBox name="selected" dataTextField="contactName" dataValueField="customerID" dropSources="${dropSources2}" selectable="multiple">
     	<kendo:dataSource data="${selected}"></kendo:dataSource>
+    	<kendo:listBox-draggable>
+    	<kendo:listBox-draggable-placeholder>
+    	function placeholder(element) {
+            		return element.clone().css({
+                "opacity": 0.3,
+                "border": "1px dashed #000000"
+            });
+        }
+    	</kendo:listBox-draggable-placeholder>
+    	</kendo:listBox-draggable>
     </kendo:listBox>
 </div>
 
@@ -73,12 +83,6 @@
             kendoConsole.log("event: dragend");
         }
 
-        function placeholder(element) {
-            return element.clone().css({
-                "opacity": 0.3,
-                "border": "1px dashed #000000"
-            });
-        }
     </script>
 
 

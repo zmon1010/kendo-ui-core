@@ -7,7 +7,7 @@
                 data-toolbar='{
                 tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
             }'
-                data-connect-with="#listbox2"
+                data-connect-with="listbox2"
                 data-bind="source: products,
                     events: {
                         change: change,
@@ -18,7 +18,7 @@
             </select>
 
             <select id="listbox2" data-role="listbox" title="listbox2"
-                data-connect-with="#listbox1"
+                data-connect-with="listbox1"
                 data-text-field="ProductName"
                 data-value-field="ProductID">
             </select>
