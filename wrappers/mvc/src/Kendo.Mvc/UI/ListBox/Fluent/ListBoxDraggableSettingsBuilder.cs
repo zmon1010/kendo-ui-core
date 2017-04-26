@@ -53,8 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-		/// If hint is not provided the widget will clone dragged item and use it as a hint.
+        /// Provides an option to customize the draggable item hint. If a function is supplied, it receives a single argument - the jQuery object of the draggable element. If a hint is not provided, the ListBox clones the dragged item and uses it as a hint.
         /// </summary>
         /// <param name="value">The value that configures the hint.</param>
         public ListBoxDraggableSettingsBuilder Hint(string value)

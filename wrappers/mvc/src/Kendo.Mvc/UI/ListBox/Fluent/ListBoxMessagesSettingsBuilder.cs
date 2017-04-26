@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// Defines the localization texts for tools in the ListBox. Texts are used for tooltip and accessibility purpose.
+        /// Defines the localization texts for tools in the ListBox. Texts are used when you configure the tooltip and accessibility support.
         /// </summary>
         /// <param name="configurator">The action that configures the tools.</param>
         public ListBoxMessagesSettingsBuilder Tools(Action<ListBoxMessagesToolsSettingsBuilder> configurator)

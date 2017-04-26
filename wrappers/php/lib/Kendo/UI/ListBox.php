@@ -13,7 +13,7 @@ class ListBox extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false, the widget will not bind to the data source during initialization. In this case, the data binding will occur when the change event of the data source is fired. By default, the ListBox will bind to the data source that is specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\ListBox
     */
@@ -22,7 +22,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.
+    * A selector which determines whether the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines a one-way relationship. If you want a two-way connection, then set the connectWith option on both widgets.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -40,7 +40,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
+    * The field of the data item that provides the text content of the list items. Based on this field, the widget filters the data source.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -58,7 +58,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Indicates if the widget items can be draged and droped.
+    * Indicates whether the ListBox items can be dragged and dropped.
     * @param boolean|\Kendo\UI\ListBoxDraggable|array $value
     * @return \Kendo\UI\ListBox
     */
@@ -67,7 +67,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+    * Array of id strings which determines the ListBoxes that can drag and drop their items to the current ListBox. The dropSources option describes a one way relationship. If you want a two-way connection, then set the dropSources option on both widgets.
     * @param array $value
     * @return \Kendo\UI\ListBox
     */
@@ -76,7 +76,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Indicates whether keyboard navigation is enabled/disabled.
+    * Indicates whether the keyboard navigation is enabled or disabled.
     * @param boolean $value
     * @return \Kendo\UI\ListBox
     */
@@ -94,7 +94,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Indicates whether selection is single or multiple. Possible values:
+    * Indicates whether a single or multiple items are selected. The possible values are:
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -104,7 +104,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the template option of the ListBox.
-    * Specifies ListBox item template.
+    * Specifies the item template of the ListBox.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\ListBox
     */
@@ -116,7 +116,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the template option of the ListBox.
-    * Specifies ListBox item template.
+    * Specifies the item template of the ListBox.
     * @param string $value The template content.
     * @return \Kendo\UI\ListBox
     */
@@ -125,7 +125,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.
+    * Defines the settings for displaying the toolbar of the ListBox. The toolbar allows you to execute a set of predefined actions.By default, the toolbar is not displayed. If the tools array is populated, then the toolbar and the corresponding tools are displayed.
     * @param \Kendo\UI\ListBoxToolbar|array $value
     * @return \Kendo\UI\ListBox
     */
@@ -135,7 +135,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the add event of the ListBox.
-    * Fires before an item is added to the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires before an item is added to the ListBox.The function context of the event handler (available through the this keyword) that will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -149,7 +149,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the change event of the ListBox.
-    * Fires when the ListBox selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires when the ListBox selection has changed.The function context of the event handler (available through the this keyword) that will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -163,7 +163,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the dataBound event of the ListBox.
-    * Fires when the ListBox has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires when the ListBox has received data from the data source and is already rendered.The function context of the event handler (available through the this keyword) that will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -177,7 +177,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the dragstart event of the ListBox.
-    * Fires when ListBox item(s) drag starts.
+    * Fires when the dragging of the ListBox items starts.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -191,7 +191,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the drag event of the ListBox.
-    * Fires when ListBox's placeholder changes its position.
+    * Fires when the placeholder of the ListBox changes its position.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -205,7 +205,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the drop event of the ListBox.
-    * Fired when ListBox item is dropped over one of the drop targets.
+    * Fires when a ListBox item is dropped over one of the drop targets.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -219,7 +219,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the dragend event of the ListBox.
-    * Fires when item dragging ends but before the item's position is changed in the DOM. This event is suitable for preventing the drag action.
+    * Fires when the dragging of the item ends but before its position is changed in the DOM. This event is suitable for preventing the drag action.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -233,7 +233,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the remove event of the ListBox.
-    * Fires before an item is removed from the ListBox.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fires before an item is removed from the ListBox.The function context of the event handler (available through the this keyword) that will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
@@ -247,7 +247,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the reorder event of the ListBox.
-    * Fires when items in the widget are reordered.
+    * Fires when ListBox items are reordered.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */

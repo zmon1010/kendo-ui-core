@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false, the widget will not bind to the data source during initialization. In this case, the data binding will occur when the change event of the data source is fired. By default, the ListBox will bind to the data source that is specified in the configuration.
         /// </summary>
         /// <param name="value">The value that configures the autobind.</param>
         public ListBoxBuilder AutoBind(bool value)
@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// A selector which determines that the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines one-way relationship - if the developer wants a two-way connection, then the connectWith option should be set on both widgets.
+        /// A selector which determines whether the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines a one-way relationship. If you want a two-way connection, then set the connectWith option on both widgets.
         /// </summary>
         /// <param name="value">The value that configures the connectwith.</param>
         public ListBoxBuilder ConnectWith(string value)
@@ -59,7 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
+        /// The field of the data item that provides the text content of the list items. Based on this field, the widget filters the data source.
         /// </summary>
         /// <param name="value">The value that configures the datatextfield.</param>
         public ListBoxBuilder DataTextField(string value)
@@ -81,7 +81,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Indicates if the widget items can be draged and droped.
+        /// Indicates whether the ListBox items can be dragged and dropped.
         /// </summary>
         public ListBoxBuilder Draggable()
         {
@@ -89,7 +89,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates if the widget items can be draged and droped.
+        /// Indicates whether the ListBox items can be dragged and dropped.
         /// </summary>
         /// <param name="enabled">Enables or disables the draggable option.</param>
         public ListBoxBuilder Draggable(bool enabled)
@@ -100,7 +100,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         
         /// <summary>
-        /// Indicates if the widget items can be draged and droped.
+        /// Indicates whether the ListBox items can be dragged and dropped.
         /// </summary>
         /// <param name="configurator">The action that configures the draggable.</param>
         public ListBoxBuilder Draggable(Action<ListBoxDraggableSettingsBuilder> configurator)
@@ -112,7 +112,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Array of id strings which determines the ListBox widgets that can drag and drop their items to the current ListBox widget. The dropSources option describes one way relationship, if the developer wants a two way connection then the dropSources option should be set on both widgets.
+        /// Array of id strings which determines the ListBoxes that can drag and drop their items to the current ListBox. The dropSources option describes a one way relationship. If you want a two-way connection, then set the dropSources option on both widgets.
         /// </summary>
         /// <param name="value">The value that configures the dropsources.</param>
         public ListBoxBuilder DropSources(params string[] value)
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Indicates whether keyboard navigation is enabled/disabled.
+        /// Indicates whether the keyboard navigation is enabled or disabled.
         /// </summary>
         /// <param name="value">The value that configures the navigatable.</param>
         public ListBoxBuilder Navigatable(bool value)
@@ -144,7 +144,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies ListBox item template.
+        /// Specifies the item template of the ListBox.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public ListBoxBuilder Template(string value)
@@ -155,7 +155,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies ListBox item template.
+        /// Specifies the item template of the ListBox.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public ListBoxBuilder TemplateId(string value)
@@ -166,7 +166,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Defines settings for displaying a toolbar for the ListBox widget, which allows a set of predefined actions to be executed. By default, the toolbar isn't shown. Populating the tools array will show the toolbar and the corresponding tools.
+        /// Defines the settings for displaying the toolbar of the ListBox. The toolbar allows you to execute a set of predefined actions.By default, the toolbar is not displayed. If the tools array is populated, then the toolbar and the corresponding tools are displayed.
         /// </summary>
         /// <param name="configurator">The action that configures the toolbar.</param>
         public ListBoxBuilder Toolbar(Action<ListBoxToolbarSettingsBuilder> configurator)

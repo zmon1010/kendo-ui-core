@@ -15,8 +15,7 @@ class ListBoxDraggable extends \Kendo\SerializableObject {
     }
 
     /**
-    * Provides a way for customization of the draggable item hint. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If hint is not provided the widget will clone dragged item and use it as a hint.
+    * Provides an option to customize the draggable item hint. If a function is supplied, it receives a single argument - the jQuery object of the draggable element. If a hint is not provided, the ListBox clones the dragged item and uses it as a hint.
     * @param \Kendo\JavaScriptFunction|string| $value
     * @return \Kendo\UI\ListBoxDraggable
     */
@@ -25,8 +24,7 @@ If hint is not provided the widget will clone dragged item and use it as a hint.
     }
 
     /**
-    * Provides a way for customization of the ListBox item placeholder. If a function is supplied, it receives one argument - the draggable element's jQuery object.
-If placeholder is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.
+    * Provides an option to customize the item placeholder of the ListBox. If a function is supplied, it receives a single argument - the jQuery object of the draggable element. If a placeholder is not provided, the ListBox clones the dragged item, removes its id attribute, sets its visibility to hidden, and uses it as a placeholder.
     * @param \Kendo\JavaScriptFunction|string| $value
     * @return \Kendo\UI\ListBoxDraggable
     */

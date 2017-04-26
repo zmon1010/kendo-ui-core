@@ -6,7 +6,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Defines the text of the "Move Down" button located in the toolbar of the widget.
+    * Defines the text of the Move Down button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -15,7 +15,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "Move Up" button located in the toolbar of the widget.
+    * Defines the text of the Move Up button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -24,7 +24,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "Delete" button located in the toolbar of the widget.
+    * Defines the text of the Delete button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -33,7 +33,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "All to Left" button located in the toolbar of the widget.
+    * Defines the text of the All to Left button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -42,7 +42,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "All to Right" button located in the toolbar of the widget.
+    * Defines the text of the All to Right button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -51,7 +51,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "To Left" button located in the toolbar of the widget.
+    * Defines the text of the To Left button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
@@ -60,7 +60,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the "To Right" button located in the toolbar of the widget.
+    * Defines the text of the To Right button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */
