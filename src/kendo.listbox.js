@@ -368,6 +368,9 @@ var __meta__ = { // jshint ignore:line
                     that.select($({}).add(that._target).add(current));
                 } else if (e.shiftKey && e.ctrlKey) {
                     that._executeCommand(key === keys.DOWN ? MOVE_DOWN : MOVE_UP);
+                    that._scroll(that._target);
+                    e.preventDefault();
+                    return;
                 } else if (!e.shiftKey && !e.ctrlKey) {
                     if(that.options.selectable === "multiple"){
                         that.clearSelection();
