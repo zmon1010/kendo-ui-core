@@ -322,7 +322,7 @@ var __meta__ = { // jshint ignore:line
             return current.length ? current : null;
         },
 
-        _scroll: function (item) {
+        _scrollIntoView: function(item) {
             if (!item) {
                 return;
             }
@@ -368,7 +368,7 @@ var __meta__ = { // jshint ignore:line
                     that.select($({}).add(that._target).add(current));
                 } else if (e.shiftKey && e.ctrlKey) {
                     that._executeCommand(key === keys.DOWN ? MOVE_DOWN : MOVE_UP);
-                    that._scroll(that._target);
+                    that._scrollIntoView(that._target);
                     e.preventDefault();
                     return;
                 } else if (!e.shiftKey && !e.ctrlKey) {
@@ -381,7 +381,7 @@ var __meta__ = { // jshint ignore:line
                 that._target = current;
                 if(that._target) {
                     that._target.addClass(FOCUSED_CLASS);
-                    that._scroll(that._target);
+                    that._scrollIntoView(that._target);
                     that._getList().attr("aria-activedescendant", that._target.attr("id"));
                 } else {
                     that._getList().removeAttr("aria-activedescendant");
@@ -1271,6 +1271,7 @@ var __meta__ = { // jshint ignore:line
 
             if (sourceListBox && item) {
                 $(sourceListBox.select($(item)));
+                sourceListBox._scrollIntoView(item);
             }
         },
 

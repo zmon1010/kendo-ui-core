@@ -506,6 +506,15 @@
         equal(listbox1.select().length, 0);
     });
 
+    test("transferTo action should scroll to the selected item", function() {
+        var scrollSpy = spy(listbox1, "_scrollIntoView");
+        listbox1.select(item1);
+
+        clickTransferToButton(listbox1);
+
+        equal(scrollSpy.calls("_scrollIntoView"), 1);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             $(document.body).append(QUnit.fixture);
@@ -519,7 +528,7 @@
 
             listbox2 = createListBoxWithToolbar({
                 dataSource: {
-                   data: [{
+                    data: [{
                         id: 1,
                         text: "item1"
                     }, {
@@ -625,7 +634,7 @@
         equal(listbox2.select()[0], item1[0]);
     });
 
-   test("transferFrom action should skip disabled items when transferring the last item", function() {
+    test("transferFrom action should skip disabled items when transferring the last item", function() {
         var lastItem = listbox2.items().last();
         var previousToLastItem = lastItem.prev();
         listbox2.enable(previousToLastItem, false);
@@ -643,6 +652,15 @@
         clickTransferFromButton(listbox1);
 
         equal(listbox2.select().length, 0);
+    });
+
+    test("transferFrom action should scroll to the selected item", function() {
+        var scrollSpy = spy(listbox2, "_scrollIntoView");
+        listbox2.select(item1);
+
+        clickTransferFromButton(listbox1);
+
+        equal(scrollSpy.calls("_scrollIntoView"), 1);
     });
 
     module("ListBox toolbar", {
