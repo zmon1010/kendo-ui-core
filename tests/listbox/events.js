@@ -338,6 +338,18 @@
         equalListItems(listbox1.select(), item);
     });
 
+    test("transferTo action should trigger a change event of source listbox", function() {
+        var called = false;
+        listbox1.select(listbox1.items().eq(0));
+        listbox1.bind(CHANGE, function(e) {
+            called = true;
+        });
+
+        clickTransferToButton(listbox1);
+
+        equal(called, true);
+    });
+
     module("ListBox events", {
         setup: function() {
             $(document.body).append(QUnit.fixture);
@@ -469,10 +481,22 @@
         var item = listbox2.items().eq(0);
         listbox2.select(item);
 
-        clickTransferToButton(listbox1);
+        clickTransferFromButton(listbox1);
 
         equal(listbox2.select().length, 1);
         equal(listbox2.select()[0], item[0]);
+    });
+
+    test("transferFrom action should trigger a change event of source listbox", function() {
+        var called = false;
+        listbox2.select(listbox2.items().eq(0));
+        listbox2.bind(CHANGE, function(e) {
+            called = true;
+        });
+
+        clickTransferFromButton(listbox1);
+
+        equal(called, true);
     });
 
     module("ListBox events", {
@@ -548,7 +572,7 @@
         equal(calls, 1);
     });
 
-    test("transferAllTo should trigger a remove event for source listbox which should be preventable", function() {
+    test("transferAllTo action should trigger a remove event for source listbox which should be preventable", function() {
         var args = {};
         listbox1.bind(REMOVE, function(e) {
             args = e;
@@ -565,7 +589,7 @@
         equal(listbox2.items().length, itemsLength);
     });
 
-    test("transferAllTo should trigger an add event for destination listbox which should be preventable", function() {
+    test("transferAllTo action should trigger an add event for destination listbox which should be preventable", function() {
         var args = {};
         listbox2.bind(ADD, function(e) {
             args = e;
@@ -579,6 +603,17 @@
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, 0);
         equal(listbox2.items().length, 0);
+    });
+
+    test("transferAllTo action should not trigger a change event", function() {
+        var called = false;
+        listbox1.bind(CHANGE, function(e) {
+            called = true;
+        });
+
+        clickTransferAllToButton(listbox1);
+
+        equal(called, false);
     });
 
     module("ListBox toolbar", {
@@ -663,7 +698,7 @@
         equal(calls, 1);
     });
 
-    test("transferAllFrom should trigger a remove event for source listbox which should be preventable", function() {
+    test("transferAllFrom action should trigger a remove event for source listbox which should be preventable", function() {
         var args = {};
         listbox2.bind(REMOVE, function(e) {
             args = e;
@@ -678,7 +713,7 @@
         equal(listbox2.items().length, itemsLength);
     });
 
-    test("transferAllFrom should trigger an add event for destination listbox which should be preventable", function() {
+    test("transferAllFrom action should trigger an add event for destination listbox which should be preventable", function() {
         var args = {};
         listbox1.bind(ADD, function(e) {
             args = e;
@@ -690,6 +725,17 @@
         equal(args.isDefaultPrevented(), true);
         equal(listbox1.items().length, 0);
         equal(listbox2.items().length, 0);
+    });
+
+    test("transferAllFrom action should not trigger a change event", function() {
+        var called = false;
+        listbox2.bind(CHANGE, function(e) {
+            called = true;
+        });
+
+        clickTransferAllFromButton(listbox1);
+
+        equal(called, false);
     });
 
     module("ListBox events", {

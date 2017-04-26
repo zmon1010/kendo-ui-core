@@ -13,10 +13,10 @@
 
     module("ListBox - navigation", {
         setup: function() {
-           
+
             var element = $('<select id="listA"></select>').appendTo(QUnit.fixture);
 
-            listA  = element.kendoListBox({ 
+            listA  = element.kendoListBox({
                     dataSource: [ "Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9", "Item10"],
                     selectable: "multiple",
                     navigatable: true,
@@ -83,7 +83,7 @@
     test("Multiple items are selected using shift and up", 1, function() {
         listA.focus();
         listA._target = listA.items().last();
-       
+
         listA._keyDown({ keyCode: keys.UP, shiftKey: true, preventDefault: $.noop });
         listA._keyDown({ keyCode: keys.UP, shiftKey: true, preventDefault: $.noop });
         listA._keyDown({ keyCode: keys.UP, shiftKey: true, preventDefault: $.noop });
@@ -171,7 +171,7 @@
     test("Focused item jump over disabled items", 1, function() {
         listA.enable(listA.items().eq(1), false);
         listA.focus();
-        debugger;
+
         listA._keyDown({ keyCode: keys.DOWN, preventDefault: $.noop });
         listA._keyDown({ keyCode: keys.DOWN, preventDefault: $.noop });
 

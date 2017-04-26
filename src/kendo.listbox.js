@@ -1124,8 +1124,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         execute: noop,
-        canExecute: noop,
-        updateSelection: noop
+        canExecute: noop
     });
 
     var RemoveItemsCommand = ListBoxCommand.extend({
@@ -1136,16 +1135,11 @@ var __meta__ = { // jshint ignore:line
 
             if (!listBox.trigger(REMOVE, { dataItems: listBox._dataItems(items), items: items })) {
                 listBox.remove(items);
-                that.updateSelection();
             }
         },
 
         canExecute: function() {
             return this.listBox.select().length > 0;
-        },
-
-        updateSelection: function() {
-            this.listBox.clearSelection();
         }
     });
     CommandFactory.current.register(REMOVE, RemoveItemsCommand);
@@ -1256,21 +1250,24 @@ var __meta__ = { // jshint ignore:line
 
         getUpdatedSelection: function(items) {
             var that = this;
+            var itemFilter = that.options.filter;
             var sourceListBox = that.getSourceListBox();
-            var nextItem = $(items).nextAll(that.options.filter)[0];
+            var lastEnabledItem = sourceListBox ? sourceListBox.items().filter(itemFilter).last() : null;
+            var containsLastItem = $(items).filter(lastEnabledItem).length > 0;
+            var itemToSelect = containsLastItem ? $(items).prevAll(itemFilter)[0] : $(items).nextAll(itemFilter)[0];
 
-            if (nextItem) {
-                return $(nextItem);
+            if ($(items).length === 1 && itemToSelect) {
+                return itemToSelect;
             } else {
-                return sourceListBox ? sourceListBox.items().not(items).filter(that.options.filter).first() : $();
+                return null;
             }
         },
 
-        updateSelection: function(items) {
+        updateSelection: function(item) {
             var sourceListBox = this.getSourceListBox();
 
-            if (sourceListBox) {
-                $(sourceListBox.select(items));
+            if (sourceListBox && item) {
+                $(sourceListBox.select($(item)));
             }
         },
 
@@ -1334,7 +1331,10 @@ var __meta__ = { // jshint ignore:line
         getItems: function() {
             var sourceListBox = this.getSourceListBox();
             return sourceListBox ? sourceListBox.items() : $();
-        }
+        },
+
+        getUpdatedSelection: noop,
+        updateSelection: noop
     });
     CommandFactory.current.register(TRANSFER_ALL_TO, TransferAllItemsToCommand);
 
@@ -1348,7 +1348,10 @@ var __meta__ = { // jshint ignore:line
         getItems: function() {
             var sourceListBox = this.getSourceListBox();
             return sourceListBox ? sourceListBox.items() : $();
-        }
+        },
+
+        getUpdatedSelection: noop,
+        updateSelection: noop
     });
     CommandFactory.current.register(TRANSFER_ALL_FROM, TransferAllItemsFromCommand);
 

@@ -39,6 +39,30 @@
         }
     });
 
+    test("tools should have title attribute", function() {
+        var toolsButtons = listbox.toolbar.element.find("a.k-button");
+        var titleAttr = "title";
+
+        equal(toolsButtons.filter('[data-command="remove"]').attr(titleAttr), "Delete");
+        equal(toolsButtons.filter('[data-command="moveUp"]').attr(titleAttr), "Move Up");
+        equal(toolsButtons.filter('[data-command="moveDown"]').attr(titleAttr), "Move Down");
+        equal(toolsButtons.filter('[data-command="transferTo"]').attr(titleAttr), "Transfer To");
+        equal(toolsButtons.filter('[data-command="transferFrom"]').attr(titleAttr), "Transfer From");
+        equal(toolsButtons.filter('[data-command="transferAllTo"]').attr(titleAttr), "Transfer All To");
+        equal(toolsButtons.filter('[data-command="transferAllFrom"]').attr(titleAttr), "Transfer All From");
+    });
+
+    module("ListBox toolbar", {
+        setup: function() {
+            listbox = createListBoxWithToolbar();
+            $(document.body).append(QUnit.fixture);
+        },
+        teardown: function() {
+            destroyListBox(listbox);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
     test("remove action should not work without selection", function() {
         var itemsLength = listbox.items().length;
 
@@ -65,19 +89,6 @@
         clickRemoveButton(listbox);
 
         equal(listbox.select().length, 0);
-    });
-
-    test("tools have title", function() {
-        var toolsButtons = listbox.toolbar.element.find("a.k-button");
-        var titleAttr = "title";
-
-        equal(toolsButtons.filter('[data-command="remove"]').attr(titleAttr), "Delete");
-        equal(toolsButtons.filter('[data-command="moveUp"]').attr(titleAttr), "Move Up");
-        equal(toolsButtons.filter('[data-command="moveDown"]').attr(titleAttr), "Move Down");
-        equal(toolsButtons.filter('[data-command="transferTo"]').attr(titleAttr), "To Right");
-        equal(toolsButtons.filter('[data-command="transferFrom"]').attr(titleAttr), "To Left");
-        equal(toolsButtons.filter('[data-command="transferAllTo"]').attr(titleAttr), "All to Right");
-        equal(toolsButtons.filter('[data-command="transferAllFrom"]').attr(titleAttr), "All to Left");
     });
 
     module("ListBox toolbar", {
@@ -360,6 +371,24 @@
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }, {
+                        id: 3,
+                        text: "item3"
+                    }, {
+                        id: 4,
+                        text: "item4"
+                    }, {
+                        id: 5,
+                        text: "item5"
+                    }]
+                },
                 connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
@@ -372,6 +401,8 @@
             item1 = listbox1.items().eq(0);
             item2 = listbox1.items().eq(1);
             item3 = listbox1.items().eq(2);
+            item4 = listbox1.items().eq(3);
+            item5 = listbox1.items().eq(4);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -403,7 +434,6 @@
 
     test("transferTo action should call remove() for source listbox", function() {
         var item = listbox1.items().eq(0);
-        var dataItem = listbox1.dataItem(item);
         var removeStub = stub(listbox1, REMOVE);
         listbox1.select(item);
 
@@ -413,8 +443,7 @@
         equalDataArrays(removeStub.args(REMOVE)[0], $(item));
     });
 
-    test("transferTo action should select the next non-disabled item", function() {
-        var dataItem = listbox1.dataItem(item1);
+    test("transferTo action should select the next item", function() {
         listbox1.select(item1);
 
         clickTransferToButton(listbox1);
@@ -423,8 +452,7 @@
         equalListItems(listbox1.select(), item2);
     });
 
-    test("transferTo action should not selected disabled items", function() {
-        var dataItem = listbox1.dataItem(item1);
+    test("transferTo action should skip disabled items for selection", function() {
         listbox1.enable(item2, false);
         listbox1.select(item1);
 
@@ -434,25 +462,78 @@
         equal(listbox1.select()[0], item3[0]);
     });
 
+    test("transferTo action should select the previous item when transferring the last item", function() {
+        var lastItem = listbox1.items().last();
+        var previousToLastItem = lastItem.prev();
+        listbox1.select(lastItem);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equal(listbox1.select()[0], previousToLastItem[0]);
+    });
+
+    test("transferTo action should select the previous enabled item when transferring the last enabled item", function() {
+        listbox1.enable(item2, false);
+        listbox1.enable(item4, false);
+        listbox1.enable(item5, false);
+        listbox1.select(item3);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equal(listbox1.select()[0], item1[0]);
+    });
+
+    test("transferTo action should skip disabled items when transferring the last item", function() {
+        var dataItem = listbox1.dataItem(item1);
+        var lastItem = listbox1.items().last();
+        var previousToLastItem = lastItem.prev();
+        listbox1.enable(previousToLastItem, false);
+        listbox1.select(lastItem);
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 1);
+        equal(listbox1.select()[0], item3[0]);
+    });
+
+    test("transferTo action should clear the selection with multiple items", function() {
+        listbox1.select(item1.add(item2));
+
+        clickTransferToButton(listbox1);
+
+        equal(listbox1.select().length, 0);
+    });
+
     module("ListBox toolbar", {
         setup: function() {
             $(document.body).append(QUnit.fixture);
 
             listbox1 = createListBoxWithToolbar({
+                dataSource: {
+                    data: []
+                },
                 connectWith: "listbox2"
             }, "<select id='listbox1' />");
 
             listbox2 = createListBoxWithToolbar({
                 dataSource: {
-                    data: [{
+                   data: [{
+                        id: 1,
+                        text: "item1"
+                    }, {
+                        id: 2,
+                        text: "item2"
+                    }, {
+                        id: 3,
+                        text: "item3"
+                    }, {
+                        id: 4,
+                        text: "item4"
+                    }, {
                         id: 5,
                         text: "item5"
-                    }, {
-                        id: 6,
-                        text: "item6"
-                    }, {
-                        id: 7,
-                        text: "item7"
                     }]
                 }
             }, "<select id='listbox2' />");
@@ -460,6 +541,8 @@
             item1 = listbox2.items().eq(0);
             item2 = listbox2.items().eq(1);
             item3 = listbox2.items().eq(2);
+            item4 = listbox2.items().eq(3);
+            item5 = listbox2.items().eq(4);
         },
         teardown: function() {
             destroyListBox(listbox1);
@@ -491,19 +574,16 @@
     });
 
     test("transferFrom action should call remove() for source listbox", function() {
-        var item = listbox2.items().eq(0);
-        var dataItem = listbox2.dataItem(item);
         var removeStub = stub(listbox2, REMOVE);
-        listbox2.select(item);
+        listbox2.select(item1);
 
         clickTransferFromButton(listbox1);
 
         equal(removeStub.args(REMOVE).length, 1);
-        equalDataArrays(removeStub.args(REMOVE)[0], $(item));
+        equalDataArrays(removeStub.args(REMOVE)[0], $(item1));
     });
 
-    test("transferFrom action should select the next non-disabled item", function() {
-        var dataItem = listbox2.dataItem(item1);
+    test("transferFrom action should select the next enabled item", function() {
         listbox2.select(item1);
 
         clickTransferFromButton(listbox1);
@@ -512,8 +592,7 @@
         equal(listbox2.select()[0], item2[0]);
     });
 
-    test("transferFrom action should skip disabled item", function() {
-        var dataItem = listbox2.dataItem(item1);
+    test("transferFrom action should skip disabled items for selection", function() {
         listbox2.enable(item2, false);
         listbox2.select(item1);
 
@@ -521,6 +600,49 @@
 
         equal(listbox2.select().length, 1);
         equal(listbox2.select()[0], item3[0]);
+    });
+
+    test("transferFrom action should select the previous item when transferring the last item", function() {
+        var lastItem = listbox2.items().last();
+        var previousToLastItem = lastItem.prev();
+        listbox2.select(lastItem);
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], previousToLastItem[0]);
+    });
+
+    test("transferFrom action should select the previous enabled item when transferring the last enabled item", function() {
+        listbox2.enable(item2, false);
+        listbox2.enable(item4, false);
+        listbox2.enable(item5, false);
+        listbox2.select(item3);
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], item1[0]);
+    });
+
+   test("transferFrom action should skip disabled items when transferring the last item", function() {
+        var lastItem = listbox2.items().last();
+        var previousToLastItem = lastItem.prev();
+        listbox2.enable(previousToLastItem, false);
+        listbox2.select(lastItem);
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 1);
+        equal(listbox2.select()[0], item3[0]);
+    });
+
+    test("transferFrom action should clear the selection with multiple items", function() {
+        listbox2.select(item1.add(item2));
+
+        clickTransferFromButton(listbox1);
+
+        equal(listbox2.select().length, 0);
     });
 
     module("ListBox toolbar", {
