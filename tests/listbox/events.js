@@ -762,7 +762,7 @@
         listbox = createListBox();
         listbox.bind("dataBound", function() {
             called = true;
-        })
+        });
 
         listbox.refresh();
 

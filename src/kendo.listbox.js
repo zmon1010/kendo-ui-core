@@ -1296,7 +1296,7 @@ var __meta__ = { // jshint ignore:line
 
         getDestinationListBox: function() {
             var sourceListBox = this.getSourceListBox();
-            return sourceListBox ? $(HASH + sourceListBox.options.connectWith).data(KENDO_LISTBOX) : null;
+            return sourceListBox && sourceListBox.options.connectWith ? $(HASH + sourceListBox.options.connectWith).data(KENDO_LISTBOX) : null;
         },
 
         getItems: function() {
@@ -1315,7 +1315,7 @@ var __meta__ = { // jshint ignore:line
 
         getSourceListBox: function() {
             var destinationListBox = this.getDestinationListBox();
-            return destinationListBox ? $(HASH + destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
+            return (destinationListBox && destinationListBox.options.connectWith) ? $(HASH + destinationListBox.options.connectWith).data(KENDO_LISTBOX) : null;
         },
 
         getDestinationListBox: function() {
