@@ -10,7 +10,7 @@
             .TemplateId("customer-item-template")
             .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
             .DropSources("selected")
-            .ConnectWith("#selected")
+            .ConnectWith("selected")
             .Toolbar(toolbar =>
             {
                 toolbar.Position(ListBoxToolbarPosition.Right);
@@ -33,7 +33,7 @@
             .TemplateId("customer-item-template")
             .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
             .DropSources("optional")
-            .ConnectWith("#optional")
+            .ConnectWith("optional")
             .BindTo(new List<CustomerViewModel>())
         )
     </div>
@@ -64,10 +64,10 @@
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
-            width: 360px;
-            margin-right: 1px;
-        }
+    #example .k-listbox:first-of-type  {
+        width: 360px;
+        margin-right: 1px;
+    }
 
     .k-ghost {
         display: none;

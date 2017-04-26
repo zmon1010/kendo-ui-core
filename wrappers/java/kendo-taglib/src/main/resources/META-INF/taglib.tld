@@ -25724,7 +25724,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>A selector which determines whether the target ListBox should be used when items are transferred from and to the current ListBox. The connectWith option defines a one-way relationship. If you want a two-way connection, then set the connectWith option on both widgets.</description>
+            <description>The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25766,7 +25766,9 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Indicates whether a single or multiple items are selected. The possible values are:</description>
+            <description>Indicates whether selection is single or multiple. Possible values:
+- "single" - Single item selection.
+- "multiple" - Multiple item selection.</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25900,25 +25902,25 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of the All to Left button that is located in the toolbar of the ListBox.</description>
+            <description>Defines the text of the Transfer All From button that is located in the toolbar of the ListBox.</description>
             <name>transferAllFrom</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of the All to Right button that is located in the toolbar of the ListBox.</description>
+            <description>Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.</description>
             <name>transferAllTo</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of the To Left button that is located in the toolbar of the ListBox.</description>
+            <description>Defines the text of the Transfer From button that is located in the toolbar of the ListBox.</description>
             <name>transferFrom</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of the To Right button that is located in the toolbar of the ListBox.</description>
+            <description>Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.</description>
             <name>transferTo</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25942,7 +25944,14 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A collection of tools that are used to interact with the ListBox.The built-in tools are:</description>
+            <description>A collection of tools that are used to interact with the ListBox.The built-in tools are:
+- "moveUp" - Moves up the selected ListBox items.
+- "moveDown" - Moves down the selected ListBox items.
+- "remove" - Removes the selected ListBox items.
+- "transferTo" - Moves the selected items from the current ListBox to the target that is defined in the connectWith option.
+- "transferFrom" - Moves the selected items from the ListBox that is defined in the connectWith option to the current ListBox.
+- "transferAllTo" - Moves all items from the current ListBox to the target that is defined in the connectWith option.
+- "transferAllFrom" - Moves all items from the ListBox that is defined in the connectWith option to the current ListBox.</description>
             <name>tools</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>

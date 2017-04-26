@@ -49,9 +49,13 @@ $countries = array(
     $listBox1->toolbar($toolbar1)
              ->dataSource($countries)
              ->messages($messages)
-             ->connectWith("#destination");
+             ->connectWith("destination")
+             ->attr("title", "Source");
 
     echo $listBox1->render();
+
+    // print space for design improvements
+    echo " ";
 
     $listBox2 = new \Kendo\UI\ListBox('destination');
 
@@ -61,11 +65,10 @@ $countries = array(
 
     $listBox2->dataSource(array())
              ->toolbar($toolbar2)
-             ->selectable("multiple");
+             ->selectable("multiple")
+             ->attr("title", "Destination");
 
     echo $listBox2->render();
-
-
 ?>
     </div>
 </div>

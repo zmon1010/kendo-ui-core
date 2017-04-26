@@ -1149,6 +1149,70 @@ namespace Kendo.Mvc.Resources {
             }
         }
 
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Down.
+        /// </summary>
+        public static string ListBox_MoveDown {
+            get {
+                return ResourceManager.GetString("ListBox_MoveDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Up.
+        /// </summary>
+        public static string ListBox_MoveUp {
+            get {
+                return ResourceManager.GetString("ListBox_MoveUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ListBox_Remove {
+            get {
+                return ResourceManager.GetString("ListBox_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer All From.
+        /// </summary>
+        public static string ListBox_TransferAllFrom {
+            get {
+                return ResourceManager.GetString("ListBox_TransferAllFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer All To.
+        /// </summary>
+        public static string ListBox_TransferAllTo {
+            get {
+                return ResourceManager.GetString("ListBox_TransferAllTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer From.
+        /// </summary>
+        public static string ListBox_TransferFrom {
+            get {
+                return ResourceManager.GetString("ListBox_TransferFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer To.
+        /// </summary>
+        public static string ListBox_TransferTo {
+            get {
+                return ResourceManager.GetString("ListBox_TransferTo", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///    Looks up a localized string similar to Full Screen.
         /// </summary>

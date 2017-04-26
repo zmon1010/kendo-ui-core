@@ -10,6 +10,7 @@
                 .Add("function(e){setDiscontinued(e, true)}")
                 .Remove("function(e){setDiscontinued(e, false)}"))
             .ConnectWith("listbox2")
+            .HtmlAttributes(new { title = "ListBox1"})
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Single)
         )
@@ -22,6 +23,7 @@
             .DataValueField("ProductID")
             .DataTextField("ProductName")
             .ConnectWith("listbox1")
+            .HtmlAttributes(new { title = "ListBox2"})
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Single)
         )
@@ -113,10 +115,6 @@
         width: 255px;
         height: 310px;
     }
-
-        #example .k-listbox:first-child {
-            
-        }
 
     #example .k-i-redo {
         margin-bottom: 10px;

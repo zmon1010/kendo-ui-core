@@ -825,4 +825,25 @@
   <data name="MediaPlayer_Unmute" xml:space="preserve">
     <value>Включване на звука</value>
   </data>
+  <data name="ListBox_MoveDown" xml:space="preserve">
+    <value>Премести надолу</value>
+  </data>
+  <data name="ListBox_MoveUp" xml:space="preserve">
+    <value>Премести нагоре</value>
+  </data>
+  <data name="ListBox_Remove" xml:space="preserve">
+    <value>Премахни</value>
+  </data>
+  <data name="ListBox_TransferAllFrom" xml:space="preserve">
+    <value>Премести вс. от</value>
+  </data>
+  <data name="ListBox_TransferAllTo" xml:space="preserve">
+    <value>Премести вс. към</value>
+  </data>
+  <data name="ListBox_TransferFrom" xml:space="preserve">
+    <value>Прехвърли от</value>
+  </data>
+  <data name="ListBox_TransferTo" xml:space="preserve">
+    <value>Прехвърли към</value>
+  </data>
 </root>

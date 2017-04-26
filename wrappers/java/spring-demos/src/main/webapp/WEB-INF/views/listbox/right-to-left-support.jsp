@@ -7,7 +7,7 @@
 
 <div class="demo-section k-content wide">
 <div class="k-rtl">
-    <kendo:listBox name="source" connectWith="#destination" >   
+    <kendo:listBox name="source" connectWith="destination" >   
       <kendo:listBox-toolbar position="left" tools="${sourceTools}"></kendo:listBox-toolbar>   
       <kendo:dataSource data="${source}">
       </kendo:dataSource> 

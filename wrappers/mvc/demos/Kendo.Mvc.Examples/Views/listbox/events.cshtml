@@ -15,12 +15,13 @@
                     .Remove()
                 );
             })
-            .ConnectWith("#selected")
+            .ConnectWith("selected")
             .Selectable(ListBoxSelectable.Multiple)
             .Draggable()
             .DropSources("selected")
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .HtmlAttributes(new { title = "Optional"})
             .DataSource(source => source
                 .Read(read => read.Action("GetCustomers", "ListBox"))
             )
@@ -39,12 +40,13 @@
 
         @(Html.Kendo().ListBox()
             .Name("selected")
-            .ConnectWith("#optional")
+            .ConnectWith("optional")
             .Selectable(ListBoxSelectable.Multiple)
             .Draggable()
             .DropSources(new string[]{"optional"})
             .DataTextField("ContactName")
             .DataValueField("CustomerID")
+            .HtmlAttributes(new { title = "Selected"})
             .Toolbar(toolbar =>
             {
                 toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
@@ -130,7 +132,7 @@
         height: 310px;
     }
 
-        #example .k-listbox:first-child {
+        #example .k-listbox:first-of-type {
             margin-right: 1px;
         }
 </style>

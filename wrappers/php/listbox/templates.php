@@ -47,13 +47,16 @@ require_once '../include/header.php';
     $listbox1->dataSource($dataSource)
              ->dataValueField("CustomerID")
              ->dataTextField("ContactName")
-             ->connectWith("#selected")
+             ->connectWith("selected")
              ->templateId("customer-item-template")
              ->toolbar($toolbar)
              ->draggable($draggable1)
              ->dropSources(array("selected"));
 
     echo $listbox1->render();
+
+    // print space for design improvements
+    echo " ";
 
     $listbox2 = new \Kendo\UI\ListBox('selected');
 
@@ -62,7 +65,7 @@ require_once '../include/header.php';
 
     $listbox2->dataSource(array())
              ->templateId("customer-item-template")
-             ->connectWith("#optional")
+             ->connectWith("optional")
              ->dataValueField("CustomerID")
              ->dataTextField("ContactName")
              ->draggable($draggable2)

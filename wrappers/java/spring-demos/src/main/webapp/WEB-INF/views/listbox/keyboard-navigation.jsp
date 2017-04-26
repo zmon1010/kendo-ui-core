@@ -6,7 +6,7 @@
 <demo:header />
 
 <div class="demo-section k-content wide">
-      <kendo:listBox name="listbox1" connectWith="#listbox2" selectable="multiple"
+      <kendo:listBox name="listbox1" connectWith="listbox2" selectable="multiple"
       navigatable="true" dataTextField="productName" dataValueField="productId" dropSources="${dropSources1}">   
       <kendo:listBox-toolbar tools="${tools}"></kendo:listBox-toolbar>   
         <kendo:dataSource>
@@ -28,7 +28,7 @@
 </div>
 
     <div class="box wide">
-        <div class="box-col">
+                <div class="box-col">
             <h4>Focus</h4>
             <ul class="keyboard-legend">
                 <li>
@@ -51,7 +51,7 @@
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        highlights previous item
+                        selects previous item
                     </span>
                 </li>
                 <li>
@@ -59,15 +59,15 @@
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        highlights next item
+                        selects next item
                     </span>
                 </li>
                 <li>
                     <span class="button-preview">
-                        <span class="key-button wider leftAlign">space</span>
+                        <span class="key-button">del</span>
                     </span>
                     <span class="button-descr">
-                        selects item
+                        deletes selected items
                     </span>
                 </li>
                 <li>
@@ -85,7 +85,7 @@
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        selects previous item
+                        adds the previous item to the selected items
                     </span>
                 </li>
                 <li>
@@ -94,7 +94,7 @@
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        selects next item
+                        adds the next item to the selected items
                     </span>
                 </li>
             </ul>
@@ -120,6 +120,24 @@
                         adds the selected items from the connected ListBox to the current
                     </span>
                 </li>
+                  <li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button wider leftAlign">up arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        moves the focus to the previous item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button wider leftAlign">down arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        moves the focus to the next item
+                    </span>
+                </li>
                 <li>
                     <span class="button-preview">
                         <span class="key-button">ctrl</span>
@@ -127,7 +145,7 @@
                         <span class="key-button wider leftAlign">up arrow</span>
                     </span>
                     <span class="button-descr">
-                        reorders the current item with the previous one
+                        shifts selected items upwards
                     </span>
                 </li>
                 <li>
@@ -137,7 +155,7 @@
                         <span class="key-button wider leftAlign">down arrow</span>
                     </span>
                     <span class="button-descr">
-                        reorders the current item with the next one
+                        shifts selected items downwards
                     </span>
                 </li>
             </ul>
@@ -148,7 +166,7 @@
         $(document).ready(function () {
             $(document).on("keydown.examples", function (e) {
                 if (e.altKey && e.keyCode === 87) {
-                    $("#listbox").data("kendoListBox").focus();
+                    $("#listbox1").data("kendoListBox").focus();
                 }
             });
         });

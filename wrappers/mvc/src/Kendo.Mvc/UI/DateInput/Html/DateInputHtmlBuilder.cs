@@ -26,6 +26,7 @@ namespace Kendo.Mvc.UI
             var html = CreateElement();
             html.Attribute("data-role", "dateinput")
                 .Attribute("id", component.Id)
+                .Attribute("name", component.Name)
                 .Attributes(component.HtmlAttributes);
 
             return html;

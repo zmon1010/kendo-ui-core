@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 
 ?>
-<div id="example" role="application">
+<div role="application">
     <div class="demo-section k-content wide">
 <?php
 
@@ -42,7 +42,7 @@ require_once '../include/header.php';
     $listBox1->dataSource($dataSource)
              ->dataTextField("ContactName")
              ->dataValueField("CustomerID")
-             ->connectWith("#selected")
+             ->connectWith("selected")
              ->selectable("multiple")
              ->draggable(true)
              ->dropSources(array("selected"))
@@ -61,6 +61,9 @@ require_once '../include/header.php';
 
     echo $listBox1->render();
 
+    // print space for design improvements
+    echo " ";
+
     $listBox2 = new \Kendo\UI\ListBox('selected');
 
     $toolbar2 = new \Kendo\UI\ListBoxToolbar();
@@ -70,7 +73,7 @@ require_once '../include/header.php';
     $listBox2->dataSource(array())
              ->dataTextField("ContactName")
              ->dataValueField("CustomerID")
-             ->connectWith("#optional")
+             ->connectWith("optional")
              ->selectable("multiple")
              ->draggable(true)
              ->dropSources(array("optional"))

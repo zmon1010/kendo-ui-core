@@ -41,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the text of the All to Left button that is located in the toolbar of the ListBox.
+        /// Defines the text of the Transfer All From button that is located in the toolbar of the ListBox.
         /// </summary>
         /// <param name="value">The value for TransferAllFrom</param>
         public ListBoxMessagesToolsSettingsBuilder TransferAllFrom(string value)
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the text of the All to Right button that is located in the toolbar of the ListBox.
+        /// Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.
         /// </summary>
         /// <param name="value">The value for TransferAllTo</param>
         public ListBoxMessagesToolsSettingsBuilder TransferAllTo(string value)
@@ -61,7 +61,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the text of the To Left button that is located in the toolbar of the ListBox.
+        /// Defines the text of the Transfer From button that is located in the toolbar of the ListBox.
         /// </summary>
         /// <param name="value">The value for TransferFrom</param>
         public ListBoxMessagesToolsSettingsBuilder TransferFrom(string value)
@@ -71,7 +71,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the text of the To Right button that is located in the toolbar of the ListBox.
+        /// Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.
         /// </summary>
         /// <param name="value">The value for TransferTo</param>
         public ListBoxMessagesToolsSettingsBuilder TransferTo(string value)
