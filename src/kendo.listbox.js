@@ -800,6 +800,8 @@ var __meta__ = { // jshint ignore:line
             for (i = 0; i < itemsLength; i++) {
                 that._enableItem($(listItems[i]), enabled);
             }
+
+            that._updateAllToolbars();
         },
 
         _enableItem: function(item, enable) {
@@ -1330,7 +1332,7 @@ var __meta__ = { // jshint ignore:line
         canExecute: function() {
             var sourceListBox = this.getSourceListBox();
 
-            return (sourceListBox ? sourceListBox.items().length > 0 : false);
+            return (sourceListBox ? sourceListBox.items().filter(ENABLED_ITEM_SELECTOR).length > 0 : false);
         },
 
         getItems: function() {
@@ -1347,7 +1349,7 @@ var __meta__ = { // jshint ignore:line
         canExecute: function() {
             var sourceListBox = this.getSourceListBox();
 
-            return (sourceListBox ? sourceListBox.items().length > 0 : false);
+            return (sourceListBox ? sourceListBox.items().filter(ENABLED_ITEM_SELECTOR).length > 0 : false);
         },
 
         getItems: function() {

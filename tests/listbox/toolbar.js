@@ -1290,6 +1290,14 @@
         equal(tool.hasClass(DISABLED_STATE_CLASS), true);
     });
 
+    test("transferAllTo tool should be disabled when only disabled items are available", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_TO);
+
+        listbox1.enable(listbox1.items(), false);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
     module("ListBox toolbar tools", {
         setup: function() {
             $(document.body).append(QUnit.fixture);
@@ -1339,6 +1347,14 @@
         var tool = getToolElement(listbox1, TRANSFER_ALL_FROM);
 
         clickTransferAllFromButton(listbox1);
+
+        equal(tool.hasClass(DISABLED_STATE_CLASS), true);
+    });
+
+    test("transferAllFrom tool should be disabled when only disabled items are available", function() {
+        var tool = getToolElement(listbox1, TRANSFER_ALL_FROM);
+
+        listbox2.enable(listbox2.items(), false);
 
         equal(tool.hasClass(DISABLED_STATE_CLASS), true);
     });
