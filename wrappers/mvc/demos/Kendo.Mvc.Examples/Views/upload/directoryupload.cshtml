@@ -10,7 +10,7 @@
     @(Html.Kendo().Upload()
         .Name("files")
         .Async(a => a
-            .Save("Save", "Upload")
+            .Save("ChunkSave", "Upload")
             .Remove("Remove", "Upload")
             .ChunkSize(2000)
         )
