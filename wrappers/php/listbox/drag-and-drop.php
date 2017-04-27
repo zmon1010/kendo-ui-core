@@ -4,7 +4,7 @@ require_once '../include/header.php';
 ?>
 <div role="application">
     <div class="demo-section k-content">
-	<img src="../content/web/listbox/arrow-left2right.png" alt="left to right" /><br />
+	<img src="../content/web/listbox/arrow-left2right.png" alt="left to right" class="arrow" /><br />
 <?php
     $listbox1 = new \Kendo\UI\ListBox('discontinued');
 
@@ -33,7 +33,7 @@ require_once '../include/header.php';
 
     echo $listbox2->render();
 ?>
-        <img src="../content/web/listbox/arrow-right2left.png" alt="right to left" />
+        <img src="../content/web/listbox/arrow-right2left.png" alt="right to left" class="arrow" />
         <button id="save-changes-btn">Save changes</button>
     </div>
 </div>
@@ -60,6 +60,12 @@ require_once '../include/header.php';
                         }
                     }
                 },
+				requestStart: function () { 
+					kendo.ui.progress($(".demo-section"), true);
+				},
+				requestEnd: function () {
+					kendo.ui.progress($(".demo-section"), false);
+				},
                 batch: true,
                 schema: {
                     model: {
