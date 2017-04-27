@@ -25,7 +25,8 @@
             </kendo:dataSource-transport>
         </kendo:dataSource>    
     </kendo:listBox>
-    <kendo:listBox name="selected" dataTextField="contactName" dataValueField="customerID" dropSources="${dropSources2}" selectable="multiple">
+    <kendo:listBox name="selected" add="onAdd" change="onChange" dataBound="onDataBound" dragstart="onDragStart" drag="onDrag"
+     drop="onDrop" dragend="onDragEnd" remove="onRemove" reorder="onReorder" dataTextField="contactName" dataValueField="customerID" dropSources="${dropSources2}" selectable="multiple">
     	<kendo:dataSource data="${selected}"></kendo:dataSource>
     	<kendo:listBox-draggable>
     	<kendo:listBox-draggable-placeholder>
@@ -45,43 +46,49 @@
         <div class="console"></div>
     </div>
     <script>
-        function onAdd(e) {
-            kendoConsole.log("event: add. " + e.dataItems.length + " item(s) added.");
-        }
+    function onAdd(e) {
+        kendoConsole.log("add : " + getWidgetName(e) + " : " + e.dataItems.length + " item(s)");
+    }
 
-        function onChange(e) {
-            kendoConsole.log("event: change");
-        }
+    function onChange(e) {
+        kendoConsole.log("change : " + getWidgetName(e));
+    }
 
-        function onDataBound(e) {
-            if ("kendoConsole" in window) {
-                kendoConsole.log("event :: dataBound");
-            }
+    function onDataBound(e) {
+        if ("kendoConsole" in window) {
+            kendoConsole.log("dataBound : " + getWidgetName(e));
         }
+    }
 
-        function onRemove(e) {
-            kendoConsole.log("event: remove. " + e.dataItems.length + " item(s) removed.");
-        };
+    function onRemove(e) {
+        kendoConsole.log("remove : " + getWidgetName(e) + " : " + e.dataItems.length + " item(s)");
+    };
 
-        function onReorder(e) {
-            kendoConsole.log("event: reorder");
-        }
+    function onReorder(e) {
+        kendoConsole.log("reorder : " + getWidgetName(e));
+    }
 
-        function onDragStart(e) {
-            kendoConsole.log("event: dragstart");
-        }
+    function onDragStart(e) {
+        kendoConsole.log("dragstart : " + getWidgetName(e));
+    }
 
-        function onDrag(e) {
-            kendoConsole.log("event: drag");
-        }
+    function onDrag(e) {
+        kendoConsole.log("drag : " + getWidgetName(e));
+    }
 
-        function onDrop(e) {
-            kendoConsole.log("event: drop");
-        }
+    function onDrop(e) {
+        kendoConsole.log("drop : " + getWidgetName(e));
+    }
 
-        function onDragEnd(e) {
-            kendoConsole.log("event: dragend");
-        }
+    function onDragEnd(e) {
+        kendoConsole.log("dragend : " + getWidgetName(e));
+    }
+
+    function getWidgetName(e) {
+        var listBoxId = e.sender.element.attr("id");
+        var widgetName = listBoxId === "optional" ? "left widget" : "right widget";
+        return widgetName;
+    }
 
     </script>
 
