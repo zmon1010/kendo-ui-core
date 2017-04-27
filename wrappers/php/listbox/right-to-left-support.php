@@ -73,6 +73,11 @@ $countries = array(
     </div>
 </div>
 <style>
+    .k-listbox-toolbar {
+        order: 2;
+        margin-right: 5px!important;
+    }
+	
     #example .demo-section {
         max-width: none;
         width: 695px;

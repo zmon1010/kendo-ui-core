@@ -18,14 +18,14 @@
                     .Remove()
                 );
             })
-            .HtmlAttributes(new { title = "Optional"})
+            .HtmlAttributes(new { title = "Employees"})
             .ConnectWith("selected")
             .BindTo(ViewBag.Attendees)
         )
 
         @(Html.Kendo().ListBox()
             .Name("selected")
-            .HtmlAttributes(new { title = "Selected"})
+            .HtmlAttributes(new { title = "Developers"})
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Multiple)
         )
@@ -34,8 +34,7 @@
 
 <style>
     .demo-section label {
-        padding-left: 8px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         font-weight: bold;
         display: inline-block;        
     }

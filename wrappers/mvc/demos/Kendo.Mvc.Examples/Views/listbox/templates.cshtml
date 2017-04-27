@@ -24,7 +24,6 @@
                     .TransferAllFrom()
                     .Remove());
             })
-            .BindTo(new List<CustomerViewModel>())
         )
 
         @(Html.Kendo().ListBox()
@@ -72,7 +71,7 @@
         }
 
     .k-ghost {
-        display:none;
+        display:none!important;
     }
 
     .custom-placeholder {

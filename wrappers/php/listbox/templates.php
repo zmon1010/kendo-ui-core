@@ -107,7 +107,7 @@ require_once '../include/header.php';
         }
 
     .k-ghost {
-        display:none;
+        display:none!important;
     }
 
     .custom-placeholder {

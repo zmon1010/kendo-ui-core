@@ -72,7 +72,7 @@
         }
 
     .k-ghost {
-        display:none;
+        display:none!important;
     }
 
     .custom-placeholder {

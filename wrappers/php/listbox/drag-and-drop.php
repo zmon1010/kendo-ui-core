@@ -4,6 +4,7 @@ require_once '../include/header.php';
 ?>
 <div role="application">
     <div class="demo-section k-content">
+	<img src="../content/web/listbox/arrow-left2right.png" alt="left to right" /><br />
 <?php
     $listbox1 = new \Kendo\UI\ListBox('discontinued');
 
@@ -19,8 +20,7 @@ require_once '../include/header.php';
 
     echo $listbox1->render();
 ?>
-        <span class="k-icon k-i-redo"></span>
-        <span class="k-icon k-i-redo flipped"></span>
+       
 <?php
     $listbox2 = new \Kendo\UI\ListBox('available');
 
@@ -33,6 +33,7 @@ require_once '../include/header.php';
 
     echo $listbox2->render();
 ?>
+        <img src="../content/web/listbox/arrow-right2left.png" alt="right to left" /><br />
         <button id="save-changes-btn">Save changes</button>
     </div>
 </div>
@@ -104,9 +105,17 @@ require_once '../include/header.php';
 </script>
 
 <style>
+    #example .k-listbox .k-item{
+        cursor: move;
+    }
+
+    #example .arrow {
+        padding: 8px 0 5px 238px;
+    }
+
     #save-changes-btn {
         float: right;
-        margin-top: 20px;
+        margin-top: 20px;    
     }
 
     #example .demo-section {
@@ -115,27 +124,8 @@ require_once '../include/header.php';
     }
 
     #example .k-listbox {
-        width: 255px;
+        width: 275px;
         height: 310px;
-    }
-
-    #example .k-i-redo {
-        margin-bottom: 10px;
-        opacity: 0.5;
-    }
-
-    #example .k-i-redo:hover {
-        color: inherit !important;
-    }
-
-    #example .flipped {
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        transform: rotate(180deg);
-        margin-top: 30px;
-        margin-right: 1px;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

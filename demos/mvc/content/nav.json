@@ -3261,7 +3261,7 @@
           "aspnet-mvc": ""
         },
 		"description": {
-         "kendo-ui": "<p>The <strong>Kendo UI ListBox</strong> is a widget that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multipl ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
+         "kendo-ui": "<p>The <strong>Kendo UI ListBox</strong> is a widget that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multiple ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
         }
       },
 	  {
