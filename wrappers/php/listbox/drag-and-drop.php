@@ -33,7 +33,7 @@ require_once '../include/header.php';
 
     echo $listbox2->render();
 ?>
-        <img src="../content/web/listbox/arrow-right2left.png" alt="right to left" /><br />
+        <img src="../content/web/listbox/arrow-right2left.png" alt="right to left" />
         <button id="save-changes-btn">Save changes</button>
     </div>
 </div>

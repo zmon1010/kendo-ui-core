@@ -3,7 +3,7 @@
         <img src="@Url.Content("~/Content/web/listbox/arrow-left2right.png")" alt="drag-indicator" class="arrow"/>        
         <br />
         @(Html.Kendo().ListBox()
-            .Name("listbox1")
+            .Name("listbox1")   
             .DataValueField("ProductID")
             .DataTextField("ProductName")
             .Draggable(true)
@@ -27,7 +27,6 @@
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Single)
         )
-        <br />
         <img src="@Url.Content("~/Content/web/listbox/arrow-right2left.png")" alt="drag-indicator" class="arrow"/>
         <button id="button" type="button">Save changes</button>
     </div>
