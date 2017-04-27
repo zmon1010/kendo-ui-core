@@ -19,7 +19,7 @@
     	<kendo:listBox-toolbar position="left" tools="${destinationTools}"></kendo:listBox-toolbar>   
     	<kendo:dataSource data="${data}"></kendo:dataSource>   	 
     </kendo:listBox>
-	<img src="${rightleft}" alt="right2left" /><br />
+	<img src="${rightleft}" alt="right2left" />
     <button id="save-changes-btn">Save changes</button>
 </div>
 <script>
