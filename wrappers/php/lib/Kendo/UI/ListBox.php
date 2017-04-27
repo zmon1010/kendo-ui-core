@@ -221,7 +221,7 @@ class ListBox extends \Kendo\UI\Widget {
 
     /**
     * Sets the dragend event of the ListBox.
-    * Fires when the dragging of the item ends but before its position is changed in the DOM. This event is suitable for preventing the drag action.
+    * Fires when the dragging of the item ends but before its position is changed in the DOM.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ListBox
     */
