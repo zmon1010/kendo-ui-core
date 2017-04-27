@@ -5,7 +5,7 @@
             .ConnectWith("listbox2")
             .DataValueField("ProductID")
             .DataTextField("ProductName")
-            .HtmlAttributes(new { title = "ListBox1"})
+            .HtmlAttributes(new { title = "Optional"})
             .DataSource(source => source
                 .Custom()
                 .Transport(transport => transport
@@ -19,7 +19,7 @@
             .Name("listbox2")
             .BindTo(new List<ProductViewModel>())
             .DataValueField("ProductID")
-            .HtmlAttributes(new { title = "ListBox2"})
+            .HtmlAttributes(new { title = "Selected"})
             .DataTextField("ProductName")
         )
         <div id="appendto"></div>

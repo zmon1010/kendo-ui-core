@@ -158,6 +158,26 @@
                         shifts selected items downwards
                     </span>
                 </li>
+				<li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button">shift</span>
+                        <span class="key-button wider leftAlign">left arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        transfers all items to the connected ListBox
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button">ctrl</span>
+                        <span class="key-button">shift</span>
+                        <span class="key-button wider leftAlign">right arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        transfers all items from the connected ListBox
+                    </span>
+                </li>
             </ul>
         </div>
     </div>

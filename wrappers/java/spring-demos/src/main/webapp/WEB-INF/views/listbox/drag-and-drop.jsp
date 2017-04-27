@@ -1,22 +1,25 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
+<c:url value="/resources/web/listbox/arrow-left2right.png" var="leftright" />
+<c:url value="/resources/web/listbox/arrow-right2left.png" var="rightleft" />
 <demo:header />
 
 <div class="demo-section k-content wide">
+    <img src="${leftright}" alt="left2right" /><br />
     <kendo:listBox name="listbox1" dataTextField="ProductName" dataValueField="ProductID"
       connectWith="listbox2" add="onAdd" remove="onRemove" draggable="true" dropSources="${list1Source}">   
       <kendo:listBox-toolbar position="left" tools="${sourceTools}"></kendo:listBox-toolbar>   
       <kendo:dataSource data="${data}">
       </kendo:dataSource> 
-    </kendo:listBox>
-    <span class="k-icon k-i-redo"></span>
-    <span class="k-icon k-i-redo flipped"></span>
+    </kendo:listBox>    
+
     <kendo:listBox name="listbox2" dataTextField="ProductName" dataValueField="ProductID" 
     	connectWith="listbox1" draggable="true" dropSources="${list2Source}">
     	<kendo:listBox-toolbar position="left" tools="${destinationTools}"></kendo:listBox-toolbar>   
     	<kendo:dataSource data="${data}"></kendo:dataSource>   	 
     </kendo:listBox>
+	<img src="${rightleft}" alt="right2left" /><br />
     <button id="save-changes-btn">Save changes</button>
 </div>
 <script>
@@ -53,7 +56,6 @@
                 }
             }
         });
-
         dataSource.fetch(function () {
             var data = this.data();
             var listbox1 = $("#listbox1").data("kendoListBox");
@@ -94,6 +96,14 @@
 </script>
 
 <style>
+    #example .k-listbox .k-item{
+        cursor: move;
+    }
+
+    #example .arrow {
+        padding: 8px 0 5px 238px;
+    }
+
     #save-changes-btn {
         float: right;
         margin-top: 20px;
@@ -105,29 +115,9 @@
     }
 
     #example .k-listbox {
-        width: 255px;
+        width: 275px;
         height: 310px;
-    }
-
-    #example .k-i-redo {
-        margin-bottom: 10px;
-        opacity: 0.5;
-    }
-
-        #example .k-i-redo:hover {
-            color: inherit !important;
-        }
-
-    #example .flipped {
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        transform: rotate(180deg);
-        margin-top: 30px;
-        margin-right: 1px;
     }
 </style>
 
-            
 <demo:footer />

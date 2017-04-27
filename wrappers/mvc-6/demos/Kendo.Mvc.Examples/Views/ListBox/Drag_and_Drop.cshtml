@@ -1,5 +1,6 @@
 ﻿<div id="example" role="application">
     <div class="demo-section k-content">
+	<img src=@Url.Content("~/shared/web/listbox/arrow-left2right.png") alt="left to right" /><br />
         @(Html.Kendo().ListBox()
             .Name("listbox1")
             .DataValueField("ProductID")
@@ -13,8 +14,7 @@
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Single)
         )
-        <span class="k-icon k-i-redo"></span>
-        <span class="k-icon k-i-redo flipped"></span>
+        
         @(Html.Kendo().ListBox()
             .Name("listbox2")
             .Draggable(true)
@@ -25,6 +25,7 @@
             .BindTo(new List<string>())
             .Selectable(ListBoxSelectable.Single)
         )
+		<img src=@Url.Content("~/shared/web/listbox/arrow-right2left.png") alt="right to left" /><br />
         <button id="button" type="button">Save changes</button>
     </div>
 </div>
@@ -99,6 +100,14 @@
 </script>
 
 <style>
+    #example .k-listbox .k-item{
+        cursor: move;
+    }
+
+    #example .arrow {
+        padding: 8px 0 5px 238px;
+    }
+
     #button {
         float: right;
         margin-top: 20px;    
@@ -110,30 +119,7 @@
     }
 
     #example .k-listbox {
-        width: 255px;
+        width: 275px;
         height: 310px;
-    }
-
-        #example .k-listbox:first-child {
-            
-        }
-
-    #example .k-i-redo {
-        margin-bottom: 10px;
-        opacity: 0.5;
-    }
-
-    #example .k-i-redo:hover {
-        color: inherit!important;
-    }
-
-    #example .flipped {
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        transform: rotate(180deg);
-        margin-top: 30px;
-        margin-right: 1px;
     }
 </style>

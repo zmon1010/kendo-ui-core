@@ -28,7 +28,7 @@ require_once '../include/header.php';
 
     $listBoxOptional->toolbar($listBoxToolbar)
                     ->dataSource($attendees)
-					->attr('title', 'Optional')
+					->attr('title', 'Employees')
                     ->connectWith("selected");
 
     echo $listBoxOptional->render();
@@ -39,7 +39,7 @@ require_once '../include/header.php';
     $listBoxSelected = new \Kendo\UI\ListBox('selected');
     $listBoxSelected->dataSource(array())
                     ->selectable("multiple")
-                    ->attr('title', 'Selected');
+                    ->attr('title', 'Developers');
 
     echo $listBoxSelected->render();
 ?>
@@ -48,8 +48,7 @@ require_once '../include/header.php';
 
 <style>
     .demo-section label {
-        padding-left: 8px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         font-weight: bold;
         display: inline-block;
     }

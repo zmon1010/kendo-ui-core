@@ -8,20 +8,19 @@
 	<label for="optional" id="employees">Employees</label>
     <label for="selected">Developers</label>
     <br />
-    <kendo:listBox name="optional" connectWith="selected" title="Optional">
+    <kendo:listBox name="optional" connectWith="selected" title="Employees">
         <kendo:listBox-toolbar tools="${tools}"></kendo:listBox-toolbar>
         <kendo:dataSource data="${data}"></kendo:dataSource>    
     </kendo:listBox> 
 	
-    <kendo:listBox name="selected" selectable="multiple" title="Selected">
+    <kendo:listBox name="selected" selectable="multiple" title="Developers">
     	<kendo:dataSource data="${selected}"></kendo:dataSource>
     </kendo:listBox>
 </div>
 
 <style>
 	.demo-section label {
-        padding-left: 8px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         font-weight: bold;
         display: inline-block;        
     }
