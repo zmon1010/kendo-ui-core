@@ -545,7 +545,10 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows Telerik DateInput basic features to select dates and times in $FRAMEWORK application."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "The DateInput helper enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format."
+        }
             },
             {
                 "text": "Events",
@@ -555,7 +558,10 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use $FRAMEWORK Date Input to pick a date or change it manually from a dropdown calendar."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of the <strong>change</strong> event. Note that the event is triggered after focus is removed from the component.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#events\">here</a>.</p>"
+        }
             },
             {
                 "text": "API",
@@ -565,11 +571,17 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example demonstrates how the API of Telerik $FRAMEWORK Dateinput can be configured to modify the features of the extension."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of <strong>value</strong>, <strong>enable</strong> and <strong>readonly</strong> methods.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#methods\">here</a>.</p>"
+        }
             },
             {
                 "text": "Globalization",
-                "url": "dateinput/globalization"
+                "url": "dateinput/globalization",
+        "description": {
+          "aspnet-mvc": "<p>This example shows Globalization supported by $FRAMEWORK DateInput.</p><p>Globalization is responsible for defining the format of the dates. Thus, the format in which the date is displayed will depend on the selected culture.</p>"
+        }
             },
             {
                 "text": "RTL support",
@@ -579,7 +591,10 @@
                 },
                 "meta": {
                     "aspnet-mvc": "See how $FRAMEWORK DateInput component supports RTL functionality."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "This example shows how RTL functionality is supported in the $FRAMEWORK DateInput component ."
+        }
             },
             {
                 "text": "Keyboard navigation",
@@ -589,7 +604,10 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput control."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput component."
+        }
             },
             {
                 "text": "Tag Helper",
@@ -597,6 +615,9 @@
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK DateInput Tag Helper sample"
                 },
+                "description": {
+          "mvc-core": "This example shows how you can use the tag-helper for $FRAMEWORK DateInput component."
+        },
                 "packages": [
                     "mvc-core"
                 ]
@@ -628,7 +649,10 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in $FRAMEWORK application."
-                }
+                },
+        "description": {
+          "aspnet-mvc": "<p>This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application.</p><p>Since <strong>R2 2017</strong> the DatePicker can use <a href=\"http://demos.telerik.com/aspnet-mvc/dateinput/index\">DateInput</a> as a default input. The second DatePicker in the example is configured to use DateInput.</p>"
+        }
             },
             {
                 "text": "Range selection",
