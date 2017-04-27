@@ -48,7 +48,7 @@
                 </ul>
             </div>
             <div class="qr-code">
-                
+
                 <h2>View on mobile device</h2>
                 <div id="mobileDemosQR"></div>
 
@@ -95,9 +95,9 @@
 
         var categories = (IEnumerable<IGrouping<string, NavigationWidget>>)ViewBag.Categories;
     }
-    
+
     @{ int colNumber = 1; }
-    
+
     @foreach (var column in columns)
     {<ul class="overview-col col-four">
         @foreach (var columnCategory in column)
@@ -135,15 +135,15 @@
 
                    break;
                case "php-ui":
-           
+
                    break;
                case "jsp-ui":
-   
+
                    break;
             }
         }
     </ul>
-    
+
     colNumber++;
     }
     </div>
@@ -152,6 +152,14 @@
     @if (ViewBag.Product == "kendo-ui")
     {
     <div id="overview-applications">
+    <h1>Theme Builder</h1>
+    <div style="box-sizing: border-box;padding: 0 9px 18px 0px;white-space: normal;">
+        <a href="./bootstrap/">
+            <img src="@Url.Content("~/content/shared/images/dashboards/bootstrap.png")" alt="Kendo UI Bootstrap"
+                class="application-image" style="height:130px;width:100%;" />
+            <p>Create new themes with just a few clicks. Use an original customized Telerik theme or ...</p>
+        </a>
+    </div>
     <h1>Sample Applications</h1>
     <ul>
         <li class="application">
