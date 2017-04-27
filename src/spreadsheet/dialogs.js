@@ -1245,6 +1245,7 @@
                     '<div class="k-edit-label"><label>#: messages.validationDialog.labels.criteria #:</label></div>' +
                     '<div class="k-edit-field">' +
                         '<select data-role="dropdownlist" ' +
+                            'title="#: messages.validationDialog.labels.criteria #"' +
                             'data-text-field="name" ' +
                             'data-value-field="type" ' +
                             'data-bind="value: criterion, source: criteria" />' +
@@ -1254,18 +1255,19 @@
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
+                                'title="#: messages.validationDialog.labels.comparer #"' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.min #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="#: messages.validationDialog.labels.min #" placeholder="e.g. 10" class="k-textbox" data-bind="value: from, enabled: isNumber" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.min #" title="#: messages.validationDialog.labels.min #" placeholder="e.g. 10" class="k-textbox" data-bind="value: from, enabled: isNumber" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
                             '<div class="k-edit-label"><label>#: messages.validationDialog.labels.max #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input name="#: messages.validationDialog.labels.max #" placeholder="e.g. 100" class="k-textbox" data-bind="value: to, enabled: showToForNumber" required="required" />' +
+                                '<input name="#: messages.validationDialog.labels.max #" title="#: messages.validationDialog.labels.max #" placeholder="e.g. 100" class="k-textbox" data-bind="value: to, enabled: showToForNumber" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1274,13 +1276,14 @@
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
+                                'title="#: messages.validationDialog.labels.comparer #"' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isText" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" title="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isText" required="required" />' +
                         '</div>' +
                     '</div>' +
 
@@ -1288,18 +1291,19 @@
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
+                                'title="#: messages.validationDialog.labels.comparer #"' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.start #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="#: messages.validationDialog.labels.start #" class="k-textbox" data-bind="value: from, enabled: isDate" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.start #" title="#: messages.validationDialog.labels.start #" class="k-textbox" data-bind="value: from, enabled: isDate" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
                             '<div class="k-edit-label"><label>#: messages.validationDialog.labels.end #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input name="#: messages.validationDialog.labels.end #" class="k-textbox" data-bind="value: to, enabled: showToForDate" required="required" />' +
+                                '<input name="#: messages.validationDialog.labels.end #" title="#: messages.validationDialog.labels.end #" class="k-textbox" data-bind="value: to, enabled: showToForDate" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1307,21 +1311,21 @@
                     '<div data-bind="visible: isCustom">' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isCustom" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" title="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isCustom" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isList">' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isList" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" title="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isList" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isList">' +
                         '<div class="k-edit-field">' +
-                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
-                            '<label for="showButton" class="k-checkbox-label">' +
+                            '<input type="checkbox" name="showButton" id="listShowButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="listShowButton" class="k-checkbox-label">' +
                                 ' #: messages.validationDialog.labels.showListButton #' +
                             '</label>' +
                         '</div>' +
@@ -1329,8 +1333,8 @@
 
                     '<div data-bind="visible: isDate">' +
                         '<div class="k-edit-field">' +
-                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
-                            '<label for="showButton" class="k-checkbox-label">' +
+                            '<input type="checkbox" name="showButton" id="dateShowButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="dateShowButton" class="k-checkbox-label">' +
                                 ' #: messages.validationDialog.labels.showCalendarButton #' +
                             '</label>' +
                         '</div>' +
@@ -1338,7 +1342,7 @@
 
                     '<div data-bind="invisible: isAny">' +
                         '<div class="k-edit-field">' +
-                            '<input type="checkbox" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
+                            '<input type="checkbox" title="#: messages.validationDialog.labels.ignoreBlank #" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
                             '<label for="ignoreBlank" class="k-checkbox-label">' +
                                 ' #: messages.validationDialog.labels.ignoreBlank #' +
                             '</label>' +
@@ -1349,11 +1353,11 @@
                         '<div class="k-action-buttons"></div>' +
                         '<div class="k-edit-label"><label>#: messages.validationDialog.labels.onInvalidData #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input type="radio" id="validationTypeReject" name="validationType" value="reject" data-bind="checked: type" class="k-radio" />' +
+                            '<input type="radio" title="#: messages.validationDialog.labels.rejectInput #" id="validationTypeReject" name="validationType" value="reject" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeReject" class="k-radio-label">' +
                                  "#: messages.validationDialog.labels.rejectInput #" +
                             '</label> ' +
-                            '<input type="radio" id="validationTypeWarning" name="validationType" value="warning" data-bind="checked: type" class="k-radio" />' +
+                            '<input type="radio" title="#: messages.validationDialog.labels.showWarning #" id="validationTypeWarning"  name="validationType" value="warning" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeWarning" class="k-radio-label">' +
                                  "#: messages.validationDialog.labels.showWarning #" +
                             '</label>' +
@@ -1362,7 +1366,7 @@
 
                     '<div data-bind="invisible: isAny" class="hint-wrapper">' +
                         '<div class="k-edit-field">' +
-                            '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
+                            '<input type="checkbox" title="#: messages.validationDialog.labels.showHint #" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
                             '<label class="k-checkbox-label" for="useCustomMessages">'+
                                 ' #: messages.validationDialog.labels.showHint #' +
                             '</label>' +
@@ -1370,11 +1374,11 @@
                         '<div data-bind="visible: useCustomMessages">' +
                             '<div class="k-edit-label"><label>#: messages.validationDialog.labels.hintTitle #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="#: messages.validationDialog.placeholders.typeTitle #" data-bind="value: hintTitle" />' +
+                                '<input class="k-textbox" title="#: messages.validationDialog.labels.hintTitle #" placeholder="#: messages.validationDialog.placeholders.typeTitle #" data-bind="value: hintTitle" />' +
                             '</div>' +
                             '<div class="k-edit-label"><label>#: messages.validationDialog.labels.hintMessage #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="#: messages.validationDialog.placeholders.typeMessage #" data-bind="value: hintMessage" />' +
+                                '<input class="k-textbox" title="#: messages.validationDialog.labels.hintMessage #" placeholder="#: messages.validationDialog.placeholders.typeMessage #" data-bind="value: hintMessage" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1690,7 +1694,7 @@
         options: {
             template:
             ("<div class='k-edit-label'><label>#: messages.linkDialog.labels.url #:</label></div>" +
-             "<div class='k-edit-field'><input class='k-textbox' data-bind='value: url' /></div>" +
+             "<div class='k-edit-field'><input class='k-textbox' data-bind='value: url' title='#: messages.linkDialog.labels.url #' /></div>" +
              "<div class='k-action-buttons'>" + (
                  ("<button style='float: left' class='k-button' data-bind='click: remove'>#= messages.linkDialog.labels.removeLink #</button>" +
                   "<button class='k-button k-primary' data-bind='click: apply'>#= messages.okText #</button>" +
