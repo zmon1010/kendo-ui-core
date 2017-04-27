@@ -966,7 +966,7 @@ td.k-state-focused.k-state-selected
 .k-other-month.k-state-hover .k-link,
 div.k-filebrowser-dropzone em,
 .k-draghandle:hover,
-.k-listbox .k-item:hover
+.k-listbox .k-item:hover:not(.k-state-disabled)
 {
     .composite-background(@hover-gradient);
 }
@@ -3662,7 +3662,7 @@ input.k-textbox:focus {
     .k-item {
         padding: 1px 7px 1px 7px;
 
-        &:not(.k-state-selected):hover {
+        &:hover:not(.k-state-selected):not(.k-state-disabled) {
             color: @hover-text-color;
             background-color: @hover-background-color;
             border-color: transparent;
