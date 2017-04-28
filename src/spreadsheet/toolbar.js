@@ -343,6 +343,7 @@
                     update(tool, value);
                 }
             }
+            this.resize();
         },
         _tools: function() {
             return this.element.find("[data-property]").toArray().map(function(element) {
