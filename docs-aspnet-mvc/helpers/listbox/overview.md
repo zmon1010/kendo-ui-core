@@ -93,7 +93,7 @@ The ListBox delivers the following features:
 
 ### Selection
 
-The ListBox has a default `single` selection. To configure multiple selection, add `selectable: "multiple"` to its settings. When selected, multiple selected items move together, that is, the selected items are transferred to another Kendo UI ListBox together or reordered as a set among other items.
+The ListBox has a default single selection. To configure multiple selection, add `Selectable(ListBoxSelectable.Multiple)` to its settings. When selected, multiple selected items move together, that is, the selected items are transferred to another Kendo UI ListBox together or reordered as a set among other items.
 
 ### Reordering of Selections
 

@@ -33,7 +33,15 @@ namespace Kendo.Mvc.UI.Fluent
         //<< Fields
 
         /// <summary>
-        /// An collection of tools displayed in the ListBox's Toolbar. Tools can be built-in ("moveUp", "moveDown", "remove", "transferAllFrom", "transferAllTo", "transferFrom", "transferTo").The "moveUp" tool moves up the item that is currently selected by the end user.The "moveDown" tool moves down the item that is currently selected by the end user.The "remove" tool removes the item(s) that are currently selected by the end user.The "transferAllFrom" tool moves all items from current ListBox widget to the target widget related with connectWith option.The "transferAllTo" tool moves all items from target widget related with connectWith option to the current ListBox widget.The "transferFrom" tool moves all selected items from current ListBox widget to the target widget related with connectWith option.The "transferTo" tool moves all selected items from target widget related with connectWith option to the current ListBox widget.
+        /// A collection of tools that are used to interact with the ListBox.
+        /// The built-in tools are:
+        /// - "moveUp" - Moves up the selected ListBox items.
+        /// - "moveDown" - Moves down the selected ListBox items.
+        /// - "remove" - Removes the selected ListBox items.
+        /// - "transferTo" - Moves the selected items from the current ListBox to the target that is defined in the connectWith option.
+        /// - "transferFrom" - Moves the selected items from the ListBox that is defined in the connectWith option to the current ListBox.
+        /// - "transferAllTo" - Moves all items from the current ListBox to the target that is defined in the connectWith option.
+        /// - "transferAllFrom" - Moves all items from the ListBox that is defined in the connectWith option to the current ListBox.
         /// </summary>
         /// <param name="configurator">The configurator for the tools setting.</param>
         public ListBoxToolbarSettingsBuilder Tools(Action<ListBoxToolFactory> configurator)
