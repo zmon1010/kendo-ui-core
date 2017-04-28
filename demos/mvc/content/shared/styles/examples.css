@@ -677,12 +677,36 @@ div.submenu-box ol {
 .tc-column
 {
     display: inline-block;
+    vertical-align: top;
 }
 
 .tc-column:first-child
 {
     margin-right: 30px;
     padding-right: 5px;
+}
+
+.tb-column {}
+.tb-column .tc-name {
+    color: #2d3e50;
+}
+.tb-column .tb-link {
+    margin-top: 20px;
+    padding: 8px 12px;
+    border: 1px solid #428bca;
+    color: #ffffff;
+    background: #428bca;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.tb-column .tb-link .k-icon {
+    color: inherit;
+    vertical-align: text-bottom;
+}
+.tb-column .tb-link:hover {
+    border-color: #357ebd;
+    background: #357ebd;
 }
 
 .tc-theme-list
