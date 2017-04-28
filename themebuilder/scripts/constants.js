@@ -55,8 +55,8 @@
             "@image-folder": {
                 readonly: true,
                 infer: function() {
-                    var result = cssPropertyFrom("k-icon", "background-image")
-                            .replace(/url\(["']?(.*?)\/sprite\.png["']?\)$/i, "\"$1\""),
+                    var result = cssPropertyFrom("k-i-loading", "background-image")
+                            .replace(/url\(["']?(.*?)\/loading\.gif["']?\)$/i, "\"$1\""),
                         cdnRootRe = /cdn\.kendostatic\.com|da7xgjtj801h2\.cloudfront\.net/i;
 
                     result = result.replace(cdnRootRe, "kendo.cdn.telerik.com");
