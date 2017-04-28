@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        ///  Defines the name of the JavaScript function that will handle the the Select client-side event.
+        /// Triggered when a files is selected. Note: Canceling this event will prevent the selection from\n\t\t/// occurring.
         /// </summary>
         /// <param name="onSelectHandlerName">The name of the JavaScript function that will handle the event.</param>
         /// <example>

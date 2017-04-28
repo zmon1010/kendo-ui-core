@@ -190,7 +190,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from\n\t\t/// occurring.
+        /// Triggered when a files is selected. Note: Cancelling this event will prevent the selection from\n\t\t/// occurring.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
         public UploadEventBuilder Select(string handler)
@@ -201,7 +201,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from\n\t\t/// occurring.
+        /// Triggered when a files is selected. Note: Cancelling this event will prevent the selection from\n\t\t/// occurring.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public UploadEventBuilder Select(Func<object, object> handler)

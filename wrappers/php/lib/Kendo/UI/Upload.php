@@ -27,7 +27,7 @@ class Upload extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+    * Configures the ability to upload a files in an asynchronous manner. Please refer to the
 async mode help topic
 for more details.
     * @param \Kendo\UI\UploadAsync|array $value
@@ -56,7 +56,7 @@ for more details.
     }
 
     /**
-    * Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+    * Initializes a dropzone elements based on a given selector that provides drag and drop file upload.
     * @param string $value
     * @return \Kendo\UI\Upload
     */
@@ -105,7 +105,7 @@ limit the total number of uploaded files in an asynchronous configuration.
 
     /**
     * Enables (true) or disables (false) the ability to display a file listing
-for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
 client-side events to build your own UI.
     * @param boolean $value
     * @return \Kendo\UI\Upload
@@ -261,7 +261,7 @@ async mode.
 
     /**
     * Sets the select event of the Upload.
-    * Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+    * Triggered when a files is selected. Note: Cancelling this event will prevent the selection from
 occurring.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload

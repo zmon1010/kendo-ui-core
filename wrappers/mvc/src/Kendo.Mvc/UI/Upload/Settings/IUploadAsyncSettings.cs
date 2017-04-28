@@ -56,8 +56,7 @@ namespace Kendo.Mvc.UI
         double? AutoRetryAfter { get; set; }
 
         /// <summary>
-        /// Gets or sets a value whether to read the file as file buffer by using FileReader and
-        /// send it in the request body.
+        /// By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and this buffer is send in the request body.
         /// </summary>
         bool? UseArrayBuffer { get; set; }
 

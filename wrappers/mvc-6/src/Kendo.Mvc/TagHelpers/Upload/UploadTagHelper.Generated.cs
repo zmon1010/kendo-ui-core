@@ -21,7 +21,7 @@ namespace Kendo.Mvc.TagHelpers
         public bool? DirectoryDrop { get; set; }
 
         /// <summary>
-        /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+        /// Initializes a dropzone elements based on a given selector that provides drag and drop file upload.
         /// </summary>
         public string DropZone { get; set; }
 
@@ -43,7 +43,7 @@ namespace Kendo.Mvc.TagHelpers
 
         /// <summary>
         /// Enables (true) or disables (false) the ability to display a file listing
-		/// for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+		/// for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
 		/// client-side events to build your own UI.
         /// </summary>
         public bool? ShowFileList { get; set; }
