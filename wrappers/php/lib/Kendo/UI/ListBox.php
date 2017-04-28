@@ -22,7 +22,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.
+    * The id of the target ListBox to which items from the source ListBox will be transferred and vice versa. If you have to transfer items from the target ListBox over its toolbar, then you also need to set its connectWith option.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
@@ -94,9 +94,9 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Indicates whether selection is single or multiple. Possible values:
-- "single" - Single item selection.
-- "multiple" - Multiple item selection.
+    * Indicates whether the selection is single or multiple. The possible values are:
+- "single" - A single-item selection.
+- "multiple" - A multiple-item selection.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */
