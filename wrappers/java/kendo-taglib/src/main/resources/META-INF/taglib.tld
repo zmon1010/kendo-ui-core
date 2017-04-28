@@ -25724,7 +25724,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-   <description>The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.</description>
+            <description>The id of the target ListBox to which items from the source ListBox will be transferred and vice versa. If you have to transfer items from the target ListBox over its toolbar, then you also need to set its connectWith option.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25766,9 +25766,9 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Indicates whether selection is single or multiple. Possible values:
-- "single" - Single item selection.
-- "multiple" - Multiple item selection.</description>
+            <description>Indicates whether the selection is single or multiple. The possible values are:
+- "single" - A single-item selection.
+- "multiple" - A multiple-item selection.</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
