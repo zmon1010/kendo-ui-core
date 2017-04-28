@@ -95,7 +95,9 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
-        /// Defines the asynchronous uploading settings
+        /// Configures the ability to upload a files in an asynchronous manner. Please refer to the
+        /// async mode help topic
+        /// for more details.
         /// </summary>
         public UploadAsyncSettings Async
         {
@@ -143,7 +145,7 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
-        /// Gets or sets the jQuery selector for the DropZone
+        /// Initializes a dropzone elements based on a given selector that provides drag and drop file upload.
         /// </summary>
         /// <value>The jQuery selector for the DropZone</value>
         public string DropZone

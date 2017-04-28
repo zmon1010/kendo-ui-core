@@ -25724,7 +25724,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.</description>
+   <description>The id of the target ListBox to which items will be transferred to from the source ListBox and vice versa. In case the developer needs to transfer items from the target ListBox via its toolbar then its connectWith options should be also set.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -48370,7 +48370,7 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.</description>
+            <description>Initializes a dropzone elements based on a given selector that provides drag and drop file upload.</description>
             <name>dropZone</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -48392,7 +48392,7 @@ limit the total number of uploaded files in an asynchronous configuration.</desc
         </attribute>
         <attribute>
             <description>Enables (true) or disables (false) the ability to display a file listing
-for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
 client-side events to build your own UI.</description>
             <name>showFileList</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48447,7 +48447,7 @@ async mode.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+            <description>Triggered when a files is selected. Note: Cancelling this event will prevent the selection from
 occurring.</description>
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
@@ -48467,7 +48467,7 @@ Canceling the event will prevent the upload.</description>
     </tag>
 
     <tag>
-        <description>Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+        <description>Configures the ability to upload a files in an asynchronous manner. Please refer to the
 async mode help topic
 for more details.</description>
         <name>upload-async</name>
@@ -48545,8 +48545,7 @@ containing one or more fields with the same name as the original input name.</de
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and
- this buffer is send in the request body.</description>
+            <description>By default, the files are uploaded as filedata. When set to true, the files are read as file buffer by using FileReader and this buffer is send in the request body.</description>
             <name>useArrayBuffer</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -48785,7 +48784,7 @@ async mode.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+        <description>Triggered when a files is selected. Note: Cancelling this event will prevent the selection from
 occurring.</description>
         <name>upload-select</name>
         <tag-class>com.kendoui.taglib.upload.SelectFunctionTag</tag-class>

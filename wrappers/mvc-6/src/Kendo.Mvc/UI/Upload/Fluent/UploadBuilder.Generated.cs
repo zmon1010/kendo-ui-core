@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+        /// Configures the ability to upload a files in an asynchronous manner. Please refer to the
 		/// async mode help topic
 		/// for more details.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+        /// Initializes a dropzone elements based on a given selector that provides drag and drop file upload.
         /// </summary>
         /// <param name="value">The value for DropZone</param>
         public UploadBuilder DropZone(string value)
@@ -101,7 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// Enables (true) or disables (false) the ability to display a file listing
-		/// for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+		/// for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
 		/// client-side events to build your own UI.
         /// </summary>
         /// <param name="value">The value for ShowFileList</param>
