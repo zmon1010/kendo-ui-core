@@ -61,6 +61,12 @@
                     }
                 }
             },
+            requestStart: function () {
+                kendo.ui.progress($(".demo-section"), true);
+            },
+            requestEnd: function () {
+                kendo.ui.progress($(".demo-section"), false);
+            },
             batch: true,
             schema: {
                 model: {

@@ -1,12 +1,13 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url value="/resources/web/listbox/arrow-left2right.png" var="leftright" />
 <c:url value="/resources/web/listbox/arrow-right2left.png" var="rightleft" />
 <demo:header />
 
 <div class="demo-section k-content wide">
-    <img src="${leftright}" alt="left2right" /><br />
+    <img src="${leftright}" alt="left2right"  class="arrow"/><br />
     <kendo:listBox name="listbox1" dataTextField="ProductName" dataValueField="ProductID"
       connectWith="listbox2" add="onAdd" remove="onRemove" draggable="true" dropSources="${list1Source}">   
       <kendo:listBox-toolbar position="left" tools="${sourceTools}"></kendo:listBox-toolbar>   
@@ -19,7 +20,7 @@
     	<kendo:listBox-toolbar position="left" tools="${destinationTools}"></kendo:listBox-toolbar>   
     	<kendo:dataSource data="${data}"></kendo:dataSource>   	 
     </kendo:listBox>
-	<img src="${rightleft}" alt="right2left" />
+	<img src="${rightleft}" alt="right2left" class="arrow" />
     <button id="save-changes-btn">Save changes</button>
 </div>
 <script>
@@ -44,6 +45,12 @@
                         return { models: kendo.stringify(options.models) };
                     }
                 }
+            },
+            requestStart: function () { 
+                kendo.ui.progress($(".demo-section"), true);
+            },
+            requestEnd: function () {
+                kendo.ui.progress($(".demo-section"), false);
             },
             batch: true,
             schema: {
