@@ -82,6 +82,12 @@
 	        display: block;
 	        margin-bottom: 10px;
 	    }
+		.k-window-content p {
+			margin-bottom: 1em;
+		}
+		.k-window-content a {
+			color: #BBB;
+		}
 	    @media screen and (max-width: 1023px) {
 	        div.k-window {
 	            display: none !important;
