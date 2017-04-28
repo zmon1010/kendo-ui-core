@@ -678,6 +678,9 @@ div.submenu-box ol {
 {
     display: inline-block;
     vertical-align: top;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #e2e4e7;
 }
 
 .tc-column:first-child
@@ -686,7 +689,9 @@ div.submenu-box ol {
     padding-right: 5px;
 }
 
-.tb-column {}
+.tb-column {
+    border-right-width: 0;
+}
 .tb-column .tc-name {
     color: #2d3e50;
 }
@@ -2652,6 +2657,16 @@ h5 {
 #applications-and-tools {
     width: 38%;
     text-align: left;
+}
+
+.theme-builder {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.theme-builder img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Overview */

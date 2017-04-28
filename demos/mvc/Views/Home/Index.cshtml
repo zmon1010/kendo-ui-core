@@ -153,11 +153,10 @@
     {
     <div id="overview-applications">
     <h1>Theme Builder</h1>
-    <div style="box-sizing: border-box;padding: 0 9px 18px 0px;white-space: normal;">
-        <a href="./bootstrap/">
-            <img src="@Url.Content("~/content/shared/images/dashboards/bootstrap.png")" alt="Kendo UI Bootstrap"
-                class="application-image" style="height:130px;width:100%;" />
-            <p>Create new themes with just a few clicks. Use an original customized Telerik theme or ...</p>
+    <div class="theme-builder">
+        <a href="http://themebuilder.telerik.com/@ViewBag.Product/">
+            <img src="@Url.Content("~/content/shared/images/theme-builder.png")" alt="Kendo UI ThemeBuilder" />
+            <p>Create new or customize SASS themes</p>
         </a>
     </div>
     <h1>Sample Applications</h1>
@@ -243,8 +242,8 @@
                 </li>
             }
             <li>
-                <a href="@Url.Action("Index", "ThemeBuilder")/">ThemeBuilder</a>
-                <p>Create and modify themes for Kendo UI widgets.</p>
+                <a href="@Url.Action("Index", "ThemeBuilder")/">LESS ThemeBuilder</a>
+                <p>Create and modify LESS based themes for Kendo UI widgets.</p>
             </li>
              <li>
                  <a href="https://chrome.google.com/webstore/detail/telerik-kendo-ui-chrome-i/npcmgpnfknjmndbbakdhchgibaajnlpe" target="_blank">Chrome Inspector</a>
