@@ -40,7 +40,7 @@ html .k-upload
     .k-upload-status {
         display: none;
     }
-} 
+}
 
 .k-upload-button
 {
@@ -96,11 +96,15 @@ html .k-upload
 .k-upload-status-total .k-icon {
     display: inline-block;
     margin-right: 4px;
+    vertical-align: text-bottom;
 }
 
 .k-dropzone .k-upload-status-total {
     top: 50%;
     transform: translateY(-50%);
+}
+.k-ie .k-dropzone .k-upload-status-total {
+    transform: none;
 }
 
 .k-upload .k-clear-selected ,
@@ -157,13 +161,8 @@ html .k-upload
 
 .k-file .k-icon
 {
-    display: block;
+    display: inline-block;
     position: relative;
-}
-
-.k-file > .k-icon
-{
-    .sprite-hoverable(7, 18);
 }
 
 .k-file-extension-wrapper,
@@ -296,9 +295,10 @@ html .k-upload
 
 .k-upload-files .k-upload-status
 {
+    line-height: 1;
     position: absolute;
     right: 10px;
-    top: 0;
+    top: 1em;
     opacity: 0.65;
 }
 
@@ -319,9 +319,12 @@ html .k-upload
         opacity: 1;
     }
 
-.k-upload-status .k-button
-{
-    vertical-align: text-bottom;
+.k-upload-action .k-icon {
+    vertical-align: top;
+}
+.k-file .k-upload-status .k-button,
+.k-file .k-upload-status > .k-icon {
+    vertical-align: middle;
     border-radius: 50%;
 }
 
