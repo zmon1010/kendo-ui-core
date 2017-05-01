@@ -60,7 +60,7 @@ class ListBoxMessagesTools extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.
+    * Defines the text of the Transfer To button that is located in the toolbar of the ListBox.
     * @param string $value
     * @return \Kendo\UI\ListBoxMessagesTools
     */

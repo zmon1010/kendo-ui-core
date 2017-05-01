@@ -86,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Defines the text of the Transfer All To button that is located in the toolbar of the ListBox.
+        /// Defines the text of the Transfer To button that is located in the toolbar of the ListBox.
         /// </summary>
         /// <param name="value">The value that configures the transferto.</param>
         public ListBoxMessagesToolsSettingsBuilder TransferTo(string value)
