@@ -99,15 +99,19 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Should_render_link_with_generated_url_Content_is_not_null()
+        public void Should_render_span_when_Url_is_null()
         {
-            const string id = "id";
-
             item.Content = () => { };
-            item.ContentHtmlAttributes["id"] = id;
 
             IHtmlNode tag = builder.ItemInnerTag(item);
-            Assert.Equal("#id", tag.Attribute("href"));
+            Assert.Equal("span", tag.TagName);
+        }
+
+        [Fact]
+        public void Should_render_item_with_unselectable_attr()
+        {
+            IHtmlNode tag = builder.ItemInnerTag(item);
+            Assert.Equal("on", tag.Attribute("unselectable"));
         }
 
         [Fact]
