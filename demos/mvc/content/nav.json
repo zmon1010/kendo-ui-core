@@ -3859,6 +3859,7 @@
   {
     "text": "Menu",
     "name": "menu",
+	"new": true,
     "api": { "all": "web/menu" },
     "documentation": {
       "kendo-ui": "getting-started/web/menu/overview",
@@ -4602,7 +4603,6 @@
   {
     "text": "PanelBar",
     "name": "panelbar",
-    "new": "true",
     "api": { "all": "web/panelbar" },
     "documentation": {
       "kendo-ui": "getting-started/web/panelbar/overview",
@@ -4676,7 +4676,6 @@
       {
         "text": "Binding to local data",
         "url": "panelbar/local-data-binding",
-        "new": "true",
         "title": {
           "kendo-ui": "Binding to local data demo for Kendo UI TreeView control",
           "aspnet-mvc": "Binding to local data demo for ASP.NET MVC TreeView control"
@@ -4693,7 +4692,6 @@
       {
         "text": "Binding to remote data",
         "url": "panelbar/remote-data-binding",
-        "new": "true",
         "title": {
           "kendo-ui": "Binding Kendo UI tree component to remote data",
           "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
@@ -4718,7 +4716,6 @@
       {
         "text": "Templates",
         "url": "panelbar/templates",
-        "new": "true",
         "title": {
           "kendo-ui": "Example of templates for Kendo UI PanelBar",
           "aspnet-mvc": "Example of templates for ASP.NET MVC PanelBar"

@@ -2005,7 +2005,6 @@
         "text": "Spreadsheet",
         "name": "spreadsheet",
         "api": "web/spreadsheet",
-        "new":  "true",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/spreadsheet/overview"
         },
@@ -2094,7 +2093,6 @@
             {
                 "text": "Custom cell editors",
                 "url": "spreadsheet/custom-editors",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Custom editors"
                 },
@@ -2557,6 +2555,7 @@
     {
         "text": "Menu",
         "name": "menu",
+		"new": "true",
         "api": "web/menu",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/menu/overview"
@@ -3025,7 +3024,6 @@
         "text": "PanelBar",
         "name": "panelbar",
         "api": "web/panelbar",
-        "new":  "true",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/panelbar/overview"
         },
@@ -3060,7 +3058,6 @@
             {
               "text": "Templates",
               "url": "panelbar/templates",
-              "new": "true",
               "title": {
                 "aspnet-mvc": "Example of templates for $FRAMEWORK PanelBar"
               },
@@ -3096,7 +3093,6 @@
             {
               "text": "Binding to local data",
               "url": "panelbar/local-data-binding",
-              "new": "true",
               "title": {
                 "aspnet-mvc": "Binding to local data demo for $FRAMEWORK PanelBar control"
               },
@@ -3112,7 +3108,6 @@
             {
               "text": "Binding to remote data",
               "url": "panelbar/remote-data-binding",
-              "new": "true",
               "title": {
                 "aspnet-mvc": "Binding $FRAMEWORK panelbar component to remote data"
               },
