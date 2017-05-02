@@ -4984,7 +4984,7 @@ var __meta__ = { // jshint ignore:line
                wrapper = wrapper.wrap("<div/>").parent();
             }
 
-            that.wrapper = wrapper.addClass("k-grid k-widget");
+            that.wrapper = wrapper.addClass("k-grid k-widget k-display-block");
 
             if (height) {
                 that.wrapper.css(HEIGHT, height);
@@ -7674,7 +7674,7 @@ var __meta__ = { // jshint ignore:line
         _restoreSelection: function() {
             var that = this,
                 rows = that.tbody.children(":not(.k-grouping-row,.k-detail-row)");
-           
+
             rows = grep(rows, function(row) {
                  var dataItemKey = that.dataItem(row)[that.dataSource.options.schema.model.id];
                  if(that._selectedIds[dataItemKey]) {
