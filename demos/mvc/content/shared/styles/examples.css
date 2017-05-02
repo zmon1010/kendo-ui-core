@@ -704,14 +704,14 @@ div.submenu-box ol {
     text-decoration: none;
     text-transform: uppercase;
     display: inline-block;
+    opacity: .9;
 }
 .tb-column .tb-link .k-icon {
     color: inherit;
     vertical-align: text-bottom;
 }
 .tb-column .tb-link:hover {
-    border-color: #357ebd;
-    background: #357ebd;
+    opacity: 1;
 }
 
 .tc-theme-list
@@ -733,10 +733,9 @@ div.submenu-box ol {
 
 .tc-theme-list .themes-grid
 {
-    -webkit-columns: 5;
-    -moz-columns: 5;
-    columns: 5;
-    max-width: 780px;
+    column-width: 152px;
+    column-gap: 0;
+    max-width: 620px;
     box-shadow: none;
     margin-bottom: 2em;
     font-size: inherit;
