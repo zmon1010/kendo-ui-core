@@ -677,12 +677,41 @@ div.submenu-box ol {
 .tc-column
 {
     display: inline-block;
+    vertical-align: top;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #e2e4e7;
 }
 
 .tc-column:first-child
 {
     margin-right: 30px;
     padding-right: 5px;
+}
+
+.tb-column {
+    border-right-width: 0;
+}
+.tb-column .tc-name {
+    color: #2d3e50;
+}
+.tb-column .tb-link {
+    margin-top: 20px;
+    padding: 8px 12px;
+    border: 1px solid #428bca;
+    color: #ffffff;
+    background: #428bca;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    opacity: .9;
+}
+.tb-column .tb-link .k-icon {
+    color: inherit;
+    vertical-align: text-bottom;
+}
+.tb-column .tb-link:hover {
+    opacity: 1;
 }
 
 .tc-theme-list
@@ -704,10 +733,9 @@ div.submenu-box ol {
 
 .tc-theme-list .themes-grid
 {
-    -webkit-columns: 5;
-    -moz-columns: 5;
-    columns: 5;
-    max-width: 780px;
+    columns: 4 152px;
+    column-gap: 0;
+    max-width: 620px;
     box-shadow: none;
     margin-bottom: 2em;
     font-size: inherit;
@@ -2150,6 +2178,7 @@ a.footer-links:hover,
     clear: both;
 }
 
+#overview-themebuilder,
 #overview-applications {
     margin-bottom: -3em;
 }
@@ -2628,6 +2657,16 @@ h5 {
 #applications-and-tools {
     width: 38%;
     text-align: left;
+}
+
+.theme-builder {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.theme-builder img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Overview */
