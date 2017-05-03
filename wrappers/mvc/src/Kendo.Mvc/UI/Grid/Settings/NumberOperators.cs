@@ -5,7 +5,7 @@ using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class NumberOperators : JsonObject
+    public class NumberOperators : OperatorsBase
     {
         public NumberOperators()
         {
@@ -78,9 +78,7 @@ namespace Kendo.Mvc.UI
                 }
             }
         }
-
-        public IDictionary<string, string> Operators { get; private set; }
-
+        
         private const int DefaultNumberOfFilters = 8;
 
         private const string DefaultIsEqualTo = "Is equal to";

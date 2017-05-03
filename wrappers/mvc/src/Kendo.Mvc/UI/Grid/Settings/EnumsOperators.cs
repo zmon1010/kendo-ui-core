@@ -5,7 +5,7 @@ using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class EnumOperators : JsonObject
+    public class EnumOperators : OperatorsBase
     {
         public EnumOperators()
         {
@@ -55,9 +55,7 @@ namespace Kendo.Mvc.UI
                 }
             }
         }
-
-        public IDictionary<string, string> Operators { get; private set; }
-
+        
         private const int DefaultDateOfFilters = 4;
 
         private const string DefaultIsEqualTo = "Is equal to";

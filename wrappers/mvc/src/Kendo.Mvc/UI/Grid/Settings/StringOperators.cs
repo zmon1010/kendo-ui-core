@@ -5,7 +5,7 @@ using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class StringOperators : JsonObject
+    public class StringOperators : OperatorsBase
     {
         public StringOperators()
         {
@@ -104,7 +104,5 @@ namespace Kendo.Mvc.UI
                 }
             }
         }
-
-        public IDictionary<string, string> Operators { get; private set; }
     }
 }

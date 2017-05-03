@@ -68,5 +68,18 @@ namespace Kendo.Mvc.UI
                 json["enums"] = enums;
             }
         }
+
+        internal FilterableOperators Clone()
+        {
+            var operators = new FilterableOperators
+            {
+                Strings = this.Strings.Clone<StringOperators>(),
+                Numbers = this.Numbers.Clone<NumberOperators>(),
+                Dates = this.Dates.Clone<DateOperators>(),
+                Enums = this.Enums.Clone<EnumOperators>()
+            };
+
+            return operators;
+        }
     }
 }

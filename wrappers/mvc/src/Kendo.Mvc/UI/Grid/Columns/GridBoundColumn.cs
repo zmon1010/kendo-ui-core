@@ -74,6 +74,8 @@ namespace Kendo.Mvc.UI
             }
 
             FilterableSettings = new GridBoundColumnFilterableSettings();
+            FilterableSettings.Operators = this.Grid.Filterable.Operators.Clone();
+
             Editable = new ClientHandlerDescriptor();
         }
 
