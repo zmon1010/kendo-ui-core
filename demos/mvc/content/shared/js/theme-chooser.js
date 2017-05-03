@@ -85,6 +85,12 @@
             var uid = $(element).closest("[data-uid]").attr("data-uid");
             return this.dataSource.getByUid(uid);
         },
+        _isSassTheme: function(themeName){
+            return /default-v2/i.test(themeName) || /bootstrap-v4/i.test(themeName);
+        },
+        _shouldReload: function (themeName) {
+            return this._isSassTheme(window.kendoTheme) ? !this._isSassTheme(themeName) : this._isSassTheme(themeName);
+        },
         _updateTheme: function(e) {
             var selection = this.select();
 
@@ -98,8 +104,9 @@
             // change theme
             var themeName = e.item.value;
             var commonFile = ThemeChooser.getCommonUrl();
+            var shouldReload = this._shouldReload(themeName);
 
-            if (/default-v2/i.test(themeName) || /bootstrap-v4/i.test(themeName)) {
+            if (this._isSassTheme(themeName)) {
                 // hack: SASS themes do not need a common file, it will be skipped
                 commonFile = "common-empty";
             } else if (/material/i.test(themeName) && !/material/i.test(commonFile)) {
@@ -123,7 +130,7 @@
                 }
             });
 
-            ThemeChooser.changeThemePair(themeName, commonFile, true)
+            ThemeChooser.changeThemePair(themeName, commonFile, shouldReload, true)
                 .then(proxy(this.trigger, this, "transition"));
         },
         value: function(value) {
@@ -376,7 +383,7 @@
             }
         },
 
-        changeThemePair: function(themeName, commonName) {
+        changeThemePair: function(themeName, commonName, shouldReload) {
             var deferred = $.Deferred();
 
             ThemeChooser.animateCssChange({
@@ -391,6 +398,10 @@
                     ThemeChooser.replaceTheme(themeName);
                 },
                 complete: function() {
+                    if (shouldReload) {
+                        location.reload();
+                    }
+
                     deferred.resolve();
                 }
             });
