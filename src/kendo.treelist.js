@@ -104,7 +104,7 @@ var __meta__ = { // jshint ignore:line
     var DRAGEND = "dragend";
 
     var classNames = {
-        wrapper: "k-treelist k-grid k-widget",
+        wrapper: "k-treelist k-grid k-widget k-display-block",
         header: "k-header",
         button: "k-button",
         alt: "k-alt",
