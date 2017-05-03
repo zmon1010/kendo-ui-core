@@ -1,8 +1,8 @@
-Telerik End User License Agreement for UI for ASP.NET MVC
+End User License Agreement for Progress Telerik UI for ASP.NET MVC
 
-(Last Updated July 16th, 2014)
+(Last Updated May 1, 2017)
 
-Telerik UI for ASP.NET MVC is a suite of products containing Kendo UI Professional and server wrappers for Microsoft’s ASP.NET MVC framework and is offered pursuant to the terms and conditions contained below.
+Progress Telerik UI for ASP.NET MVC is a suite of products containing Kendo UI Professional and server wrappers for Microsoft’s ASP.NET MVC framework and is offered pursuant to the terms and conditions contained below.
 
 IMPORTANT – PLEASE READ THIS END USER LICENSE AGREEMENT (THE “AGREEMENT”) CAREFULLY BEFORE ATTEMPTING TO DOWNLOAD OR USE ANY SOFTWARE, DOCUMENTATION, OR OTHER MATERIALS MADE AVAILABLE THROUGH THIS WEB SITE.  THIS AGREEMENT CONSTITUTES A LEGALLY BINDING AGREEMENT BETWEEN YOU OR THE COMPANY WHICH YOU REPRESENT AND ARE AUTHORIZED TO BIND (the “Licensee” or “You”), AND TELERIK AD (“Telerik” or “Licensor”). PLEASE CHECK THE “I HAVE READ AND AGREE TO THE LICENSE AGREEMENT” BOX AT THE BOTTOM OF THIS AGREEMENT IF YOU AGREE TO BE BOUND BY THE TERMS AND CONDITIONS OF THIS AGREEMENT. BY CHECKING THE “I HAVE READ AND AGREE TO THE LICENSE AGREEMENT” BOX AND/OR BY PURCHASING, DOWNLOADING, INSTALLING OR OTHERWISE USING THE SOFTWARE MADE AVAILABLE BY TELERIK THROUGH THIS WEB SITE, YOU ACKNOWLEDGE (1) THAT YOU HAVE READ THIS AGREEMENT, (2) THAT YOU UNDERSTAND IT, (3) THAT YOU AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS, AND (4) TO THE EXTENT YOU ARE ENTERING INTO THIS AGREEMENT ON BEHALF OF A COMPANY, YOU HAVE THE POWER AND AUTHORITY TO BIND THAT COMPANY.
 
@@ -125,11 +125,17 @@ If a particular provision of this Agreement is terminated or held by a court of 
 Neither party shall be deemed in default of this Agreement if failure or delay in performance is caused by an act of God, fire, flood, severe weather conditions, material shortage or unavailability of transportation, government ordinance, laws, regulations or restrictions, war or civil disorder, or any other cause beyond the reasonable control of such party.
 
 19. Export Classifications
+
 You expressly agree not to export or re-export Telerik Software or Your Integrated Product to any country, person, entity or end user subject to U.S. export restrictions. You specifically agree not to export, re-export, or transfer the Software to any country to which the U.S. has embargoed or restricted the export of goods or services, or to any national of any such country, wherever located, who intends to transmit or transport the products back to such country, or to any person or entity who has been prohibited from participating in U.S. export transactions by any federal agency of the U.S. government. You warrant and represent that neither the U.S.A. Bureau of Export Administration nor any other federal agency has suspended, revoked or denied Your export privileges.
+
 20.  Commercial Software
+
 The Programs and the Documentation are "Commercial Items", as that term is defined at 48 C.F.R. §2.101, consisting of "Commercial Computer Software" and "Commercial Computer Software Documentation", as such terms are used in 48 C.F.R. §12.212 or 48 C.F.R. §227.7202, as applicable. Consistent with 48 C.F.R. §12.212 or 48 C.F.R. §227.7202-1 through 227.7202-4, as applicable, the Commercial Computer Software and Commercial Computer Software Documentation are being licensed to U.S. Government end users (a) only as Commercial Items and (b) with only those rights as are granted to all other end users pursuant to the terms and conditions herein. Unpublished-rights reserved under the copyright laws of the United States. 
 
 21.  Reports and Audit Rights. 
+
 Licensee shall grant Telerik audit rights against Licensee twice within a calendar three hundred and sixty five (365) day period upon two weeks written notice, to verify Licensee’s compliance with this Agreement.  Licensee shall keep adequate records to verify Licensee’s compliance with this Agreement.
 
 YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, THAT YOU UNDERSTAND THIS AGREEMENT, AND UNDERSTAND THAT BY CONTINUING THE INSTALLATION OF THE SOFTWARE PRODUCT, BY LOADING OR RUNNING THE SOFTWARE PRODUCT, OR BY PLACING OR COPYING THE SOFTWARE ONTO YOUR COMPUTER HARD DRIVE, YOU AGREE TO BE BOUND BY THIS AGREEMENT’S TERMS AND CONDITIONS. YOU FURTHER AGREE THAT, EXCEPT FOR WRITTEN SEPARATE AGREEMENTS BETWEEN TELERIK AND YOU, THIS AGREEMENT IS A COMPLETE AND EXCLUSIVE STATEMENT OF THE RIGHTS AND LIABILITIES OF THE PARTIES.
+ 
+
