@@ -89,7 +89,7 @@
             return /default-v2/i.test(themeName) || /bootstrap-v4/i.test(themeName);
         },
         _shouldReload: function (themeName) {
-            return this._isSassTheme(window.kendoTheme) ? !this._isSassTheme(themeName) : this._isSassTheme(themeName);
+            return this._isSassTheme(window.kendoTheme) || this._isSassTheme(themeName);
         },
         _updateTheme: function(e) {
             var selection = this.select();
