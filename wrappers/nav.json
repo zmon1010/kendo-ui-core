@@ -3928,7 +3928,6 @@
         "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "spreadprocessingIcon",
-        "new": "true",
         "items": [
             {
                 "text": "Basic usage",
@@ -3956,12 +3955,10 @@
     "api": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview",
     "category": "Editors",
     "spriteCssClass": "spreadstreamprocessingIcon",
-    "new": "true",
     "items": [
       {
         "text": "Large Document Export",
         "url": "spreadstreamprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadSpreadStreamProcessing in MVC"
         },
@@ -4916,7 +4913,6 @@
         "api": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "wordprocessingIcon",
-        "new": "true",
         "items": [
             {
                 "text": "Basic usage",
@@ -4995,7 +4991,6 @@
         "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "pdfIcon",
-        "new": "true",
         "items": [
             {
                 "text": "Basic usage",
