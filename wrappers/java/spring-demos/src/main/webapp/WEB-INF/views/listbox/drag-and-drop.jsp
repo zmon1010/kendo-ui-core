@@ -52,8 +52,7 @@
             requestEnd: function () {
                 kendo.ui.progress($(".demo-section"), false);
             },
-            batch: true,
-            schema: {
+            batch: false,            schema: {
                 model: {
                     id: "ProductID",
                     fields: {

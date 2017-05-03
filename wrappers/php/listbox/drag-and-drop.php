@@ -66,7 +66,7 @@ require_once '../include/header.php';
 				requestEnd: function () {
 					kendo.ui.progress($(".demo-section"), false);
 				},
-                batch: true,
+                batch: false,
                 schema: {
                     model: {
                         id: "ProductID",
