@@ -733,7 +733,7 @@ div.submenu-box ol {
 
 .tc-theme-list .themes-grid
 {
-    column-width: 152px;
+    columns: 4 152px;
     column-gap: 0;
     max-width: 620px;
     box-shadow: none;
