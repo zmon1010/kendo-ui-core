@@ -20,18 +20,4 @@ namespace :cdn do
         rsync -avz --exclude '.git' ./ #{KENDO_ORIGIN_HOST}:/usr/share/nginx/html/;
         SH
     end
-
-    task :sync => do
-        sh <<-SH
-        if [ ! -d kendo-cdn ]
-        then
-            mkdir kendo-cdn && cd kendo-cdn && git clone git@github.com:telerik/kendo-cdn.git
-        else
-            cd kendo-cdn;
-        fi
-        git pull;
-        git reset --hard origin/master;
-        rsync -avz --exclude '.git' ./ #{KENDO_ORIGIN_HOST}:/usr/share/nginx/html/;
-        SH
-    end
 end
