@@ -10,9 +10,18 @@
               source
                   .Read(read =>
                   {
-                      read.Action("GetProducts", "Home");
-                  });
+                      read.Action("GetProducts", "Home")
+                      .Data("onAdditionalData");
+                  })
+                  .ServerFiltering(true);
           })
     )
     <div class="demo-hint">Hint: type "che"</div>
+    <script>
+    function onAdditionalData() {
+        return {
+            text: $("#products").val()
+        };
+    }
+    </script>
 </div>
