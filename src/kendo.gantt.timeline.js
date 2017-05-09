@@ -1357,7 +1357,7 @@ var __meta__ = { // jshint ignore:line
                 for (var columnIndex = 0, columnCount = level.length; columnIndex < columnCount; columnIndex++) {
                     column = level[columnIndex];
 
-                    headerText = kendoTextElement(column.text);
+                    headerText = kendoHtmlElement(column.text);
                     headers.push(kendoDomElement("th", { colspan: column.span, className: styles.header + (column.isNonWorking ? (" " + styles.nonWorking) : "") }, [headerText]));
                 }
 
