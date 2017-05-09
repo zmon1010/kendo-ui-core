@@ -465,20 +465,36 @@ var Dom = {
         return scrollContainer;
     },
 
-    scrollTo: function (node) {
-        var element = $(Dom.isDataNode(node) ? node.parentNode : node),
-            wnd = Dom.windowFromDocument(node.ownerDocument),
-            windowHeight = wnd.innerHeight,
-            elementTop, elementHeight,
-            scrollContainer = Dom.scrollContainer(node.ownerDocument);
+    scrollTo: function (node, toStart) {
+        var doc = node.ownerDocument;
+        var wnd = Dom.windowFromDocument(doc);
+        var windowHeight = wnd.innerHeight;
+        var scrollContainer = Dom.scrollContainer(doc);
+        var element, elementTop, elementHeight, marker;
+
+        if (Dom.isDataNode(node)) {
+            if (toStart) {
+                marker = Dom.create(doc, "span", {"innerHTML": "&#xfeff;"});
+                Dom.insertBefore(marker, node);
+                element = $(marker);
+            } else {
+                element = $(node.parentNode);
+            }
+        } else {
+            element = $(node);
+        }
 
         elementTop = element.offset().top;
         elementHeight = element[0].offsetHeight;
 
-        if (!elementHeight) {
+        if (toStart || !elementHeight) {
             elementHeight = parseInt(element.css("line-height"), 10) ||
                             Math.ceil(1.2 * parseInt(element.css("font-size"), 10)) ||
                             15;
+        }
+
+        if (marker) {
+            Dom.remove(marker);
         }
 
         if (elementHeight + elementTop > scrollContainer.scrollTop + windowHeight) {

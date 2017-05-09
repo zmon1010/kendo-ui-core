@@ -183,7 +183,7 @@ var ParagraphCommand = Command.extend({
 
         range.collapse(true);
 
-        dom.scrollTo(next);
+        dom.scrollTo(next, true);
 
         RangeUtils.selectRange(range);
     },
@@ -254,7 +254,7 @@ var NewLineCommand = Command.extend({
         range.setStartAfter(br);
         range.collapse(true);
 
-        dom.scrollTo(br.nextSibling || br);
+        dom.scrollTo(br.nextSibling || br, true);
 
         RangeUtils.selectRange(range);
     }
