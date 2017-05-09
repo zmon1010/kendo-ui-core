@@ -716,7 +716,7 @@
                         sheet.range(merged).merge();
                     }, this);
                 }
-            }.bind(this), { recalc: true });
+            }.bind(this), { recalc: true, ref: this._ref });
         },
 
         _adjustRowHeight: function() {
