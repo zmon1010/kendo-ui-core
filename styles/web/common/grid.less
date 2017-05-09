@@ -871,20 +871,16 @@ html .k-grid-edit-row .k-tooltip
 }
 
 .k-grid {
-    .k-edit-cell input.k-checkbox,
-    .k-grid-edit-row input.k-checkbox {
-        position: absolute;
+    input.k-checkbox {
         width: 14px;
         height: 15px;
+        margin-left: 1px;
+        margin-top: 4px;
+        position: absolute;
         z-index: 1;
         + label.k-checkbox-label {
             cursor: default;
         }
-    }
-
-    .k-grid-edit-row input.k-checkbox {
-        margin-left: 1px;
-        margin-top: 4px;
     }
 
     .k-edit-cell {
