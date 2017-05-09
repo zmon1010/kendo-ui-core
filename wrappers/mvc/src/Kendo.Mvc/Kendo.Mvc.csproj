@@ -863,8 +863,12 @@
     <Compile Include="UI\Gauge\GaugeLinearPointerFactory.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramEditableResizeSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeSettings.cs" />
+    <Compile Include="UI\Grid\Columns\GridSelectColumn.cs" />
+    <Compile Include="UI\Grid\Fluent\GridSelectColumnBuilder.cs" />
     <Compile Include="UI\Grid\Fluent\GridAllowCopyBuilder.cs" />
     <Compile Include="UI\Grid\Fluent\GridNoRecordsSettingsBuilder.cs" />
+    <Compile Include="UI\Grid\Html\GridSelectCellBuilder.cs" />
+    <Compile Include="UI\Grid\Html\GridSelectHeaderCellBuilder.cs" />
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
     <Compile Include="UI\Grid\Settings\GridNoRecordsSettings.cs" />
     <Compile Include="UI\Grid\Settings\OperatorsBase.cs" />

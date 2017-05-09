@@ -1,0 +1,18 @@
+@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Select().Width(50);
+        columns.Bound(p => p.ProductName);
+        columns.Bound(p => p.UnitPrice).Width(140);
+        columns.Bound(p => p.UnitsInStock).Width(140);
+        columns.Bound(p => p.Discontinued).Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .PersistSelection()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => model.Id(p => p.ProductID))
+        .Read(read => read.Action("Selection_Read", "Grid"))
+    )
+)

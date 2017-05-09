@@ -278,5 +278,18 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return new GridActionColumnBuilder(column);
 		}
-	}
+
+        /// <summary>
+        /// Defines a select column.
+        /// </summary>
+        /// <returns></returns>
+        public virtual GridSelectColumnBuilder Select()
+        {
+            GridSelectColumn<TModel> column = new GridSelectColumn<TModel>(Container);
+
+            ColumnsContainer.Columns.Add(column);
+
+            return new GridSelectColumnBuilder(column);
+        }
+    }
 }

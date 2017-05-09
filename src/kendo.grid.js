@@ -121,6 +121,8 @@ var __meta__ = { // jshint ignore:line
         DETAILCOLLAPSE = "detailCollapse",
         FOCUSED = "k-state-focused",
         SELECTED = "k-state-selected",
+        CHECKBOX = "k-checkbox",
+        CHECKBOXINPUT = "input[data-role='checkbox']." + CHECKBOX,
         NORECORDSCLASS = "k-grid-norecords",
         COLUMNRESIZE = "columnResize",
         COLUMNREORDER = "columnReorder",
@@ -145,6 +147,8 @@ var __meta__ = { // jshint ignore:line
         nonDataCellsRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-group-cell|k-hierarchy-cell)" + "(" + whitespaceRegExp + "|$)"),
         filterRowRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-filter-row)" + "(" + whitespaceRegExp + "|$)"),
         COMMANDBUTTONTMPL = '<a role="button" class="k-button k-button-icontext #=className#" #=attr# href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
+        SELECTCOLUMNTMPL = '<input class="' + CHECKBOX + '" data-role="checkbox" aria-label="Select row" aria-checked="false" type="checkbox"><label class="k-checkbox-label">&\\#8203;</label>',
+        SELECTCOLUMNHEADERTMPL = '<input class="' + CHECKBOX + '" data-role="checkbox" aria-label="Select all rows" aria-checked="false" type="checkbox"><label class="k-checkbox-label">&#8203;</label>',
         isRtl = false,
         browser = kendo.support.browser,
         isIE7 = browser.msie && browser.version == 7,
@@ -3059,7 +3063,7 @@ var __meta__ = { // jshint ignore:line
 
                         model = that._modelForContainer(cell);
 
-                        if (model && (!model.editable || model.editable(column.field)) && column.field) {
+                        if (model && (!model.editable || model.editable(column.field)) && column.field && !column.selectable) {
                             that.editCell(cell);
                             return false;
                         }
@@ -3158,7 +3162,9 @@ var __meta__ = { // jshint ignore:line
             } else {
                 for (idx = 0, length = columns.length; idx < length; idx++) {
                     column = columns[idx];
-
+                    if (column.selectable) {
+                        continue;
+                    }
                     if (!column.command) {
                         html += '<div class="k-edit-label"><label for="' + column.field + '">' + (column.title || column.field || "") + '</label></div>';
 
@@ -3431,7 +3437,7 @@ var __meta__ = { // jshint ignore:line
                 });
 
 
-                if (isSelected && that.options.selectable) {
+                if (isSelected && (that.options.selectable || !!$.grep(leafColumns(that.columns), function (col) { return col.selectable ;}).length)) {
                     that.select(newRow.add(related));
                 }
 
@@ -3841,26 +3847,7 @@ var __meta__ = { // jshint ignore:line
                     multiple: multi,
                     change: function() {
                         if(that.options.persistSelection && !cell) {
-                            var key,
-                                dataItem,
-                                allRows = that.tbody.children(":not(.k-grouping-row,.k-detail-row)"),
-                                modelId = dataSourceOptions.schema.model.id,
-                                selectedViewIds = {};
-
-                            this.value().each(function() {
-                                dataItem = that.dataItem(this);
-                                selectedViewIds[dataItem[modelId]] = true;
-                            });
-
-                            for (var i = 0; i < allRows.length; i ++) {
-                                dataItem = that.dataItem(allRows[i]);
-                                key = dataItem[modelId];
-                                if(selectedViewIds[key]) {
-                                    that._selectedIds[key] = true;
-                                } else {
-                                    delete that._selectedIds[key];
-                                }
-                            }
+                            that._persistSelectedRows();
                         }
 
                         that.trigger(CHANGE);
@@ -4122,7 +4109,19 @@ var __meta__ = { // jshint ignore:line
 
         clearSelection: function() {
             var that = this;
-            that.selectable.clear();
+
+            if (that.selectable) {
+                that.selectable.clear();
+            }
+
+            if ($.grep(leafColumns(that.columns), function (col) { return col.selectable ;}).length) {
+                that._deselectCheckRows(that.select());
+            }
+
+            if (that.options.persistSelection) {
+                that._persistSelectedRows();
+            }
+
             that.trigger(CHANGE);
         },
 
@@ -4132,7 +4131,7 @@ var __meta__ = { // jshint ignore:line
 
             items = that.table.add(that.lockedTable).find(items);
             if(items.length) {
-                if(!selectable.options.multiple) {
+                if(selectable && !selectable.options.multiple) {
                     selectable.clear();
                     items = items.first();
                 }
@@ -4143,11 +4142,84 @@ var __meta__ = { // jshint ignore:line
                     }));
                 }
 
-                selectable.value(items);
+                if(selectable) {
+                   selectable.value(items);
+                } else {
+                    items.each(function() {
+                        $(this).addClass(SELECTED).find(CHECKBOXINPUT).prop("checked", true)
+                            .attr("aria-label", "Deselect row").attr("aria-checked", true);
+                    });
+
+                    if(that.select().length === that.items().length) {
+                        that._toggleHeaderCheckState(true);
+                    }
+
+                    if (that.options.persistSelection) {
+                        that._persistSelectedRows();
+                    }
+
+                    that.trigger(CHANGE);
+                }
+
                 return;
             }
 
-            return selectable.value();
+            return selectable ? selectable.value() : that.items().filter("." + SELECTED);
+        },
+
+        _toggleHeaderCheckState: function(checked) {
+            var that = this;
+            if(checked) {
+                that.thead.add(that.lockedHeader).find("tr " + CHECKBOXINPUT)
+                    .prop("checked", true).attr("aria-checked", true)
+                    .attr("aria-label", "Deselect all rows");
+            } else {
+                that.thead.add(that.lockedHeader).find("tr " + CHECKBOXINPUT)
+                    .prop("checked", false).attr("aria-checked", false)
+                    .attr("aria-label", "Select all rows");
+            }
+        },
+
+        _deselectCheckRows: function(items) {
+            var that = this;
+            items = that.table.add(that.lockedTable).find(items);
+
+            items.each(function() {
+                $(this).removeClass(SELECTED).find(CHECKBOXINPUT).attr("aria-checked", false)
+                    .prop("checked", false).attr("aria-label", "Select row");
+            });
+            that._toggleHeaderCheckState(false);
+
+            if (that.options.persistSelection) {
+                that._persistSelectedRows();
+            }
+
+            that.trigger(CHANGE);
+        },
+
+        _persistSelectedRows: function() {
+            var that = this,
+                key,
+                dataItem,
+                allRows = that.items(),
+                dataSourceOptions = that.dataSource.options,
+                modelId = dataSourceOptions.schema.model.id,
+                selectedViewIds = {};
+
+            that.select().each(function() {
+                dataItem = that.dataItem(this);
+                selectedViewIds[dataItem[modelId]] = true;
+            });
+
+            for (var i = 0; i < allRows.length; i ++) {
+                dataItem = that.dataItem(allRows[i]);
+                key = dataItem[modelId];
+                if(selectedViewIds[key]) {
+                    that._selectedIds[key] = true;
+                } else {
+                    delete that._selectedIds[key];
+                }
+            }
         },
 
         selectedKeyNames: function() {
@@ -5972,6 +6044,48 @@ var __meta__ = { // jshint ignore:line
             }
 
             that.columns = normalizeColumns(columns, encoded);
+
+            if($.grep(leafColumns(that.columns), function (col) { return col.selectable ;}).length) {
+                if(that.options.persistSelection){
+                    that._selectedIds = {};
+                }
+
+                that.wrapper.on(CLICK + NS, "tbody > tr " + CHECKBOXINPUT, proxy(that._checkboxClick, that));
+                that.wrapper.on(CLICK + NS, "thead > tr " + CHECKBOXINPUT, proxy(that._headerCheckboxClick, that));
+            }
+        },
+
+        _headerCheckboxClick: function(e) {
+            var that = this,
+                checkBox = $(e.target),
+                checked = checkBox.prop("checked"),
+                parentGrid = checkBox.closest(".k-grid.k-widget").getKendoGrid();
+
+            if (that !== parentGrid) {
+                return;
+            }
+
+            if (checked) {
+                that.select(parentGrid.items());
+            } else {
+                that.clearSelection();
+            }
+        },
+
+        _checkboxClick: function(e) {
+            var that = this,
+                row =  $(e.target).closest("tr"),
+                isSelecting = !row.hasClass(SELECTED);
+
+            if(that !== row.closest(".k-grid.k-widget").getKendoGrid()) {
+                return;
+            }
+
+            if (isSelecting) {
+                that.select(row);
+            } else {
+                that._deselectCheckRows(row);
+            }
         },
 
         _groups: function() {
@@ -6092,6 +6206,11 @@ var __meta__ = { // jshint ignore:line
                 }
                 return that._createButton(column.command).replace(templateHashRegExp, "\\#");
             }
+
+            if(column.selectable) {
+                return SELECTCOLUMNTMPL;
+            }
+
             if (type === FUNCTION) {
                 state.storage["tmpl" + state.count] = template;
                 html += "#=this.tmpl" + state.count + "(" + paramName + ")#";
@@ -6435,7 +6554,31 @@ var __meta__ = { // jshint ignore:line
 
                 var index = inArray(th, leafs);
 
-                if (!th.command) {
+                if (th.selectable) {
+                    html += "<th scope='col'" + stringifyAttributes(th.headerAttributes);
+
+                    if (rowSpan && !columns[idx].colSpan) {
+                        html += " rowspan='" + rowSpan + "'";
+                    }
+
+                    if (index > -1) {
+                        html += kendo.attr("index") + "='" + index + "'";
+                    }
+                    text = th.headerTemplate ? text: SELECTCOLUMNHEADERTMPL;
+                    html += ">" + text + "</th>";
+                } else if(th.command) {
+                    html += "<th scope='col'" + stringifyAttributes(th.headerAttributes);
+
+                    if (rowSpan && !columns[idx].colSpan) {
+                        html += " rowspan='" + rowSpan + "'";
+                    }
+
+                    if (index > -1) {
+                        html += kendo.attr("index") + "='" + index + "'";
+                    }
+
+                    html += ">" + text + "</th>";
+                } else {
                     if (th.field) {
                         field = kendo.attr("field") + "='" + th.field + "' ";
                     }
@@ -6469,18 +6612,6 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     html += stringifyAttributes(th.headerAttributes);
-
-                    html += ">" + text + "</th>";
-                } else {
-                    html += "<th scope='col'" + stringifyAttributes(th.headerAttributes);
-
-                    if (rowSpan && !columns[idx].colSpan) {
-                        html += " rowspan='" + rowSpan + "'";
-                    }
-
-                    if (index > -1) {
-                        html += kendo.attr("index") + "='" + index + "'";
-                    }
 
                     html += ">" + text + "</th>";
                 }
@@ -7542,6 +7673,7 @@ var __meta__ = { // jshint ignore:line
                 currentIndex,
                 current = $(that.current()),
                 isCurrentInHeader = false,
+                hasCheckBoxColumn = !!$.grep(leafColumns(that.columns), function (col) { return col.selectable ;}).length,
                 groups = (that.dataSource.group() || []).length,
                 colspan = groups + visibleLeafColumns(visibleColumns(that.columns)).length;
 
@@ -7629,7 +7761,12 @@ var __meta__ = { // jshint ignore:line
                 that._angularItems("compile");
             });
 
-            if(that.options.selectable && !kendo.ui.Selectable.parseOptions(that.options.selectable).cell && that.options.persistSelection) {
+            if(hasCheckBoxColumn) {
+                that._toggleHeaderCheckState(false);
+            }
+
+            if(that.options.persistSelection &&
+                ((that.selectable && !kendo.ui.Selectable.parseOptions(that.options.selectable).cell) || hasCheckBoxColumn)) {
                 that._restoreSelection();
             }
 
@@ -7673,16 +7810,17 @@ var __meta__ = { // jshint ignore:line
 
         _restoreSelection: function() {
             var that = this,
-                rows = that.tbody.children(":not(.k-grouping-row,.k-detail-row)");
+                allRows = that.items(),
+                selectedRows;
 
-            rows = grep(rows, function(row) {
+            selectedRows = grep(allRows, function(row) {
                  var dataItemKey = that.dataItem(row)[that.dataSource.options.schema.model.id];
                  if(that._selectedIds[dataItemKey]) {
                     return row;
                  }
             });
 
-            that.select(rows);
+            that.select(selectedRows);
         },
 
        _angularItems: function(cmd) {
@@ -8151,7 +8289,7 @@ var __meta__ = { // jshint ignore:line
    }
 
    function isColumnEditable(column, model) {
-       if(!column.field) {
+       if(!column.field || column.selectable) {
            return false;
        }
        if(model.editable && !model.editable(column.field)) {
