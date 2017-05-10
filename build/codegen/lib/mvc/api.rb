@@ -56,7 +56,7 @@ title: <%= name %>
         end
 
         def empty?
-            @methods.empty? && @fields.empty? && @properties.empty? && @summary
+            @methods.empty? && @fields.empty? && @properties.empty? && !@summary
         end
 
         def js_name
