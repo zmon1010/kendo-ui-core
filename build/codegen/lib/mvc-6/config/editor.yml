@@ -7,3 +7,8 @@
       :description: Specifies the color palette for "foreColor" and "backColor" tools.
       :type: String
       :enum_type: ColorPickerPalette
+
+    - :name: tools.columns
+      :merge: true
+      :description: Specifies the colors columns for "foreColor" and "backColor" tools when list of colors are defined.
+      :type: int

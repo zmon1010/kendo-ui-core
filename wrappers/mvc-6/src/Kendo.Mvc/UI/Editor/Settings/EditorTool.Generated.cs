@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         public List<EditorToolItem> Items { get; set; } = new List<EditorToolItem>();
 
+        public int? Columns { get; set; }
+
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -51,6 +53,11 @@ namespace Kendo.Mvc.UI
             if (items.Any())
             {
                 settings["items"] = items;
+            }
+
+            if (Columns.HasValue)
+            {
+                settings["columns"] = Columns;
             }
 
             if (TemplateId.HasValue())

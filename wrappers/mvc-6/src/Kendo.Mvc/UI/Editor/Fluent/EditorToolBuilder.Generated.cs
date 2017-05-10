@@ -65,6 +65,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies the colors columns for "foreColor" and "backColor" tools when list of colors are defined.
+        /// </summary>
+        /// <param name="value">The value for Columns</param>
+        public EditorToolBuilder Columns(int value)
+        {
+            Container.Columns = value;
+            return this;
+        }
+
+        /// <summary>
         /// The kendo template that will be used for rendering the given tool.
         /// </summary>
         /// <param name="value">The value for Template</param>

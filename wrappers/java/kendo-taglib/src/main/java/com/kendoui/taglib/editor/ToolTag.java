@@ -65,6 +65,14 @@ public class ToolTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setEvent("exec", value.getBody());
     }
 
+    public float getColumns() {
+        return (Float)getProperty("columns");
+    }
+
+    public void setColumns(float value) {
+        setProperty("columns", value);
+    }
+
     public String getExec() {
         Function property = ((Function)getProperty("exec"));
         if (property != null) {

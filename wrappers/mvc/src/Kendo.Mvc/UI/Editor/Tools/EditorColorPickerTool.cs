@@ -12,7 +12,9 @@ namespace Kendo.Mvc.UI
 
         public IEnumerable<string> PaletteColors { get; set; }
 
-        public EditorColorPickerTool(string name)
+		public int? Columns { get; set; }
+
+		public EditorColorPickerTool(string name)
         {
             Name = name;
             Palette = ColorPickerPalette.WebSafe;

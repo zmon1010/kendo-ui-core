@@ -466,10 +466,13 @@ var ColorTool = Tool.extend({
         var editor = initOptions.editor,
             toolName = this.name,
             options =  extend({}, ColorTool.fn.options, this.options),
-            palette = options.palette;
+            palette = options.palette,
+            columns = options.columns;
+
         ui = this._widget = new kendo.ui.ColorPicker(ui, {
             toolIcon: "k-icon k-i-" + EditorUtils.getToolCssClass(options.name),
             palette: palette,
+            columns: columns,
             change: function() {
                 var color = ui.value();
                 if (color) {

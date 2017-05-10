@@ -295,16 +295,23 @@ namespace Kendo.Mvc.UI
                         palette = colorPickerTool.PaletteColors;
                     }
 
-                    return new Dictionary<string, object>() {
-                        { "name", colorPickerTool.Name},
-                        { "palette", palette }
-                    };
+					var result = new Dictionary<string, object>() {
+						{ "name", colorPickerTool.Name},
+						{ "palette", palette }
+					};
+
+					if (colorPickerTool.Columns.HasValue)
+					{
+						result.Add("columns", colorPickerTool.Columns);
+					}
+
+					return result;
                 }
                 else
                 {
                     return new Dictionary<string, object>() {
                         { "name", tool.Name }
-                    };
+					};
                 }
             });
 

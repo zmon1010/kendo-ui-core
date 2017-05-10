@@ -56,6 +56,15 @@ class EditorTool extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies the colors columns for "foreColor" and "backColor" tools when list of colors are defined.
+    * @param float $value
+    * @return \Kendo\UI\EditorTool
+    */
+    public function columns($value) {
+        return $this->setProperty('columns', $value);
+    }
+
+    /**
     * Sets the template option of the EditorTool.
     * The kendo template that will be used for rendering the given tool.
     * @param string $value The id of the element which represents the kendo template.

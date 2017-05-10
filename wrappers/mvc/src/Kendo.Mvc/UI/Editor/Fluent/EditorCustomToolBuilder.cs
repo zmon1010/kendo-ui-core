@@ -85,19 +85,26 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        /// <summary>
-        /// Sets the range of colors that the user can pick from.
-        /// </summary>
-        /// <param name="palette">One of the preset palettes of colors</param>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().ColorPicker()
-        ///             .Name("ColorPicker")
-        ///             .Palette(ColorPickerPalette.WebSafe)
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public EditorColorPickerToolBuilder Palette(ColorPickerPalette palette)
+		public EditorColorPickerToolBuilder Columns(int columns)
+		{
+			tool.Columns = columns;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the range of colors that the user can pick from.
+		/// </summary>
+		/// <param name="palette">One of the preset palettes of colors</param>
+		/// <example>
+		/// <code lang="CS">
+		///  &lt;%= Html.Kendo().ColorPicker()
+		///             .Name("ColorPicker")
+		///             .Palette(ColorPickerPalette.WebSafe)
+		/// %&gt;
+		/// </code>
+		/// </example>
+		public EditorColorPickerToolBuilder Palette(ColorPickerPalette palette)
         {
             tool.PaletteColors = null;
             tool.Palette = palette;
