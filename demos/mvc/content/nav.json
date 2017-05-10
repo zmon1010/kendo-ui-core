@@ -4629,7 +4629,7 @@
         "url": "panelbar/index",
         "title": {
           "kendo-ui": "Basic usage of Kendo UI PanelBar widget",
-          "aspnet-mvc": "Basic usage of ASP.NET MVC PanelBar conrol"
+          "aspnet-mvc": "Basic usage of ASP.NET MVC PanelBar control"
         },
         "meta": {
           "kendo-ui": "This example shows the core features of Kendo UI jQuery-based Accordion widget.",

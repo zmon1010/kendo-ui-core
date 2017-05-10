@@ -3039,7 +3039,7 @@
                 "text": "Basic usage",
                 "url": "panelbar/index",
                 "title": {
-                    "aspnet-mvc": "Basic usage of $FRAMEWORK PanelBar conrol"
+                    "aspnet-mvc": "Basic usage of $FRAMEWORK PanelBar control"
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows the core features of $FRAMEWORK Accordion component."
