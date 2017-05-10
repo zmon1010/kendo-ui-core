@@ -130,7 +130,7 @@ If it is not supported by the browser, the Sparkline will switch to the first av
 
     /**
     * The sparkline theme. This can be either a built-in theme or "sass".
-When set to "sass" the sparkline will read the variables from the SASS-based themes.The supported values are:
+When set to "sass" the sparkline will read the variables from the Sass-based themes.The supported values are:
     * @param string $value
     * @return \Kendo\Dataviz\UI\Sparkline
     */

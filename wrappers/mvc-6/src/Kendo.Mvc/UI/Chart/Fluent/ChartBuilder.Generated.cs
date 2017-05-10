@@ -162,7 +162,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// The chart theme. This can be either a built-in theme or "sass".
-		/// When set to "sass" the chart will read the variables from the SASS-based themes.The supported values are:
+		/// When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:
         /// </summary>
         /// <param name="value">The value for Theme</param>
         public ChartBuilder<T> Theme(string value)

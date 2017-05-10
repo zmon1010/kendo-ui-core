@@ -798,7 +798,7 @@ If it is not supported by the browser, the Chart will switch to the first availa
         </attribute>
         <attribute>
             <description>The chart theme. This can be either a built-in theme or "sass".
-When set to "sass" the chart will read the variables from the SASS-based themes.The supported values are:</description>
+When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -21265,6 +21265,12 @@ Custom tools and tools that require configuration are defined as objects.The ava
 
         <body-content>JSP</body-content>
         <attribute>
+            <description>Specifies the colors columns for "foreColor" and "backColor" tools when list of colors are defined.</description>
+            <name>columns</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The JavaScript function which will be executed when the end-user clicks the tool button.</description>
             <name>exec</name>
             <rtexprvalue>true</rtexprvalue>
@@ -33191,7 +33197,7 @@ If it is not supported by the browser, the Sparkline will switch to the first av
         </attribute>
         <attribute>
             <description>The sparkline theme. This can be either a built-in theme or "sass".
-When set to "sass" the sparkline will read the variables from the SASS-based themes.The supported values are:</description>
+When set to "sass" the sparkline will read the variables from the Sass-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38468,7 +38474,7 @@ If it is not supported by the browser, the Chart will switch to the first availa
         </attribute>
         <attribute>
             <description>The chart theme. This can be either a built-in theme or "sass".
-When set to "sass" the chart will read the variables from the SASS-based themes.The supported values are:</description>
+When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

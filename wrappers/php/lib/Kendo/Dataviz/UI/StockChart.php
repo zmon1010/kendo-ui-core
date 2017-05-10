@@ -148,7 +148,7 @@ If it is not supported by the browser, the Chart will switch to the first availa
 
     /**
     * The chart theme. This can be either a built-in theme or "sass".
-When set to "sass" the chart will read the variables from the SASS-based themes.The supported values are:
+When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChart
     */
