@@ -237,12 +237,10 @@
                 hasVisibleChildren = hasVisibleChildren || anyVisibleChildren || itemVisible;
                 item.hidden = !itemVisible && !anyVisibleChildren;
 
-                if (query !== "" || values.length === 0) {
+                if (query.length || !values.length) {
                     item.checked = !item.hidden;
-                } else {
-                    if (values && values.indexOf(item.text) != -1) {
-                        item.checked = true;
-                    }
+                } else if (values && values.indexOf(item.text) != -1){
+                    item.checked = true;
                 }
             }
 
