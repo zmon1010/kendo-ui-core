@@ -41,7 +41,7 @@ To be able to run the sample application on Windows, make sure you provide for t
 - Download [NET Core 1.0.0 - VS 2015 Tooling Preview 2](https://www.microsoft.com/net/core#windows).
 - Optional Download [.NET SDK Core for Windows](https://www.microsoft.com/net/core#windows).
 - Install [SQLite3](http://mislav.net/rails/install-sqlite3/).
-- Copy of the latest official Sample Application should be available in your installation folder - Telerik\UI for ASP.NET Core RX YYYY\wrappers\aspnetcore\Examples\AspNet.Core
+- Download the matching release of the [Sample Application](https://github.com/telerik/ui-for-aspnet-mvc-6-demos/releases).
 - Open the `Kendo.Mvc.Examples.sln` solution in Visual Studio.
 - Run the application.
 
