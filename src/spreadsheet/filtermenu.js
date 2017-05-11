@@ -225,18 +225,23 @@
         function filter(dataSource, query) {
             var hasVisibleChildren = false;
             var data = dataSource instanceof kendo.data.HierarchicalDataSource && dataSource.data();
-
+            var valuesFilter = this;
+            var values = this.values;
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var text = item.text.toString().toLowerCase();
                 var itemVisible = query === true || query === "" || text.indexOf(query) >= 0;
-
-                var anyVisibleChildren = filter(item.children, itemVisible || query); // pass true if parent matches
+                var filterSpread = filter.bind(valuesFilter);
+                var anyVisibleChildren = filterSpread(item.children, query); // pass true if parent matches
 
                 hasVisibleChildren = hasVisibleChildren || anyVisibleChildren || itemVisible;
-
                 item.hidden = !itemVisible && !anyVisibleChildren;
-                item.checked = !item.hidden;
+
+                if (query.length || !values.length) {
+                    item.checked = !item.hidden;
+                } else if (values && values.indexOf(item.text) != -1){
+                    item.checked = true;
+                }
             }
 
             if (data) {
@@ -304,8 +309,9 @@
 
                 this.set("hasActiveSearch", !!query);
 
+                var filterSpread = filter.bind(this.valueFilter);
                 uncheckAll(dataSource);
-                filter(dataSource, query);
+                filterSpread(dataSource, query);
             },
             reset: function() {
                 this.set("customFilter", { logic: "and", criteria: [ { operator: null, value: null } ] });
@@ -359,7 +365,7 @@
                 return [{
                     text: "All",
                     expanded: true,
-                    checked: true,
+                    checked: false,
                     items: this.values(range.resize({ top: 1 }), column)
                 }];
             },
@@ -370,8 +376,9 @@
                 var sheet = range.sheet();
 
                 columnRange.forEachCell(function(row, col, cell) {
+                    var checked = true;
                     if (sheet.isHiddenRow(row)) {
-                        return;
+                        checked = false;
                     }
 
                     var value = cell.value;
@@ -404,7 +411,7 @@
                         dataType: dataType,
                         value: value,
                         text: text,
-                        checked: true
+                        checked: checked
                     });
                 });
 
