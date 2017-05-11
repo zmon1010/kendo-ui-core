@@ -339,9 +339,11 @@
         filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
         var values = controller.values(filterMenuRange.resize({ top: 1 }), 0);
 
-        equal(values.length, 1);
-        equal(values[0].value, "B");
-        equal(values[0].checked, true);
+        equal(values.length, 3);
+        equal(values[1].value, "B");
+        equal(values[1].checked, true);
+        equal(values[0].value, "A");
+        equal(values[0].checked, false);
     });
 
     test("values that does not match existing value filter rules do not appear in menu", function() {
@@ -349,11 +351,13 @@
         filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
         var values = controller.values(filterMenuRange.resize({ top: 1 }), 0);
 
-        equal(values.length, 2);
+        equal(values.length, 3);
         equal(values[0].value, "A");
         equal(values[1].value, "B");
+        equal(values[2].value, "C");
         equal(values[0].checked, true);
         equal(values[1].checked, true);
+        equal(values[2].checked, false);
     });
 
     module("filter menu: filter by condition", {

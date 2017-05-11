@@ -237,7 +237,7 @@
                 hasVisibleChildren = hasVisibleChildren || anyVisibleChildren || itemVisible;
                 item.hidden = !itemVisible && !anyVisibleChildren;
 
-                if (query.length || !values.length) {
+                if (query.length || (values && !values.length)) {
                     item.checked = !item.hidden;
                 } else if (values && values.indexOf(item.text) != -1){
                     item.checked = true;
