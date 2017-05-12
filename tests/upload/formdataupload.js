@@ -1402,6 +1402,54 @@ test("separate template is rendered for each of the selected files", function() 
     equal($('.k-file > .myTemplate', uploadInstance.wrapper).length, 2);
 });
 
+test("retry icon is rendered in tempalte when it fails", function() {
+    simulateUploadError();
+    equal($(".k-file button.k-upload-action > span", uploadInstance.wrapper).length, 1);
+});
+
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+module("Upload / FormDataUpload / TemplatesWithTwoButtons / autoUpload = false", {
+    setup: function() {
+        moduleSetup();
+        uploadInstance = createUpload({
+            async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;', autoUpload: false },
+            template: "<div class='myTemplate'><span class='k-progress'></span><span class='fileInfo'>#=name# #=size# #=files[0].extension#</span><button type='button' class='k-upload-action'></button><button type='button' class='k-upload-action'></button></div>"
+        });
+    },
+    teardown: moduleTeardown
+});
+
+test("k-upload-action button should contain remove icon", function() {
+    simulateSingleFileSelect("image.jpg", 500);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
+});
+
+test("progress bar is rendered in the template", function() {
+    simulateSingleFileSelect("image.jpg", 500);
+    equal($('.k-progress', uploadInstance.wrapper).length, 1);
+});
+
+test("separate template is rendered for each of the selected files", function() {
+    simulateMultipleFileSelect();
+    equal($('.k-file > .myTemplate', uploadInstance.wrapper).length, 2);
+});
+
+test("two buttons are rendered in tempalte when it fails", function() {
+    simulateUploadError();
+    equal($(".k-file button.k-upload-action > span", uploadInstance.wrapper).length, 2);
+});
+
+test("retry button is rendered in tempalte when it fails", function() {
+    simulateUploadError();
+    equal($(".k-file button.k-upload-action > span.k-i-retry", uploadInstance.wrapper).length, 1);
+});
+
+test("delete button is rendered in tempalte when it fails", function() {
+    simulateUploadError();
+    equal($(".k-file button.k-upload-action > span.k-i-x", uploadInstance.wrapper).length, 1);
+});
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
