@@ -36,6 +36,11 @@
         equal(element.find(".k-spreadsheet-vborder").css("borderRightColor"), "rgb(255, 0, 0)");
     });
 
+    test("renders format", function() {
+        sheet.fromJSON(singleCell({ format: "hh:mm", value: new Date("7/1/2014 15:15") }));
+        equal(firstDataCell(element).text(), "15:15");
+    });
+
     test("renders border size", function() {
         sheet.fromJSON(singleCell({ borderBottom: { size: 2 } }));
 
