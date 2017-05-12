@@ -743,6 +743,7 @@ var __meta__ = { // jshint ignore:line
         _fileAction: function(fileElement, actionKey, skipClear) {
             var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry", pause: "k-i-pause-sm"};
             var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload-sm", pause: "k-i-pause-sm"};
+            var firstActionButton;
 
             if (!classDictionary.hasOwnProperty(actionKey)) {
                 return;
@@ -758,12 +759,22 @@ var __meta__ = { // jshint ignore:line
                     this._renderAction(classDictionary[actionKey], this.localization[actionKey], iconsClassDictionary[actionKey])
                 );
             } else {
-                fileElement.find(".k-upload-action")
-                           .addClass("k-button")
-                           .append("<span class='k-icon " + iconsClassDictionary[actionKey] + " " + classDictionary[actionKey] +
-                                   "' title='" + this.localization[actionKey] + "'" +
-                                   "aria-label='" + this.localization[actionKey] + "'></span>")
-                           .show();
+                firstActionButton = fileElement.find(".k-upload-action").first();
+                if(!firstActionButton.find(".k-icon").length){
+                firstActionButton
+                        .addClass("k-button")
+                        .append("<span class='k-icon " + iconsClassDictionary[actionKey] + " " + classDictionary[actionKey] +
+                                "' title='" + this.localization[actionKey] + "'" +
+                                "aria-label='" + this.localization[actionKey] + "'></span>")
+                        .show();
+                }else if (firstActionButton.next(".k-upload-action").length){
+                    firstActionButton.next(".k-upload-action")
+                        .addClass("k-button")
+                        .append("<span class='k-icon " + iconsClassDictionary[actionKey] + " " + classDictionary[actionKey] +
+                                "' title='" + this.localization[actionKey] + "'" +
+                                "aria-label='" + this.localization[actionKey] + "'></span>")
+                        .show();
+                }
             }
         },
 
