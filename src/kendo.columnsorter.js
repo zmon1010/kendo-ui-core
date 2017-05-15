@@ -94,6 +94,18 @@ var __meta__ = { // jshint ignore:line
             }
 
             dir = element.attr(kendo.attr(DIR));
+            if (element.is("th")) {
+                var table = element.closest("table");
+                if (table.parent().hasClass("k-grid-header-wrap")) {
+                    table = table.closest(".k-grid").find(".k-grid-content > table");
+                } else if (!table.parent().hasClass("k-grid")) {
+                    table = null;
+                }
+                if (table) {
+                    element.toggleClass("k-sorted", dir !== undefined);
+                    table.children("colgroup").children().eq(element.index()).toggleClass("k-sorted", dir !== undefined);
+                }
+            }
             element.find(".k-i-sort-asc-sm,.k-i-sort-desc-sm,.k-sort-order").remove();
 
             if (dir === ASC) {
