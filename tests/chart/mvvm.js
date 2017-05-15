@@ -23,13 +23,14 @@
     });
 
     test("initializes options from data attributes", function() {
-        dom = $('<div data-role="chart" data-series=\'[{"field":"foo"}]\'"/>');
+        dom = $('<div data-role="chart" data-axis-defaults="{ foo: \'bar\' }" data-series=\'[{"field":"foo"}]\'"/>');
 
         kendo.bind(dom, {}, kendo.dataviz.ui);
 
         var chart = dom.data("kendoChart");
 
         equal(chart.options.series.length, 1);
+        equal(chart.options.axisDefaults.foo, "bar");
     });
 
     test("initalizes data source", function() {
