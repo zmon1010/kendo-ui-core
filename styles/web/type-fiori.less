@@ -3354,7 +3354,8 @@ div.k-window.k-state-focused
     margin-left: 0.8em;
 }
 
-.k-datepicker .k-picker-wrap {
+.k-datepicker .k-picker-wrap,
+.k-timepicker .k-picker-wrap {
     &.k-state-invalid {
         border-color: @input-validation-error;
 
@@ -3368,12 +3369,12 @@ div.k-window.k-state-focused
         margin-left:0;
         margin-right: 2.8em;
     }
-}
 
-.k-rtl .k-datepicker .k-picker-wrap {
-    .k-i-warning {
-        margin-right: 0;
-        margin-left: 2.8em;
+    .k-rtl & {
+        .k-i-warning {
+            margin-right: 0;
+            margin-left: 2.8em;
+        }
     }
 }
 
