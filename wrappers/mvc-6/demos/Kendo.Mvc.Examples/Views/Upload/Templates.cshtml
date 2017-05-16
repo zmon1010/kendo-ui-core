@@ -6,7 +6,10 @@
         <span class='file-icon #=addExtensionClass(files[0].extension)#'></span>
         <h4 class='file-heading file-name-heading'>Name: #=name#</h4>
         <h4 class='file-heading file-size-heading'>Size: #=size# bytes</h4>
-        <button type='button' class='k-upload-action'></button>
+        <strong class="k-upload-status">
+            <button type='button' class='k-upload-action'></button>
+            <button type='button' class='k-upload-action'></button>
+        </strong>
     </div>
 </script>
 
@@ -104,12 +107,6 @@
     #example .file-size-heading {
         font-weight: normal;
         font-style: italic;
-    }
-
-    li.k-file .file-wrapper .k-upload-action {
-        position: absolute;
-        top: 0;
-        right: 0;
     }
 
     li.k-file div.file-wrapper {

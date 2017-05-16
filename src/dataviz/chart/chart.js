@@ -145,6 +145,7 @@
             name: "Chart",
             renderAs: "",
             theme: "default",
+            axisDefaults: {},
             chartArea: {},
             legend: {},
             categoryAxis: {},
