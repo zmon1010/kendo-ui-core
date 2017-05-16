@@ -1257,7 +1257,7 @@
         FORMAT_PARSERS.push(p);
     };
 
-    exports.parse = function(sheet, row, col, input) {
+    exports.parse = function(sheet, row, col, input, format) {
         if (input instanceof Date) {
             return { type: "date", value: runtime.dateToSerial(input) };
         }
@@ -1307,7 +1307,7 @@
         if (input.toLowerCase() == "false") {
             return { type: "boolean", value: false };
         }
-        var date = runtime.parseDate(input);
+        var date = format ? runtime.parseDate(input, format) : runtime.parseDate(input);
         if (date) {
             return { type: "date", value: runtime.dateToSerial(date) };
         }

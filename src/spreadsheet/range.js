@@ -110,7 +110,7 @@
             var existingFormat = this._get("format"), x;
             if (value !== undefined) {
                 var tl = this._ref.toRangeRef().topLeft;
-                x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
+                x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value, existingFormat);
                 this._sheet.batch(function() {
                     var formula = null;
                     if (x.type == "exp") {
@@ -153,16 +153,14 @@
                         // check if we could parse back the displayed value.
                         // https://github.com/telerik/kendo/issues/5335
                         var t1 = kendo.spreadsheet.formatting.text(value, existingFormat);
-                        x = kendo.spreadsheet.calc.parse(null, null, null, t1); // it's not a formula so we don't need sheet/row/col
-                        if (typeof x.value == "number") {
-                            var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
-                            if (t1 == t2) {
-                                value = t1;
-                                break OUT; // jshint ignore:line
-                            }
+                        x = kendo.spreadsheet.calc.parse(null, null, null, t1, existingFormat); // it's not a formula so we don't need sheet/row/col
+                        var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
+                        if (t1 == t2) {
+                            value = t1;
+                            break OUT; // jshint ignore:line
                         }
                     }
-                    if (type === "date") {
+                    if (type === "date" && !existingFormat) {
                         value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
                     } else if (type === "percent") {
                         value = (value * 100) + "%";
