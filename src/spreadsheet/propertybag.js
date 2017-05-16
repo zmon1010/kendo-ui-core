@@ -56,14 +56,10 @@
 
         set: function(start, end, value) {
             if (value instanceof Date) {
-                // XXX: should we check if existing format is not
-                // already date, in which case not reset it?
+
                 value = kendo.spreadsheet.dateToNumber(value);
 
-                var currFormat = $.grep(this.formats.values(), function(e){
-                    return e.start == start && e.end == end;
-                });
-                if (!currFormat.length) {
+                if (!this.formats.value(start,end)) {
                     this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
                 }
             }
