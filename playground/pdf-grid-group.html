@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+        <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+        <script src="./loader.js"></script>
+        <script>
+         requireSync([
+             "../src/jquery.js",
+             "../src/kendo.all.js"
+         ]);
+        </script>
+        <script src="../src/jszip.js"></script>
+    </head>
+    <body>
+
+        <div id="example">
+            <div id="grid"></div>
+            <script>
+             $(document).ready(function() {
+                 $("#grid").kendoGrid({
+                     dataSource: {
+                         type: "odata",
+                         transport: {
+                             read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                         },
+                         schema:{
+                             model: {
+                                 fields: {
+                                     UnitsInStock: { type: "number" },
+                                     ProductName: { type: "string" },
+                                     UnitPrice: { type: "number" },
+                                     UnitsOnOrder: { type: "number" },
+                                     UnitsInStock: { type: "number" }
+                                 }
+                             }
+                         },
+                         pageSize: 7,
+                         group: {
+                             field: "UnitsInStock", aggregates: [
+                                 { field: "ProductName", aggregate: "count" },
+                                 { field: "UnitPrice", aggregate: "sum"},
+                                 { field: "UnitsOnOrder", aggregate: "average" },
+                                 { field: "UnitsOnOrder", aggregate: "sum" },
+                                 { field: "UnitsInStock", aggregate: "count" }
+                             ]
+                         },
+
+                         aggregate: [ { field: "ProductName", aggregate: "count" },
+                                      { field: "UnitPrice", aggregate: "sum" },
+                                      { field: "UnitsOnOrder", aggregate: "average" },
+                                      { field: "UnitsOnOrder", aggregate: "sum" },
+                                      { field: "UnitsInStock", aggregate: "min" },
+                                      { field: "UnitsInStock", aggregate: "max" }]
+                     },
+                     sortable: true,
+                     toolbar: ["excel"],
+                     excel: {
+                         fileName: "Kendo UI Grid Export.xlsx",
+                         proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+                         filterable: true
+                     },
+                     scrollable: false,
+                     pageable: true,
+                     columns: [
+                         { field: "ProductName", title: "Product Name", aggregates: ["count"], footerTemplate: "Total Count: #=count#", groupFooterTemplate: "Count: #=count#" },
+                         { field: "UnitPrice", title: "Unit Price", aggregates: ["sum"] },
+                         { field: "UnitsOnOrder", title: "Units On Order", aggregates: ["average", "sum"], footerTemplate: "Average: #=average#",
+                           groupFooterTemplate: 'This is the value that caused the error: #=group.value #' },
+                         { field: "UnitsInStock", title: "Units In Stock", aggregates: ["min", "max", "count"],
+                           groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" }
+                     ]
+                 });
+             });
+            </script>
+        </div>
+
+
+    </body>
+</html>

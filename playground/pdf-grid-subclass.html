@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+        <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+        <script src="./loader.js"></script>
+        <script>
+         requireSync([
+             "../src/jquery.js",
+             "../src/kendo.all.js"
+         ]);
+        </script>
+        <script src="../src/jszip.js"></script>
+    <body>
+        <div id="grid"></div>
+        <script>
+         (function($) {
+
+             // shorten references to variables. this is better for uglification var kendo = window.kendo,
+             ui = kendo.ui,
+             Grid = ui.Grid
+
+             var kendoSpecialGrid = Grid.extend({
+                 init: function(element, options) {
+                     // base call to widget initialization
+                     Grid.fn.init.call(this, element, options);
+                 },
+                 options: {
+                     name: "SpecialGrid",
+                 }
+             });
+
+             ui.plugin(kendoSpecialGrid);
+
+         })(jQuery);
+         
+         var dataItems = [{
+             a: "SLKdfjnsodijfnopi sjdnfpoisndfpoisnjdfpoisjndfposidjnf poijanpoinjasdpofinjasdpoifjnpaosdfijnpoijansdfpoij ansdjpfoijnajsdpofi jasdfpoijasdnfpo ijansdfp",
+             b: 2,
+             c: 3
+         },{
+             a: "SLKdfjnsodij fnopi isjndfposidjnf poijanpoinjasdpofinjasdpoifj npdfpoij ansdjpfoijnajsdpofi jasdfpoijasdnfpo ijansdfp sadflkjhnsdf sdfnasdfl;jnasdf asdflkasdf asdflasdfkasdf asdfkasdf asdf asdfkasdfjsadf asdf sadf asdfkasdf",
+             b: 2,
+             c: 3
+         }];
+         var data = [];
+         for(var i = 0; i < 50; ++i){
+             data.push(dataItems[i % 2]);
+         }
+         var grid = $('#grid').kendoSpecialGrid({
+             height: '300px',
+             dataSource: {
+                 data: data
+             },
+             dataBound: function(e){
+                 var dropdown = e.sender.pager.element.find('[data-role=dropdownlist]').data('kendoDropDownList');
+                 if(dropdown.value() != 'all'){
+                     setPagesToAll(e);
+                 }else{
+                     exportGridDOM();
+                 }
+             },
+             columns: [
+                 {
+                     title: 'group 1',
+                     columns: [
+                         {
+                             field:'a'
+                         },
+                         {
+                             field:'b'
+                         }
+                     ]
+                 },{
+                     title: 'group 2',
+                     columns: [
+                         {
+                             field: 'c'
+                         }
+                     ]
+                 }
+             ],
+             pageable: {
+                 pageSize: 50,
+                 pageSizes: [5, 10, 50, "All"],
+                 numeric: false
+             }
+         }).data('kendoSpecialGrid');
+         
+         function setPagesToAll(e){
+             var dropdown = e.sender.pager.element.find('[data-role=dropdownlist]').data('kendoDropDownList');
+             dropdown.ul.find('li').last().click();
+         }
+         
+         function exportGridDOM(){
+             kendo.pdf.defineFont({
+                 "FontAwesome":
+                 "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/fonts/fontawesome-webfont.ttf"
+             });
+             
+             
+             
+             $('.k-grid-content').css('height', 'auto');
+
+             // this line fixes the issue
+             //$('[data-role=specialgrid]').attr('data-role', 'grid');
+             
+             $('body').css({
+                 'margin': '0',
+                 'margin-top': '55px',
+                 'left': '0',
+                 'top': '0',
+                 'height': '100%',
+                 'width': '100%'
+             });
+
+             kendo.drawing.drawDOM('body', {
+                 paperSize: 'Letter',
+                 margin: {
+                     left: '0.25in',
+                     top: '0.25in',
+                     right: '0.25in',
+                     bottom: '0.25in'
+                 },
+                 scale: 0.65,
+                 repeatHeaders: true,
+                 multiPage: true,
+                 landscape: true,
+                 keepTogether: '.row',
+                 forcePageBreak: '.break-page',
+                 template: function (pageNum, totalPages) {
+                     return '<div style="position: absolute; top: 0; left: 0.25in; height: 50px; width: calc(100% - 0.75in); line-height: 50px; padding:0; margin: 0; vertical-align: middle;">' +
+                            '<div style="width: 25%; float: left;"></div>' +
+                            '<div style="width: 50%; text-align: center; font-weight: bold; float: left; font-size: 20pt;"><h1 style="color: #AA0000; display: inline;">Unit Committee Portal</h1></div>' +
+                            '<div style="width: 25%; text-align: right; float: left; font-size: 14pt;"><span style="color: grey;">Fiscal Year 2017</span></div>' +
+                            '</div>';
+                 }
+             }).then(function (group) {
+                 kendo.drawing.pdf.saveAs(group, 'Export.pdf');
+                 $('body').css({
+                     'margin': '',
+                     'left': '',
+                     'top': '',
+                     'height': '',
+                     'width': ''
+                 });
+                 $('.k-grid-content').css('height', '300px');
+             });
+         }
+        </script>
+    </body>
+</html>
