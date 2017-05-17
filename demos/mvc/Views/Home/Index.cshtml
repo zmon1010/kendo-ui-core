@@ -233,6 +233,18 @@
     </ul>
     </div>
     }
+    @if (ViewBag.Product == "php-ui" || ViewBag.Product == "jsp-ui")
+    {
+        <div id="overview-themebuilder">
+            <h1>Theme Builder</h1>
+            <div class="theme-builder">
+                <a href="http://themebuilder.telerik.com/@ViewBag.Product/">
+                    <img src="@Url.Content("~/content/shared/images/theme-builder.png")" alt="Kendo UI ThemeBuilder" />
+                    <p>Create new or customize SASS themes</p>
+                </a>
+            </div>
+        </div>
+    }
     <div id="overview-tools">
         <h1>Tools</h1>
          <ul>
