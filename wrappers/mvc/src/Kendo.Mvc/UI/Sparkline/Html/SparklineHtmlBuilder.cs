@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Creates the chart top-level div.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode CreateSparkline()
         {
             return new HtmlElement("span")
@@ -27,7 +26,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Builds the Sparkline component markup.
         /// </summary>
-        /// <returns></returns>
         protected override IHtmlNode BuildCore()
         {
             return CreateSparkline();

@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Creates the chart top-level div.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode CreateChart()
         {
             return new HtmlElement("div")
@@ -27,7 +26,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Builds the Chart component markup.
         /// </summary>
-        /// <returns></returns>
         protected override IHtmlNode BuildCore()
         {
             return CreateChart();

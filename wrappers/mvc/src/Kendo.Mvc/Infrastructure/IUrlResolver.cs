@@ -6,7 +6,6 @@ namespace Kendo.Mvc.Infrastructure
         /// Returns the relative path for the specified virtual path.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns></returns>
         string Resolve(string url);
     }
 }

@@ -25,7 +25,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds an item.
         /// </summary>
-        /// <returns></returns>
         public ContextMenuItemBuilder Add()
         {
             ContextMenuItem item = new ContextMenuItem();

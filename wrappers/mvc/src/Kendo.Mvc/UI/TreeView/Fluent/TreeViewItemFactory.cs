@@ -26,7 +26,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public TreeViewItemBuilder Add()
         {
             TreeViewItem item = new TreeViewItem();

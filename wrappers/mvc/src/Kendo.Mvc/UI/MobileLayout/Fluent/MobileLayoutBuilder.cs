@@ -169,7 +169,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the Header HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileLayoutBuilder HeaderHtmlAttributes(object attributes)
         {
             return HeaderHtmlAttributes(attributes.ToDictionary());
@@ -179,7 +178,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the Footer HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileLayoutBuilder FooterHtmlAttributes(object attributes)
         {
             return FooterHtmlAttributes(attributes.ToDictionary());
@@ -189,7 +187,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the Header HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileLayoutBuilder HeaderHtmlAttributes(IDictionary<string, object> attributes)
         {
             container.HeaderHtmlAttributes.Clear();
@@ -202,7 +199,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the Footer HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileLayoutBuilder FooterHtmlAttributes(IDictionary<string, object> attributes)
         {
             container.FooterHtmlAttributes.Clear();

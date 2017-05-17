@@ -43,7 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Returns the inner navigation item
         /// </summary>
-        /// <returns></returns>
         public TItem ToItem()
         {
             return item as TItem;

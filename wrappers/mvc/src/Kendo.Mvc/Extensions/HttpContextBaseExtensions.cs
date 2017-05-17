@@ -10,7 +10,6 @@ namespace Kendo.Mvc.Extensions
         /// Requests the context.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static RequestContext RequestContext(this HttpContextBase instance)
         {
             RouteData routeData = RouteTable.Routes.GetRouteData(instance) ?? new RouteData();

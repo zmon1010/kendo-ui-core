@@ -17,7 +17,6 @@ namespace Kendo.Mvc
         /// <summary>
         /// Adds this instance.
         /// </summary>
-        /// <returns></returns>
         public SiteMapNodeBuilder Add()
         {
             SiteMapNode node = new SiteMapNode();

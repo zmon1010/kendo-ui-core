@@ -35,7 +35,6 @@
         /// The Expand settings.
         /// </summary>
         /// <param name="effectsAction">The configuration action.</param>
-        /// <returns></returns>
         public ExpandableAnimationBuilder Expand(Action<EffectsBuilder> effectsAction)
         {
             effectsAction(new EffectsBuilder(Animation.Expand));
@@ -47,7 +46,6 @@
         /// The Collapse settings.
         /// </summary>
         /// <param name="effectsAction">The configuration action.</param>
-        /// <returns></returns>
         public ExpandableAnimationBuilder Collapse(Action<EffectsBuilder> effectsAction)
         {
             effectsAction(new EffectsBuilder(Animation.Collapse));

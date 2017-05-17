@@ -9,7 +9,6 @@ namespace Kendo.Mvc.Extensions
         /// Starts thread safe read write code block.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static IDisposable ReadAndWrite(this ReaderWriterLockSlim instance)
         {
 
@@ -22,7 +21,6 @@ namespace Kendo.Mvc.Extensions
         /// Starts thread safe read code block.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static IDisposable Read(this ReaderWriterLockSlim instance)
         {
 
@@ -35,7 +33,6 @@ namespace Kendo.Mvc.Extensions
         /// Starts thread safe write code block.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static IDisposable Write(this ReaderWriterLockSlim instance)
         {
 

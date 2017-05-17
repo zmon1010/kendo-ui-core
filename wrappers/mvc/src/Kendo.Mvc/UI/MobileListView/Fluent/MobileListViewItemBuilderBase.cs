@@ -28,7 +28,6 @@
         /// Sets the text of the item.
         /// </summary>
         /// <param name="value">Sets the text of the item.</param>
-        /// <returns></returns>
         public virtual TItemBuilder Text(string value)
         {
             Item.Content.Html = value;
@@ -40,7 +39,6 @@
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual TItemBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
 
@@ -54,7 +52,6 @@
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual TItemBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());

@@ -20,7 +20,6 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Builds the MobileSplitView markup.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode Build()
         {
             var html = CreateElement();

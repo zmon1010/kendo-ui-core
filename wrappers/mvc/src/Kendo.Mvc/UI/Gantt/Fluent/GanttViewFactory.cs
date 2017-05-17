@@ -36,7 +36,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a Gantt day view 
         /// </summary>
-        /// <returns></returns>
         public virtual GanttViewBuilder DayView(Action<GanttViewBuilder> addViewAction)
         {
             var builder = Add(GanttViewType.Day);
@@ -57,7 +56,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a Gantt week view.
         /// </summary>
-        /// <returns></returns>
         public virtual GanttViewBuilder WeekView(Action<GanttViewBuilder> addViewAction)
         {
             var builder = Add(GanttViewType.Week);
@@ -78,7 +76,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a Gantt мonth view
         /// </summary>
-        /// <returns></returns>
         public virtual GanttViewBuilder MonthView(Action<GanttViewBuilder> addViewAction)
         {
             var builder = Add(GanttViewType.Month);
@@ -99,7 +96,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a Scheduler year view.
         /// </summary>
-        /// <returns></returns>
         public virtual GanttViewBuilder YearView(Action<GanttViewBuilder> addViewAction)
         {
             var builder = Add(GanttViewType.Year);

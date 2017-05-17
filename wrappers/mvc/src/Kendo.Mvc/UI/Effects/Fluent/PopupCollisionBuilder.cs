@@ -35,7 +35,6 @@
         /// Defines the collision.
         /// </summary>
         /// <param name="collision">The collision.</param>
-        /// <returns></returns>
         public PopupCollisionBuilder Collision(string collision)
         {
             PopupCollision.Collision = collision;

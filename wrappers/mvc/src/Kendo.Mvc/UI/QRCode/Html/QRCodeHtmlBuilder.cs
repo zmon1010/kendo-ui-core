@@ -17,7 +17,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Creates the QRCode top-level div.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode CreateQRCode()
         {
             return new HtmlElement("div")
@@ -28,7 +27,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Builds the QRCode component markup.
         /// </summary>
-        /// <returns></returns>
         protected override IHtmlNode BuildCore()
         {
             return CreateQRCode();

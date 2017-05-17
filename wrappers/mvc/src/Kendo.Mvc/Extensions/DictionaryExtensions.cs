@@ -53,7 +53,6 @@ namespace Kendo.Mvc.Extensions
         /// Toes the attribute string.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static string ToAttributeString(this IDictionary<string, object> instance)
         {
 

@@ -25,7 +25,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <typeparam name="TTaskModel"></typeparam>
         /// <param name="expression"></param>
-        /// <returns></returns>
         public virtual GanttBoundColumnBuilder<TTaskModel, TDependenciesModel> Bound<TValue>(Expression<Func<TTaskModel, TValue>> expression)
         {
             var column = new GanttBoundColumn<TTaskModel, TValue>(expression);

@@ -24,7 +24,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the RouteKey.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public void RouteKey(string value)
         {
 

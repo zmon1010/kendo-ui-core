@@ -35,7 +35,6 @@
         /// The Open settings.
         /// </summary>
         /// <param name="effectsAction">The configuration action.</param>
-        /// <returns></returns>
         public PopupAnimationBuilder Open(Action<EffectsBuilder> effectsAction)
         {
             effectsAction(new EffectsBuilder(Animation.Open));
@@ -47,7 +46,6 @@
         /// The Close settings.
         /// </summary>
         /// <param name="effectsAction">The configuration action.</param>
-        /// <returns></returns>
         public PopupAnimationBuilder Close(Action<EffectsBuilder> effectsAction)
         {
             effectsAction(new EffectsBuilder(Animation.Close));

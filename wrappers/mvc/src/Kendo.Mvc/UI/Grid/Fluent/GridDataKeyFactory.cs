@@ -32,7 +32,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="expression"></param>
-        /// <returns></returns>
         public GridDataKeyBuilder<TModel> Add<TValue>(Expression<Func<TModel, TValue>> expression)
         {
             var dataKey = new GridDataKey<TModel, TValue>(expression);

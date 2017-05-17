@@ -62,7 +62,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="expression"></param>
-        /// <returns></returns>
         public virtual GridBoundColumnBuilder<TModel> Bound<TValue>(Expression<Func<TModel, TValue>> expression)
         {
             GridBoundColumn<TModel, TValue> column = new GridBoundColumn<TModel, TValue>(Container, expression);
@@ -136,7 +135,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="data">The foreign data</param>
         /// <param name="dataFieldValue">The data value field</param>
         /// <param name="dataFieldText">The data text field</param>
-        /// <returns></returns>
         public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, IEnumerable data, 
             string dataFieldValue, string dataFieldText)
         {
@@ -149,7 +147,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <typeparam name="TValue">Member type</typeparam>
         /// <param name="expression">The member which matches the selected item</param>
         /// <param name="data">The foreign data</param>
-        /// <returns></returns>
         public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, SelectList data)
         {            
             GridForeignKeyColumn<TModel, TValue> column = new GridForeignKeyColumn<TModel, TValue>(Container, expression, data);
@@ -255,7 +252,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines a template column.
         /// </summary>
         /// <param name="templateAction"></param>
-        /// <returns></returns>
         public virtual GridTemplateColumnBuilder<TModel> Template(Action<TModel> templateAction)
         {
             GridTemplateColumn<TModel> column = new GridTemplateColumn<TModel>(Container, templateAction);
@@ -276,7 +272,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines a command column.
         /// </summary>
         /// <param name="commandAction"></param>
-        /// <returns></returns>
         public virtual GridActionColumnBuilder Command(Action<GridActionCommandFactory<TModel>> commandAction)
         {
             GridActionColumn<TModel> column = new GridActionColumn<TModel>(Container);

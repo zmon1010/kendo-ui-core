@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Creates the chart top-level div.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode CreateGauge()
         {
             return new HtmlElement("div")
@@ -26,7 +25,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Builds the Gauge component markup.
         /// </summary>
-        /// <returns></returns>
         protected override IHtmlNode BuildCore()
         {
             return CreateGauge();

@@ -21,7 +21,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures Filter menu messages.
         /// </summary>
         /// <param name="configurator"></param>
-        /// <returns></returns>
         public TreeListFilterableSettingsBuilder<T> Messages(Action<FilterableMessagesBuilder> configurator)
         {
             configurator(new FilterableMessagesBuilder(container.Messages));

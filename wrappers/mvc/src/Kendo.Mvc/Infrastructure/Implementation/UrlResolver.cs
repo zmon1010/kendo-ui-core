@@ -12,7 +12,6 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         /// Returns the relative path for the specified virtual path.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns></returns>
         public string Resolve(string url)
         {
             HttpContextBase httpContext = new HttpContextWrapper(HttpContext.Current);

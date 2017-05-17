@@ -25,7 +25,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a new item to the PanelBar.
         /// </summary>
-        /// <returns></returns>
         public virtual PanelBarItemBuilder Add()
         {
             PanelBarItem item = new PanelBarItem();

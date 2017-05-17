@@ -9,7 +9,6 @@ namespace Kendo.Mvc.Extensions
         /// Get the Application root path.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        /// <returns></returns>
         public static string ApplicationRoot(this HttpRequestBase instance)
         {
             string applicationPath = instance.Url.GetLeftPart(UriPartial.Authority) + instance.ApplicationPath;

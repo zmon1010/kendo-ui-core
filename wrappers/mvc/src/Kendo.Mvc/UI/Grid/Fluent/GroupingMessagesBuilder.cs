@@ -19,7 +19,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the text of the group panel when grid is not grouped.
         /// </summary>
         /// <param name="message">The message</param>
-        /// <returns></returns>
         public GroupingMessagesBuilder Empty(string message)
         {
             messages.Empty = message;

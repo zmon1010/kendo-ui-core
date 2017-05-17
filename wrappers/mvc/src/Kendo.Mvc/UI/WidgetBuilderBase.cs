@@ -48,7 +48,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Returns the internal view component.
         /// </summary>
-        /// <returns></returns>
         public TViewComponent ToComponent()
         {
             return Component;
@@ -58,7 +57,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the name of the component.
         /// </summary>
         /// <param name="componentName">The name.</param>
-        /// <returns></returns>
         public virtual TBuilder Name(string componentName)
         {
             Component.Name = componentName;
@@ -69,7 +67,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Suppress initialization script rendering. Note that this options should be used in conjunction with <see cref="WidgetFactory.DeferredScripts"/>
         /// </summary>        
-        /// <returns></returns>
         public virtual TBuilder Deferred(bool deferred=true)
         {
             Component.HasDeferredInitialization = deferred;
@@ -88,7 +85,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual TBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());
@@ -98,7 +94,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual TBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
 

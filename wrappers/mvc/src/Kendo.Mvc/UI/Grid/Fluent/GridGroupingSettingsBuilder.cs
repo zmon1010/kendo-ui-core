@@ -17,7 +17,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Configures messages.
         /// </summary>        
-        /// <returns></returns>
         public GridGroupingSettingsBuilder Messages(Action<GroupingMessagesBuilder> configurator)
         {
             configurator(new GroupingMessagesBuilder(settings.Messages));

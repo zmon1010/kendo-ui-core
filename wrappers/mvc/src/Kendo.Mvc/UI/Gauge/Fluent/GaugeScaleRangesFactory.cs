@@ -30,7 +30,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public GaugeScaleRangesBuilder Add()
         {
             var item = new GaugeScaleRanges();
@@ -43,7 +42,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public GaugeScaleRangesBuilder Add(double from, double to, string color)
         {
             var item = new GaugeScaleRanges();

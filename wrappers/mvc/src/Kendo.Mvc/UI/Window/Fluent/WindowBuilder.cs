@@ -93,7 +93,6 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Content(@&lt;strong&gt; Hello World!&lt;/strong&gt;))
         /// </code>        
         /// </example>
-        /// <returns></returns>
         public WindowBuilder Content(Func<object, object> value)
         {
             Component.Template.InlineTemplate = value;

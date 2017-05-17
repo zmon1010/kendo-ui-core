@@ -20,7 +20,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds color range.
         /// </summary>
-        /// <returns></returns>
         public TreeMapColorRangeFactory AddRange(string fromColor, string toColor)
         {
             container.ColorRanges.Add(new string[] { fromColor, toColor });

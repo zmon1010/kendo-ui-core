@@ -23,7 +23,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a custom template tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory CustomTemplate(Action<EditorCustomTemplateToolBuilder> configurator)
         {
             var tool = new EditorCustomTemplateTool();
@@ -36,7 +35,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a custom button tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory CustomButton(Action<EditorCustomButtonToolBuilder> configurator)
         {
             var tool = new EditorCustomButtonTool();
@@ -49,7 +47,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Clears all tools.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Clear()
         {
             group.Tools.Clear();
@@ -60,7 +57,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Bold tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Bold()
         {
             return Button("bold");
@@ -69,7 +65,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Italic tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Italic()
         {
             return Button("italic");
@@ -78,7 +73,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Underline tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Underline()
         {
             return Button("underline");
@@ -87,7 +81,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Strikethrough tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Strikethrough()
         {
             return Button("strikethrough");
@@ -96,7 +89,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds JustifyLeft tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory JustifyLeft()
         {
             return Button("justifyLeft");
@@ -105,7 +97,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds JustifyRight tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory JustifyRight()
         {
             return Button("justifyRight");
@@ -114,7 +105,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds JustifyCenter tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory JustifyCenter()
         {
             return Button("justifyCenter");
@@ -123,7 +113,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds JustifyFull tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory JustifyFull()
         {
             return Button("justifyFull");
@@ -132,7 +121,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds InsertUnorderedList tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory InsertUnorderedList()
         {
             return Button("insertUnorderedList");
@@ -141,7 +129,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Indent tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Indent()
         {
             return Button("indent");
@@ -150,7 +137,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Pdf tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Pdf()
         {
             return Button("pdf");
@@ -159,7 +145,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Import tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Import()
         {
             return Button("import");
@@ -168,7 +153,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds ExportAs tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory ExportAs()
         {
             return SelectBox("exportAs", null);
@@ -177,7 +161,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds ExportAs tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory ExportAs(Action<EditorDropDownItemBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
@@ -191,7 +174,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Outdent tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Outdent()
         {
             return Button("outdent");
@@ -200,7 +182,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds InsertOrderedList tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory InsertOrderedList()
         {
             return Button("insertOrderedList");
@@ -209,7 +190,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds InsertImage tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory InsertImage()
         {
             return Button("insertImage");
@@ -218,7 +198,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds InsertFile tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory InsertFile()
         {
             return Button("insertFile");
@@ -227,7 +206,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds CreateLink tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory CreateLink()
         {
             return Button("createLink");
@@ -236,7 +214,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Unlink tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Unlink()
         {
             return Button("unlink");
@@ -245,7 +222,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds SubScript tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory SubScript()
         {
             return Button("subscript");
@@ -254,7 +230,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds SuperScript tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory SuperScript()
         {
             return Button("superscript");
@@ -263,7 +238,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds ViewHtml tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory ViewHtml()
         {
             return Button("viewHtml");
@@ -272,7 +246,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Print tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Print()
         {
             return Button("print");
@@ -281,7 +254,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontName tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontName()
         {
             return ComboBox("fontName", null);
@@ -290,7 +262,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontName tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontName(Action<EditorDropDownItemBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
@@ -304,7 +275,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontSize tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontSize()
         {
             return ComboBox("fontSize", null);
@@ -313,7 +283,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontSize tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontSize(Action<EditorDropDownItemBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
@@ -327,7 +296,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Formatting tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Formatting()
         {
             return SelectBox("formatting", null);
@@ -336,7 +304,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Formatting tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Formatting(Action<EditorDropDownItemBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
@@ -350,7 +317,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FormatBlock tool.
         /// </summary>
-        /// <returns></returns>
         [Obsolete("The FormatBlock tool is deprecated, please use the Formatting tool instead. For more information, visit http://docs.telerik.com/kendo-ui/getting-started/changes-and-backward-compatibility")]
         public EditorToolFactory FormatBlock()
         {
@@ -360,7 +326,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FormatBlock tool.
         /// </summary>
-        /// <returns></returns>
         [Obsolete("The FormatBlock tool is deprecated, please use the Formatting tool instead. For more information, visit http://docs.telerik.com/kendo-ui/getting-started/changes-and-backward-compatibility")]
         public EditorToolFactory FormatBlock(Action<EditorDropDownItemBuilder> configurator)
         {
@@ -375,7 +340,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Snippets tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Snippets(Action<EditorSnippetBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
@@ -390,7 +354,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds Styles tool.
         /// </summary>
-        /// <returns></returns>
         [Obsolete("The Styles tool is deprecated, please use the Formatting tool instead. For more information, visit http://docs.telerik.com/kendo-ui/getting-started/changes-and-backward-compatibility")]
         public EditorToolFactory Styles(Action<EditorDropDownItemBuilder> configurator)
         {
@@ -406,7 +369,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontColor tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontColor()
         {
             return ColorPicker("foreColor");
@@ -415,7 +377,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds FontColor tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory FontColor(Action<EditorColorPickerToolBuilder> configurator)
         {
             return ColorPicker("foreColor", configurator);
@@ -424,7 +385,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds BackColor tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory BackColor()
         {
             return ColorPicker("backColor");
@@ -433,7 +393,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds BackColor tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory BackColor(Action<EditorColorPickerToolBuilder> configurator)
         {
             return ColorPicker("backColor", configurator);
@@ -442,7 +401,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds TableEditing tools.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory TableEditing()
         {
             Button("tableWizard");
@@ -460,7 +418,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a separator.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory Separator()
         {
             group.Tools.Add(new EditorTool(("separator")));
@@ -471,7 +428,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds CleanFormatting tool.
         /// </summary>
-        /// <returns></returns>
         public EditorToolFactory CleanFormatting()
         {
             return Button("cleanFormatting");
