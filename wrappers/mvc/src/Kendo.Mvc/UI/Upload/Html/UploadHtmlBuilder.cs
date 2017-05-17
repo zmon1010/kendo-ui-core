@@ -38,7 +38,6 @@ namespace Kendo.Mvc.UI.Html
         /// <summary>
         /// Builds the Upload component markup.
         /// </summary>
-        /// <returns></returns>
         protected override IHtmlNode BuildCore()
         {
             return CreateUpload();

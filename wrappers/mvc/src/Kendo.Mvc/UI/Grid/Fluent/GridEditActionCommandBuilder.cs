@@ -19,7 +19,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the text displayed by the "update" button. If not set a default value is used.
         /// </summary>
         /// <param name="text">The text which should be displayed</param>
-        /// <returns></returns>
         public GridEditActionCommandBuilder UpdateText(string text)
         {
             Command.UpdateText = text;
@@ -31,7 +30,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the text displayed by the "cancel" button. If not set a default value is used.
         /// </summary>
         /// <param name="text">The text which should be displayed</param>
-        /// <returns></returns>
         public GridEditActionCommandBuilder CancelText(string text)
         {
             Command.CancelText = text;

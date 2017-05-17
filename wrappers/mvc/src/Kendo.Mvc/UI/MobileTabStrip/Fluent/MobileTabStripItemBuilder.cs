@@ -105,7 +105,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileTabStripItemBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());
@@ -115,7 +114,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MobileTabStripItemBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
 

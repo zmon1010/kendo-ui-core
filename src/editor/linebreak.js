@@ -62,8 +62,12 @@ var ParagraphCommand = Command.extend({
                 if (dom.emptyNode(focusNode)) {
                     focusNode.innerHTML = "\ufeff";
                 }
-
-                range.setStartBefore(focusNode.firstChild || focusNode);
+                var startNode = focusNode.firstChild || focusNode;
+                if (dom.isDataNode(startNode)) {
+                    range.setStart(startNode, 0);
+                } else {
+                    range.setStartBefore(startNode);
+                }
             }
         }
     },

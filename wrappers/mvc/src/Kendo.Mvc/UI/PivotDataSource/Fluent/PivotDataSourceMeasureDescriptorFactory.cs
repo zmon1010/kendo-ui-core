@@ -22,7 +22,6 @@
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public PivotDataSourceMeasureDescriptorBuilder Add()
         {
             PivotDataSourceMeasureDescriptor item = new PivotDataSourceMeasureDescriptor();

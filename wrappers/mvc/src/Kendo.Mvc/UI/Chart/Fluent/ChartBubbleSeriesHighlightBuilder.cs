@@ -43,7 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the highlight border
         /// </summary>
         /// <param name="configurator"></param>
-        /// <returns></returns>
         public ChartBubbleSeriesHighlightBuilder Border(Action<ChartBorderBuilder> configurator)
         {
             configurator(new ChartBorderBuilder(Highlight.Border));

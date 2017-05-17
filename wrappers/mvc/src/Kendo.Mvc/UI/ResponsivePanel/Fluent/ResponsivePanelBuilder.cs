@@ -55,7 +55,6 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Content(@&lt;strong&gt; Hello World!&lt;/strong&gt;))
         /// </code>        
         /// </example>
-        /// <returns></returns>
         public ResponsivePanelBuilder Content(Func<object, object> value)
         {
             Component.Template.InlineTemplate = value;

@@ -94,7 +94,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="getItem">The name of the JavaScript function which returns the offline state.</param>
         /// <param name="setItem">The name of the JavaScript function which saves the offline state.</param>
-        /// <returns></returns>
         public TDataSourceBuilder OfflineStorage(string getItem, string setItem)
         {
             dataSource.OfflineStorage["getItem"] = new ClientHandlerDescriptor { HandlerName = getItem };

@@ -53,7 +53,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Configures the Filter menu operators.
         /// </summary>        
-        /// <returns></returns>
         public TDataSourceBuilder Operators(Action<FilterableOperatorsBuilder> configurator)
         {
             configurator(new FilterableOperatorsBuilder(settings.Operators));
@@ -65,7 +64,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures Filter menu messages.
         /// </summary>
         /// <param name="configurator"></param>
-        /// <returns></returns>
         public TDataSourceBuilder Messages(Action<FilterableMessagesBuilder> configurator)
         {
             configurator(new FilterableMessagesBuilder(settings.Messages));
@@ -77,7 +75,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specify if the extra input fields should be visible within the filter menu. Default is true.
         /// </summary>
         /// <param name="value">True to show the extra inputs, otherwise false</param>
-        /// <returns></returns>
         public TDataSourceBuilder Extra(bool value)
         {
             settings.Extra = value;

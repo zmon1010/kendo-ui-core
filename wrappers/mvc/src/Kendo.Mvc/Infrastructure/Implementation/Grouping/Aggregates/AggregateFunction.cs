@@ -76,7 +76,6 @@ namespace Kendo.Mvc
         /// </summary>
         /// <param name="enumerableExpression">The grouping expression.</param>
         /// <param name="liftMemberAccessToNull"></param>
-        /// <returns></returns>
         public abstract Expression CreateAggregateExpression(Expression enumerableExpression, bool liftMemberAccessToNull);
 
         /// <summary>

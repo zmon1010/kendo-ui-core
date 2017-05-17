@@ -24,7 +24,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a new item to the TabStrip.
         /// </summary>
-        /// <returns></returns>
         public virtual TabStripItemBuilder Add()
         {
             var item = new TabStripItem();

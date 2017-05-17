@@ -8,7 +8,6 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         /// Returns the physical path for the specified virtual path.
         /// </summary>
         /// <param name="virtualPath">The virtual path.</param>
-        /// <returns></returns>
         public string Resolve(string virtualPath)
         {
             return HostingEnvironment.MapPath(virtualPath);

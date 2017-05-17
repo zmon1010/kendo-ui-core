@@ -79,7 +79,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MapMarkerBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());
@@ -89,7 +88,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public virtual MapMarkerBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
 

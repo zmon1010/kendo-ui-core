@@ -492,7 +492,7 @@ var Serializer = {
         }
 
         function isEmptyBomNode(node) {
-            if (node.nodeValue === '\ufeff') {
+            if (dom.isBom(node)) {
                 do {
                     node = node.parentNode;
 

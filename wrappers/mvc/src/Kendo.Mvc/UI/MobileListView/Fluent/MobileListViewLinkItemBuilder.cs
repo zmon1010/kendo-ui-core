@@ -26,7 +26,6 @@
         /// Sets the HTML attributes of the link.
         /// </summary>
         /// <param name="attributes">The HTML attributes of the link.</param>
-        /// <returns></returns>
         public virtual MobileListViewLinkItemBuilder LinkHtmlAttributes(IDictionary<string, object> attributes)
         {
 
@@ -40,7 +39,6 @@
         /// Sets the HTML attributes of the link.
         /// </summary>
         /// <param name="attributes">The HTML attributes of the link.</param>
-        /// <returns></returns>
         public virtual MobileListViewLinkItemBuilder LinkHtmlAttributes(object attributes)
         {
             return LinkHtmlAttributes(attributes.ToDictionary());

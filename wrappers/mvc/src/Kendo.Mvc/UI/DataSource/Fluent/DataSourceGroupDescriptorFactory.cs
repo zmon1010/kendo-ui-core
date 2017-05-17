@@ -42,7 +42,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <typeparam name="TValue">Member type</typeparam>
         /// <param name="memberName">Member type</param>
         /// <param name="sortDirection">Sort order</param>
-        /// <returns></returns>
         public DataSourceGroupDescriptorBuilder Add<TValue>(string memberName, ListSortDirection sortDirection)
         {
             return AddDescriptor<TValue>(memberName, sortDirection);

@@ -24,7 +24,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector which to match the DOM element to which the Tooltip widget will be instantiated
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual TooltipBuilder For(string selector)
         {
             Component.Container = selector;
@@ -35,7 +34,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector which to match target child elements for which the Tooltip will be shown
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual TooltipBuilder Filter(string selector)
         {
             Component.Filter = selector;
@@ -45,7 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Suppress initialization script rendering. Note that this options should be used in conjunction with <see cref="WidgetFactory.DeferredScripts"/>
         /// </summary>        
-        /// <returns></returns>
         public virtual TooltipBuilder Deferred()
         {
             Component.HasDeferredInitialization = true;
@@ -61,7 +58,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Returns the internal view component.
         /// </summary>
-        /// <returns></returns>
         public Tooltip ToComponent()
         {
             return Component;

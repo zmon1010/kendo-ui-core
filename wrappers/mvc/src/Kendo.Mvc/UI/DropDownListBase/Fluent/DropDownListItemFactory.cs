@@ -22,7 +22,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public DropDownListItemBuilder Add()
         {
             DropDownListItem item = new DropDownListItem();

@@ -140,7 +140,6 @@ namespace Kendo.Mvc
         /// <summary>
         /// Returns a new builder.
         /// </summary>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SiteMapBuilder ToBuilder()
         {

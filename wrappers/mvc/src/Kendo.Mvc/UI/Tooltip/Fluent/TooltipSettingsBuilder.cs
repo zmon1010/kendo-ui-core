@@ -31,7 +31,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position (relative to the target) at which the Tooltip will be shown
         /// </summary>
         /// <param name="position">The position</param>
-        /// <returns></returns>
         public virtual TBuilder Position(TooltipPosition position)
         {
             Component.Position = position;
@@ -42,7 +41,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The inverval in milliseconds, after which the Tooltip will be shown
         /// </summary>
         /// <param name="milliseconds"></param>
-        /// <returns></returns>
         public virtual TBuilder ShowAfter(int milliseconds)
         {                       
             Component.ShowAfter = milliseconds;
@@ -53,7 +51,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Determines if callout should be visible
         /// </summary>
         /// <param name="show"></param>
-        /// <returns></returns>
         public virtual TBuilder Callout(bool show)
         {
             Component.Callout = show;
@@ -70,7 +67,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Determines if tooltip should be automatically hidden, or a close button should be present
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public virtual TBuilder AutoHide(bool value)
         {
             Component.AutoHide = value;

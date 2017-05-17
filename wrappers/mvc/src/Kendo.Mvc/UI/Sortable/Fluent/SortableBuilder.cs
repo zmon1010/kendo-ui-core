@@ -26,7 +26,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector to match the DOM element to which the Sortable widget will be instantiated
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder For(string selector)
         {
             Component.Container = selector;
@@ -38,7 +37,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector that determines which items are disabled. Disabled items cannot be dragged but are valid sort targets.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder Disabled(string selector)
         {
             Component.Disabled = selector;
@@ -49,7 +47,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector that determines which items are sortable. Filtered items cannot be dragged and are not valid sort targets.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder Filter(string selector)
         {
             Component.Filter = selector;
@@ -60,7 +57,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector that determines which element will be used as a draggable handler.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder Handler(string selector)
         {
             Component.Handler = selector;
@@ -71,7 +67,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Selector that determines the container boundaries in which hint movement will be constrained to.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder ContainerSelector(string selector)
         {
             Component.ContainerSelector = selector;
@@ -82,7 +77,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector which determines if items from the current Sortable widget can be accepted from another Sortable container(s). The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder ConnectWith(string selector)
         {
             Component.ConnectWith = selector;
@@ -93,7 +87,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The selector which determines child elements for which the sort will not be initiated. Useful if the sortable item contains input elements.
         /// </summary>
         /// <param name="selector">jQuery selector</param>
-        /// <returns></returns>
         public virtual SortableBuilder Ignore(string selector)
         {
             Component.Ignore = selector;
@@ -104,7 +97,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// The CSS style which determines the cursor that will be shown while user drags sortable item. For example 'move', 'pointer', etc.
         /// </summary>
         /// <param name="string">String</param>
-        /// <returns></returns>
         public virtual SortableBuilder Cursor(string cursor)
         {
             Component.Cursor = cursor;
@@ -115,7 +107,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public virtual SortableBuilder HoldToDrag(bool value)
         {
             Component.HoldToDrag = value;
@@ -126,7 +117,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the widget will auto-scroll the container when the mouse/finger is close to the top/bottom of it.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public virtual SortableBuilder AutoScroll(bool value)
         {
             Component.AutoScroll = value;
@@ -137,7 +127,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Constrains the hint movement to either the horizontal (x) or vertical (y) axis.
         /// </summary>
         /// <param name="axis">The axis</param>
-        /// <returns></returns>
         public virtual SortableBuilder Axis(SortableAxis axis)
         {
             Component.Axis = axis;
@@ -169,7 +158,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// HTML string representing the the hint element
         /// </summary>
         /// <param name="string">Html string</param>
-        /// <returns></returns>
         public virtual SortableBuilder Hint(string content)
         {
             Component.Hint = content;
@@ -202,7 +190,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// HTML string representing the placeholder
         /// </summary>
         /// <param name="string">Html string</param>
-        /// <returns></returns>
         public virtual SortableBuilder Placeholder(string content)
         {
             Component.Placeholder = content;
@@ -234,7 +221,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Suppress initialization script rendering. Note that this options should be used in conjunction with <see cref="WidgetFactory.DeferredScripts"/>
         /// </summary>        
-        /// <returns></returns>
         public virtual SortableBuilder Deferred()
         {
             Component.HasDeferredInitialization = true;
@@ -250,7 +236,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Returns the internal view component.
         /// </summary>
-        /// <returns></returns>
         public Sortable ToComponent()
         {
             return Component;

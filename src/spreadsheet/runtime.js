@@ -1249,7 +1249,10 @@
         }
     }
 
-    function parseDate(str) {
+    function parseDate(str, format) {
+        if (format) {
+            return kendo.parseDate(str, format) || kendo.parseDate(str);
+        }
         return kendo.parseDate(str) || kendo.parseDate(str, [
             "MMMM dd yyyy",
             "MMMM dd yy",

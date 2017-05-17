@@ -134,7 +134,6 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets the bar chart data labels configuration
         /// </summary>
-        /// <returns></returns>
         public ChartBarLabels Labels
         {
             get;

@@ -25,7 +25,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies whether the widget will unmask input value on form post
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public MaskedTextBoxBuilder UnmaskOnPost(bool value)
         {
             Component.UnmaskOnPost = value;
@@ -37,7 +36,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies whether the widget will replace the prompt characters with spaces on blur
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public MaskedTextBoxBuilder ClearPromptChar(bool value)
         {
             Component.ClearPromptChar = value;
@@ -104,7 +102,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Enables or disables the textbox.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public MaskedTextBoxBuilder Enable(bool value)
         {
             Component.Enabled = value;

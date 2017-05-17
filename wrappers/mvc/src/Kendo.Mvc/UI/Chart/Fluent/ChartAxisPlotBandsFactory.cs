@@ -31,7 +31,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds a plot band.
         /// </summary>
-        /// <returns></returns>
         public ChartPlotBandsBuilder Add()
         {
             var item = new ChartPlotBand();
@@ -44,7 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public ChartPlotBandsBuilder Add(double from, double to, string color)
         {
             var item = new ChartPlotBand();
@@ -60,7 +58,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a item.
         /// </summary>
-        /// <returns></returns>
         public ChartPlotBandsBuilder Add(TValue from, TValue to, string color)
         {
             var item = new ChartPlotBand();

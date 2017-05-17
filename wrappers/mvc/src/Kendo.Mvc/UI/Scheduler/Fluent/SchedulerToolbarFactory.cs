@@ -22,7 +22,6 @@
         /// <summary>
         /// Enables Pdf command.
         /// </summary>
-        /// <returns></returns>
         public void Pdf()
         {
             SchedulerToolbarCommand command = new SchedulerToolbarCommand(SchedulerToolbarCommandType.Pdf);

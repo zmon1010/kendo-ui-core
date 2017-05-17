@@ -442,7 +442,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the client group footer template for the column.
         /// </summary>
         /// <param name="value">The template</param>
-        /// <returns></returns>
         public TColumnBuilder ClientGroupFooterTemplate(string template)
         {
             Column.ClientGroupFooterTemplate = template;

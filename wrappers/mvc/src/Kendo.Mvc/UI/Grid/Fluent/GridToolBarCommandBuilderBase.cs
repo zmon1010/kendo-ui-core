@@ -25,7 +25,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the button type.
         /// </summary>
         /// <param name="type">The button type.</param>
-        /// <returns></returns>
         public TBuilder ButtonType(GridButtonType type)
         {
 
@@ -45,7 +44,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public TBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());
@@ -55,7 +53,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public TBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
             Command.HtmlAttributes.Merge(attributes);

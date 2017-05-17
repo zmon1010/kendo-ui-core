@@ -34,7 +34,6 @@
         /// Enables or disables the textbox.
         /// </summary>
         /// <param name="isEnabled"></param>
-        /// <returns></returns>
         public TextBoxBuilder<T> Enable(bool isEnabled)
         {
             Component.Enabled = isEnabled;

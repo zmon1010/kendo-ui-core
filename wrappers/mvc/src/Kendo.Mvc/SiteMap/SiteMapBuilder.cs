@@ -44,7 +44,6 @@ namespace Kendo.Mvc
         /// <summary>
         /// Returns the internal sitemap.
         /// </summary>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SiteMapBase ToSiteMap()
         {
@@ -55,7 +54,6 @@ namespace Kendo.Mvc
         /// Caches the duration in minutes.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapBuilder CacheDurationInMinutes(float value)
         {
             siteMap.CacheDurationInMinutes = value;
@@ -67,7 +65,6 @@ namespace Kendo.Mvc
         /// Compresses the specified value.
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns></returns>
         public virtual SiteMapBuilder Compress(bool value)
         {
             siteMap.Compress = value;
@@ -79,7 +76,6 @@ namespace Kendo.Mvc
         /// Generates the search engine map.
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns></returns>
         public virtual SiteMapBuilder GenerateSearchEngineMap(bool value)
         {
             siteMap.GenerateSearchEngineMap = value;

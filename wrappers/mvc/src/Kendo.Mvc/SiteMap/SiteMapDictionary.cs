@@ -133,7 +133,6 @@ namespace Kendo.Mvc
         /// <typeparam name="TSiteMap">The type of the site map.</typeparam>
         /// <param name="name">The name.</param>
         /// <param name="configure">The configure.</param>
-        /// <returns></returns>
         public SiteMapDictionary Register<TSiteMap>(string name, Action<TSiteMap> configure) where TSiteMap : SiteMapBase, new()
         {
 

@@ -965,7 +965,12 @@ var Marker = Class.extend({
         start = start.nextSibling;
         end = end.previousSibling;
 
-        var collapsed = false;
+        var isBomSelected = start === end && dom.isBom(start);
+        if (isBomSelected && start.length > 1) {
+            start.nodeValue = start.nodeValue.charAt(0);
+        }
+
+        var collapsed = isBomSelected;
         var collapsedToStart = false;
         // collapsed range
         if (start == that.end) {
@@ -1203,7 +1208,7 @@ var RangeUtils = {
         var nodes = [];
 
         function visit(node) {
-            if (!dom.insignificant(node)) {
+            if (!dom.insignificant(node) && !(dom.isDataNode(node) && /^[\ufeff]*$/.test(node.nodeValue))) {
                 nodes.push(node);
             }
         }

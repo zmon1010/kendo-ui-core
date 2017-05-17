@@ -41,7 +41,6 @@ namespace Kendo.Mvc
         /// <summary>
         /// Returns the internal node.
         /// </summary>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SiteMapNode ToNode()
         {
@@ -52,7 +51,6 @@ namespace Kendo.Mvc
         /// Sets the title.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Title(string value)
         {
             siteMapNode.Title = value;
@@ -64,7 +62,6 @@ namespace Kendo.Mvc
         /// Sets the visibility.
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Visible(bool value)
         {
             siteMapNode.Visible = value;
@@ -76,7 +73,6 @@ namespace Kendo.Mvc
         /// Sets the Lasts the modified date..
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder LastModifiedAt(DateTime value)
         {
             siteMapNode.LastModifiedAt = value;
@@ -89,7 +85,6 @@ namespace Kendo.Mvc
         /// </summary>
         /// <param name="routeName">Name of the route.</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Route(string routeName, RouteValueDictionary routeValues)
         {
             siteMapNode.RouteName = routeName;
@@ -105,7 +100,6 @@ namespace Kendo.Mvc
         /// </summary>
         /// <param name="routeName">Name of the route.</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Route(string routeName, object routeValues)
         {
             Route(routeName, null);
@@ -119,7 +113,6 @@ namespace Kendo.Mvc
         /// Sets the route.
         /// </summary>
         /// <param name="routeName">Name of the route.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Route(string routeName)
         {
             return Route(routeName, (object) null);
@@ -142,7 +135,6 @@ namespace Kendo.Mvc
         /// <param name="actionName">Name of the action.</param>
         /// <param name="controllerName">Name of the controller.</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Action(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             siteMapNode.ControllerName = controllerName;
@@ -160,7 +152,6 @@ namespace Kendo.Mvc
         /// <param name="actionName">Name of the action.</param>
         /// <param name="controllerName">Name of the controller.</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Action(string actionName, string controllerName, object routeValues)
         {
             Action(actionName, controllerName, null);
@@ -175,7 +166,6 @@ namespace Kendo.Mvc
         /// </summary>
         /// <param name="actionName">Name of the action.</param>
         /// <param name="controllerName">Name of the controller.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Action(string actionName, string controllerName)
         {
             return Action(actionName, controllerName, (object)null);
@@ -186,7 +176,6 @@ namespace Kendo.Mvc
         /// </summary>
         /// <typeparam name="TController">The type of the controller.</typeparam>
         /// <param name="controllerAction">The action.</param>
-        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Need it for strongly type support.")]
         public virtual SiteMapNodeBuilder Action<TController>(Expression<Action<TController>> controllerAction) where TController : Controller
         {
@@ -248,7 +237,6 @@ namespace Kendo.Mvc
         /// Sets the url.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Url(string value)
         {
             siteMapNode.Url = value;
@@ -260,7 +248,6 @@ namespace Kendo.Mvc
         /// Marks an item that it would be included in the search engine index.
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder IncludeInSearchEngineIndex(bool value)
         {
             siteMapNode.IncludeInSearchEngineIndex = value;
@@ -272,7 +259,6 @@ namespace Kendo.Mvc
         /// Sets the attributes
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Attributes(IDictionary<string, object> value)
         {
 
@@ -286,7 +272,6 @@ namespace Kendo.Mvc
         /// Sets the attributes
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder Attributes(object value)
         {
 
@@ -297,7 +282,6 @@ namespace Kendo.Mvc
         /// Executes the provided delegate to configure the child node.
         /// </summary>
         /// <param name="addActions">The add actions.</param>
-        /// <returns></returns>
         public virtual SiteMapNodeBuilder ChildNodes(Action<SiteMapNodeFactory> addActions)
         {
 

@@ -30,7 +30,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the button type.
         /// </summary>
         /// <param name="type">The button type.</param>
-        /// <returns></returns>
         public TBuilder ButtonType(GridButtonType type)
         {
 
@@ -43,7 +42,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the text displayed by the command. If not set a default value is used.
         /// </summary>
         /// <param name="text">The text which should be displayed</param>
-        /// <returns></returns>
         public TBuilder Text(string text)
         {
             Command.Text = text;
@@ -55,7 +53,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public TBuilder HtmlAttributes(object attributes)
         {
             return HtmlAttributes(attributes.ToDictionary());
@@ -65,7 +62,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the HTML attributes.
         /// </summary>
         /// <param name="attributes">The HTML attributes.</param>
-        /// <returns></returns>
         public TBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
             Command.HtmlAttributes.Merge(attributes);
@@ -77,7 +73,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the visible function which will determine if the command button will render.
         /// </summary>
         /// <param name="visible">The visible function.</param>
-        /// <returns></returns>
         public TBuilder Visible(Func<object, object> handler)
         {
             Command.Visible.TemplateDelegate = handler;
@@ -89,7 +84,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the visible function which will determine if the command button will render.
         /// </summary>
         /// <param name="visible">The visible function.</param>
-        /// <returns></returns>
         public TBuilder Visible(string handler)
         {
             Command.Visible.HandlerName = handler;

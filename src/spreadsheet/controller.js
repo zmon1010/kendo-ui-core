@@ -749,6 +749,9 @@
         },
 
         objectAt: function(location) {
+            if (!location) {
+                return;
+            }
             var box = this.container[0].getBoundingClientRect();
             return this.view.objectAt(location.clientX - box.left,
                                       location.clientY - box.top);

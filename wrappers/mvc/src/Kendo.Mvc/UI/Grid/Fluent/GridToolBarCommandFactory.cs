@@ -27,7 +27,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a create command.
         /// </summary>
-        /// <returns></returns>
         public GridToolBarCommandBuilder<T> Create()
         {
             var command = new GridToolBarCreateCommand<T>();
@@ -42,7 +41,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Represents a command which exports the current grid data to Excel.
         /// </summary>
-        /// <returns></returns>
         public GridToolBarCommandBuilder<T> Excel()
         {
             var command = new GridToolBarExcelCommand<T>();
@@ -55,7 +53,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Represents a command which exports the current grid data to PDF.
         /// </summary>
-        /// <returns></returns>
         public GridToolBarCommandBuilder<T> Pdf()
         {
             var command = new GridToolBarPdfCommand<T>();

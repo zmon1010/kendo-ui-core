@@ -32,7 +32,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Read(string actionName, string controllerName)
         {
             return Read(actionName, controllerName, (object)null);
@@ -44,7 +43,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Read(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Read.Action(actionName, controllerName, routeValues);
@@ -60,7 +58,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Read(string actionName, string controllerName, object routeValues)
         {
             settings.Read.Action(actionName, controllerName, routeValues);
@@ -74,7 +71,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Read action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Read(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Read, viewContext, urlGenerator));
@@ -92,7 +88,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Thumbnail(string actionName, string controllerName)
         {
             return Thumbnail(actionName, controllerName, (object)null);
@@ -104,7 +99,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Thumbnail(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Thumbnail.Action(actionName, controllerName, routeValues);
@@ -120,7 +114,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Thumbnail(string actionName, string controllerName, object routeValues)
         {
             settings.Thumbnail.Action(actionName, controllerName, routeValues);
@@ -134,7 +127,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Thumbnail action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Thumbnail(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Thumbnail, viewContext, urlGenerator));
@@ -147,7 +139,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Image(string actionName, string controllerName)
         {
             return Image(actionName, controllerName, (object)null);
@@ -157,7 +148,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Image action.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Image(string url)
         {
             settings.Image.Url = urlGenerator.Generate(viewContext.RequestContext, url);
@@ -170,7 +160,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Image(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Image.Action(actionName, controllerName, routeValues);
@@ -184,7 +173,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Image(string actionName, string controllerName, object routeValues)
         {
             settings.Image.Action(actionName, controllerName, routeValues);
@@ -196,7 +184,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Image action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Image(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Image, viewContext, urlGenerator));
@@ -209,7 +196,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Upload(string actionName, string controllerName)
         {
             return Upload(actionName, controllerName, (object)null);
@@ -221,7 +207,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Upload(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Upload.Action(actionName, controllerName, routeValues);
@@ -237,7 +222,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Upload(string actionName, string controllerName, object routeValues)
         {
             settings.Upload.Action(actionName, controllerName, routeValues);
@@ -249,7 +233,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Upload action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Upload(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Upload, viewContext, urlGenerator));
@@ -262,7 +245,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(string actionName, string controllerName)
         {
             return Destroy(actionName, controllerName, (object)null);
@@ -274,7 +256,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Destroy.Action(actionName, controllerName, routeValues);
@@ -288,7 +269,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(string actionName, string controllerName, object routeValues)
         {
             settings.Destroy.Action(actionName, controllerName, routeValues);
@@ -300,7 +280,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Destroy action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Destroy, viewContext, urlGenerator));
@@ -313,7 +292,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(string actionName, string controllerName)
         {
             return Create(actionName, controllerName, (object)null);
@@ -325,7 +303,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(string actionName, string controllerName, RouteValueDictionary routeValues)
         {
             settings.Create.Action(actionName, controllerName, routeValues);
@@ -339,7 +316,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
         /// <param name="routeValues">The route values.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(string actionName, string controllerName, object routeValues)
         {
             settings.Create.Action(actionName, controllerName, routeValues);
@@ -351,7 +327,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the Create action.
         /// </summary>
         /// <param name="configurator">The configuration action.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(Action<EditorImageBrowserOperationBuilder> configurator)
         {
             configurator(new EditorImageBrowserOperationBuilder(settings.Create, viewContext, urlGenerator));
@@ -363,7 +338,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the file types.
         /// </summary>
         /// <param name="value">The file types.</param>
-        /// <returns></returns>
         public EditorImageBrowserSettingsBuilder FileTypes(string value)
         {
             settings.FileTypes = value;

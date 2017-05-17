@@ -13,7 +13,6 @@
         /// Checkes or unchecks the checkbox.
         /// </summary>
         /// <param name="isChecked"></param>
-        /// <returns></returns>
         public CheckBoxBuilder Checked(bool isChecked)
         {
             Component.Checked = isChecked;
@@ -25,7 +24,6 @@
         /// Enables or disables the checkbox.
         /// </summary>
         /// <param name="isEnabled"></param>
-        /// <returns></returns>
         public CheckBoxBuilder Enable(bool isEnabled)
         {
             Component.Enabled = isEnabled;

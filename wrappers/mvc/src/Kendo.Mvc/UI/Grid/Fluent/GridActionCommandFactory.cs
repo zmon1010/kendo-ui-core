@@ -26,7 +26,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a edit command.
         /// </summary>
-        /// <returns></returns>
         public GridEditActionCommandBuilder Edit()
         {
             GridEditActionCommand command = new GridEditActionCommand();
@@ -41,7 +40,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a delete command.
         /// </summary>
-        /// <returns></returns>
         public GridDestroyActionCommandBuilder Destroy()
         {
             GridDestroyActionCommand command = new GridDestroyActionCommand();
@@ -56,7 +54,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a select command.
         /// </summary>
-        /// <returns></returns>
         public GridSelectActionCommandBuilder Select()
         {
             GridSelectActionCommand command = new GridSelectActionCommand();
@@ -69,7 +66,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines a custom command.
         /// </summary>
-        /// <returns></returns>
         public GridCustomActionCommandBuilder<T> Custom(string name)
         {
             var command = new GridCustomActionCommand<T>();

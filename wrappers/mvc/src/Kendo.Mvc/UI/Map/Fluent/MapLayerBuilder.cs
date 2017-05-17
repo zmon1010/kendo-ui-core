@@ -22,7 +22,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the data source of the map layer.
         /// </summary>
         /// <param name="configurator">The configuration of the data source.</param>
-        /// <returns></returns>
         public MapLayerBuilder DataSource(Action<MapLayerDataSourceBuilder> configurator)
         {
             container.DataSource = new DataSource();

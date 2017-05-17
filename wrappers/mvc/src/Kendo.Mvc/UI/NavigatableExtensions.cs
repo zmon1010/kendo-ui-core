@@ -162,7 +162,6 @@ namespace Kendo.Mvc.UI
         /// <param name="navigatable">The <see cref="INavigatable"/> object.</param>
         /// <param name="viewContext">The <see cref="ViewContext"/> object.</param>
         /// <param name="urlGenerator">The <see cref="IUrlGenerator"/> generator.</param>
-        /// <returns></returns>
         public static bool IsCurrent(this INavigatable navigatable, ViewContext viewContext, IUrlGenerator urlGenerator)
         {
             var currentUrl = viewContext.HttpContext.Request.Url.PathAndQuery;

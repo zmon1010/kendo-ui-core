@@ -326,7 +326,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the selection settings of the calendar.
         /// </summary>
         /// <param name="selectionAction">SelectAction settings, which includes Action name and IEnumerable of DateTime objects.</param>
-        /// <returns></returns>
         public CalendarBuilder Selection(Action<CalendarSelectionSettingsBuilder> selectionAction)
         {
             selectionAction(new CalendarSelectionSettingsBuilder(Component.SelectionSettings));

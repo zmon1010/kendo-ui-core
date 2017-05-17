@@ -16,7 +16,6 @@
         /// <summary>
         /// Creates the barcode top-level div.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode CreateBarcode()
         {
             return new HtmlElement("div")
@@ -26,7 +25,6 @@
         /// <summary>
         /// Builds the Barcode component markup.
         /// </summary>
-        /// <returns></returns>
         public IHtmlNode Build()
         {
             return new HtmlElement("div")

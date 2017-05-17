@@ -22,7 +22,6 @@
         /// <summary>
         /// Defines a Scheduler day view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerDayViewBuilder<SchedulerDayView> DayView(Action<SchedulerDayViewBuilder<SchedulerDayView>> addViewAction)
         {
             SchedulerDayView view = new SchedulerDayView(container);
@@ -39,7 +38,6 @@
         /// <summary>
         /// Enables a Scheduler day view.
         /// </summary>
-        /// <returns></returns>
         public void DayView()
         {
             SchedulerDayView view = new SchedulerDayView(container);
@@ -78,7 +76,6 @@
         /// <summary>
         /// Defines a Scheduler workWeek view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerWorkWeekViewBuilder<SchedulerWorkWeekView> WorkWeekView(Action<SchedulerWorkWeekViewBuilder<SchedulerWorkWeekView>> addViewAction)
         {
             SchedulerWorkWeekView view = new SchedulerWorkWeekView(container);
@@ -95,7 +92,6 @@
         /// <summary>
         /// Enables a Scheduler workWeek view.
         /// </summary>
-        /// <returns></returns>
         public void WorkWeekView()
         {
             SchedulerWorkWeekView view = new SchedulerWorkWeekView(container);
@@ -106,7 +102,6 @@
         /// <summary>
         /// Defines a Scheduler week view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerWeekViewBuilder<SchedulerWeekView> WeekView(Action<SchedulerWeekViewBuilder<SchedulerWeekView>> addViewAction)
         {
             SchedulerWeekView view = new SchedulerWeekView(container);
@@ -123,7 +118,6 @@
         /// <summary>
         /// Enables a Scheduler week view.
         /// </summary>
-        /// <returns></returns>
         public void WeekView()
         {
             SchedulerWeekView view = new SchedulerWeekView(container);
@@ -134,7 +128,6 @@
         /// <summary>
         /// Defines a Scheduler month view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerMonthViewBuilder<SchedulerMonthView> MonthView(Action<SchedulerMonthViewBuilder<SchedulerMonthView>> addViewAction)
         {
             SchedulerMonthView view = new SchedulerMonthView(container);
@@ -151,7 +144,6 @@
         /// <summary>
         /// Enables a Scheduler month view.
         /// </summary>
-        /// <returns></returns>
         public void MonthView()
         {
             SchedulerMonthView view = new SchedulerMonthView(container);
@@ -162,7 +154,6 @@
         /// <summary>
         /// Defines a Scheduler agenda view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerAgendaViewBuilder<SchedulerAgendaView> AgendaView(Action<SchedulerAgendaViewBuilder<SchedulerAgendaView>> addViewAction)
         {
             SchedulerAgendaView view = new SchedulerAgendaView(container);
@@ -179,7 +170,6 @@
         /// <summary>
         /// Enables a Scheduler timeline view.
         /// </summary>
-        /// <returns></returns>
         public void TimelineView()
         {
             SchedulerTimelineView view = new SchedulerTimelineView(container);
@@ -190,7 +180,6 @@
         /// <summary>
         /// Defines a Scheduler timeline view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerTimelineViewBuilder<SchedulerTimelineView> TimelineView(Action<SchedulerTimelineViewBuilder<SchedulerTimelineView>> addViewAction)
         {
             SchedulerTimelineView view = new SchedulerTimelineView(container);
@@ -207,7 +196,6 @@
         /// <summary>
         /// Enables a Scheduler timeline week view.
         /// </summary>
-        /// <returns></returns>
         public void TimelineWeekView()
         {
             SchedulerTimelineWeekView view = new SchedulerTimelineWeekView(container);
@@ -218,7 +206,6 @@
         /// <summary>
         /// Defines a Scheduler timelineWeek view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerTimelineWeekViewBuilder<SchedulerTimelineWeekView> TimelineWeekView(Action<SchedulerTimelineWeekViewBuilder<SchedulerTimelineWeekView>> addViewAction)
         {
             SchedulerTimelineWeekView view = new SchedulerTimelineWeekView(container);
@@ -235,7 +222,6 @@
         /// <summary>
         /// Enables a Scheduler timeline work week view.
         /// </summary>
-        /// <returns></returns>
         public void TimelineWorkWeekView()
         {
             SchedulerTimelineWorkWeekView view = new SchedulerTimelineWorkWeekView(container);
@@ -246,7 +232,6 @@
         /// <summary>
         /// Defines a Scheduler timelineWorkWeek view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerTimelineWorkWeekViewBuilder<SchedulerTimelineWorkWeekView> TimelineWorkWeekView(Action<SchedulerTimelineWorkWeekViewBuilder<SchedulerTimelineWorkWeekView>> addViewAction)
         {
             SchedulerTimelineWorkWeekView view = new SchedulerTimelineWorkWeekView(container);
@@ -264,7 +249,6 @@
         /// <summary>
         /// Enables a Scheduler timeline month view.
         /// </summary>
-        /// <returns></returns>
         public void TimelineMonthView()
         {
             SchedulerTimelineMonthView view = new SchedulerTimelineMonthView(container);
@@ -275,7 +259,6 @@
         /// <summary>
         /// Defines a Scheduler timeline month view.
         /// </summary>
-        /// <returns></returns>
         public SchedulerTimelineMonthViewBuilder<SchedulerTimelineMonthView> TimelineMonthView(Action<SchedulerTimelineMonthViewBuilder<SchedulerTimelineMonthView>> addViewAction)
         {
             SchedulerTimelineMonthView view = new SchedulerTimelineMonthView(container);
@@ -292,7 +275,6 @@
         /// <summary>
         /// Enables a Scheduler agenda view.
         /// </summary>
-        /// <returns></returns>
         public void AgendaView()
         {
             SchedulerAgendaView view = new SchedulerAgendaView(container);
