@@ -53,6 +53,15 @@
         equal(link[0], resultRange.startContainer.previousSibling);
     });
 
+    test("range is collapsed", function () {
+        var cmd = newAutoLinkCommandForText("link http://www.telerik.com/ ||");
+        cmd.exec();
+
+        var resultRange = editor.getRange();
+
+        ok(resultRange.collapsed);
+    });
+
     test("autoLink formatted content", function () {
         var cmd = newAutoLinkCommandForText("link http://te<strong>le</strong>rik.com/ ||");
         cmd.exec();
@@ -64,13 +73,13 @@
         var cmd = newAutoLinkCommandForText("<p>link http://telerik.com</p><p>||</p>")
         cmd.exec();
 
-        equal(editor.value(), '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p></p>');
+        equal(editor.value(), '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p>&nbsp;</p>');
     });
 
     test("range is in next empty paragraph with formatting", function() {
         __autoLinkContentTest(
             "<p>link http://telerik.com</p><p><strong>||</strong></p>",
-            '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p><strong></strong></p>');
+            '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p><strong>&nbsp;</strong></p>');
     });
 
     test("do not autolink existing links", function() {

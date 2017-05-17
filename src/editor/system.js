@@ -329,7 +329,13 @@ var BackspaceHandler = Class.extend({
     },
     _restoreCaret: function(caret) {
         var range = this.editor.createRange();
-        range.setStartAfter(caret);
+
+        if (!caret.nextSibling && dom.isDataNode(caret.previousSibling)) {
+            range.setStart(caret.previousSibling, caret.previousSibling.length);
+        } else {
+            range.setStartAfter(caret);
+        }
+
         range.collapse(true);
         this.editor.selectRange(range);
         dom.remove(caret);
@@ -382,6 +388,12 @@ var BackspaceHandler = Class.extend({
         var previousSibling;
 
         if (dom.isDataNode(node)) {
+            if (range.collapsed && /^\s[\ufeff]+$/.test(node.nodeValue)) {
+                range.setStart(node, 0);
+                range.setEnd(node, node.length);
+                editor.selectRange(range);
+                return false;
+            }
             this._cleanBomBefore(range);
         }
 
@@ -428,17 +440,21 @@ var BackspaceHandler = Class.extend({
             return true;
         }
 
-        // needs this due to window.getSelection() browser inconsistence
+        var rangeStartNode = node.childNodes[range.startOffset] || node.childNodes[range.startOffset - 1];
         var linkRange = range;
-        var previousNode = node.previousSibling;
-        if (linkRange.startOffset === 0 && previousNode && previousNode.nodeName.toLowerCase() === "a") {
+        var anchor = rangeStartNode && dom.closestEditableOfType(rangeStartNode, ['a']);
+        var previousNode = getSibling(rangeStartNode || node, PREVIOUS_SIBLING, function(sibling) {
+            return !dom.isDataNode(sibling) || (!dom.isBom(sibling) && sibling.length > 0);
+        });
+        if (anchor || ((range.startOffset === 0 || rangeStartNode) && dom.is(previousNode, "a"))) {
+            anchor = anchor || previousNode;
             linkRange = editor.createRange();
-            linkRange.setStart(previousNode, previousNode.childNodes.length);
-            linkRange.setEnd(previousNode, previousNode.childNodes.length);
+            linkRange.setStart(anchor, anchor.childNodes.length);
+            linkRange.collapse(true);
         }
 
-        var a = dom.closestEditableOfType(linkRange.startContainer, ['a']);
-        var isEndOfLink = a && editorNS.RangeUtils.isEndOf(linkRange, a);
+        anchor = anchor || dom.closestEditableOfType(rangeStartNode || linkRange.startContainer, ['a']);
+        var isEndOfLink = anchor && editorNS.RangeUtils.isEndOf(linkRange, anchor);
         if (isEndOfLink) {
             var command = new editorNS.UnlinkCommand({ range: linkRange, body: editor.body, immutables: !!editor.immutables });
             editor.execCommand(command);

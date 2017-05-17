@@ -499,7 +499,8 @@ test("empty list item is removed", function() {
     formatter.toggle(range);
 
     marker.remove(range);
-    equal(editor.value(), "<ul><li>foo</li></ul><p></p>");
+
+    equal(editor.value(), "<ul><li>foo</li></ul><p>&nbsp;</p>");
 });
 
 test("divs are not converted to lists", function() {

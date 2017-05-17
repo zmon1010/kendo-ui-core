@@ -313,9 +313,15 @@ var LinkCommand = Command.extend({
 
         detectLink: function () {
             var range = this.getRange();
+            var startNode = range.startContainer;
+            var startOffset = range.startOffset;
+            if (dom.isBom(startNode) && !startNode.previousSibling && !startNode.nextSibling) {
+                startNode = startNode.parentNode;
+                startOffset = 0;
+            }
             var traverser = new LeftDomTextTraverser({
-                node: range.startContainer,
-                offset: range.startOffset,
+                node: startNode,
+                offset: startOffset,
                 cancelAtNode: function(node) { return node && dom.name(node) === "a"; }
             });
 
