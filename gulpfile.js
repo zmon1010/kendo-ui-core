@@ -261,6 +261,7 @@ gulp.task('mdspell', shell.task(
         const dest = 'dist/npm-' + flavor;
 
         const js = gulp.src('dist/cjs/**/*')
+                    .pipe(replace("$KENDO_VERSION", kendoVersion))
                     .pipe(gulp.dest(dest + '/js'));
 
         const styles = gulp.src('dist/styles/**/*')
