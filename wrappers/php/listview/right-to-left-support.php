@@ -115,7 +115,7 @@ require_once '../include/header.php';
         clear: both;
         visibility: hidden;
     }
-    .k-listview
+    #example .k-listview
     {
         padding: 0;
         min-height: 360px;
