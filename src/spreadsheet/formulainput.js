@@ -586,10 +586,14 @@
             }
         },
 
-        refAtPoint: function(ref) {
+        refAtPoint: function(sheet) {
             var x = this._canInsertRef();
             if (x) {
-                this._replaceAt(x, ref.simplify().toString());
+                var ref = sheet.selection()._ref.simplify().clone().relative(0, 0, 3);
+                if (sheet !== this.activeSheet) {
+                    ref = ref.setSheet(sheet.name(), true);
+                }
+                this._replaceAt(x, ref.print(0, 0));
             }
         },
 

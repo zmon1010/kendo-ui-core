@@ -21,7 +21,7 @@
     }
 
     function activateEditor(editor, options) {
-        options.range = { topLeft: { row: 0, col: 0 } };
+        options.range = { topLeft: function() { return { row: 0, col: 0 }; } };
         editor.activate(options);
     }
 
