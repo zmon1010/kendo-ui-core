@@ -2415,6 +2415,9 @@ var __meta__ = { // jshint ignore:line
             var clonedEvent;
             var that = this;
             var originSlot;
+            var originSlotPosition;
+            var originStart;
+            var originEnd;
             var distance = 0;
 
             var isMobile = that._isMobile();
@@ -2453,6 +2456,8 @@ var __meta__ = { // jshint ignore:line
                         event = that.occurrenceByUid(eventElement.attr(kendo.attr("uid")));
 
                         clonedEvent = event.clone();
+                        originStart = clonedEvent.start;
+                        originEnd = clonedEvent.end;
 
                         clonedEvent.update(view._eventOptionsForMove(clonedEvent));
 
@@ -2462,6 +2467,7 @@ var __meta__ = { // jshint ignore:line
 
                         endSlot = startSlot;
 
+                        originSlotPosition = { x: e.x.startLocation, y: e.y.startLocation };
                         originSlot = startSlot;
 
                         if (!startSlot || that.trigger("moveStart", { event: event })) {
@@ -2481,25 +2487,33 @@ var __meta__ = { // jshint ignore:line
                         endTime = slot.startOffset(e.x.location, e.y.location, that.options.snap);
 
                         if (slot.isDaySlot !== startSlot.isDaySlot) {
-                            startSlot = view._slotByPosition(e.x.location, e.y.location);
-                            startTime = startSlot.startOffset(e.x.location, e.y.location, that.options.snap);
-
-                            distance = endTime - startTime;
-
                             clonedEvent.isAllDay = slot.isDaySlot;
-                            clonedEvent.start = kendo.timezone.toLocalDate(startTime);
-                            clonedEvent.end = kendo.timezone.toLocalDate(endTime);
 
-                            view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+                            if (slot.isDaySlot !== originSlot.isDaySlot) {
+                                startSlot = view._slotByPosition(e.x.location, e.y.location);
+                                startTime = startSlot.startOffset(e.x.location, e.y.location, that.options.snap);
 
-                            range = { start: clonedEvent.start, end: clonedEvent.end };
-                        } else {
-                            distance = endTime - startTime;
+                                clonedEvent.start = kendo.timezone.toLocalDate(startTime);
 
-                            view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+                                if (slot.isDaySlot) {
+                                    clonedEvent.end = kendo.timezone.toLocalDate(endTime);
+                                } else {
+                                    clonedEvent.end = kendo.timezone.toLocalDate(slot.endOffset(e.x.location, e.y.location, that.options.snap));
+                                }
+                            } else {
+                                startSlot = view._slotByPosition(originSlotPosition.x, originSlotPosition.y);
+                                startTime = startSlot.startOffset(originSlotPosition.x, originSlotPosition.y, that.options.snap);
 
-                            range = moveEventRange(clonedEvent, distance);
+                                clonedEvent.start = originStart;
+                                clonedEvent.end = originEnd;
+                            }
                         }
+
+                        distance = endTime - startTime;
+
+                        view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+
+                        range = moveEventRange(clonedEvent, distance);
 
                         if (!that.trigger("move", {
                             event: event,
@@ -2534,21 +2548,12 @@ var __meta__ = { // jshint ignore:line
                         });
 
                         if (!prevented && (event.start.getTime() !== start.getTime() ||
-                        event.end.getTime() !== end.getTime() ||
-                        originSlot.isDaySlot !== endSlot.isDaySlot ||
-                        kendo.stringify(endResources) !== kendo.stringify(startResources))) {
-                            var updatedEventOptions = that.view()._eventOptionsForMove(event);
-                            var eventOptions;
+                            event.end.getTime() !== end.getTime() ||
+                            originSlot.isDaySlot !== endSlot.isDaySlot ||
+                            kendo.stringify(endResources) !== kendo.stringify(startResources))) {
 
-                            if (originSlot.isDaySlot !== endSlot.isDaySlot) {
-                                if (endSlot.isDaySlot) {
-                                    eventOptions = $.extend({ start: endSlot.startDate(), end: endSlot.startDate(), isAllDay: endSlot.isDaySlot }, updatedEventOptions, endResources);
-                                } else {
-                                    eventOptions = $.extend({ isAllDay: endSlot.isDaySlot, start: start, end: end }, updatedEventOptions, endResources);
-                                }
-                            } else {
-                                eventOptions = $.extend({ isAllDay: event.isAllDay, start: start, end: end }, updatedEventOptions, endResources);
-                            }
+                            var updatedEventOptions = that.view()._eventOptionsForMove(event);
+                            var eventOptions = $.extend({ isAllDay: endSlot.isDaySlot, start: start, end: end }, updatedEventOptions, endResources);
 
                             that._updateEvent(null, event, eventOptions, endSlot.groupIndex);
                         }

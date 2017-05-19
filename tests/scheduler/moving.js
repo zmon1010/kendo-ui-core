@@ -661,13 +661,31 @@
 
         dragdrop(scheduler, handle, slots.eq(1));
 
+        equal(scheduler.dataSource.at(0).isAllDay, false);
+    });
+
+    test("moving all day event in week view to timeslots changes its end time", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            startTime: new Date("2013/6/6 8:00"),
+            views: ["week"],
+            dataSource: [
+                { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
+            ]
+        });
+        jasmine.clock().tick(1);
+        var handle = div.find(".k-event");
+
+        var slots = div.find(".k-scheduler-content .k-scheduler-table td");
+
+        dragdrop(scheduler, handle, slots.eq(1));
+
         equal(scheduler.dataSource.at(0).start.getHours(), 08);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 00);
         equal(scheduler.dataSource.at(0).start.getDate(), 3);
         equal(scheduler.dataSource.at(0).end.getHours(), 08);
-        equal(scheduler.dataSource.at(0).end.getMinutes(), 00);
+        equal(scheduler.dataSource.at(0).end.getMinutes(), 30);
         equal(scheduler.dataSource.at(0).end.getDate(), 3);
-        equal(scheduler.dataSource.at(0).isAllDay, false);
     });
 
     test("moving all day event in week view to timeslots and back to allDay slots saves event", function() {
@@ -693,13 +711,75 @@
 
         dragend(scheduler, handle, allDaySlots.eq(1).offset());
 
-        equal(scheduler.dataSource.at(0).start.getHours(), 0);
+        equal(scheduler.dataSource.at(0).start.getHours(), 10);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
         equal(scheduler.dataSource.at(0).start.getDate(), 3);
-        equal(scheduler.dataSource.at(0).end.getHours(), 0);
-        equal(scheduler.dataSource.at(0).end.getMinutes(), 0);
+        equal(scheduler.dataSource.at(0).end.getHours(), 10);
+        equal(scheduler.dataSource.at(0).end.getMinutes(), 10);
         equal(scheduler.dataSource.at(0).end.getDate(), 3);
         equal(scheduler.dataSource.at(0).isAllDay, true);
+    });
+
+    test("moving all day event in week view to timeslots and back to allDay slots preserves event duration", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            startTime: new Date("2013/6/6 8:00"),
+            views: ["week"],
+            dataSource: [
+                { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/3 10:10"), title: "" }
+            ]
+        });
+        jasmine.clock().tick(1);
+        var handle = div.find(".k-event");
+
+        var slots = div.find(".k-scheduler-content .k-scheduler-table td");
+        var allDaySlots = div.find(".k-scheduler-header-all-day td");
+
+        dragstart(scheduler, handle, handle.offset());
+
+        drag(scheduler, handle, slots.eq(0).offset());
+
+        drag(scheduler, handle, allDaySlots.eq(1).offset());
+
+        dragend(scheduler, handle, allDaySlots.eq(1).offset());
+
+        equal(scheduler.dataSource.at(0).start.getHours(), 10);
+        equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
+        equal(scheduler.dataSource.at(0).start.getDate(), 3);
+        equal(scheduler.dataSource.at(0).end.getHours(), 10);
+        equal(scheduler.dataSource.at(0).end.getMinutes(), 10);
+        equal(scheduler.dataSource.at(0).end.getDate(), 4);
+        equal(scheduler.dataSource.at(0).isAllDay, true);
+    });
+
+    test("moving event in week view to allDay slots and back preserves event duration", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            startTime: new Date("2013/6/6 8:00"),
+            views: ["week"],
+            dataSource: [
+                { isAllDay: false, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
+            ]
+        });
+        jasmine.clock().tick(1);
+        var handle = div.find(".k-event");
+
+        var slots = div.find(".k-scheduler-content .k-scheduler-table td");
+        var allDaySlots = div.find(".k-scheduler-header-all-day td");
+
+        dragstart(scheduler, handle, handle.offset());
+
+        drag(scheduler, handle, allDaySlots.eq(1).offset());
+
+        drag(scheduler, handle, slots.eq(0).offset());
+
+        equal(scheduler.dataSource.at(0).start.getHours(), 10);
+        equal(scheduler.dataSource.at(0).start.getMinutes(), 00);
+        equal(scheduler.dataSource.at(0).start.getDate(), 2);
+        equal(scheduler.dataSource.at(0).end.getHours(), 10);
+        equal(scheduler.dataSource.at(0).end.getMinutes(), 10);
+        equal(scheduler.dataSource.at(0).end.getDate(), 2);
+        equal(scheduler.dataSource.at(0).isAllDay, false);
     });
 
     test("moving event in week view to allDay slots changes its isAllDay field", function() {
