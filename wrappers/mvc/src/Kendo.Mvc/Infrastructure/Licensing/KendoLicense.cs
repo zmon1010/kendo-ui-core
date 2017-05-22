@@ -111,7 +111,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
             string trialStartHash = RegistryUtilities.ReadRegistryString(
                 REGISTRY_SECONDARY_SUB_KEY,
-                registryKeyString.GetHashCode().ToString());
+                RegistryUtilities.EncodeString(registryKeyString));
 
             if (RegistryUtilities.RegistryKeyExists(
                 REGISTRY_SUB_KEY,
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
                     DateTime.MinValue);
 
                 if (trialStartHash != null &&
-                    trialStartHash.Equals(registeredTrialStart.GetHashCode().ToString()))
+                    trialStartHash.Equals(registeredTrialStart.ToBinary().ToString()))
                 {
                     trialStart = registeredTrialStart;
                 }
@@ -141,8 +141,8 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
                     RegistryUtilities.SaveRegistryString(
                         REGISTRY_SECONDARY_SUB_KEY,
-                        registryKeyString.GetHashCode().ToString(),
-                        trialStart.GetHashCode().ToString());
+                        RegistryUtilities.EncodeString(registryKeyString),
+                        trialStart.ToBinary().ToString());
                 }
             }
 
