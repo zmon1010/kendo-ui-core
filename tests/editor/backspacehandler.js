@@ -462,4 +462,17 @@
 
         equal(editor.value(), 'foobaz');
     });
+
+    test("unlink command between two links", function() {
+        editor.value('<p>before <a href="http://test.com" title="test1">link1</a><a href="http://test.com" title="test2">link2</a> after</p>');
+        var range = editor.createRange();
+        var p = editor.body.getElementsByTagName("p")[0];
+        range.setStart(p, 2);
+        range.setEnd(p, 2);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p>before link1<a href="http://test.com" title="test2">link2</a> after</p>');
+    });
 }());

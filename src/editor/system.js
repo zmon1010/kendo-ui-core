@@ -440,7 +440,7 @@ var BackspaceHandler = Class.extend({
             return true;
         }
 
-        var rangeStartNode = node.childNodes[range.startOffset] || node.childNodes[range.startOffset - 1];
+        var rangeStartNode = node.childNodes[range.startOffset - 1];
         var linkRange = range;
         var anchor = rangeStartNode && dom.closestEditableOfType(rangeStartNode, ['a']);
         var previousNode = getSibling(rangeStartNode || node, PREVIOUS_SIBLING, function(sibling) {
