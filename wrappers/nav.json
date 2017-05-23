@@ -770,6 +770,7 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -4128,6 +4129,7 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },

@@ -10,7 +10,8 @@ $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 
 $dateTimePicker->value(new DateTime('now', new DateTimeZone('UTC')))
            ->attr('style', 'width: 100%')
-           ->attr('title', 'datetimepicker');
+           ->attr('title', 'datetimepicker')
+           ->dateInput(true);
 
 echo $dateTimePicker->render();
 ?>
