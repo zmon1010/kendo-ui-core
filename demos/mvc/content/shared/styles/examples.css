@@ -1761,11 +1761,6 @@ div.old-browser
     box-shadow: inset 0 1px 5px #aaa, inset 0 0 20px #bcbcbc;
 }
 
-#mobile-landing {
-    background: url("../images/mobile-landing.jpg") no-repeat 50% 0;
-    height: 523px;
-}
-
 /*keyboard navigation legend */
 .key-button {
     display: inline-block;
