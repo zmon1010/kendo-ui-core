@@ -177,6 +177,22 @@
         equal(cells.eq(1).attr(kendo.attr("container-for")), "parentId");
     });
 
+    test("column attributes are rendered on cells", function() {
+        createTreeList({
+            columns: [
+                { field: "id", attributes: { "foo": "bar" } }
+            ]
+        });
+
+        var row = instance.content.find("tr").first();
+        instance.editRow(row);
+
+        var cells = instance.content.find("tr").first().children();
+        equal(cells.eq(0).attr("foo"), "bar");
+
+        equal(instance.content.find("td[foo=bar]").length, 3);
+    });
+
     test("editRow trigger edit event", 1, function() {
         createTreeList({
             edit: function() {
