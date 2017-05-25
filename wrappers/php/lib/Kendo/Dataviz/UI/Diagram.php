@@ -140,6 +140,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\Diagram
+    */
+    public function theme($value) {
+        return $this->setProperty('theme', $value);
+    }
+
+    /**
     * The zoom level in percentages.
     * @param float $value
     * @return \Kendo\Dataviz\UI\Diagram

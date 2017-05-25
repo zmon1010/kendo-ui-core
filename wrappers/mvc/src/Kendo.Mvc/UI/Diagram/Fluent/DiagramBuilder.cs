@@ -189,7 +189,25 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
+        /// <summary>
+        /// Sets the theme of the diagram.
+        /// </summary>
+        /// <param name="theme">The Diagram theme.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Diagram()
+        ///             .Name("Diagram")
+        ///             .Theme("sass")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DiagramBuilder<TShapeModel, TConnectionModel> Theme(string theme)
+        {
+            container.Theme = theme;
+            return this;
+        }
+
         /// <summary>
         /// The zoom level in percentages.
         /// </summary>
