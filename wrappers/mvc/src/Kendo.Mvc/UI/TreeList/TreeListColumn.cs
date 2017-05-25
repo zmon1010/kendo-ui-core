@@ -35,8 +35,6 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public object Editor { get; set; }
-        
         public bool? Encoded { get; set; }
         
         public bool? Expandable { get; set; }
@@ -87,6 +85,8 @@ namespace Kendo.Mvc.UI
         
         //<< Fields
 
+        public object Editor { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
@@ -101,11 +101,6 @@ namespace Kendo.Mvc.UI
             {
                 json["command"] = command;
             }
-            if (Editor != null)
-            {
-                json["editor"] = Editor;
-            }
-            
             if (Encoded.HasValue)
             {
                 json["encoded"] = Encoded;
@@ -225,6 +220,11 @@ namespace Kendo.Mvc.UI
             }
                 
         //<< Serialization
+
+            if (Editor != null)
+            {
+                json["editor"] = Editor;
+            }
         }
     }
 }
