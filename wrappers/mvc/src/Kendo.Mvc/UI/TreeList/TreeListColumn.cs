@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public string Editor { get; set; }
+        public object Editor { get; set; }
         
         public bool? Encoded { get; set; }
         
@@ -101,7 +101,7 @@ namespace Kendo.Mvc.UI
             {
                 json["command"] = command;
             }
-            if (Editor.HasValue())
+            if (Editor != null)
             {
                 json["editor"] = Editor;
             }

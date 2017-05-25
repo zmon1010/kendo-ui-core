@@ -295,29 +295,36 @@ namespace Kendo.Mvc.UI
                         return;
                     }
 
-                    var editorHtml = htmlHelper.Editor(column.Field).ToHtmlString();
-                    var validationMessage = htmlHelper.ValidationMessage(column.Field);
-
-                    if (validationMessage != null)
+                    if (column.Editor != null)
                     {
-                        editorHtml = string.Concat(editorHtml, validationMessage);
+                        column.Editor = new ClientHandlerDescriptor() { HandlerName = column.Editor.ToString() };
                     }
-
-                    if (IsInClientTemplate)
+                    else
                     {
-                        editorHtml = popupSlashes.Replace(editorHtml, match =>
+                        var editorHtml = htmlHelper.Editor(column.Field).ToHtmlString();
+                        var validationMessage = htmlHelper.ValidationMessage(column.Field);
+
+                        if (validationMessage != null)
                         {
-                            return match.Groups[0].Value.Replace("\\", "\\\\");
-                        });
+                            editorHtml = string.Concat(editorHtml, validationMessage);
+                        }
 
-                        editorHtml = editorHtml.Trim()
-                            .EscapeHtmlEntities()
-                            .Replace("\r\n", string.Empty)
-                            .Replace("</script>", "<\\/script>")
-                            .Replace("jQuery(\"#", "jQuery(\"\\#");
+                        if (IsInClientTemplate)
+                        {
+                            editorHtml = popupSlashes.Replace(editorHtml, match =>
+                            {
+                                return match.Groups[0].Value.Replace("\\", "\\\\");
+                            });
+
+                            editorHtml = editorHtml.Trim()
+                                .EscapeHtmlEntities()
+                                .Replace("\r\n", string.Empty)
+                                .Replace("</script>", "<\\/script>")
+                                .Replace("jQuery(\"#", "jQuery(\"\\#");
+                        }
+
+                        column.Editor = editorHtml;
                     }
-
-                    column.Editor = editorHtml;
                 });
             }
         }
