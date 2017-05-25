@@ -397,14 +397,23 @@
     });
 
     test("does not unwrap complete ul", function() {
-        var range = createRangeFromText(editor, '<ul><li>foo</li><li><em>||</em></li></ul>');
+        var range = createRangeFromText(editor, '<ul><li><em>||</em></li><li>foo</li></ul>');
         editor.selectRange(range);
 
         handleBackspace();
 
         editor.getRange().insertNode(editor.document.createElement("a"));
 
-        equal(editor.value(), '<ul><li>foo</li></ul><p><em><a></a></em></p>');
+        equal(editor.value(), '<p><em><a></a></em></p><ul><li>foo</li></ul>');
+    });
+
+    test("does not delete li", function() {
+        var range = createRangeFromText(editor, '<ul><li>foo</li><li>||</li></ul>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<ul><li>foo</li></ul>');
     });
 
     test("removing empty paragraph should not insert bom and set caret after the li", function() {
