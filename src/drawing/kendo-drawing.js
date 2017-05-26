@@ -3036,6 +3036,19 @@ function alignStart(size, rect, align, axis, sizeField) {
     return start;
 }
 
+function alignStartReverse(size, rect, align, axis, sizeField) {
+    var start;
+    if (align === "start") {
+        start = rect.origin[axis] + rect.size[sizeField] - size;
+    } else if (align === "end") {
+        start = rect.origin[axis];
+    } else {
+        start = rect.origin[axis] + (rect.size[sizeField] - size) / 2;
+    }
+
+    return start;
+}
+
 var DEFAULT_OPTIONS = {
     alignContent: "start",
     justifyContent: "start",
@@ -3043,7 +3056,20 @@ var DEFAULT_OPTIONS = {
     spacing: 0,
     orientation: "horizontal",
     lineSpacing: 0,
-    wrap: true
+    wrap: true,
+    revers: false
+};
+
+var forEach = function (elements, callback) {
+    elements.forEach(callback);
+};
+
+var forEachReverse = function (elements, callback) {
+    var length = elements.length;
+
+    for (var idx = length - 1; idx >= 0; idx--) {
+        callback(elements[idx], idx);
+    }
 };
 
 var Layout = Group.extend({
@@ -3076,9 +3102,19 @@ var Layout = Group.extend({
             fieldMap.groupAxis = "y";
             fieldMap.groupsAxis = "x";
         }
+
+        if (options.reverse) {
+            this.forEach = forEachReverse;
+            this.justifyAlign = alignStartReverse;
+        } else {
+            this.forEach = forEach;
+            this.justifyAlign = alignStart;
+        }
     },
 
     reflow: function() {
+        var this$1 = this;
+
         if (!this._rect || this.children.length === 0) {
             return;
         }
@@ -3102,23 +3138,26 @@ var Layout = Group.extend({
         var elementOrigin = new Point();
         var size = new Size();
         var groupStart = alignStart(groupsSize, rect, options.alignContent, groupsAxis, groupsSizeField);
-        var elementStart, bbox, element, group, groupBox;
+        var elementStart, group, groupBox;
+
+        var arrangeElements = function (bbox, idx) {
+            var element = group.elements[idx];
+
+            elementOrigin[groupAxis] = elementStart;
+            elementOrigin[groupsAxis] = alignStart(bbox.size[groupsSizeField], groupBox, options.alignItems, groupsAxis, groupsSizeField);
+            translateToPoint(elementOrigin, bbox, element);
+            elementStart += bbox.size[sizeField] + options.spacing;
+        };
 
         for (var groupIdx = 0; groupIdx < groups.length; groupIdx++) {
             group = groups[groupIdx];
-            groupOrigin[groupAxis] = elementStart = alignStart(group.size, rect, options.justifyContent, groupAxis, sizeField);
+            groupOrigin[groupAxis] = elementStart = this$1.justifyAlign(group.size, rect, options.justifyContent, groupAxis, sizeField);
             groupOrigin[groupsAxis] = groupStart;
             size[sizeField] = group.size;
             size[groupsSizeField] = group.lineSize;
             groupBox = new Rect(groupOrigin, size);
-            for (var idx = 0; idx < group.bboxes.length; idx++) {
-                element = group.elements[idx];
-                bbox = group.bboxes[idx];
-                elementOrigin[groupAxis] = elementStart;
-                elementOrigin[groupsAxis] = alignStart(bbox.size[groupsSizeField], groupBox, options.alignItems, groupsAxis, groupsSizeField);
-                translateToPoint(elementOrigin, bbox, element);
-                elementStart += bbox.size[sizeField] + options.spacing;
-            }
+            this$1.forEach(group.bboxes, arrangeElements);
+
             groupStart += group.lineSize + options.lineSpacing;
         }
 
