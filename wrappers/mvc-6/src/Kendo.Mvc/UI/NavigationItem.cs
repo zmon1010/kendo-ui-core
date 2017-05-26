@@ -16,8 +16,6 @@
         private string controllerName;
         private string actionName;
         private string url;
-        private string template;
-        private Func<T, object> inlineTemplate;
 
         private bool selected;
         private bool enabled;
