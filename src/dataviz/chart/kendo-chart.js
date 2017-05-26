@@ -5086,7 +5086,7 @@ var ChartContainer = ChartElement.extend({
 
             for (var j = 0; j < length; j++) {
                 var point = points[j];
-                if (point && point.overlapsBox && point.overlapsBox(clipBox)) {
+                if (point && point.visible !== false && point.overlapsBox && point.overlapsBox(clipBox)) {
                     var label = point.label;
                     var note = point.note;
 
