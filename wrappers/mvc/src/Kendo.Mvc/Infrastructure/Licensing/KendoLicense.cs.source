@@ -34,6 +34,14 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             }
         }
 
+        internal string ErrorCode
+        {
+            get
+            {
+                return "0";
+            }
+        }
+
         internal KendoLicense(System.Type type)
         {
             this.Type = type;
