@@ -4956,6 +4956,8 @@ var RootNode = Node.extend({
     }
 });
 
+var RTL = 'rtl';
+
 function alignToScreen(element) {
     var ctm;
 
@@ -4979,7 +4981,9 @@ var Surface$1 = Surface.extend({
     init: function(element, options) {
         Surface.fn.init.call(this, element, options);
 
-        this._root = new RootNode(this.options);
+        this._root = new RootNode($.extend({
+            rtl: elementStyles(element, 'direction').direction === RTL
+        }, this.options));
 
         renderSVG$1(this.element, this._template());
 
@@ -5468,8 +5472,18 @@ var TextNode = PathNode.extend({
         return content;
     },
 
+    renderTextAnchor: function() {
+        var anchor;
+
+        if ((this.options || {}).rtl) {
+            anchor = 'end';
+        }
+
+        return renderAttr("text-anchor", anchor);
+    },
+
     template: function() {
-        return "<text " + (this.renderStyle()) + " " + (this.renderOpacity()) + " x='" + (this.pos().x) + "' y='" + (this.pos().y) + "'" +
+        return "<text " + (this.renderTextAnchor()) + " " + (this.renderStyle()) + " " + (this.renderOpacity()) + " x='" + (this.pos().x) + "' y='" + (this.pos().y) + "'" +
                     (this.renderStroke()) + " " + (this.renderTransform()) + " " + (this.renderDefinitions()) +
                     (this.renderFill()) + ">" + (this.renderContent()) + "</text>";
     }
@@ -6602,6 +6616,8 @@ var TextNode$2 = PathNode$2.extend({
         ctx.beginPath();
 
         ctx.font = text.options.font;
+        ctx.textAlign = 'left';
+
         if (this.setFill(ctx)) {
             ctx.fillText(text.content(), pos.x, pos.y + size.baseline);
         }
