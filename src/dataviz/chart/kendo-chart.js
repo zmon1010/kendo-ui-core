@@ -44,8 +44,7 @@ var valueOrDefault = dataviz.valueOrDefault;
 var isObject = dataviz.isObject;
 var deepExtend = dataviz.deepExtend;
 var eventElement = dataviz.eventElement;
-var services = dataviz.services;
-var TemplateService = services.TemplateService;
+var getTemplate = dataviz.getTemplate;
 var TextBox = dataviz.TextBox;
 var ShapeElement = dataviz.ShapeElement;
 var getSpacing = dataviz.getSpacing;
@@ -63,6 +62,7 @@ var DateCategoryAxis = dataviz.DateCategoryAxis;
 var elementStyles = dataviz.elementStyles;
 var hasClasses = dataviz.hasClasses;
 var bindEvents = dataviz.bindEvents;
+var services = dataviz.services;
 var unbindEvents = dataviz.unbindEvents;
 var support = kendo.support;
 var drawing = kendo.drawing;
@@ -1139,7 +1139,7 @@ var CategoricalChart = ChartElement.extend({
     },
 
     evalPointOptions: function(options, value, category, categoryIx, series, seriesIx) {
-        var state = { defaults: series._defaults, excluded: [ "data", "aggregate", "_events", "tooltip", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
+        var state = { defaults: series._defaults, excluded: [ "data", "aggregate", "_events", "tooltip", "content", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
 
         var doEval = this._evalSeries[seriesIx];
         if (!defined(doEval)) {
@@ -1436,9 +1436,9 @@ var LinePoint = ChartElement.extend({
         }
 
         if (labels.visible) {
+            var labelTemplate = getTemplate(labels);
             var labelText = this.value;
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
+            if (labelTemplate) {
                 labelText = labelTemplate({
                     dataItem: this.dataItem,
                     category: this.category,
@@ -2670,11 +2670,10 @@ var Bar = ChartElement.extend({
         var labels = options.labels;
 
         if (labels.visible) {
+            var labelTemplate = getTemplate(labels);
             var labelText;
 
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
-
+            if (labelTemplate) {
                 labelText = labelTemplate({
                     dataItem: this.dataItem,
                     category: this.category,
@@ -4079,7 +4078,7 @@ var ScatterChart = ChartElement.extend({
     evalPointOptions: function(options, value, fields) {
         var series = fields.series;
         var seriesIx = fields.seriesIx;
-        var state = { defaults: series._defaults, excluded: [ "data", "tooltip", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
+        var state = { defaults: series._defaults, excluded: [ "data", "tooltip", "content", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
 
         var doEval = this._evalSeries[seriesIx];
         if (!defined(doEval)) {
@@ -5497,9 +5496,9 @@ var PlotAreaBase = ChartElement.extend({
             }
 
             var text = currentSeries.name || "";
-            var labelTemplate = seriesVisible ? labels.template : (inactiveItemsLabels.template || labels.template);
+            var labelTemplate = seriesVisible ? getTemplate(labels) : getTemplate(inactiveItemsLabels) || getTemplate(labels);
             if (labelTemplate) {
-                text = TemplateService.compile(labelTemplate)({
+                text = labelTemplate({
                     text: text,
                     series: currentSeries
                 });
@@ -6400,10 +6399,10 @@ var RangeBar = Bar.extend({
     },
 
     _createLabel: function(options) {
+        var labelTemplate = getTemplate(options);
         var labelText;
 
-        if (options.template) {
-            var labelTemplate = TemplateService.compile(options.template);
+        if (labelTemplate) {
             labelText = labelTemplate({
                 dataItem: this.dataItem,
                 category: this.category,
@@ -9422,8 +9421,8 @@ var PieSegment = ChartElement.extend({
         }
         this._rendered = true;
 
-        if (labels.template) {
-            var labelTemplate = TemplateService.compile(labels.template);
+        var labelTemplate = getTemplate(labels);
+        if (labelTemplate) {
             labelText = labelTemplate({
                 dataItem: this.dataItem,
                 category: this.category,
@@ -9738,12 +9737,12 @@ var PieChartMixin = {
 
         if (options && options.visibleInLegend !== false) {
             var pointVisible = options.visible !== false;
-            var labelTemplate = pointVisible ? labelsOptions.template :
-                (inactiveItemsLabels.template || labelsOptions.template);
+            var labelTemplate = pointVisible ? getTemplate(labelsOptions) :
+                getTemplate(inactiveItemsLabels) || getTemplate(labelsOptions);
             var text = options.category || "";
 
             if (labelTemplate) {
-                text = TemplateService.compile(labelTemplate)({
+                text = labelTemplate({
                     text: text,
                     series: options.series,
                     dataItem: options.dataItem,
@@ -9901,7 +9900,7 @@ var PieChart = ChartElement.extend({
             dataItem: fields.dataItem,
             category: fields.category,
             percentage: fields.percentage
-        }, { defaults: series._defaults, excluded: [ "data", "template", "visual", "toggle" ] });
+        }, { defaults: series._defaults, excluded: [ "data", "content", "template", "visual", "toggle" ] });
     },
 
     addValue: function(value, sector, fields) {
@@ -11290,7 +11289,7 @@ var FunnelChart = ChartElement.extend({
             series: series,
             dataItem: fields.dataItem,
             index: fields.index
-        }, { defaults: series._defaults, excluded: [ "data", "toggle", "visual" ] });
+        }, { defaults: series._defaults, excluded: [ "data", "content", "template", "toggle", "visual" ] });
     },
 
     createSegment: function(value, fields) {
@@ -11318,8 +11317,8 @@ var FunnelChart = ChartElement.extend({
         var text = value;
 
         if (labels.visible) {
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
+            var labelTemplate = getTemplate(labels);
+            if (labelTemplate) {
                 text = labelTemplate({
                     dataItem: dataItem,
                     value: value,
