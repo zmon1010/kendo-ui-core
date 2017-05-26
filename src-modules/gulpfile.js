@@ -15,7 +15,7 @@ const rollupDependencies = require('./transpilers/rollup-dependencies');
 const replaceExports = rollupDependencies.replaceExports;
 const replaceDependencies = rollupDependencies.replaceDependencies;
 
-const SRC_ROOT='../..';
+const SRC_ROOT='./';
 const DRAWING_SRC = path.join(SRC_ROOT, 'kendo-drawing', 'src');
 const CHARTS_SRC = path.join(SRC_ROOT, 'kendo-charts', 'src');
 

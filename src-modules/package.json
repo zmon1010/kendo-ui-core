@@ -1,14 +1,12 @@
 {
   "name": "src-modules",
   "version": "1.0.0",
-  "description": "",
+  "description": "Gulp tasks for syncing source code from external modules",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./sync.sh"
   },
   "author": "Progress",
   "devDependencies": {
-    "@progress/kendo-charts": "^0.8.0",
-    "@progress/kendo-drawing": "^0.10.0",
     "gulp": "^3.9.1",
     "gulp-concat": "2.6.0",
     "gulp-replace": "0.5.4",
