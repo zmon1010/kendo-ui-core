@@ -7282,7 +7282,7 @@ function drawDOM(element, options) {
                 // <table> element from its content.
                 //
                 // XXX: This is likely to break as soon as the widget HTML is modified.
-                grid = closest(el, ".k-grid[data-role=\"grid\"]");
+                grid = closest(el, ".k-grid.k-widget");
                 if (grid && grid.querySelector(".k-auto-scrollable")) {
                     gridHead = grid.querySelector(".k-grid-header");
                 }
@@ -7304,7 +7304,7 @@ function drawDOM(element, options) {
                 }
             }
             if (options.repeatHeaders && gridHead) {
-                grid = closest(el, ".k-grid[data-role=\"grid\"]");
+                grid = closest(el, ".k-grid.k-widget");
                 grid.insertBefore(gridHead.cloneNode(true), grid.firstChild);
             }
         }
