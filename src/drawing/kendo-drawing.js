@@ -4389,14 +4389,17 @@ function baseUrl() {
     return url;
 }
 
-function refUrl(id) {
-    return "url(" + baseUrl() + "#" + id + ")";
+function refUrl(id, skipBaseHref) {
+    var base = skipBaseHref ? '' : baseUrl();
+    return ("url(" + base + "#" + id + ")");
 }
 
 var Node = BaseNode.extend({
-    init: function(srcElement) {
+    init: function(srcElement, options) {
         BaseNode.fn.init.call(this, srcElement);
         this.definitions = {};
+
+        this.options = options;
     },
 
     destroy: function() {
@@ -4416,7 +4419,7 @@ var Node = BaseNode.extend({
             var srcElement = elements[i];
             var children = srcElement.children;
 
-            var childNode = new NODE_MAP[srcElement.nodeType](srcElement);
+            var childNode = new NODE_MAP[srcElement.nodeType](srcElement, this$1.options);
 
             if (defined(pos)) {
                 this$1.insertAt(childNode, pos);
@@ -4677,7 +4680,7 @@ var Node = BaseNode.extend({
                 definitions: definition
             });
             definitions[type] = value;
-            this.attr(attr, refUrl(value.id));
+            this.attr(attr, this.refUrl(value.id));
         }
     },
 
@@ -4696,14 +4699,21 @@ var Node = BaseNode.extend({
     },
 
     mapDefinitions: function() {
+        var this$1 = this;
+
         var definitions = this.definitions;
         var attrs = [];
 
         for (var field in definitions) {
-            attrs.push([ DefinitionMap[field], refUrl(definitions[field].id) ]);
+            attrs.push([ DefinitionMap[field], this$1.refUrl(definitions[field].id) ]);
         }
 
         return attrs;
+    },
+
+    refUrl: function(id) {
+        var skipBaseHref = (this.options || {}).skipBaseHref;
+        return refUrl(id, skipBaseHref);
     }
 });
 
@@ -5501,7 +5511,9 @@ var geometry = {
 };
 
 function exportGroup(group) {
-    var root = new RootNode();
+    var root = new RootNode({
+        skipBaseHref: true
+    });
     var bbox = group.clippedBBox();
     var rootGroup = group;
 
