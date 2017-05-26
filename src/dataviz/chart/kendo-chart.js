@@ -1133,8 +1133,10 @@ var CategoricalChart = ChartElement.extend({
             $.extend(point, fields);
 
             point.owner = this;
-            point.dataItem = series.data[categoryIx];
             point.noteText = data.fields.noteText;
+            if (!defined(point.dataItem)) {
+                point.dataItem = series.data[categoryIx];
+            }
             this.addErrorBar(point, data, categoryIx);
         }
 
@@ -1319,7 +1321,8 @@ var CategoricalChart = ChartElement.extend({
                 category: outOfRangePoint.category,
                 categoryIx: categoryIx,
                 series: series,
-                seriesIx: seriesIx
+                seriesIx: seriesIx,
+                dataItem: outOfRangePoint.item
             });
         }
     },
