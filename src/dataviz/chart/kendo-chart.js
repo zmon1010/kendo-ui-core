@@ -5680,6 +5680,7 @@ var PlotAreaBase = ChartElement.extend({
             var axis = yAxes[i];
             var pane = axis.pane;
             var paneId = pane.id;
+            var visible = axis.options.visible !== false;
 
             // Locate pane anchor, if any, and use its axisCrossingValues
             var anchor = paneAnchor(xAxes, pane) || xAnchor;
@@ -5704,7 +5705,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                leftAnchors[paneId] = axis;
+                if (visible) {
+                    leftAnchors[paneId] = axis;
+                }
             }
 
             if (round(axis.lineBox().x2) === round(anchor.lineBox().x2)) {
@@ -5723,7 +5726,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                rightAnchors[paneId] = axis;
+                if (visible) {
+                    rightAnchors[paneId] = axis;
+                }
             }
 
             if (i !== 0 && yAnchor.pane === axis.pane) {
@@ -5736,6 +5741,7 @@ var PlotAreaBase = ChartElement.extend({
             var axis$1 = xAxes[i$1];
             var pane$1 = axis$1.pane;
             var paneId$1 = pane$1.id;
+            var visible$1 = axis$1.options.visible !== false;
 
             // Locate pane anchor and use its axisCrossingValues
             var anchor$1 = paneAnchor(yAxes, pane$1) || yAnchor;
@@ -5766,7 +5772,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                topAnchors[paneId$1] = axis$1;
+                if (visible$1) {
+                    topAnchors[paneId$1] = axis$1;
+                }
             }
 
             if (round(axis$1.lineBox().y2, datavizConstants.COORD_PRECISION) === round(anchor$1.lineBox().y2, datavizConstants.COORD_PRECISION)) {
@@ -5778,7 +5786,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                bottomAnchors[paneId$1] = axis$1;
+                if (visible$1) {
+                    bottomAnchors[paneId$1] = axis$1;
+                }
             }
 
             if (i$1 !== 0) {
