@@ -104,6 +104,13 @@ var ChartAxis = Class.extend({
     }
 });
 
+var ChartPane = kendo.Class.extend({
+    init: function(pane) {
+        this.visual = pane.visual;
+        this.chartsVisual = pane.chartContainer.visual;
+    }
+});
+
 var ChartPlotArea = Class.extend({
     init: function(plotArea) {
 
@@ -11738,6 +11745,23 @@ var Chart = Class.extend({
 
     findAxisByName: function(name) {
         return this.getAxis(name);
+    },
+
+    findPaneByName: function(name) {
+        var panes = this._plotArea.panes;
+
+        for (var idx = 0; idx < panes.length; idx++) {
+            if (panes[idx].options.name === name) {
+                return new ChartPane(panes[idx]);
+            }
+        }
+    },
+
+    findPaneByIndex: function(idx) {
+        var panes = this._plotArea.panes;
+        if (panes[idx]) {
+            return new ChartPane(panes[idx]);
+        }
     },
 
     plotArea: function() {
