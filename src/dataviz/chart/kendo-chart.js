@@ -10563,7 +10563,12 @@ var PolarPlotAreaBase = PlotAreaBase.extend({
         var box = ref.box;
         var defaultPadding = Math.min(box.width(), box.height()) * DEFAULT_PADDING;
         var padding = getSpacing(options.padding || {}, defaultPadding);
-        var axisBox = box.clone().unpad(padding);
+        var paddingBox = box.clone().unpad(padding);
+        var axisBox = paddingBox.clone();
+
+        axisBox.y2 = axisBox.y1 + Math.min(axisBox.width(), axisBox.height());
+        axisBox.align(paddingBox, Y, CENTER);
+
         var valueAxisBox = axisBox.clone().shrink(0, axisBox.height() / 2);
 
         polarAxis.reflow(axisBox);
