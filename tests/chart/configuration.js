@@ -1531,4 +1531,42 @@
             equal(chart.options.legend.labels.color, "rgb(0, 0, 255)");
         });
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+
+        module("rtl", {
+            teardown: destroyChart
+        });
+
+        test("sets rtl to true if k-rtl is detected", function() {
+            var chart = $("<div id='container' class='k-rtl' />").appendTo(QUnit.fixture).kendoChart({
+                series: [{
+                    data: [1, 2, 2]
+                }]
+            }).getKendoChart();
+
+            equal(chart._instance.chartService.rtl, true);
+        });
+
+        test("sets rtl to false if k-rtl is detected but the direction is ltr", function() {
+            var chart = $("<div id='container' class='k-rtl' style='direction:ltr;' />").appendTo(QUnit.fixture).kendoChart({
+                series: [{
+                    data: [1, 2, 2]
+                }]
+            }).getKendoChart();
+
+            equal(chart._instance.chartService.rtl, false);
+        });
+
+        test("sets tooltip direction", function() {
+            var chart = $("<div id='container' class='k-rtl' />").appendTo(QUnit.fixture).kendoChart({
+                series: [{
+                    data: [1, 2, 2]
+                }]
+            }).getKendoChart();
+
+            equal(chart._tooltip.options.rtl, true);
+        });
+    })();
 })();

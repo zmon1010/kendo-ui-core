@@ -74,7 +74,8 @@
             this._initNavigatorOptions(options);
             this._instance = new KendoStockChart(this.element[0], options, themeOptions, {
                 observer: new StockInstanceObserver(this),
-                sender: this
+                sender: this,
+                rtl: this._isRtl()
             });
         },
 

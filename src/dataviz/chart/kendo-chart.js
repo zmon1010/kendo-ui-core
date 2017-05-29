@@ -2931,7 +2931,25 @@ Bar.prototype.defaults = {
     }
 };
 
+function forEach(elements, callback) {
+    elements.forEach(callback);
+}
+
+function forEachReverse(elements, callback) {
+    var length = elements.length;
+
+    for (var idx = length - 1; idx >= 0; idx--) {
+        callback(elements[idx], idx - length - 1);
+    }
+}
+
 var ClusterLayout = ChartElement.extend({
+    init: function(options) {
+        ChartElement.fn.init.call(this, options);
+
+        this.forEach = options.rtl ? forEachReverse : forEach;
+    },
+
     reflow: function(box) {
         var ref = this.options;
         var vertical = ref.vertical;
@@ -2944,19 +2962,19 @@ var ClusterLayout = ChartElement.extend({
         var slotSize = (vertical ? box.height() : box.width()) / slots;
         var position = box[axis + 1] + slotSize * (gap / 2);
 
-        for (var i = 0; i < count; i++) {
-            var childBox = (children[i].box || box).clone();
+        this.forEach(children, function (child, idx) {
+            var childBox = (child.box || box).clone();
 
             childBox[axis + 1] = position;
             childBox[axis + 2] = position + slotSize;
 
-            children[i].reflow(childBox);
-            if (i < count - 1) {
+            child.reflow(childBox);
+            if (idx < count - 1) {
                 position += (slotSize * spacing);
             }
 
             position += slotSize;
-        }
+        });
     }
 });
 
@@ -3065,7 +3083,8 @@ var BarChart = CategoricalChart.extend({
             cluster = new clusterType({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -3452,7 +3471,8 @@ var CandlestickChart = CategoricalChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -3844,7 +3864,8 @@ var BoxPlotChart = CandlestickChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -4674,7 +4695,8 @@ var BulletChart = CategoricalChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -7340,6 +7362,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
                 var categories = axisOptions.categories; if (categories === void 0) { categories = []; }
                 axisOptions = deepExtend({
                     vertical: invertAxes,
+                    reverse: !invertAxes && this$1.chartService.rtl,
                     axisCrossingValue: invertAxes ? MAX_VALUE : 0
                 }, axisOptions);
 
@@ -7402,7 +7425,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
         var defaultRange = tracker.query();
         var definitions = [].concat(this.options.valueAxis);
         var invertAxes = this.invertAxes;
-        var baseOptions = { vertical: !invertAxes };
+        var baseOptions = { vertical: !invertAxes, reverse: invertAxes && this.chartService.rtl };
         var axes = [];
 
         if (this.stack100) {
@@ -7951,7 +7974,8 @@ var LegendLayout = ChartElement.extend({
         this.visual = new drawing.Layout(null, {
             spacing: vertical ? 0 : options.spacing,
             lineSpacing: vertical ? options.spacing : 0,
-            orientation: vertical ? "vertical" : "horizontal"
+            orientation: vertical ? "vertical" : "horizontal",
+            reverse: options.rtl
         });
 
         for (var idx = 0; idx < children.length; idx++) {
@@ -7985,12 +8009,17 @@ var LegendItem = BoxElement.extend({
         BoxElement.fn.init.call(this, options);
 
         this.createContainer();
-        this.createMarker();
-        this.createLabel();
+        if (!options.rtl) {
+            this.createMarker();
+            this.createLabel();
+        } else {
+            this.createLabel();
+            this.createMarker();
+        }
     },
 
     createContainer: function() {
-        this.container = new dataviz.FloatElement({ vertical: false, wrap: false, align: CENTER });
+        this.container = new dataviz.FloatElement({ vertical: false, wrap: false, align: CENTER, spacing: this.options.spacing });
         this.append(this.container);
     },
 
@@ -8109,6 +8138,8 @@ var CUSTOM = "custom";
 
 var Legend = ChartElement.extend({
     init: function(options, chartService) {
+        if (chartService === void 0) { chartService = {}; }
+
         ChartElement.fn.init.call(this, options);
 
         this.chartService = chartService;
@@ -8168,7 +8199,8 @@ var Legend = ChartElement.extend({
         var vertical = this.isVertical();
         var innerElement = new LegendLayout({
             vertical: vertical,
-            spacing: options.spacing
+            spacing: options.spacing,
+            rtl: chartService.rtl
         }, chartService);
         var items = options.items;
 
@@ -8183,7 +8215,8 @@ var Legend = ChartElement.extend({
 
             innerElement.append(new LegendItem(deepExtend({}, {
                 markers: options.markers,
-                labels: options.labels
+                labels: options.labels,
+                rtl: chartService.rtl
             }, options.item, item)));
         }
 
@@ -8298,11 +8331,6 @@ var Legend = ChartElement.extend({
 setDefaultOptions(Legend, {
     position: RIGHT,
     items: [],
-    labels: {
-        margin: {
-            left: 6
-        }
-    },
     offsetX: 0,
     offsetY: 0,
     margin: getSpacing(5),
@@ -8312,7 +8340,8 @@ setDefaultOptions(Legend, {
         width: 0
     },
     item: {
-        cursor: POINTER
+        cursor: POINTER,
+        spacing: 6
     },
     spacing: 6,
     background: "",
@@ -9290,7 +9319,7 @@ var XYPlotArea = PlotAreaBase.extend({
         var axisName = options.name;
         var namedAxes = vertical ? this.namedYAxes : this.namedXAxes;
         var tracker = vertical ? this.yAxisRangeTracker : this.xAxisRangeTracker;
-        var axisOptions = deepExtend({}, options, { vertical: vertical });
+        var axisOptions = deepExtend({ reverse: !vertical && this.chartService.rtl }, options, { vertical: vertical });
         var isLog = equalsIgnoreCase(axisOptions.type, LOGARITHMIC);
         var defaultRange = tracker.query();
         var defaultAxisRange = isLog ? { min: 0.1, max: 1 } : { min: 0, max: 1 };
@@ -10909,6 +10938,12 @@ setDefaultOptions(RadarSegment, {
 });
 
 var RadarClusterLayout = ChartElement.extend({
+    init: function(options) {
+        ChartElement.fn.init.call(this, options);
+
+        this.forEach = options.rtl ? forEachReverse : forEach;
+    },
+
     reflow: function(sector) {
         var ref = this;
         var options = ref.options;
@@ -10920,20 +10955,20 @@ var RadarClusterLayout = ChartElement.extend({
         var slotAngle = sector.angle / slots;
         var angle = sector.startAngle + slotAngle * (gap / 2);
 
-        for (var i = 0; i < count; i++) {
+        this.forEach(children, function (child) {
             var slotSector = sector.clone();
             slotSector.startAngle = angle;
             slotSector.angle = slotAngle;
 
-            if (children[i].sector) {
-                slotSector.radius = children[i].sector.radius;
+            if (child.sector) {
+                slotSector.radius = child.sector.radius;
             }
 
-            children[i].reflow(slotSector);
-            children[i].sector = slotSector;
+            child.reflow(slotSector);
+            child.sector = slotSector;
 
             angle += slotAngle + (slotAngle * spacing);
-        }
+        });
     }
 });
 
@@ -11991,11 +12026,40 @@ var Chart = Class.extend({
         }
     },
 
+    _toggleDomDrag: function() {
+        if (!this.domEvents || !this.domEvents.toggleDrag) {
+            return;
+        }
+
+        var pannable = this.options.pannable;
+        var zoomable = this.options.zoomable;
+        var selection = (zoomable || {}).selection;
+        if (!pannable && (zoomable === false || selection === false) && !this.requiresHandlers([ DRAG_START, DRAG, DRAG_END ])) {
+            this.domEvents.toggleDrag(false);
+        } else {
+            this.domEvents.toggleDrag(true);
+        }
+    },
+
     _createMousewheelZoom: function() {
         var zoomable = this.options.zoomable;
         var mousewheel = (zoomable || {}).mousewheel;
         if (zoomable !== false && mousewheel !== false) {
             this._mousewheelZoom = new MousewheelZoom(this, mousewheel);
+        }
+    },
+
+    _toggleDomZoom: function() {
+        if (!this.domEvents || !this.domEvents.toggleZoom) {
+            return;
+        }
+
+        var zoomable = this.options.zoomable;
+        var mousewheel = (zoomable || {}).mousewheel;
+        if ((zoomable === false || mousewheel === false) && !this.requiresHandlers([ ZOOM_START, ZOOM, ZOOM_END ])) {
+            this.domEvents.toggleZoom(false);
+        } else {
+            this.domEvents.toggleZoom(true);
         }
     },
 
@@ -12209,6 +12273,9 @@ var Chart = Class.extend({
             gesturechange: this._gesturechange.bind(this),
             gestureend: this._gestureend.bind(this)
         });
+
+        this._toggleDomDrag();
+        this._toggleDomZoom();
     },
 
     _cancelDomEvents: function() {
@@ -12921,6 +12988,9 @@ var Chart = Class.extend({
         this.bindCategories();
         this.redraw();
         this.updateMouseMoveHandler();
+
+        this._toggleDomDrag();
+        this._toggleDomZoom();
     },
 
     destroy: function() {
@@ -13284,10 +13354,12 @@ kendo.deepExtend(kendo.dataviz, {
     ZoomSelection: ZoomSelection,
     Pannable: Pannable,
     ChartAxis: ChartAxis,
+    ChartPane: ChartPane,
     ChartPlotArea: ChartPlotArea,
     anyHasZIndex: anyHasZIndex,
     appendIfNotNull: areNumbers,
     areNumbers: areNumbers,
+    bindSegments: bindSegments,
     categoriesCount: categoriesCount,
     countNumbers: countNumbers,
     equalsIgnoreCase: equalsIgnoreCase,

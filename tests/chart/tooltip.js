@@ -212,6 +212,14 @@
             equal(element.css("opacity"), 0.5);
         });
 
+        test("sets k-rtl class depending on direction", function() {
+            createTooltip({ rtl: true });
+            equal(element.hasClass("k-rtl"), true);
+
+            createTooltip({ rtl: false });
+            equal(element.hasClass("k-rtl"), false);
+        });
+
         asyncTest("show displays tooltip for last point with a delay", function() {
             showTooltip();
 

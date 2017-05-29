@@ -9661,6 +9661,21 @@
           "!mvc-core"
         ],
         "url": "chart-api/benchmark"
+      },
+      {
+        "text": "RTL support",
+        "new": "true",
+        "packages": [
+          "!mvc",
+          "!mvc-core"
+        ],
+        "title": {
+          "kendo-ui": "Right-to-Left rendering of the Kendo UI Chart widget"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the Kendo UI Chart widget supports right-to-left direction."
+        },
+        "url": "chart-api/rtl"
       }
     ],
     "category": "Charts"
