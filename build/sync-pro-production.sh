@@ -1,25 +1,19 @@
 #!/bin/sh
 
 if [ ! -d kendo-ui-core ]; then
-    git clone git@github.com:telerik/kendo-ui-core.git;
-    cd kendo-ui-core;
-    git checkout production;
-    cd ..
-else
-    cd kendo-ui-core;
-    git checkout production;
-    git fetch;
-    git reset --hard origin/production
-    cd ..
+    git clone --reference-if-able /usr/local/jenkins/gitcache/kendo git@github.com:telerik/kendo-ui-core.git kendo-ui-core
 fi
 
+export GIT_DIR="kendo-ui-core/.git"
+export GIT_WORK_TREE="kendo-ui-core"
+
+git checkout production;
+git fetch;
+git reset --hard origin/production
 npm install;
 
 gulp copy-ui-core-files;
 
-cd kendo-ui-core;
 git add .
 git commit -m "Sync with Kendo UI Professional"
 git push
-
-exit
