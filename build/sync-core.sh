@@ -15,7 +15,7 @@ gulp copy-ui-core-files;
 
 cd kendo-ui-core;
 git add .
-git commit -m "Sync: `date`"
+git commit -m "Sync: `date -Iminutes`"
 git push
 
 exit
