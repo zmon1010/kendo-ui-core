@@ -130,7 +130,7 @@
     <value>Začíná po</value>
   </data>
   <data name="Filter_DateIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>Začáná od</value>
+    <value>Začíná od</value>
   </data>
   <data name="Filter_DateIsLessThan" xml:space="preserve">
     <value>Končí po</value>
@@ -169,7 +169,7 @@
     <value>Je menší nebo rovno</value>
   </data>
   <data name="Filter_NumberIsNotEqualTo" xml:space="preserve">
-    <value>Je různá od</value>
+    <value>Je různé od</value>
   </data>
   <data name="Filter_Or" xml:space="preserve">
     <value>Nebo</value>
@@ -184,10 +184,10 @@
     <value>Končí na</value>
   </data>
   <data name="Filter_StringIsEqualTo" xml:space="preserve">
-    <value>Je shodná s</value>
+    <value>Je shodné s</value>
   </data>
   <data name="Filter_StringIsNotEqualTo" xml:space="preserve">
-    <value>Je různá od</value>
+    <value>Je různé od</value>
   </data>
   <data name="Filter_StringStartsWith" xml:space="preserve">
     <value>Začíná na</value>
@@ -478,13 +478,13 @@
     <value>Časové pásmo začátku</value>
   </data>
   <data name="Scheduler_Editor_Timezone" xml:space="preserve">
-    <value> Časové pásmo</value>
+    <value>Časové pásmo</value>
   </data>
   <data name="Scheduler_Editor_TimezoneEditorButton" xml:space="preserve">
     <value>Časové pásmo</value>
   </data>
   <data name="Scheduler_Editor_TimezoneEditorTitle" xml:space="preserve">
-    <value>Časové pásma</value>
+    <value>Časová pásma</value>
   </data>
   <data name="Scheduler_Editor_Title" xml:space="preserve">
     <value>Nadpis</value>
@@ -700,10 +700,10 @@
     <value>Odemknout</value>
   </data>
   <data name="Scheduler_Recurrence_Editor_End_MobileLabel" xml:space="preserve">
-    <value>Ends</value>
+    <value>Konec</value>
   </data>
   <data name="Editor_InsertFile" xml:space="preserve">
-    <value>Insert file</value>
+    <value>Vložit soubor</value>
   </data>
   <data name="PivotConfigurator_Columns" xml:space="preserve">
     <value>Drop Column Fields Here</value>
@@ -754,39 +754,39 @@
     <value>All events</value>
   </data>
   <data name="Grid_Excel" xml:space="preserve">
-    <value>Export to Excel</value>
+    <value>Exportovat do Excelu</value>
   </data>
   <data name="Pager_AllPages" xml:space="preserve">
-    <value>All</value>
+    <value>Vše</value>
   </data>
   <data name="Filter_StringIsEmpty" xml:space="preserve">
-    <value>Is empty</value>
+    <value>Je prázdné</value>
   </data>
   <data name="Filter_StringIsNotEmpty" xml:space="preserve">
-    <value>Is not empty</value>
+    <value>Není prázdné</value>
   </data>
   <data name="Filter_StringIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Je vyplněno</value>
   </data>
   <data name="Filter_StringIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Není vyplněno</value>
   </data>
   <data name="Filter_NumberIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Je vyplněno</value>
   </data>
   <data name="Filter_NumberIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Není vyplněno</value>
   </data>
   <data name="Filter_DateIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Je vyplněno</value>
   </data>
   <data name="Filter_DateIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Není vyplněno</value>
   </data>
   <data name="Filter_EnumIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Je vyplněno</value>
   </data>
   <data name="Filter_EnumIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Není vyplněno</value>
   </data>
 </root>
