@@ -165,23 +165,29 @@ namespace Kendo.Mvc.UI
 						return;
 					}
 
-					var field = fields.FirstOrDefault(f => f.Member == column.Field);
-					if (isDynamic && field != null && !field.IsEditable)
-					{
-						return;
-					}
+                    if (column.Editor != null)
+                    {
+                        column.Editor = new ClientHandlerDescriptor() { HandlerName = column.Editor.ToString() };
+                    }
+                    else
+                    {
+                        var field = fields.FirstOrDefault(f => f.Member == column.Field);
+                        if (isDynamic && field != null && !field.IsEditable)
+                        {
+                            return;
+                        }
 
-					var editorHtml = EditorForColumn(column, htmlHelper);
+                        var editorHtml = EditorForColumn(column, htmlHelper);
 
-					if (IsInClientTemplate)
-					{
-						editorHtml = popupSlashes.Replace(editorHtml, match =>
-						{
-							return match.Groups[0].Value.Replace("\\", "\\\\");
-						});
-					}
-					column.Editor = editorHtml;
-
+                        if (IsInClientTemplate)
+                        {
+                            editorHtml = popupSlashes.Replace(editorHtml, match =>
+                            {
+                                return match.Groups[0].Value.Replace("\\", "\\\\");
+                            });
+                        }
+                        column.Editor = editorHtml;
+                    }
 				});
 			}
 		}		
