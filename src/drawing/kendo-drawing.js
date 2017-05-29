@@ -1574,6 +1574,7 @@ var Arc$2 = Class.extend({
         this.startAngle = options.startAngle;
         this.endAngle = options.endAngle;
         this.anticlockwise = options.anticlockwise || false;
+        this.xRotation = options.xRotation;
     },
 
     clone: function() {
@@ -1617,10 +1618,14 @@ var Arc$2 = Class.extend({
         var subIntervalsCount = Math.ceil(intervalAngle / MAX_INTERVAL);
         var subIntervalAngle = intervalAngle / subIntervalsCount;
         var currentAngle = startAngle;
+        var transformation;
+        if (this.xRotation) {
+            transformation = transform().rotate(this.xRotation, this.center);
+        }
 
         for (var i = 1; i <= subIntervalsCount; i++) {
             var nextAngle = currentAngle + dir * subIntervalAngle;
-            var points = this$1._intervalCurvePoints(currentAngle, nextAngle);
+            var points = this$1._intervalCurvePoints(currentAngle, nextAngle, transformation);
 
             curvePoints.push(points.cp1, points.cp2, points.p2);
             currentAngle = nextAngle;
@@ -1688,7 +1693,7 @@ var Arc$2 = Class.extend({
         };
     },
 
-    _intervalCurvePoints: function(startAngle, endAngle) {
+    _intervalCurvePoints: function(startAngle, endAngle, transformation) {
         var p1 = this.pointAt(startAngle);
         var p2 = this.pointAt(endAngle);
         var p1Derivative = this._derivativeAt(startAngle);
@@ -1696,6 +1701,12 @@ var Arc$2 = Class.extend({
         var t = (rad(endAngle) - rad(startAngle)) / 3;
         var cp1 = new Point(p1.x + t * p1Derivative.x, p1.y + t * p1Derivative.y);
         var cp2 = new Point(p2.x - t * p2Derivative.x, p2.y - t * p2Derivative.y);
+        if (transformation) {
+            p1.transform(transformation);
+            p2.transform(transformation);
+            cp1.transform(transformation);
+            cp2.transform(transformation);
+        }
 
         return {
             p1: p1,
@@ -1755,7 +1766,7 @@ var Arc$2 = Class.extend({
     }
 });
 
-Arc$2.fromPoints = function(start, end, rx, ry, largeArc, swipe) {
+Arc$2.fromPoints = function(start, end, rx, ry, largeArc, swipe, rotation) {// eslint-disable-line max-params
     var arcParameters = normalizeArcParameters({
         x1: start.x,
         y1: start.y,
@@ -1764,35 +1775,22 @@ Arc$2.fromPoints = function(start, end, rx, ry, largeArc, swipe) {
         rx: rx,
         ry: ry,
         largeArc: largeArc,
-        swipe: swipe
+        swipe: swipe,
+        rotation: rotation
     });
 
     return new Arc$2(arcParameters.center, {
         startAngle: arcParameters.startAngle,
         endAngle: arcParameters.endAngle,
-        radiusX: rx,
-        radiusY: ry,
+        radiusX: arcParameters.radiusX,
+        radiusY: arcParameters.radiusY,
+        xRotation: arcParameters.xRotation,
         anticlockwise: swipe === 0
     });
 };
 
 defineAccessors(Arc$2.prototype, [ "radiusX", "radiusY", "startAngle", "endAngle", "anticlockwise" ]);
 ObserversMixin.extend(Arc$2.prototype);
-
-function elipseAngle(start, end, swipe) {
-    var endAngle = end;
-
-    if (start > endAngle) {
-        endAngle += 360;
-    }
-
-    var alpha = Math.abs(endAngle - start);
-    if (!swipe) {
-        alpha = 360 - alpha;
-    }
-
-    return alpha;
-}
 
 function calculateAngle(cx, cy, rx, ry, x, y) {
     var cos = round((x - cx) / rx, 3);
@@ -1810,53 +1808,73 @@ function normalizeArcParameters(parameters) {
     var ry = parameters.ry;
     var largeArc = parameters.largeArc;
     var swipe = parameters.swipe;
-    var cx, cy;
-    var cx1, cy1;
-    var a, b, c, sqrt;
+    var rotation = parameters.rotation; if (rotation === void 0) { rotation = 0; }
 
-    if (y1 !== y2) {
-        var x21 = x2 - x1;
-        var y21 = y2 - y1;
-        var rx2 = pow$1(rx, 2), ry2 = pow$1(ry, 2);
-        var k = (ry2 * x21 * (x1 + x2) + rx2 * y21 * (y1 + y2)) / (2 * rx2 * y21);
-        var yk2 = k - y2;
-        var l = -(x21 * ry2) / (rx2 * y21);
+    var radians = rad(rotation);
+    var cosine = Math.cos(radians);
+    var sine = Math.sin(radians);
 
-        a = 1 / rx2 + pow$1(l, 2) / ry2;
-        b = 2 * ((l * yk2) / ry2 - x2 / rx2);
-        c = pow$1(x2, 2) / rx2 + pow$1(yk2, 2) / ry2 - 1;
-        sqrt = Math.sqrt(pow$1(b, 2) - 4 * a * c);
+    var xT = cosine * (x1 - x2) / 2 + sine * (y1 - y2) / 2;
+    var yT = -sine * (x1 - x2) / 2 + cosine * (y1 - y2) / 2;
 
-        cx = (-b - sqrt) / (2 * a);
-        cy = k + l * cx;
-        cx1 = (-b + sqrt) / (2 * a);
-        cy1 = k + l * cx1;
-    } else if (x1 !== x2) {
-        b = - 2 * y2;
-        c = pow$1(((x2 - x1) * ry) / (2 * rx), 2) + pow$1(y2, 2) - pow$1(ry, 2);
-        sqrt = Math.sqrt(pow$1(b, 2) - 4 * c);
+    var sign = largeArc !== swipe ? 1 : -1;
 
-        cx = cx1 = (x1 + x2) / 2;
-        cy = (-b - sqrt) / 2;
-        cy1 = (-b + sqrt) / 2;
-    } else {
-        return false;
+    var xt2 = Math.pow(xT, 2);
+    var yt2 = Math.pow(yT, 2);
+    var rx2 = Math.pow(rx, 2);
+    var ry2 = Math.pow(ry, 2);
+
+    var delta = xt2 / rx2 + yt2 / ry2;
+
+    if (delta > 1) {
+        delta = Math.sqrt(xt2 / rx2 + yt2 / ry2);
+        rx = delta * rx;
+        rx2 = Math.pow(rx, 2);
+
+        ry = delta * ry;
+        ry2 = Math.pow(ry, 2);
     }
 
-    var start = calculateAngle(cx, cy, rx, ry, x1, y1);
-    var end = calculateAngle(cx, cy, rx, ry, x2, y2);
-    var alpha = elipseAngle(start, end, swipe);
-
-    if ((largeArc && alpha <= 180) || (!largeArc && alpha > 180)) {
-        cx = cx1; cy = cy1;
-        start = calculateAngle(cx, cy, rx, ry, x1, y1);
-        end = calculateAngle(cx, cy, rx, ry, x2, y2);
+    var constT = sign * Math.sqrt((rx2 * ry2 - rx2 * yt2 - ry2 * xt2) / (rx2 * yt2 + ry2 * xt2));
+    // due to rounding errors the value could become NaN even after radii correction
+    if (isNaN(constT)) {
+        constT = 0;
     }
+
+    var cxT = constT * (rx * yT) / ry;
+    var cyT = - constT * (ry * xT) / rx;
+
+    var cx = cosine * cxT - sine * cyT + (x1 + x2) / 2;
+    var cy = sine * cxT + cosine * cyT + (y1 + y2) / 2;
+
+    var uX = (xT - cxT) / rx;
+    var uY = (yT - cyT) / ry;
+    var vX = -(xT + cxT) / rx;
+    var vY = -(yT + cyT) / ry;
+
+    var startAngle = (uY >= 0 ? 1 : -1) * deg(Math.acos(uX / Math.sqrt(uX * uX + uY * uY)));
+
+    var angleCosine = round((uX * vX + uY * vY) / (Math.sqrt(uX * uX + uY * uY) * Math.sqrt(vX * vX + vY * vY)), 10);
+    var angle = (uX * vY - uY * vX >= 0 ? 1 : -1) * deg(Math.acos(angleCosine));
+
+    if (!swipe && angle > 0) {
+        angle -= 360;
+    }
+
+    if (swipe && angle < 0) {
+        angle += 360;
+    }
+    var endAngle = startAngle + angle;
+    var signEndAngle = endAngle >= 0 ? 1 : -1;
+    endAngle = (Math.abs(endAngle) % 360) * signEndAngle;
 
     return {
         center: new Point(cx, cy),
-        startAngle: start,
-        endAngle: end
+        startAngle: startAngle,
+        endAngle: endAngle,
+        radiusX: rx,
+        radiusY: ry,
+        xRotation: rotation
     };
 }
 
@@ -2431,11 +2449,11 @@ var Path = Element$1.extend({
         return this;
     },
 
-    arcTo: function(end, rx, ry, largeArc, swipe) {
+    arcTo: function(end, rx, ry, largeArc, swipe, rotation) {
         if (this.segments.length > 0) {
             var lastSegment = last(this.segments);
             var anchor = lastSegment.anchor();
-            var arc = Arc$2.fromPoints(anchor, end, rx, ry, largeArc, swipe);
+            var arc = Arc$2.fromPoints(anchor, end, rx, ry, largeArc, swipe, rotation);
 
             this._addArcSegments(arc);
         }
@@ -2713,9 +2731,9 @@ var MultiPath = Element$1.extend({
         return this;
     },
 
-    arcTo: function(end, rx, ry, largeArc, swipe) {
+    arcTo: function(end, rx, ry, largeArc, swipe, rotation) {
         if (this.paths.length > 0) {
-            last(this.paths).arcTo(end, rx, ry, largeArc, swipe);
+            last(this.paths).arcTo(end, rx, ry, largeArc, swipe, rotation);
         }
 
         return this;
@@ -3802,6 +3820,7 @@ var ShapeMap = {
         for (var i = 0; i < parameters.length; i += 7) {
             var radiusX = parameters[i];
             var radiusY = parameters[i + 1];
+            var rotation = parameters[i + 2];
             var largeArc = parameters[i + 3];
             var swipe = parameters[i + 4];
             var endPoint = new Point(parameters[i + 5], parameters[i + 6]);
@@ -3809,11 +3828,12 @@ var ShapeMap = {
             if (options.isRelative) {
                 endPoint.translateWith(position);
             }
+            if (position.x !== endPoint.x || position.y !== endPoint.y) {
+                path.arcTo(endPoint, radiusX, radiusY, largeArc, swipe, rotation);
 
-            path.arcTo(endPoint, radiusX, radiusY, largeArc, swipe);
-
-            position.x = endPoint.x;
-            position.y = endPoint.y;
+                position.x = endPoint.x;
+                position.y = endPoint.y;
+            }
         }
     },
 
