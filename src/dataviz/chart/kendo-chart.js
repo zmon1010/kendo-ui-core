@@ -8388,14 +8388,13 @@ var Selection = Class.extend({
     init: function(chart, categoryAxis, options, observer) {
 
         var chartElement = chart.element;
-        var valueAxis = this.getValueAxis(categoryAxis);
+
         this.options = deepExtend({}, this.options, options);
         this.chart = chart;
         this.observer = observer;
         this.chartElement = chartElement;
         this.categoryAxis = categoryAxis;
         this._dateAxis = this.categoryAxis instanceof DateCategoryAxis;
-        this.valueAxis = valueAxis;
 
         this.initOptions();
 
@@ -8415,7 +8414,8 @@ var Selection = Class.extend({
             top: options.offset.top,
             left: options.offset.left,
             width: options.width,
-            height: options.height
+            height: options.height,
+            direction: 'ltr'
         });
         var selection = this.selection = createDiv("k-selection");
         this.leftMask = createDiv("k-mask");
@@ -8480,9 +8480,7 @@ var Selection = Class.extend({
         var ref = this;
         var options = ref.options;
         var categoryAxis = ref.categoryAxis;
-        var valueAxis = ref.valueAxis;
-        var categoryAxisLineBox = categoryAxis.lineBox();
-        var valueAxisLineBox = valueAxis.lineBox();
+        var box = categoryAxis.pane.chartsBox();
         var intlService = this.chart.chartService.intl;
 
         if (this._dateAxis) {
@@ -8499,15 +8497,15 @@ var Selection = Class.extend({
         var paddingTop = ref$1.paddingTop;
 
         this.options = deepExtend({}, {
-            width: categoryAxisLineBox.width(),
-            height: valueAxisLineBox.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
+            width: box.width(),
+            height: box.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
             padding: {
                 left: paddingLeft,
                 top: paddingTop
             },
             offset: {
-                left: valueAxisLineBox.x2 + paddingLeft,
-                top: valueAxisLineBox.y1 + paddingTop
+                left: box.x1 + paddingLeft,
+                top: box.y1 + paddingTop
             },
             from: options.min,
             to: options.max
@@ -8587,9 +8585,10 @@ var Selection = Class.extend({
         var ref = this;
         var state = ref._state;
         var options = ref.options;
-        var categories = ref.categoryAxis.options.categories;
+        var axisOptions = ref.categoryAxis.options;
         var range = state.range;
         var target = state.moveTarget;
+        var reverse = axisOptions.reverse;
         var from = this._index(options.from);
         var to = this._index(options.to);
         var min = this._index(options.min);
@@ -8597,12 +8596,15 @@ var Selection = Class.extend({
         var delta = state.startLocation - e.x.location;
         var oldRange = { from: range.from, to: range.to };
         var span = range.to - range.from;
-        var scale = elementStyles(this.wrapper, "width").width / (categories.length - 1);
-        var offset = Math.round(delta / scale);
+        var scale = elementStyles(this.wrapper, "width").width / (axisOptions.categories.length - 1);
+        var offset = Math.round(delta / scale) * (reverse ? -1 : 1);
 
         if (!target) {
             return;
         }
+
+        var leftHandle = hasClasses(target, "k-left-handle");
+        var rightHandle = hasClasses(target, "k-right-handle");
 
         if (hasClasses(target, "k-selection k-selection-bg")) {
             range.from = Math.min(
@@ -8613,13 +8615,13 @@ var Selection = Class.extend({
                 range.from + span,
                 max
             );
-        } else if (hasClasses(target, "k-left-handle")) {
+        } else if ((leftHandle && !reverse) || (rightHandle && reverse)) {
             range.from = Math.min(
                 Math.max(min, from - offset),
                 max - 1
             );
             range.to = Math.max(range.from + 1, range.to);
-        } else if (hasClasses(target, "k-right-handle")) {
+        } else if ((leftHandle && reverse) || (rightHandle && !reverse)) {
             range.to = Math.min(
                 Math.max(min + 1, to - offset),
                 max
@@ -8812,11 +8814,16 @@ var Selection = Class.extend({
 
     move: function(from, to) {
         var options = this.options;
+        var reverse = this.categoryAxis.options.reverse;
         var offset = options.offset;
         var padding = options.padding;
         var border = options.selection.border;
-        var box = this._slot(from);
-        var leftMaskWidth = round(box.x1 - offset.left + padding.left);
+        var left = reverse ? to : from;
+        var right = reverse ? from : to;
+        var edge = 'x' + (reverse ? 2 : 1);
+
+        var box = this._slot(left);
+        var leftMaskWidth = round(box[edge] - offset.left + padding.left);
 
         elementStyles(this.leftMask, {
             width: leftMaskWidth
@@ -8825,9 +8832,9 @@ var Selection = Class.extend({
             left: leftMaskWidth
         });
 
-        box = this._slot(to);
+        box = this._slot(right);
 
-        var rightMaskWidth = round(options.width - (box.x1 - offset.left + padding.left));
+        var rightMaskWidth = round(options.width - (box[edge] - offset.left + padding.left));
         elementStyles(this.rightMask, {
             width: rightMaskWidth
         });
@@ -8892,19 +8899,6 @@ var Selection = Class.extend({
         if (range.from !== oldRange.from || range.to !== oldRange.to) {
             this.set(range.from, range.to);
             return true;
-        }
-    },
-
-    getValueAxis: function(categoryAxis) {
-        var axes = categoryAxis.pane.axes;
-        var axesCount = axes.length;
-
-        for (var i = 0; i < axesCount; i++) {
-            var axis = axes[i];
-
-            if (axis.options.vertical !== categoryAxis.options.vertical) {
-                return axis;
-            }
         }
     },
 
