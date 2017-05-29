@@ -46,7 +46,8 @@ const PDF_GLOBALS = {
 const CORE_GLOBALS = {
     '@progress/kendo-drawing': 'kendo',
     'common/deep-extend': 'kendo.deepExtend',
-    'common/getter': 'kendo.getter'
+    'common/getter': 'kendo.getter',
+    'common/is-function': 'kendo.isFunction'
 };
 
 const CHART_GLOBALS = {
