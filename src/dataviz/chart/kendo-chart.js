@@ -9448,7 +9448,7 @@ var PieSegment = ChartElement.extend({
             labelText = chartService.format.auto(labels.format, labelText);
         }
 
-        if (labels.visible && labelText) {
+        if (labels.visible && (labelText || labelText === 0)) {
             if (labels.position === CENTER || labels.position === INSIDE_END) {
                 if (!labels.color) {
                     var brightnessValue = new Color(this.options.color).percBrightness();
@@ -9802,25 +9802,43 @@ function segmentVisible(series, fields, index) {
     }
 }
 
-function seriesTotal(series) {
+function bindSegments(series) {
     var data = series.data;
+    var points = [];
     var sum = 0;
+    var count = 0;
 
-    for (var i = 0; i < data.length; i++) {
-        var pointData = SeriesBinder.current.bindPoint(series, i);
+    for (var idx = 0; idx < data.length; idx++) {
+        var pointData = SeriesBinder.current.bindPoint(series, idx);
         var value = pointData.valueFields.value;
 
         if (isString(value)) {
             value = parseFloat(value);
         }
 
-        var visible = segmentVisible(series, pointData.fields, i);
-        if (isNumber(value) && visible !== false) {
-            sum += Math.abs(value);
+        if (isNumber(value)) {
+            pointData.visible = segmentVisible(series, pointData.fields, idx) !== false;
+
+            pointData.value = Math.abs(value);
+            points.push(pointData);
+
+            if (pointData.visible) {
+                sum += pointData.value;
+            }
+
+            if (value !== 0) {
+                count++;
+            }
+        } else {
+            points.push(null);
         }
     }
 
-    return sum;
+    return {
+        total: sum,
+        points: points,
+        count: count
+    };
 }
 
 var PIE_SECTOR_ANIM_DELAY = 70;
@@ -9853,8 +9871,15 @@ var PieChart = ChartElement.extend({
         for (var seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
             var currentSeries = series[seriesIx];
             var data = currentSeries.data;
-            var total = seriesTotal(currentSeries);
+            var ref$1 = bindSegments(currentSeries);
+            var total = ref$1.total;
+            var points = ref$1.points;
+            var count = ref$1.count;
             var anglePerValue = 360 / total;
+            var constantAngle = (void 0);
+            if (!isFinite(anglePerValue)) {
+                constantAngle = 360 / count;
+            }
             var currentAngle = (void 0);
 
             if (defined(currentSeries.startAngle)) {
@@ -9869,28 +9894,30 @@ var PieChart = ChartElement.extend({
                 }
             }
 
-            for (var i = 0; i < data.length; i++) {
-                var pointData = SeriesBinder.current.bindPoint(currentSeries, i);
-                var value = pointData.valueFields.value;
-                var plotValue = Math.abs(value);
+            for (var i = 0; i < points.length; i++) {
+                var pointData = points[i];
+                if (!pointData) {
+                    continue;
+                }
+
                 var fields = pointData.fields;
-                var angle = plotValue * anglePerValue;
+                var value = pointData.value;
+                var visible = pointData.visible;
+                var angle = value !== 0 ? (constantAngle || (value * anglePerValue)) : 0;
                 var explode = data.length !== 1 && Boolean(fields.explode);
 
                 if (!isFunction(currentSeries.color)) {
                     currentSeries.color = fields.color || seriesColors[i % colorsCount];
                 }
 
-                var visible = segmentVisible(currentSeries, fields, i);
-
-                callback(value, new dataviz.Ring(null, 0, 0, currentAngle, angle), {
+                callback(pointData.valueFields.value, new dataviz.Ring(null, 0, 0, currentAngle, angle), {
                     owner: this$1,
                     category: fields.category || "",
                     index: i,
                     series: currentSeries,
                     seriesIx: seriesIx,
                     dataItem: data[i],
-                    percentage: total !== 0 ? plotValue / total : 0,
+                    percentage: total !== 0 ? value / total : 0,
                     explode: explode,
                     visibleInLegend: fields.visibleInLegend,
                     visible: visible,
@@ -10146,7 +10173,7 @@ var PieChart = ChartElement.extend({
                     }
                 });
 
-                if (label.options.position === OUTSIDE_END && segment.value !== 0) {
+                if (label.options.position === OUTSIDE_END) {
                     var box = label.box;
                     var centerPoint = sector.center;
                     var start = sector.point(angle);
@@ -11261,13 +11288,14 @@ var FunnelChart = ChartElement.extend({
             return;
         }
 
-        var total = seriesTotal(series);
+        var ref$1 = bindSegments(series);
+        var total = ref$1.total;
+        var points = ref$1.points;
 
-        for (var i = 0; i < data.length; i++) {
-            var pointData = SeriesBinder.current.bindPoint(series, i);
-            var value = pointData.valueFields.value;
+        for (var i = 0; i < points.length; i++) {
+            var pointData = points[i];
 
-            if (value === null || value === undefined) {
+            if (!pointData) {
                 continue;
             }
 
@@ -11277,15 +11305,15 @@ var FunnelChart = ChartElement.extend({
                 series.color = fields.color || seriesColors[i % seriesColors.length];
             }
 
-            var visible = segmentVisible(series, fields, i);
             fields = deepExtend({
                 index: i,
                 owner: this$1,
                 series: series,
                 dataItem: data[i],
-                percentage: Math.abs(value) / total
-            }, fields, { visible: visible });
+                percentage: pointData.value / total
+            }, fields, { visible: pointData.visible });
 
+            var value = pointData.valueFields.value;
             var segment = this$1.createSegment(value, fields);
             var label = this$1.createLabel(value, fields);
 
@@ -13266,7 +13294,6 @@ kendo.deepExtend(kendo.dataviz, {
     hasValue: hasValue,
     isDateAxis: isDateAxis,
     segmentVisible: segmentVisible,
-    seriesTotal: seriesTotal,
     singleItemOrArray: singleItemOrArray
 });
 
