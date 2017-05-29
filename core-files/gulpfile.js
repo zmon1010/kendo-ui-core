@@ -1,5 +1,4 @@
 /* jshint browser:false, node:true, esnext: true */
-"use strict";
 
 var gulp = require('gulp');
 var shell = require('gulp-shell');
@@ -12,11 +11,9 @@ var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
 var gulpIf = require('gulp-if');
-var rename = require('gulp-rename');
 var jshint = require("gulp-jshint");
 var replace = require("gulp-replace");
 var rename = require("gulp-rename");
-var clean = require('gulp-clean');
 
 var ignore = require('gulp-ignore');
 
@@ -25,7 +22,6 @@ var concat = require('gulp-concat');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
-var packageJSON = require('./package');
 
 var license = require('./build/gulp/license');
 var cssUtils = require('./build/gulp/css');
@@ -51,7 +47,7 @@ gulp.task("css-assets", function() {
         .pipe(gulp.dest("dist/styles"));
 });
 
-gulp.task("build-skin", [ "import-dependencies", "css-assets" ], function() {
+gulp.task("build-skin", ["css-assets"], function() {
     var resumeOnErrors = lazypipe()
         .pipe(plumber, {
             errorHandler: function (err) {
@@ -79,7 +75,7 @@ gulp.task("build-skin", [ "import-dependencies", "css-assets" ], function() {
         .pipe(browserSync.stream({ match: '**/*.css' }));
 });
 
-gulp.task("less", [ "import-dependencies" ], function() {
+gulp.task("less",function() {
     var css = gulp.src(`styles/${argv.styles || '**/kendo*.less'}`, { base: "styles" })
         .pipe(license())
         .pipe(cssUtils.fromLess());
@@ -99,33 +95,11 @@ gulp.task("less", [ "import-dependencies" ], function() {
         .pipe(gulp.dest('dist/styles'));
 });
 
-const CSS_DEPENDENCIES = [
-    "node_modules/@progress/kendo-theme-*/dist/all.css"
-];
-
-gulp.task("import-dependencies", function() {
-    return gulp.src(CSS_DEPENDENCIES)
-        .pipe(rename(function(path) {
-          if (/bootstrap/.test(path.dirname)) {
-            path.basename = "kendo.bootstrap-v4";
-          } else {
-            path.basename = "kendo.default-v2";
-          }
-
-          path.extname = ".less";
-          path.dirname = "";
-        }))
-        .pipe(gulp.dest("styles/web/"))
-        .pipe(browserSync.stream({ match: '**/*.css' }));
-});
-
 gulp.task("styles", [ "less", "css-assets" ]);
 
 gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
     browserSync.init({ proxy: "localhost", open: false });
-
-    gulp.watch("styles/**/*.less", [ "build-skin" ]);
-    gulp.watch(CSS_DEPENDENCIES, [ "import-dependencies" ]);
+    return gulp.watch("styles/**/*.less", [ "build-skin" ]);
 });
 
 // cloning those somehow fails, I think that it is due to the RTL symbols in the culture
@@ -212,14 +186,12 @@ gulp.task("custom", function() {
 });
 
 gulp.task("jshint", function() {
+    var packageJSON = require('./package');
+
     return gulp.src(argv.files || packageJSON.jshintFiles)
         .pipe(jshint(packageJSON.jshintConfig))
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jshint.reporter('fail'));
-});
-
-gulp.task("watch-jshint", function() {
-    return gulp.watch(argv.files || packageJSON.jshintFiles, [ "jshint" ]);
 });
 
 gulp.task('build', [ 'scripts', 'styles' ]);
@@ -257,30 +229,25 @@ gulp.task('mdspell', shell.task(
 ['cd docs && mdspell "**/*.md" -n -a --report']
 ));
 
-[ 'pro', 'core' ].forEach((flavor) => {
+[ 'pro', 'core' ].forEach(function(flavor) {
     gulp.task('npm-' + flavor, [ 'cjs', 'styles' ] , function() {
-        const dest = 'dist/npm-' + flavor;
+        var js = gulp.src('dist/cjs/**/*').pipe(gulp.dest('dist/npm/js'));
 
-        const js = gulp.src('dist/cjs/**/*')
-                    .pipe(replace("$KENDO_VERSION", kendoVersion))
-                    .pipe(gulp.dest(dest + '/js'));
+        var styles = gulp.src('dist/styles/**/*').pipe(gulp.dest('dist/npm/css'));
 
-        const styles = gulp.src('dist/styles/**/*')
-                    .pipe(gulp.dest(dest + '/css'));
-
-        const pkg = gulp.src('build/package-' + flavor + '.json')
+        var pkg = gulp.src('build/package-' + flavor + '.json')
                     .pipe(replace("$KENDO_VERSION", kendoVersion))
                     .pipe(rename('package.json'))
-                    .pipe(gulp.dest(dest));
+                    .pipe(gulp.dest('dist/npm'));
 
-        const license = gulp.src('resources/legal/npm/' + flavor + '.txt')
+        var license = gulp.src('resources/legal/npm/' + flavor + '.txt')
                     .pipe(replace("$YEAR", new Date().getFullYear()))
                     .pipe(rename('LICENSE'))
-                    .pipe(gulp.dest(dest));
+                    .pipe(gulp.dest('dist/npm'));
 
-        const readme = gulp.src('resources/npm/' + flavor + '-README.md')
+        var readme = gulp.src('resources/npm/' + flavor + '-README.md')
                     .pipe(rename('README.md'))
-                    .pipe(gulp.dest(dest));
+                    .pipe(gulp.dest('dist/npm'));
 
         return merge(js, styles, pkg, license, readme);
     })
@@ -288,29 +255,4 @@ gulp.task('mdspell', shell.task(
 
 const taskListing = require('gulp-task-listing');
 gulp.task('tasks', taskListing.withFilters(/:/));
-
-const syncCoreConfig = require('./build/gulp/sync-core.config')();
-gulp.task('clear-ui-core-files', function() {
-	return gulp.src(syncCoreConfig.cleanFiles)
-        .pipe(clean({force: true}));
-});
-
-gulp.task('copy-ui-core-files', ['clear-ui-core-files'], function() { 
-	var files = gulp
-		.src(syncCoreConfig.files, {base: syncCoreConfig.base})
-		.pipe(gulp.dest(syncCoreConfig.dest));
-
-	var core_files = gulp
-		.src(syncCoreConfig.core_files, {base: syncCoreConfig.base_core})
-		.pipe(gulp.dest(syncCoreConfig.dest));
- 
- 	return merge(
-		 files,
-		 core_files);
-});
-
-// Exit immediately on Ctrl+C
-process.once('SIGINT', function () {
-    process.exit();
-});
 
