@@ -160,7 +160,7 @@
                             break OUT; // jshint ignore:line
                         }
                     }
-                    if (type === "date" && !existingFormat) {
+                    if (type === "date") {
                         value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
                     } else if (type === "percent") {
                         value = (value * 100) + "%";
