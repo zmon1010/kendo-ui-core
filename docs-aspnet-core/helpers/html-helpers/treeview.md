@@ -36,6 +36,11 @@ The following example demonstrates how to define the TreeView by using the TreeV
 
     public class TreeViewController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public JsonResult Employees(int? id)
         {
             var dataContext = new SampleEntities();
