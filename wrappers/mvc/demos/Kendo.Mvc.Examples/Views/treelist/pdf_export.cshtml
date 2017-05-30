@@ -23,7 +23,7 @@
 </script>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
-<script src="@Url.Content("~/content/shared/js/pako.min.js")"></script>
+<script src="@Url.Content("~/Scripts/pako.min.js")"></script>
 @(Html.Kendo().TreeList<Kendo.Mvc.Examples.Models.TreeList.EmployeeDirectoryModel>()
     .Name("treelist")
     .Columns(columns =>

@@ -610,7 +610,7 @@
 
             var object = this.objectAt(event);
             if (object && object.ref && editor.canInsertRef(false)) {
-                editor.refAtPoint(sheet.selection()._ref);
+                editor.refAtPoint(sheet);
                 sheet._setFormulaSelections(editor.highlightedRefs());
             }
         },
@@ -625,7 +625,7 @@
 
             this.editor
                 .activate({
-                    range: this._workbook.activeSheet()._viewActiveCell(),
+                    range: this._workbook.activeSheet().selection(),
                     rect: this.view.activeCellRectangle(),
                     tooltip: this._activeTooltip()
                 })
@@ -842,7 +842,7 @@
             this._execute({
                 command: "EditCommand",
                 options: {
-                    editActiveCell: true,
+                    operatingRange: e.range,
                     value: e.value
                 }
             });
@@ -917,7 +917,7 @@
             if (editor.canInsertRef(true)) {
                 this.navigator.moveActiveCell(ACTIONS[action]);
 
-                editor.activeEditor().refAtPoint(sheet.selection()._ref);
+                editor.activeEditor().refAtPoint(sheet);
                 sheet._setFormulaSelections(editor.highlightedRefs());
 
                 event.preventDefault();
@@ -931,7 +931,7 @@
             if (editor.canInsertRef(true)) {
                 this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")], this.appendSelection);
 
-                editor.activeEditor().refAtPoint(sheet.selection()._ref);
+                editor.activeEditor().refAtPoint(sheet);
                 sheet._setFormulaSelections(editor.highlightedRefs());
 
                 event.preventDefault();
@@ -945,7 +945,7 @@
 
         activateEditor: function() {
             this.editor.activate({
-                range: this._workbook.activeSheet()._viewActiveCell(),
+                range: this._workbook.activeSheet().selection(),
                 rect: this.view.activeCellRectangle(),
                 tooltip: this._activeTooltip()
             }).focus();

@@ -325,6 +325,218 @@
         equal(data[20].value, 120);
     });
 
+    test("expand the first dimension of expanded first child column", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] }
+                ]
+            }
+        ];
+
+        var rowTuples = [
+            {
+                tuples: [
+                    { members: [{ name: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-1", parentName: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-2", parentName: "row 0", children: [] }] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [{ name: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-1", parentName: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-2", parentName: "row 0", children: [] }] }
+                ]
+            }
+        ];;
+
+        var data = [
+            [
+                { "value": 24, "ordinal": 0  }, { "value": 48, "ordinal": 1  },
+                { "value": 24, "ordinal": 2  }, { "value": 48, "ordinal": 3  },
+                { "value": 8,  "ordinal": 2  }, { "value": 16, "ordinal": 3  },
+                { "value": 16, "ordinal": 4  }, { "value": 32, "ordinal": 5  },
+                { "value": 9,  "ordinal": 4  }, { "value": 18, "ordinal": 5  },
+                { "value": 9,  "ordinal": 6  }, { "value": 18, "ordinal": 7  },
+                { "value": 3,  "ordinal": 8  }, { "value": 6,  "ordinal": 9  },
+                { "value": 6,  "ordinal": 10 }, { "value": 12, "ordinal": 11 },
+                { "value": 15, "ordinal": 8  }, { "value": 30, "ordinal": 9  },
+                { "value": 15, "ordinal": 10 }, { "value": 30, "ordinal": 11 },
+                { "value": 5,  "ordinal": 14 }, { "value": 10, "ordinal": 15 },
+                { "value": 10, "ordinal": 16 }, { "value": 20, "ordinal": 17 }
+            ], [
+                { "value": 24, "ordinal": 0  }, { "value": 48, "ordinal": 1  },
+                { "value": 8,  "ordinal": 2  }, { "value": 16, "ordinal": 3  },
+                { "value": 16, "ordinal": 4  }, { "value": 32, "ordinal": 5  },
+                { "value": 9,  "ordinal": 2  }, { "value": 18, "ordinal": 3  },
+                { "value": 3,  "ordinal": 8  }, { "value": 6,  "ordinal": 9  },
+                { "value": 6,  "ordinal": 10 }, { "value": 12, "ordinal": 11 },
+                { "value": 15, "ordinal": 4  }, { "value": 30, "ordinal": 5  },
+                { "value": 5,  "ordinal": 14 }, { "value": 10, "ordinal": 15 },
+                { "value": 10, "ordinal": 16 }, { "value": 20, "ordinal": 17 }
+            ]
+        ];
+
+        var dataSource = new PivotDataSource({
+            measures: ["measure 1", "measure 2"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift(),
+                            rows: rowTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.expandColumn(["All Categories", "All Years"]);
+
+        equalArrays(dataSource.data(), [
+            { "value": 24, "ordinal": 0  }, { "value": 48, "ordinal": 1  },
+            { "value": 24, "ordinal": 2  }, { "value": 48, "ordinal": 3  },
+            { "value": 8,  "ordinal": 2  }, { "value": 16, "ordinal": 3  },
+            { "value": 16, "ordinal": 4  }, { "value": 32, "ordinal": 5  },
+            { "value": 8,  "ordinal": 2  }, { "value": 16, "ordinal": 3  },
+            { "value": 16, "ordinal": 4  }, { "value": 32, "ordinal": 5  },
+            { "value": 9,  "ordinal": 4  }, { "value": 18, "ordinal": 5  },
+            { "value": 9,  "ordinal": 6  }, { "value": 18, "ordinal": 7  },
+            { "value": 3,  "ordinal": 8  }, { "value": 6,  "ordinal": 9  },
+            { "value": 6,  "ordinal": 10 }, { "value": 12, "ordinal": 11 },
+            { "value": 3,  "ordinal": 8  }, { "value": 6,  "ordinal": 9  },
+            { "value": 6,  "ordinal": 10 }, { "value": 12, "ordinal": 11 },
+            { "value": 15, "ordinal": 8  }, { "value": 30, "ordinal": 9  },
+            { "value": 15, "ordinal": 10 }, { "value": 30, "ordinal": 11 },
+            { "value": 5,  "ordinal": 14 }, { "value": 10, "ordinal": 15 },
+            { "value": 10, "ordinal": 16 }, { "value": 20, "ordinal": 17 },
+            { "value": 5,  "ordinal": 14 }, { "value": 10, "ordinal": 15 },
+            { "value": 10, "ordinal": 16 }, { "value": 20, "ordinal": 17 }
+        ]);
+    });
+
+    test("expand the second dimension of expanded first child column", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "Category&Beverages", parentName: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2010", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 1", children: [] }] },
+                    { members: [{ name: "All Categories", children: [] }, { name: "Year&2011", parentName: "All Years", children: [] }, { name: "measure 2", children: [] }] }
+                ]
+            }
+        ];
+
+        var rowTuples = [
+            {
+                tuples: [
+                    { members: [{ name: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-1", parentName: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-2", parentName: "row 0", children: [] }] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [{ name: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-1", parentName: "row 0", children: [] }] },
+                    { members: [{ name: "row 0-2", parentName: "row 0", children: [] }] }
+                ]
+            }
+        ];
+
+        var data = [
+            [
+                { "value": 24, "ordinal": 0  }, { "value": 48 ,"ordinal":  1 },
+                { "value": 24, "ordinal": 2  }, { "value": 48, "ordinal":  3 },
+                { "value": 9,  "ordinal": 4  }, { "value": 18, "ordinal":  5 },
+                { "value": 9,  "ordinal": 6  }, { "value": 18, "ordinal":  7 },
+                { "value": 15, "ordinal": 8  }, { "value": 30, "ordinal":  9 },
+                { "value": 15, "ordinal": 10 }, { "value": 30, "ordinal": 11 }
+            ], [
+                { "value": 24, "ordinal": 0  }, { "value": 48, "ordinal": 1  },
+                { "value": 8,  "ordinal": 2  }, { "value": 16, "ordinal": 3  },
+                { "value": 16, "ordinal": 4  }, { "value": 32, "ordinal": 5  },
+                { "value": 9,  "ordinal": 6  }, { "value": 18, "ordinal": 7  },
+                { "value": 3,  "ordinal": 8  }, { "value": 6,  "ordinal": 9  },
+                { "value": 6,  "ordinal": 10 }, { "value": 12, "ordinal": 11 },
+                { "value": 15, "ordinal": 12 }, { "value": 30, "ordinal": 13 },
+                { "value": 5,  "ordinal": 14 }, { "value": 10, "ordinal": 15 },
+                { "value": 10, "ordinal": 16 }, { "value": 20, "ordinal": 17 }
+            ]
+        ];
+
+        var dataSource = new PivotDataSource({
+            measures: ["measure 1", "measure 2"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift(),
+                            rows: rowTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.expandColumn(["All Categories", "All Years"]);
+
+        equalArrays(dataSource.data(), [
+            { "value": 24, "ordinal": 0  }, { "value": 48, "ordinal": 1  },
+            { "value": 24, "ordinal": 2  }, { "value": 48, "ordinal": 3  },
+            { "value": 8,  "ordinal": 4  }, { "value": 16, "ordinal": 5  },
+            { "value": 16, "ordinal": 6  }, { "value": 32, "ordinal": 7  },
+            { "value": 9,  "ordinal": 8  }, { "value": 18, "ordinal": 9  },
+            { "value": 9,  "ordinal": 10 }, { "value": 18, "ordinal": 11 },
+            { "value": 3,  "ordinal": 12 }, { "value": 6,  "ordinal": 13 },
+            { "value": 6,  "ordinal": 14 }, { "value": 12, "ordinal": 15 },
+            { "value": 15, "ordinal": 16 }, { "value": 30, "ordinal": 17 },
+            { "value": 15, "ordinal": 18 }, { "value": 30, "ordinal": 19 },
+            { "value": 5,  "ordinal": 20 }, { "value": 10, "ordinal": 21 },
+            { "value": 10, "ordinal": 22 }, { "value": 20, "ordinal": 23 }
+        ]);
+    });
+
     test("expand of root level row axis", function() {
         var rowTuples = [
             {

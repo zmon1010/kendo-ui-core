@@ -12,7 +12,7 @@
     )
     .Import(import => import
         .Proxy("Import", "EditorImport")
-        .AllowedExtensions(new[] { "docx", "rtf", "pdf", "html", "txt" })
+        .AllowedExtensions(new[] { "docx", "rtf", "html", "txt" })
         .MaxFileSize(104857600)
         .Select("onSelect")
         .Error("onError")

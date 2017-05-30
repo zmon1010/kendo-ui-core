@@ -69,6 +69,21 @@
         equal(editor.value(), 'link <a href="http://telerik.com/">http://te<strong>le</strong>rik.com/</a> ');
     });
 
+    test("range is in next paragraph", function() {
+        editor.value('<p>test http://telerik.com</p><p>ater link</p>');
+        var p = $(editor.body).children("p").get(1);
+        var range = editor.createRange();
+
+        range.setStart(p.firstChild, 0);
+        range.setEnd(p.firstChild, 0);
+        editor.selectRange(range);
+
+        var cmd = createAutoLinkCommand(range);
+        cmd.exec();
+
+        equal(editor.value(), '<p>test <a href="http://telerik.com">http://telerik.com</a></p><p>ater link</p>');
+    });
+
     test("range is in next empty paragraph", function() {
         var cmd = newAutoLinkCommandForText("<p>link http://telerik.com</p><p>||</p>")
         cmd.exec();

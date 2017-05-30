@@ -1,13 +1,13 @@
 ---
 title: Charts
 page_title: Charts | UI for ASP.NET Core HtmlHelpers
-description: "Learn the basics when working with the Charts Html helper for ASP.NET Core (MVC 6 or ASP.NET Core MVC)."
+description: "Learn the basics when working with the Charts HtmlHelper for ASP.NET Core (MVC 6 or ASP.NET Core MVC)."
 slug: htmlhelpers_charts_aspnetcore
 ---
 
-# Charts Html Helper
+# Charts HtmlHelper Overview
 
-The Charts Html helper is a server-side wrapper for the [Kendo UI Charts](http://docs.telerik.com/kendo-ui/controls/charts/overview).
+The Charts HtmlHelper extension is a server-side wrapper for the [Kendo UI Charts](http://docs.telerik.com/kendo-ui/controls/charts/overview).
 
 The [Kendo UI Charts](http://demos.telerik.com/aspnet-core/) use modern browser technologies to render high-quality data visualizations. All graphics are rendered on the client by using [Scalable Vector Graphics (SVG)](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) with a fallback to [Canvas](http://www.canvasgfx.com/).
 
@@ -25,11 +25,11 @@ Kendo UI Charts support the following series types:
 
 For additional information on new Kendo UI Chart types and features, refer to the [Kendo UI Roadmap](http://www.telerik.com/support/whats-new/kendo-ui-web/roadmap).
 
-For more information on the Html helper, refer to the article on the [Charts HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/chart/overview).
+For more information on the HtmlHelper, refer to the article on the [Charts HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/chart/overview).
 
 ## Basic Usage
 
-The following example demonstrates how to define a Bar Chart by using the Chart Html helper.
+The following example demonstrates how to define a Bar Chart by using the Chart HtmlHelper.
 
 ###### Example
 
@@ -55,7 +55,7 @@ The following example demonstrates how to define a Bar Chart by using the Chart 
 
 ## Configuration
 
-The following example demonstrates the basic configuration for the Line Chart Html helper.
+The following example demonstrates the basic configuration for the Line Chart HtmlHelper.
 
 ###### Example
 
@@ -97,7 +97,7 @@ The following example demonstrates the basic configuration for the Line Chart Ht
 
 ## See Also
 
-* [JavaScript API Reference of the Charts](../../../kendo-ui/api/javascript/dataviz/ui/chart)
+* [JavaScript API Reference of the Charts](http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart)
 * [Charts HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/chart/overview)
 * [Charts Official Demos](http://demos.telerik.com/)
 * [Overview of Telerik UI for ASP.NET Core - RC1]({% slug overview_aspnetmvc6_aspnetmvc %})

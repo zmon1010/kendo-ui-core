@@ -344,7 +344,7 @@ require_once '../include/header.php';
     .product-view dd .k-textbox {
         font-size: 14px;
     }
-    .k-listview
+    #example .k-listview
     {
         border-width: 1px 0 0;
         padding: 0;

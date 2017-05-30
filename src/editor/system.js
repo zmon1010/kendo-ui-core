@@ -408,8 +408,16 @@ var BackspaceHandler = Class.extend({
             editor.selectRange(range);
         }
 
+        var startAtLi = li && editorNS.RangeUtils.isStartOf(range, li);
+        var liIndex = li && $(li).index();
+        var startAtNonFirstLi = startAtLi && liIndex > 0;
+        if (startAtNonFirstLi) {
+            block = li;
+            previousSibling = dom.prev(li);
+        }
+
         // unwrap block
-        if (block && previousSibling && editorNS.RangeUtils.isStartOf(range, block)) {
+        if ((block && previousSibling && editorNS.RangeUtils.isStartOf(range, block)) || startAtNonFirstLi) {
             var caret = this._addCaret(block);
             this._merge(previousSibling, block);
             this._restoreCaret(caret);
@@ -418,7 +426,7 @@ var BackspaceHandler = Class.extend({
         }
 
         // unwrap li element
-        if (li && editorNS.RangeUtils.isStartOf(range, li)) {
+        if (startAtLi && liIndex === 0) {
             var child = li.firstChild;
             if (!child) {
                 li.innerHTML = editorNS.emptyElementContent;
@@ -440,7 +448,7 @@ var BackspaceHandler = Class.extend({
             return true;
         }
 
-        var rangeStartNode = node.childNodes[range.startOffset] || node.childNodes[range.startOffset - 1];
+        var rangeStartNode = node.childNodes[range.startOffset - 1];
         var linkRange = range;
         var anchor = rangeStartNode && dom.closestEditableOfType(rangeStartNode, ['a']);
         var previousNode = getSibling(rangeStartNode || node, PREVIOUS_SIBLING, function(sibling) {

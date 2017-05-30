@@ -267,6 +267,15 @@ so the two should not be used at the same time.
     }
 
     /**
+    * If set to true the grid will render a select column with checkboxes in each cell, thus enabling multi-row selection. The header checkbox allows users to select/deselect all the rows on the current page.
+    * @param boolean $value
+    * @return \Kendo\UI\GridColumn
+    */
+    public function selectable($value) {
+        return $this->setProperty('selectable', $value);
+    }
+
+    /**
     * If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
 be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
     * @param boolean|\Kendo\UI\GridColumnSortable|array $value

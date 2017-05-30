@@ -11,7 +11,6 @@ var dataviz = kendo.dataviz;
 var elementStyles = dataviz.elementStyles;
 var deepExtend = dataviz.deepExtend;
 var toTime = dataviz.toTime;
-var services = dataviz.services;
 var datavizConstants = dataviz.constants;
 var Chart = dataviz.Chart;
 var drawing = kendo.drawing;
@@ -96,6 +95,7 @@ var NavigatorHint = dataviz.Class.extend({
         var scale = posRange / range;
         var offset = middle - options.min;
         var text = this.chartService.intl.format(options.format, from, to);
+        var template = dataviz.getTemplate(options);
 
         this.clearHideTimeout();
 
@@ -107,8 +107,8 @@ var NavigatorHint = dataviz.Class.extend({
             this._visible = true;
         }
 
-        if (options.template) {
-            text = services.TemplateService.compile(options.template)({
+        if (template) {
+            text = template({
                 from: from,
                 to: to
             });
@@ -278,7 +278,7 @@ var Navigator = dataviz.Class.extend({
             this.hint = new NavigatorHint(chart.element, chart.chartService, {
                 min: min,
                 max: max,
-                template: options.hint.template,
+                template: dataviz.getTemplate(options.hint),
                 format: options.hint.format
             });
         }

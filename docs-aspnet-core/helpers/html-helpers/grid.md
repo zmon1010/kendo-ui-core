@@ -1,21 +1,21 @@
 ---
 title: Grid
 page_title: Grid | UI for ASP.NET Core HtmlHelpers
-description: "Learn the basics when working with the Grid Html helper for ASP.NET Core (MVC 6 or ASP.NET Core MVC)."
+description: "Learn the basics when working with the Grid HtmlHelper for ASP.NET Core (MVC 6 or ASP.NET Core MVC)."
 slug: htmlhelpers_grid_aspnetcore
 ---
 
-# Grid Html Helper
+# Grid HtmlHelper Overview
 
 The Grid HtmlHelper extension is a server-side wrapper for the [Kendo UI Grid](https://demos.telerik.com/kendo-ui/grid/index) widget.
 
-It enables you to configure the Kendo UI Grid widget from server-side code and helps with data binding and editing. The [Grid](../../../kendo-ui/controls/data-management/grid/overview) is a powerful control for displaying data in a tabular format. It provides many options, such as paging, sorting, filtering, grouping, and editing, which determine the way data is presented and manipulated. The Grid can be bound to local or remote data by using the [Kendo UI DataSource](http://docs.telerik.com/kendo-ui/framework/datasource/overview) component.
+It enables you to configure the Kendo UI Grid widget from server-side code and helps with data binding and editing. The [Grid](http://docs.telerik.com/kendo-ui/controls/data-management/grid/overview) is a powerful control for displaying data in a tabular format. It provides many options, such as paging, sorting, filtering, grouping, and editing, which determine the way data is presented and manipulated. The Grid can be bound to local or remote data by using the [Kendo UI DataSource](http://docs.telerik.com/kendo-ui/framework/datasource/overview) component.
 
-For more information, refer to the article on the [Grid HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/grid/overview).
+For more information on the HtmlHelper, refer to the article on the [Grid HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/grid/overview).
 
 ## Basic Usage
 
-The following example demonstrates how to define the Grid by using the Grid Html helper.
+The following example demonstrates how to define the Grid by using the Grid HtmlHelper.
 
 ###### Example
 
@@ -119,7 +119,7 @@ The following example demonstrates how to define the Grid by using the Grid Html
 
 ## Configuration
 
-The following example demonstrates the basic configuration of the Grid Html helper and how to get the Grid instance.
+The following example demonstrates the basic configuration of the Grid HtmlHelper and how to get the Grid instance.
 
 ###### Example
 
@@ -158,7 +158,7 @@ The following example demonstrates the basic configuration of the Grid Html help
 
 ## See Also
 
-* [JavaScript API Reference of the Grid](../../../kendo-ui/api/javascript/ui/grid)
+* [JavaScript API Reference of the Grid](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid)
 * [Grid HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/grid/overview)
 * [Grid Official Demos](http://demos.telerik.com/aspnet-core/grid/index)
 * [Overview of Telerik UI for ASP.NET Core - RC1]({% slug overview_aspnetmvc6_aspnetmvc %})

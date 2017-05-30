@@ -4,12 +4,14 @@
     ], f);
 })(function(){
 
-(function () {
+(function ($) {
 
 var dataviz = kendo.dataviz;
 var Chart = dataviz.ui.Chart;
 var KendoSparkline = dataviz.Sparkline;
 var ChartInstanceObserver = dataviz.ChartInstanceObserver;
+
+var extend = $.extend;
 
 var Sparkline = Chart.extend({
 
@@ -25,12 +27,15 @@ var Sparkline = Chart.extend({
     _createChart: function(options, themeOptions) {
         this._instance = new KendoSparkline(this.element[0], options, themeOptions, {
             observer: new ChartInstanceObserver(this),
-            sender: this
+            sender: this,
+            rtl: this._isRtl()
         });
     },
 
     _createTooltip: function() {
-        return new SparklineTooltip(this.element, this.options.tooltip);
+        return new SparklineTooltip(this.element, extend({}, this.options.tooltip, {
+            rtl: this._isRtl()
+        }));
     },
 
     options: {
@@ -116,6 +121,6 @@ var SparklineTooltip = dataviz.Tooltip.extend({
 
 dataviz.SparklineTooltip = SparklineTooltip;
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

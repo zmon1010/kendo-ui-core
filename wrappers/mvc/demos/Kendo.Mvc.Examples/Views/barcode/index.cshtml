@@ -1,15 +1,15 @@
 
    <ul id="dairy">
         <li>
-            <img src="@(Url.Content("/content/web/foods/200/12.jpg"))" alt="Queso Manchego La Pastora" />
+            <img src="@(Url.Content("~/content/web/foods/200/12.jpg"))" alt="Queso Manchego La Pastora" />
             @(Html.Kendo().Barcode().Name("manchego").Value("2346722").Encoding(BarcodeSymbology.EAN8).Width(280).Height(100))
         </li>
         <li>
-            <img src="@(Url.Content("/content/web/foods/200/32.jpg"))"alt="Mascarpone Fabioli" />
+            <img src="@(Url.Content("~/content/web/foods/200/32.jpg"))"alt="Mascarpone Fabioli" />
             @(Html.Kendo().Barcode().Name("mascarpone").Value("Mascarpone").Encoding(BarcodeSymbology.Code128).Width(280).Height(100))
         </li>
         <li>
-            <img src="@(Url.Content("/content/web/foods/200/72.jpg"))" alt="Gudbrandsdalsost" />
+            <img src="@(Url.Content("~/content/web/foods/200/72.jpg"))" alt="Gudbrandsdalsost" />
             @(Html.Kendo().Barcode().Name("gudbrands").Value("CHEESE").Encoding(BarcodeSymbology.Code39).Width(280).Height(100))
         </li>
     </ul>

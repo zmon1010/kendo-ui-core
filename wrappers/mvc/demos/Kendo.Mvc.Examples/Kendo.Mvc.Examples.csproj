@@ -261,6 +261,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Selected_Date_and_RangeController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
+    <Compile Include="Controllers\Grid\Checkbox_Selection.cs" />
     <Compile Include="Controllers\Grid\Editing_Remote_ValidationController.cs" />
     <Compile Include="Controllers\Grid\ServerExportController.cs" />
     <Compile Include="Controllers\ListBox\ApiController.cs" />
@@ -3032,6 +3033,7 @@
     <Content Include="Views\listbox\api.cshtml" />
     <Content Include="Views\listbox\right_to_left_support.cshtml" />
     <Content Include="Views\listbox\drag_and_drop.cshtml" />
+    <Content Include="Views\grid\checkbox_selection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -397,14 +397,23 @@
     });
 
     test("does not unwrap complete ul", function() {
-        var range = createRangeFromText(editor, '<ul><li>foo</li><li><em>||</em></li></ul>');
+        var range = createRangeFromText(editor, '<ul><li><em>||</em></li><li>foo</li></ul>');
         editor.selectRange(range);
 
         handleBackspace();
 
         editor.getRange().insertNode(editor.document.createElement("a"));
 
-        equal(editor.value(), '<ul><li>foo</li></ul><p><em><a></a></em></p>');
+        equal(editor.value(), '<p><em><a></a></em></p><ul><li>foo</li></ul>');
+    });
+
+    test("does not delete li", function() {
+        var range = createRangeFromText(editor, '<ul><li>foo</li><li>||</li></ul>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<ul><li>foo</li></ul>');
     });
 
     test("removing empty paragraph should not insert bom and set caret after the li", function() {
@@ -461,5 +470,18 @@
         handleBackspace();
 
         equal(editor.value(), 'foobaz');
+    });
+
+    test("unlink command between two links", function() {
+        editor.value('<p>before <a href="http://test.com" title="test1">link1</a><a href="http://test.com" title="test2">link2</a> after</p>');
+        var range = editor.createRange();
+        var p = editor.body.getElementsByTagName("p")[0];
+        range.setStart(p, 2);
+        range.setEnd(p, 2);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p>before link1<a href="http://test.com" title="test2">link2</a> after</p>');
     });
 }());

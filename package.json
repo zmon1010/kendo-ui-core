@@ -13,8 +13,8 @@
     "gulp-subset-process": "0.1.0"
   },
   "devDependencies": {
-    "@progress/kendo-theme-default": "^2.0.0",
     "@progress/kendo-theme-bootstrap": "^2.0.0",
+    "@progress/kendo-theme-default": "^2.0.0",
     "amd-optimize": "0.6.1",
     "bootstrap": "git://github.com/twbs/bootstrap.git#95f37e4c402df37db16781995ffa1592032df9c8",
     "browser-sync": "~2.9.10",
@@ -27,6 +27,7 @@
     "glob": "~5.0.15",
     "gulp": "^3.9.1",
     "gulp-cached": "~1.1.0",
+    "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.0",
     "gulp-clone": "~1.0.0",
     "gulp-concat": "^2.6.0",

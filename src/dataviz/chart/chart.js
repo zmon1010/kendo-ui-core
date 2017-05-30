@@ -68,6 +68,7 @@
     var TOOLTIP_SHOW_DELAY = 100;
     var TOOLTIP_INVERSE = "k-chart-tooltip-inverse";
     var SHARED_TOOLTIP_CLASS = "k-chart-shared-tooltip";
+    var RTL = "rtl";
 
     services.DomEventsBuilder.register({
         create: function(element, events) {
@@ -354,7 +355,8 @@
         _createChart: function(options, themeOptions) {
             this._instance = new KendoChart(this.element[0], options, themeOptions, {
                 observer: new ChartInstanceObserver(this),
-                sender: this
+                sender: this,
+                rtl: this._isRtl()
             });
         },
 
@@ -484,7 +486,9 @@
         },
 
         _createTooltip: function() {
-            return new Tooltip(this.element, this.options.tooltip);
+            return new Tooltip(this.element, extend({}, this.options.tooltip, {
+                rtl: this._isRtl()
+            }));
         },
 
         _tooltipleave: function() {
@@ -636,6 +640,10 @@
             }
 
             return result;
+        },
+
+        _isRtl: function() {
+            return kendo.support.isRtl(this.element) && this.element.css("direction") === RTL;
         }
     });
 
@@ -773,7 +781,7 @@
             tooltip.template = Tooltip.template;
             if (!tooltip.template) {
                 tooltip.template = Tooltip.template = kendo.template(
-                    "<div class='k-tooltip k-chart-tooltip' " +
+                    "<div class='k-tooltip k-chart-tooltip#= d.rtl ? \" k-rtl\" : \"\"#' " +
                     "style='display:none; position: absolute; font: #= d.font #;" +
                     "#if (d.border) {# border: #= d.border.width #px solid; #}#" +
                     "opacity: #= d.opacity #; filter: alpha(opacity=#= d.opacity * 100 #);'>" +

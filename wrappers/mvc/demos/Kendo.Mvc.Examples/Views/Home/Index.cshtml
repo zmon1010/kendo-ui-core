@@ -81,7 +81,8 @@
             @{ int colNumber = 1; }
 
             @foreach (var column in columns)
-            {<ul class="overview-col col-four">
+            {
+                <ul class="overview-col col-four">
                 @foreach (var columnCategory in column)
                 {
                     var category = categories.FirstOrDefault(c => c.Key == columnCategory);
@@ -101,14 +102,14 @@
                         </li>
                     }
                 }
-            </ul>
+                </ul>
 
                 colNumber++;
             }
         </div>
     </div>
     <div id="applications-and-tools">
-        <div id="overview-applications">
+        <div id="overview-themebuilder">
             <h1>Theme Builder</h1>
             <div class="theme-builder">
                 <a href="http://themebuilder.telerik.com/@ViewBag.Product/">
@@ -116,6 +117,8 @@
                     <p>Create new or customize SASS themes</p>
                 </a>
             </div>
+        </div>
+        <div id="overview-applications">
             <h1>Sample Applications</h1>
             <ul>
                 <li class="application">

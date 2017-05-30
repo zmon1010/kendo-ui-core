@@ -134,6 +134,7 @@ module CodeGen::MVC::Wrappers
         'treelist.editable.window',
         'treelist.filterable.messages',
         'treelist.selectable',
+        'treelist.columns.editor',
         'treeview.items',
         'treeview.autobind',
         'treeview.animation',

@@ -2189,6 +2189,10 @@ var __meta__ = { // jshint ignore:line
                 "role": "gridcell",
                 "style": column.hidden === true ? { "display": "none" } : {}
             };
+            
+            if (column.attributes) {
+                extend(true, attr, column.attributes);
+            }
 
             if (model._edit && column.field && model.editable(column.field)) {
                 attr[kendo.attr("container-for")] = column.field;
@@ -2212,10 +2216,6 @@ var __meta__ = { // jshint ignore:line
                     children.push(kendoDomElement("span", { className: iconClass.join(" ") }));
 
                     attr.style["white-space"] = "nowrap";
-                }
-
-                if (column.attributes) {
-                    extend(true, attr, column.attributes);
                 }
 
                 if (column.command) {

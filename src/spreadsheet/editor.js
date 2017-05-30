@@ -59,11 +59,13 @@
         activate: function(options) {
             this._active = true;
             this._rect = options.rect;
+            this._range = options.range;
 
             this.cellInput.position(options.rect);
             this.cellInput.resize(options.rect);
             this.cellInput.tooltip(options.tooltip);
-            this.cellInput.activeCell = this.barInput.activeCell = options.range.topLeft;
+            this.cellInput.activeCell = this.barInput.activeCell = this._range.topLeft();
+            this.cellInput.activeSheet = this.barInput.activeSheet = this._range._sheet;
 
             this.trigger("activate");
 
@@ -78,7 +80,10 @@
             }
 
             if (cellInput.value() != this._value) {
-                this.trigger("change", { value: cellInput.value() });
+                this.trigger("change", {
+                    value: cellInput.value(),
+                    range: this._range
+                });
             }
 
             this._active = false;

@@ -2184,16 +2184,18 @@ var __meta__ = { // jshint ignore:line
 
         var measuresLength = Math.max(measures.length, 1);
         var tuples = tuple.members.slice(0, memberIndex);
-        var counter = measuresLength;
         var current = tuples.shift();
 
-        if (measuresLength > 1) {
-            measuresLength += 1;
-        }
+        //the initial value is equal to the total number of measures
+        //as the measures member is not extracted from the members of the starting tuple
+        //but should be calculated in the final result
+        var counter = measuresLength;
 
         while (current) {
             if (current.name === MEASURES) {
-                counter += measuresLength;
+                //subtract 1 as the measures member has been already counted as a single standard member
+                //but we are interested in the total number of measures instead
+                counter += (measuresLength - 1);
             } else if (current.children) {
                 //is member
                 [].push.apply(tuples, current.children);

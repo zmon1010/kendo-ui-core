@@ -314,7 +314,10 @@ var __meta__ = { // jshint ignore:line
                 dataItem = data[i];
                 uid = dataItem.uid;
                 item = items.eq(i);
-                item.attr("role", "treeitem").attr(uidAttr, uid);
+                item.attr("role", "treeitem")
+                    .attr(uidAttr, uid)
+                    .attr(ARIASELECTED, item.hasClass("k-state-selected"));
+
                 dataItem.expanded = item.attr(expandedAttr) === "true";
 
                 if (checkboxesEnabled) {
@@ -601,7 +604,7 @@ var __meta__ = { // jshint ignore:line
                     "# var item = data.item, r = data.r; #" +
                     "<li role='treeitem' class='#= r.wrapperCssClass(data.group, item) #' " +
                         kendo.attr("uid") + "='#= item.uid #' " +
-                        "aria-selected='#= item.selected ? \"true\" : \"false \" #' " +
+                        "aria-selected='#= item.selected ? \"true\" : \"false\" #' " +
                         "#=item.enabled === false ? \"aria-disabled='true'\" : ''#" +
                         "# if (item.expanded) { #" +
                         "data-expanded='true' aria-expanded='true'" +

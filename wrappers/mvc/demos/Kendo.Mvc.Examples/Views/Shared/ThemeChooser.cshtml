@@ -1,8 +1,15 @@
 <div class="themechooser" data-rel="themechooser" data-role="details">
-        <span class="tc-activator"><span class="tc-current" data-bind="text: selectedTheme"></span> Theme</span>
+    <span class="tc-activator"><span class="tc-current" data-bind="text: selectedTheme"></span> Theme</span>
     <div class="tc-theme-list">
         <div class="tc-column">
-            <h4>Themes</h4>
+            <h4>SASS Themes (beta)</h4>
+            <ul class="themes-grid"
+                data-cols="2"
+                data-role="themechooser"
+                data-template="theme-item-template"
+                data-bind="source: sassThemes, value: selectedSassTheme"></ul>
+
+            <h4>LESS Themes</h4>
             <ul class="themes-grid"
                 data-role="themechooser"
                 data-template="theme-item-template"

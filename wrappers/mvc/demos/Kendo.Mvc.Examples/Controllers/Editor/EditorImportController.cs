@@ -21,9 +21,6 @@ namespace Kendo.Mvc.Examples.Controllers.Editor
                 case ".rtf":
                     htmlResult = EditorImport.ToRtfImportResult(file, settings);
                     break;
-                case ".pdf":
-                    htmlResult = EditorImport.ToPdfImportResult(file, settings);
-                    break;
                 default:
                     htmlResult = EditorImport.GetTextContent(file);
                     break;

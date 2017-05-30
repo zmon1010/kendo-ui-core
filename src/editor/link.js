@@ -315,7 +315,8 @@ var LinkCommand = Command.extend({
             var range = this.getRange();
             var startNode = range.startContainer;
             var startOffset = range.startOffset;
-            if (dom.isBom(startNode) && !startNode.previousSibling && !startNode.nextSibling) {
+            var prev = startNode.previousSibling;
+            if (!prev && ((dom.isBom(startNode) && !startNode.nextSibling) || (!startOffset && dom.isDataNode(startNode)))) {
                 startNode = startNode.parentNode;
                 startOffset = 0;
             }

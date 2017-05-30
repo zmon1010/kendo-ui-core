@@ -719,6 +719,7 @@ var __meta__ = { // jshint ignore:line
 
     ui.plugin(Popup);
 
+    var stableSort = kendo.support.stableSort;
     var tabKeyTrapNS = "kendoTabKeyTrap";
     var focusableNodesSelector = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex], *[contenteditable]";
     var TabKeyTrap = Class.extend({
@@ -748,32 +749,57 @@ var __meta__ = { // jshint ignore:line
             if (e.which !== 9 || !this.shouldTrap()) {
                 return;
             }
-            var target = e.target;
-            var elements = this.element.find(focusableNodesSelector).filter(':visible[tabindex!=-1]');
-            var focusableItems = elements.sort(function(prevEl,nextEl) {
-                return prevEl.tabIndex - nextEl.tabIndex;
-            });
-            var focusableItemsCount = focusableItems.length;
-            var lastIndex = focusableItemsCount - 1;
-            var focusedItemIndex = focusableItems.index(target);
 
-            if (e.shiftKey) {
-                if (focusedItemIndex === 0) {
-                    focusableItems.get(lastIndex).focus();
-                }
-                else {
-                    focusableItems.get(focusedItemIndex - 1).focus();
-                }
-            }
-            else {
-                if (focusedItemIndex === lastIndex) {
-                    focusableItems.get(0).focus();
-                }
-                else {
-                    focusableItems.get(focusedItemIndex + 1).focus();
-                }
-            }
+            var elements = this._focusableElements();
+            var sortedElements = this._sortFocusableElements(elements);
+            var next = this._nextFocusable(e, sortedElements);
+
+            this._focus(next);
+
             e.preventDefault();
+        },
+        _focusableElements: function(){
+            var elements = this.element.find(focusableNodesSelector).filter(function(i, item){
+                return item.tabIndex >= 0 && $(item).is(':visible');
+            });
+
+            return elements;
+        },
+        _sortFocusableElements: function(elements){
+            var sortedElements;
+
+            if (stableSort) {
+                sortedElements = elements.sort(function(prev, next) {
+                    return prev.tabIndex - next.tabIndex;
+                });
+            } else {
+                var attrName = "__k_index";
+                elements.each(function(i, item){
+                    item.setAttribute(attrName, i);
+                });
+
+                sortedElements = elements.sort(function(prev, next) {
+                    return prev.tabIndex === next.tabIndex ?
+                        parseInt(prev.getAttribute(attrName), 10) - parseInt(next.getAttribute(attrName), 10) :
+                        prev.tabIndex - next.tabIndex;
+                });
+
+                elements.removeAttr(attrName);
+            }
+
+            return sortedElements;
+        },
+        _nextFocusable: function(e, elements){
+            var count = elements.length;
+            var current = elements.index(e.target);
+
+            return elements.get((current + (e.shiftKey ? -1 : 1)) % count);
+        },
+        _focus: function(element){
+            element.focus();
+            if (element.nodeName == "INPUT" && element.setSelectionRange) {
+                element.setSelectionRange(0, element.value.length);
+            }
         }
     });
     ui.Popup.TabKeyTrap = TabKeyTrap;

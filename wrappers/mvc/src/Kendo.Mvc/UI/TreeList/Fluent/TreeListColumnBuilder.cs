@@ -53,17 +53,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.
-        /// </summary>
-        /// <param name="value">The value that configures the editor.</param>
-        public TreeListColumnBuilder<T> Editor(string value)
-        {
-            container.Editor = value;
-
-            return this;
-        }
-        
-        /// <summary>
         /// If set to true the column value will be HTML-encoded before it is displayed. If set to false the column value will be displayed as is. By default the column value is HTML-encoded.
         /// </summary>
         /// <param name="value">The value that configures the encoded.</param>
@@ -362,6 +351,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+
+        /// <summary>
+        /// Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.
+        /// </summary>
+        /// <param name="value">The value that configures the editor.</param>
+        public TreeListColumnBuilder<T> Editor(string value)
+        {
+            container.Editor = value;
+
+            return this;
+        }
 
         /// <summary>
         /// The width of the column. Numeric values are treated as pixels. For more important information, please refer to Column Widths.

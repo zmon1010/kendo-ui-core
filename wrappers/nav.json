@@ -770,6 +770,7 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -1736,6 +1737,22 @@
                     "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>As of <strong>R2 2017</strong> you can persist the row selection after data operations by setting the <strong>PersistSelection</strong> property to <strong>true</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
                 }
             },
+			{
+				"text": "Checkbox selection",
+				"url": "grid/checkbox-selection",
+				"new": "true",
+				"title": {
+					"kendo-ui": "Checkbox selection"
+				},
+				"group": "Functionality",
+				"meta": {
+					"kendo-ui": "In this example we will learn how to enable the built-in checkbox column and selection persistence of the Kendo UI Grid."
+				},
+				"description": {
+					"kendo-ui": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define selectable column as shown below:</p> <p>&nbsp;columns: [{ selectable: true }]</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved  by setting the <strong>persistSelection</strong> property to <strong>true</strong>.</p>",
+					"aspnet-mvc": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define select column as shown below:</p> <p>&nbsp;.Columns(columns => { columns.Select(); })</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved by enabling the <strong>persistSelection</strong> as follows <strong>.PersistSelection()</strong>.</p>"
+				}
+			},
             {
                 "text": "Aggregates",
                 "url": "grid/aggregates",
@@ -4112,6 +4129,7 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },

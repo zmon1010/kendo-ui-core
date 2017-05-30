@@ -44,8 +44,7 @@ var valueOrDefault = dataviz.valueOrDefault;
 var isObject = dataviz.isObject;
 var deepExtend = dataviz.deepExtend;
 var eventElement = dataviz.eventElement;
-var services = dataviz.services;
-var TemplateService = services.TemplateService;
+var getTemplate = dataviz.getTemplate;
 var TextBox = dataviz.TextBox;
 var ShapeElement = dataviz.ShapeElement;
 var getSpacing = dataviz.getSpacing;
@@ -63,6 +62,7 @@ var DateCategoryAxis = dataviz.DateCategoryAxis;
 var elementStyles = dataviz.elementStyles;
 var hasClasses = dataviz.hasClasses;
 var bindEvents = dataviz.bindEvents;
+var services = dataviz.services;
 var unbindEvents = dataviz.unbindEvents;
 var support = kendo.support;
 var drawing = kendo.drawing;
@@ -101,6 +101,13 @@ var ChartAxis = Class.extend({
 
     valueRange: function() {
         return this._axis.valueRange();
+    }
+});
+
+var ChartPane = kendo.Class.extend({
+    init: function(pane) {
+        this.visual = pane.visual;
+        this.chartsVisual = pane.chartContainer.visual;
     }
 });
 
@@ -1126,8 +1133,10 @@ var CategoricalChart = ChartElement.extend({
             $.extend(point, fields);
 
             point.owner = this;
-            point.dataItem = series.data[categoryIx];
             point.noteText = data.fields.noteText;
+            if (!defined(point.dataItem)) {
+                point.dataItem = series.data[categoryIx];
+            }
             this.addErrorBar(point, data, categoryIx);
         }
 
@@ -1139,7 +1148,7 @@ var CategoricalChart = ChartElement.extend({
     },
 
     evalPointOptions: function(options, value, category, categoryIx, series, seriesIx) {
-        var state = { defaults: series._defaults, excluded: [ "data", "aggregate", "_events", "tooltip", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
+        var state = { defaults: series._defaults, excluded: [ "data", "aggregate", "_events", "tooltip", "content", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
 
         var doEval = this._evalSeries[seriesIx];
         if (!defined(doEval)) {
@@ -1312,7 +1321,8 @@ var CategoricalChart = ChartElement.extend({
                 category: outOfRangePoint.category,
                 categoryIx: categoryIx,
                 series: series,
-                seriesIx: seriesIx
+                seriesIx: seriesIx,
+                dataItem: outOfRangePoint.item
             });
         }
     },
@@ -1436,9 +1446,9 @@ var LinePoint = ChartElement.extend({
         }
 
         if (labels.visible) {
+            var labelTemplate = getTemplate(labels);
             var labelText = this.value;
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
+            if (labelTemplate) {
                 labelText = labelTemplate({
                     dataItem: this.dataItem,
                     category: this.category,
@@ -2670,11 +2680,10 @@ var Bar = ChartElement.extend({
         var labels = options.labels;
 
         if (labels.visible) {
+            var labelTemplate = getTemplate(labels);
             var labelText;
 
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
-
+            if (labelTemplate) {
                 labelText = labelTemplate({
                     dataItem: this.dataItem,
                     category: this.category,
@@ -2922,7 +2931,25 @@ Bar.prototype.defaults = {
     }
 };
 
+function forEach(elements, callback) {
+    elements.forEach(callback);
+}
+
+function forEachReverse(elements, callback) {
+    var length = elements.length;
+
+    for (var idx = length - 1; idx >= 0; idx--) {
+        callback(elements[idx], idx - length - 1);
+    }
+}
+
 var ClusterLayout = ChartElement.extend({
+    init: function(options) {
+        ChartElement.fn.init.call(this, options);
+
+        this.forEach = options.rtl ? forEachReverse : forEach;
+    },
+
     reflow: function(box) {
         var ref = this.options;
         var vertical = ref.vertical;
@@ -2935,19 +2962,19 @@ var ClusterLayout = ChartElement.extend({
         var slotSize = (vertical ? box.height() : box.width()) / slots;
         var position = box[axis + 1] + slotSize * (gap / 2);
 
-        for (var i = 0; i < count; i++) {
-            var childBox = (children[i].box || box).clone();
+        this.forEach(children, function (child, idx) {
+            var childBox = (child.box || box).clone();
 
             childBox[axis + 1] = position;
             childBox[axis + 2] = position + slotSize;
 
-            children[i].reflow(childBox);
-            if (i < count - 1) {
+            child.reflow(childBox);
+            if (idx < count - 1) {
                 position += (slotSize * spacing);
             }
 
             position += slotSize;
-        }
+        });
     }
 });
 
@@ -3056,7 +3083,8 @@ var BarChart = CategoricalChart.extend({
             cluster = new clusterType({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -3443,7 +3471,8 @@ var CandlestickChart = CategoricalChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -3835,7 +3864,8 @@ var BoxPlotChart = CandlestickChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -4079,7 +4109,7 @@ var ScatterChart = ChartElement.extend({
     evalPointOptions: function(options, value, fields) {
         var series = fields.series;
         var seriesIx = fields.seriesIx;
-        var state = { defaults: series._defaults, excluded: [ "data", "tooltip", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
+        var state = { defaults: series._defaults, excluded: [ "data", "tooltip", "content", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint" ] };
 
         var doEval = this._evalSeries[seriesIx];
         if (!defined(doEval)) {
@@ -4665,7 +4695,8 @@ var BulletChart = CategoricalChart.extend({
             cluster = new ClusterLayout({
                 vertical: options.invertAxes,
                 gap: options.gap,
-                spacing: options.spacing
+                spacing: options.spacing,
+                rtl: !options.invertAxes && (this.chartService || {}).rtl
             });
             this.append(cluster);
         }
@@ -5077,7 +5108,7 @@ var ChartContainer = ChartElement.extend({
 
             for (var j = 0; j < length; j++) {
                 var point = points[j];
-                if (point && point.overlapsBox && point.overlapsBox(clipBox)) {
+                if (point && point.visible !== false && point.overlapsBox && point.overlapsBox(clipBox)) {
                     var label = point.label;
                     var note = point.note;
 
@@ -5497,9 +5528,9 @@ var PlotAreaBase = ChartElement.extend({
             }
 
             var text = currentSeries.name || "";
-            var labelTemplate = seriesVisible ? labels.template : (inactiveItemsLabels.template || labels.template);
+            var labelTemplate = seriesVisible ? getTemplate(labels) : getTemplate(inactiveItemsLabels) || getTemplate(labels);
             if (labelTemplate) {
-                text = TemplateService.compile(labelTemplate)({
+                text = labelTemplate({
                     text: text,
                     series: currentSeries
                 });
@@ -5671,6 +5702,7 @@ var PlotAreaBase = ChartElement.extend({
             var axis = yAxes[i];
             var pane = axis.pane;
             var paneId = pane.id;
+            var visible = axis.options.visible !== false;
 
             // Locate pane anchor, if any, and use its axisCrossingValues
             var anchor = paneAnchor(xAxes, pane) || xAnchor;
@@ -5695,7 +5727,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                leftAnchors[paneId] = axis;
+                if (visible) {
+                    leftAnchors[paneId] = axis;
+                }
             }
 
             if (round(axis.lineBox().x2) === round(anchor.lineBox().x2)) {
@@ -5714,7 +5748,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                rightAnchors[paneId] = axis;
+                if (visible) {
+                    rightAnchors[paneId] = axis;
+                }
             }
 
             if (i !== 0 && yAnchor.pane === axis.pane) {
@@ -5727,6 +5763,7 @@ var PlotAreaBase = ChartElement.extend({
             var axis$1 = xAxes[i$1];
             var pane$1 = axis$1.pane;
             var paneId$1 = pane$1.id;
+            var visible$1 = axis$1.options.visible !== false;
 
             // Locate pane anchor and use its axisCrossingValues
             var anchor$1 = paneAnchor(yAxes, pane$1) || yAnchor;
@@ -5757,7 +5794,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                topAnchors[paneId$1] = axis$1;
+                if (visible$1) {
+                    topAnchors[paneId$1] = axis$1;
+                }
             }
 
             if (round(axis$1.lineBox().y2, datavizConstants.COORD_PRECISION) === round(anchor$1.lineBox().y2, datavizConstants.COORD_PRECISION)) {
@@ -5769,7 +5808,9 @@ var PlotAreaBase = ChartElement.extend({
                     );
                 }
 
-                bottomAnchors[paneId$1] = axis$1;
+                if (visible$1) {
+                    bottomAnchors[paneId$1] = axis$1;
+                }
             }
 
             if (i$1 !== 0) {
@@ -6400,10 +6441,10 @@ var RangeBar = Bar.extend({
     },
 
     _createLabel: function(options) {
+        var labelTemplate = getTemplate(options);
         var labelText;
 
-        if (options.template) {
-            var labelTemplate = TemplateService.compile(options.template);
+        if (labelTemplate) {
             labelText = labelTemplate({
                 dataItem: this.dataItem,
                 category: this.category,
@@ -7321,6 +7362,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
                 var categories = axisOptions.categories; if (categories === void 0) { categories = []; }
                 axisOptions = deepExtend({
                     vertical: invertAxes,
+                    reverse: !invertAxes && this$1.chartService.rtl,
                     axisCrossingValue: invertAxes ? MAX_VALUE : 0
                 }, axisOptions);
 
@@ -7383,7 +7425,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
         var defaultRange = tracker.query();
         var definitions = [].concat(this.options.valueAxis);
         var invertAxes = this.invertAxes;
-        var baseOptions = { vertical: !invertAxes };
+        var baseOptions = { vertical: !invertAxes, reverse: invertAxes && this.chartService.rtl };
         var axes = [];
 
         if (this.stack100) {
@@ -7932,7 +7974,8 @@ var LegendLayout = ChartElement.extend({
         this.visual = new drawing.Layout(null, {
             spacing: vertical ? 0 : options.spacing,
             lineSpacing: vertical ? options.spacing : 0,
-            orientation: vertical ? "vertical" : "horizontal"
+            orientation: vertical ? "vertical" : "horizontal",
+            reverse: options.rtl
         });
 
         for (var idx = 0; idx < children.length; idx++) {
@@ -7966,12 +8009,17 @@ var LegendItem = BoxElement.extend({
         BoxElement.fn.init.call(this, options);
 
         this.createContainer();
-        this.createMarker();
-        this.createLabel();
+        if (!options.rtl) {
+            this.createMarker();
+            this.createLabel();
+        } else {
+            this.createLabel();
+            this.createMarker();
+        }
     },
 
     createContainer: function() {
-        this.container = new dataviz.FloatElement({ vertical: false, wrap: false, align: CENTER });
+        this.container = new dataviz.FloatElement({ vertical: false, wrap: false, align: CENTER, spacing: this.options.spacing });
         this.append(this.container);
     },
 
@@ -8090,6 +8138,8 @@ var CUSTOM = "custom";
 
 var Legend = ChartElement.extend({
     init: function(options, chartService) {
+        if (chartService === void 0) { chartService = {}; }
+
         ChartElement.fn.init.call(this, options);
 
         this.chartService = chartService;
@@ -8149,7 +8199,8 @@ var Legend = ChartElement.extend({
         var vertical = this.isVertical();
         var innerElement = new LegendLayout({
             vertical: vertical,
-            spacing: options.spacing
+            spacing: options.spacing,
+            rtl: chartService.rtl
         }, chartService);
         var items = options.items;
 
@@ -8164,7 +8215,8 @@ var Legend = ChartElement.extend({
 
             innerElement.append(new LegendItem(deepExtend({}, {
                 markers: options.markers,
-                labels: options.labels
+                labels: options.labels,
+                rtl: chartService.rtl
             }, options.item, item)));
         }
 
@@ -8279,11 +8331,6 @@ var Legend = ChartElement.extend({
 setDefaultOptions(Legend, {
     position: RIGHT,
     items: [],
-    labels: {
-        margin: {
-            left: 6
-        }
-    },
     offsetX: 0,
     offsetY: 0,
     margin: getSpacing(5),
@@ -8293,7 +8340,8 @@ setDefaultOptions(Legend, {
         width: 0
     },
     item: {
-        cursor: POINTER
+        cursor: POINTER,
+        spacing: 6
     },
     spacing: 6,
     background: "",
@@ -8369,14 +8417,13 @@ var Selection = Class.extend({
     init: function(chart, categoryAxis, options, observer) {
 
         var chartElement = chart.element;
-        var valueAxis = this.getValueAxis(categoryAxis);
+
         this.options = deepExtend({}, this.options, options);
         this.chart = chart;
         this.observer = observer;
         this.chartElement = chartElement;
         this.categoryAxis = categoryAxis;
         this._dateAxis = this.categoryAxis instanceof DateCategoryAxis;
-        this.valueAxis = valueAxis;
 
         this.initOptions();
 
@@ -8396,7 +8443,8 @@ var Selection = Class.extend({
             top: options.offset.top,
             left: options.offset.left,
             width: options.width,
-            height: options.height
+            height: options.height,
+            direction: 'ltr'
         });
         var selection = this.selection = createDiv("k-selection");
         this.leftMask = createDiv("k-mask");
@@ -8461,9 +8509,7 @@ var Selection = Class.extend({
         var ref = this;
         var options = ref.options;
         var categoryAxis = ref.categoryAxis;
-        var valueAxis = ref.valueAxis;
-        var categoryAxisLineBox = categoryAxis.lineBox();
-        var valueAxisLineBox = valueAxis.lineBox();
+        var box = categoryAxis.pane.chartsBox();
         var intlService = this.chart.chartService.intl;
 
         if (this._dateAxis) {
@@ -8480,15 +8526,15 @@ var Selection = Class.extend({
         var paddingTop = ref$1.paddingTop;
 
         this.options = deepExtend({}, {
-            width: categoryAxisLineBox.width(),
-            height: valueAxisLineBox.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
+            width: box.width(),
+            height: box.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
             padding: {
                 left: paddingLeft,
                 top: paddingTop
             },
             offset: {
-                left: valueAxisLineBox.x2 + paddingLeft,
-                top: valueAxisLineBox.y1 + paddingTop
+                left: box.x1 + paddingLeft,
+                top: box.y1 + paddingTop
             },
             from: options.min,
             to: options.max
@@ -8568,9 +8614,10 @@ var Selection = Class.extend({
         var ref = this;
         var state = ref._state;
         var options = ref.options;
-        var categories = ref.categoryAxis.options.categories;
+        var axisOptions = ref.categoryAxis.options;
         var range = state.range;
         var target = state.moveTarget;
+        var reverse = axisOptions.reverse;
         var from = this._index(options.from);
         var to = this._index(options.to);
         var min = this._index(options.min);
@@ -8578,12 +8625,15 @@ var Selection = Class.extend({
         var delta = state.startLocation - e.x.location;
         var oldRange = { from: range.from, to: range.to };
         var span = range.to - range.from;
-        var scale = elementStyles(this.wrapper, "width").width / (categories.length - 1);
-        var offset = Math.round(delta / scale);
+        var scale = elementStyles(this.wrapper, "width").width / (axisOptions.categories.length - 1);
+        var offset = Math.round(delta / scale) * (reverse ? -1 : 1);
 
         if (!target) {
             return;
         }
+
+        var leftHandle = hasClasses(target, "k-left-handle");
+        var rightHandle = hasClasses(target, "k-right-handle");
 
         if (hasClasses(target, "k-selection k-selection-bg")) {
             range.from = Math.min(
@@ -8594,13 +8644,13 @@ var Selection = Class.extend({
                 range.from + span,
                 max
             );
-        } else if (hasClasses(target, "k-left-handle")) {
+        } else if ((leftHandle && !reverse) || (rightHandle && reverse)) {
             range.from = Math.min(
                 Math.max(min, from - offset),
                 max - 1
             );
             range.to = Math.max(range.from + 1, range.to);
-        } else if (hasClasses(target, "k-right-handle")) {
+        } else if ((leftHandle && reverse) || (rightHandle && !reverse)) {
             range.to = Math.min(
                 Math.max(min + 1, to - offset),
                 max
@@ -8793,11 +8843,16 @@ var Selection = Class.extend({
 
     move: function(from, to) {
         var options = this.options;
+        var reverse = this.categoryAxis.options.reverse;
         var offset = options.offset;
         var padding = options.padding;
         var border = options.selection.border;
-        var box = this._slot(from);
-        var leftMaskWidth = round(box.x1 - offset.left + padding.left);
+        var left = reverse ? to : from;
+        var right = reverse ? from : to;
+        var edge = 'x' + (reverse ? 2 : 1);
+
+        var box = this._slot(left);
+        var leftMaskWidth = round(box[edge] - offset.left + padding.left);
 
         elementStyles(this.leftMask, {
             width: leftMaskWidth
@@ -8806,9 +8861,9 @@ var Selection = Class.extend({
             left: leftMaskWidth
         });
 
-        box = this._slot(to);
+        box = this._slot(right);
 
-        var rightMaskWidth = round(options.width - (box.x1 - offset.left + padding.left));
+        var rightMaskWidth = round(options.width - (box[edge] - offset.left + padding.left));
         elementStyles(this.rightMask, {
             width: rightMaskWidth
         });
@@ -8873,19 +8928,6 @@ var Selection = Class.extend({
         if (range.from !== oldRange.from || range.to !== oldRange.to) {
             this.set(range.from, range.to);
             return true;
-        }
-    },
-
-    getValueAxis: function(categoryAxis) {
-        var axes = categoryAxis.pane.axes;
-        var axesCount = axes.length;
-
-        for (var i = 0; i < axesCount; i++) {
-            var axis = axes[i];
-
-            if (axis.options.vertical !== categoryAxis.options.vertical) {
-                return axis;
-            }
         }
     },
 
@@ -9277,7 +9319,7 @@ var XYPlotArea = PlotAreaBase.extend({
         var axisName = options.name;
         var namedAxes = vertical ? this.namedYAxes : this.namedXAxes;
         var tracker = vertical ? this.yAxisRangeTracker : this.xAxisRangeTracker;
-        var axisOptions = deepExtend({}, options, { vertical: vertical });
+        var axisOptions = deepExtend({ reverse: !vertical && this.chartService.rtl }, options, { vertical: vertical });
         var isLog = equalsIgnoreCase(axisOptions.type, LOGARITHMIC);
         var defaultRange = tracker.query();
         var defaultAxisRange = isLog ? { min: 0.1, max: 1 } : { min: 0, max: 1 };
@@ -9422,8 +9464,8 @@ var PieSegment = ChartElement.extend({
         }
         this._rendered = true;
 
-        if (labels.template) {
-            var labelTemplate = TemplateService.compile(labels.template);
+        var labelTemplate = getTemplate(labels);
+        if (labelTemplate) {
             labelText = labelTemplate({
                 dataItem: this.dataItem,
                 category: this.category,
@@ -9435,7 +9477,7 @@ var PieSegment = ChartElement.extend({
             labelText = chartService.format.auto(labels.format, labelText);
         }
 
-        if (labels.visible && labelText) {
+        if (labels.visible && (labelText || labelText === 0)) {
             if (labels.position === CENTER || labels.position === INSIDE_END) {
                 if (!labels.color) {
                     var brightnessValue = new Color(this.options.color).percBrightness();
@@ -9738,12 +9780,12 @@ var PieChartMixin = {
 
         if (options && options.visibleInLegend !== false) {
             var pointVisible = options.visible !== false;
-            var labelTemplate = pointVisible ? labelsOptions.template :
-                (inactiveItemsLabels.template || labelsOptions.template);
+            var labelTemplate = pointVisible ? getTemplate(labelsOptions) :
+                getTemplate(inactiveItemsLabels) || getTemplate(labelsOptions);
             var text = options.category || "";
 
             if (labelTemplate) {
-                text = TemplateService.compile(labelTemplate)({
+                text = labelTemplate({
                     text: text,
                     series: options.series,
                     dataItem: options.dataItem,
@@ -9789,25 +9831,43 @@ function segmentVisible(series, fields, index) {
     }
 }
 
-function seriesTotal(series) {
+function bindSegments(series) {
     var data = series.data;
+    var points = [];
     var sum = 0;
+    var count = 0;
 
-    for (var i = 0; i < data.length; i++) {
-        var pointData = SeriesBinder.current.bindPoint(series, i);
+    for (var idx = 0; idx < data.length; idx++) {
+        var pointData = SeriesBinder.current.bindPoint(series, idx);
         var value = pointData.valueFields.value;
 
         if (isString(value)) {
             value = parseFloat(value);
         }
 
-        var visible = segmentVisible(series, pointData.fields, i);
-        if (isNumber(value) && visible !== false) {
-            sum += Math.abs(value);
+        if (isNumber(value)) {
+            pointData.visible = segmentVisible(series, pointData.fields, idx) !== false;
+
+            pointData.value = Math.abs(value);
+            points.push(pointData);
+
+            if (pointData.visible) {
+                sum += pointData.value;
+            }
+
+            if (value !== 0) {
+                count++;
+            }
+        } else {
+            points.push(null);
         }
     }
 
-    return sum;
+    return {
+        total: sum,
+        points: points,
+        count: count
+    };
 }
 
 var PIE_SECTOR_ANIM_DELAY = 70;
@@ -9840,8 +9900,15 @@ var PieChart = ChartElement.extend({
         for (var seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
             var currentSeries = series[seriesIx];
             var data = currentSeries.data;
-            var total = seriesTotal(currentSeries);
+            var ref$1 = bindSegments(currentSeries);
+            var total = ref$1.total;
+            var points = ref$1.points;
+            var count = ref$1.count;
             var anglePerValue = 360 / total;
+            var constantAngle = (void 0);
+            if (!isFinite(anglePerValue)) {
+                constantAngle = 360 / count;
+            }
             var currentAngle = (void 0);
 
             if (defined(currentSeries.startAngle)) {
@@ -9856,28 +9923,30 @@ var PieChart = ChartElement.extend({
                 }
             }
 
-            for (var i = 0; i < data.length; i++) {
-                var pointData = SeriesBinder.current.bindPoint(currentSeries, i);
-                var value = pointData.valueFields.value;
-                var plotValue = Math.abs(value);
+            for (var i = 0; i < points.length; i++) {
+                var pointData = points[i];
+                if (!pointData) {
+                    continue;
+                }
+
                 var fields = pointData.fields;
-                var angle = plotValue * anglePerValue;
+                var value = pointData.value;
+                var visible = pointData.visible;
+                var angle = value !== 0 ? (constantAngle || (value * anglePerValue)) : 0;
                 var explode = data.length !== 1 && Boolean(fields.explode);
 
                 if (!isFunction(currentSeries.color)) {
                     currentSeries.color = fields.color || seriesColors[i % colorsCount];
                 }
 
-                var visible = segmentVisible(currentSeries, fields, i);
-
-                callback(value, new dataviz.Ring(null, 0, 0, currentAngle, angle), {
+                callback(pointData.valueFields.value, new dataviz.Ring(null, 0, 0, currentAngle, angle), {
                     owner: this$1,
                     category: fields.category || "",
                     index: i,
                     series: currentSeries,
                     seriesIx: seriesIx,
                     dataItem: data[i],
-                    percentage: total !== 0 ? plotValue / total : 0,
+                    percentage: total !== 0 ? value / total : 0,
                     explode: explode,
                     visibleInLegend: fields.visibleInLegend,
                     visible: visible,
@@ -9901,7 +9970,7 @@ var PieChart = ChartElement.extend({
             dataItem: fields.dataItem,
             category: fields.category,
             percentage: fields.percentage
-        }, { defaults: series._defaults, excluded: [ "data", "template", "visual", "toggle" ] });
+        }, { defaults: series._defaults, excluded: [ "data", "content", "template", "visual", "toggle" ] });
     },
 
     addValue: function(value, sector, fields) {
@@ -10133,7 +10202,7 @@ var PieChart = ChartElement.extend({
                     }
                 });
 
-                if (label.options.position === OUTSIDE_END && segment.value !== 0) {
+                if (label.options.position === OUTSIDE_END) {
                     var box = label.box;
                     var centerPoint = sector.center;
                     var start = sector.point(angle);
@@ -10523,7 +10592,12 @@ var PolarPlotAreaBase = PlotAreaBase.extend({
         var box = ref.box;
         var defaultPadding = Math.min(box.width(), box.height()) * DEFAULT_PADDING;
         var padding = getSpacing(options.padding || {}, defaultPadding);
-        var axisBox = box.clone().unpad(padding);
+        var paddingBox = box.clone().unpad(padding);
+        var axisBox = paddingBox.clone();
+
+        axisBox.y2 = axisBox.y1 + Math.min(axisBox.width(), axisBox.height());
+        axisBox.align(paddingBox, Y, CENTER);
+
         var valueAxisBox = axisBox.clone().shrink(0, axisBox.height() / 2);
 
         polarAxis.reflow(axisBox);
@@ -10864,6 +10938,12 @@ setDefaultOptions(RadarSegment, {
 });
 
 var RadarClusterLayout = ChartElement.extend({
+    init: function(options) {
+        ChartElement.fn.init.call(this, options);
+
+        this.forEach = options.rtl ? forEachReverse : forEach;
+    },
+
     reflow: function(sector) {
         var ref = this;
         var options = ref.options;
@@ -10875,20 +10955,20 @@ var RadarClusterLayout = ChartElement.extend({
         var slotAngle = sector.angle / slots;
         var angle = sector.startAngle + slotAngle * (gap / 2);
 
-        for (var i = 0; i < count; i++) {
+        this.forEach(children, function (child) {
             var slotSector = sector.clone();
             slotSector.startAngle = angle;
             slotSector.angle = slotAngle;
 
-            if (children[i].sector) {
-                slotSector.radius = children[i].sector.radius;
+            if (child.sector) {
+                slotSector.radius = child.sector.radius;
             }
 
-            children[i].reflow(slotSector);
-            children[i].sector = slotSector;
+            child.reflow(slotSector);
+            child.sector = slotSector;
 
             angle += slotAngle + (slotAngle * spacing);
-        }
+        });
     }
 });
 
@@ -11248,13 +11328,14 @@ var FunnelChart = ChartElement.extend({
             return;
         }
 
-        var total = seriesTotal(series);
+        var ref$1 = bindSegments(series);
+        var total = ref$1.total;
+        var points = ref$1.points;
 
-        for (var i = 0; i < data.length; i++) {
-            var pointData = SeriesBinder.current.bindPoint(series, i);
-            var value = pointData.valueFields.value;
+        for (var i = 0; i < points.length; i++) {
+            var pointData = points[i];
 
-            if (value === null || value === undefined) {
+            if (!pointData) {
                 continue;
             }
 
@@ -11264,15 +11345,15 @@ var FunnelChart = ChartElement.extend({
                 series.color = fields.color || seriesColors[i % seriesColors.length];
             }
 
-            var visible = segmentVisible(series, fields, i);
             fields = deepExtend({
                 index: i,
                 owner: this$1,
                 series: series,
                 dataItem: data[i],
-                percentage: Math.abs(value) / total
-            }, fields, { visible: visible });
+                percentage: pointData.value / total
+            }, fields, { visible: pointData.visible });
 
+            var value = pointData.valueFields.value;
             var segment = this$1.createSegment(value, fields);
             var label = this$1.createLabel(value, fields);
 
@@ -11290,7 +11371,7 @@ var FunnelChart = ChartElement.extend({
             series: series,
             dataItem: fields.dataItem,
             index: fields.index
-        }, { defaults: series._defaults, excluded: [ "data", "toggle", "visual" ] });
+        }, { defaults: series._defaults, excluded: [ "data", "content", "template", "toggle", "visual" ] });
     },
 
     createSegment: function(value, fields) {
@@ -11318,8 +11399,8 @@ var FunnelChart = ChartElement.extend({
         var text = value;
 
         if (labels.visible) {
-            if (labels.template) {
-                var labelTemplate = TemplateService.compile(labels.template);
+            var labelTemplate = getTemplate(labels);
+            if (labelTemplate) {
                 text = labelTemplate({
                     dataItem: dataItem,
                     value: value,
@@ -11741,6 +11822,23 @@ var Chart = Class.extend({
         return this.getAxis(name);
     },
 
+    findPaneByName: function(name) {
+        var panes = this._plotArea.panes;
+
+        for (var idx = 0; idx < panes.length; idx++) {
+            if (panes[idx].options.name === name) {
+                return new ChartPane(panes[idx]);
+            }
+        }
+    },
+
+    findPaneByIndex: function(idx) {
+        var panes = this._plotArea.panes;
+        if (panes[idx]) {
+            return new ChartPane(panes[idx]);
+        }
+    },
+
     plotArea: function() {
         return new ChartPlotArea(this._plotArea);
     },
@@ -11928,11 +12026,40 @@ var Chart = Class.extend({
         }
     },
 
+    _toggleDomDrag: function() {
+        if (!this.domEvents || !this.domEvents.toggleDrag) {
+            return;
+        }
+
+        var pannable = this.options.pannable;
+        var zoomable = this.options.zoomable;
+        var selection = (zoomable || {}).selection;
+        if (!pannable && (zoomable === false || selection === false) && !this.requiresHandlers([ DRAG_START, DRAG, DRAG_END ])) {
+            this.domEvents.toggleDrag(false);
+        } else {
+            this.domEvents.toggleDrag(true);
+        }
+    },
+
     _createMousewheelZoom: function() {
         var zoomable = this.options.zoomable;
         var mousewheel = (zoomable || {}).mousewheel;
         if (zoomable !== false && mousewheel !== false) {
             this._mousewheelZoom = new MousewheelZoom(this, mousewheel);
+        }
+    },
+
+    _toggleDomZoom: function() {
+        if (!this.domEvents || !this.domEvents.toggleZoom) {
+            return;
+        }
+
+        var zoomable = this.options.zoomable;
+        var mousewheel = (zoomable || {}).mousewheel;
+        if ((zoomable === false || mousewheel === false) && !this.requiresHandlers([ ZOOM_START, ZOOM, ZOOM_END ])) {
+            this.domEvents.toggleZoom(false);
+        } else {
+            this.domEvents.toggleZoom(true);
         }
     },
 
@@ -12146,6 +12273,9 @@ var Chart = Class.extend({
             gesturechange: this._gesturechange.bind(this),
             gestureend: this._gestureend.bind(this)
         });
+
+        this._toggleDomDrag();
+        this._toggleDomZoom();
     },
 
     _cancelDomEvents: function() {
@@ -12858,6 +12988,9 @@ var Chart = Class.extend({
         this.bindCategories();
         this.redraw();
         this.updateMouseMoveHandler();
+
+        this._toggleDomDrag();
+        this._toggleDomZoom();
     },
 
     destroy: function() {
@@ -13221,10 +13354,12 @@ kendo.deepExtend(kendo.dataviz, {
     ZoomSelection: ZoomSelection,
     Pannable: Pannable,
     ChartAxis: ChartAxis,
+    ChartPane: ChartPane,
     ChartPlotArea: ChartPlotArea,
     anyHasZIndex: anyHasZIndex,
     appendIfNotNull: areNumbers,
     areNumbers: areNumbers,
+    bindSegments: bindSegments,
     categoriesCount: categoriesCount,
     countNumbers: countNumbers,
     equalsIgnoreCase: equalsIgnoreCase,
@@ -13236,7 +13371,6 @@ kendo.deepExtend(kendo.dataviz, {
     hasValue: hasValue,
     isDateAxis: isDateAxis,
     segmentVisible: segmentVisible,
-    seriesTotal: seriesTotal,
     singleItemOrArray: singleItemOrArray
 });
 

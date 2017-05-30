@@ -8,7 +8,8 @@ require_once '../lib/Kendo/Autoload.php';
 $timePicker = new \Kendo\UI\TimePicker('timepicker');
 $timePicker->value('10:00 AM');
 $timePicker->attr('style', 'width: 100%');
-$timePicker->attr('title', 'timepicker');
+$timePicker->attr('title', 'timepicker')
+$timePicker->dateInput(true);
 
 echo $timePicker->render();
 ?>

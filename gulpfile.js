@@ -16,6 +16,7 @@ var rename = require('gulp-rename');
 var jshint = require("gulp-jshint");
 var replace = require("gulp-replace");
 var rename = require("gulp-rename");
+var clean = require('gulp-clean');
 
 var ignore = require('gulp-ignore');
 
@@ -261,6 +262,7 @@ gulp.task('mdspell', shell.task(
         const dest = 'dist/npm-' + flavor;
 
         const js = gulp.src('dist/cjs/**/*')
+                    .pipe(replace("$KENDO_VERSION", kendoVersion))
                     .pipe(gulp.dest(dest + '/js'));
 
         const styles = gulp.src('dist/styles/**/*')
@@ -286,6 +288,26 @@ gulp.task('mdspell', shell.task(
 
 const taskListing = require('gulp-task-listing');
 gulp.task('tasks', taskListing.withFilters(/:/));
+
+const syncCoreConfig = require('./build/gulp/sync-core.config')();
+gulp.task('clear-ui-core-files', function() {
+	return gulp.src(syncCoreConfig.cleanFiles)
+        .pipe(clean({force: true}));
+});
+
+gulp.task('copy-ui-core-files', ['clear-ui-core-files'], function() { 
+	var files = gulp
+		.src(syncCoreConfig.files, {base: syncCoreConfig.base})
+		.pipe(gulp.dest(syncCoreConfig.dest));
+
+	var core_files = gulp
+		.src(syncCoreConfig.core_files, {base: syncCoreConfig.base_core})
+		.pipe(gulp.dest(syncCoreConfig.dest));
+ 
+ 	return merge(
+		 files,
+		 core_files);
+});
 
 // Exit immediately on Ctrl+C
 process.once('SIGINT', function () {
