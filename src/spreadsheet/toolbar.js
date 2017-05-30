@@ -501,7 +501,7 @@
             this.toolbar = toolbar;
             this._title = options.attributes.title;
             this.element = $("<button class='k-button k-button-icon'>" +
-                                 "<span class='k-icon k-i-file-excel' />" +
+                                 "<span class='k-icon k-i-download' />" +
                              "</button>")
                              .attr("title", this._title)
                              .attr("aria-label", this._title)
