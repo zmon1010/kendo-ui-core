@@ -11735,6 +11735,7 @@ var Chart = Class.extend({
         this.bindCategories();
         dataviz.FontLoader.preloadFonts(userOptions, function () {
             if (!this$1._destroyed) {
+                this$1.trigger('init');
                 this$1._redraw();
                 this$1._attachEvents();
             }

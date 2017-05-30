@@ -1696,6 +1696,50 @@
     (function() {
 
         // ------------------------------------------------------------
+        module("instance members", {
+            teardown: destroyChart
+        });
+
+        test("are available in visual handlers", 1, function() {
+            createChart({
+                series: [{
+                    type: "bar",
+                    data: [1],
+                    visual: function(e) {
+                       ok(e.sender.getAxis("Foo"));
+                    }
+                }],
+                valueAxis:  {
+                    name: "Foo"
+                }
+            });
+        });
+
+        test("are available on render", function() {
+            var chart = createChart({
+                render: function(e) {
+                    ok(e.sender.getAxis("Foo"));
+                },
+                valueAxis:  {
+                    name: "Foo"
+                }
+            });
+        });
+
+        test("are available after the initialization", function() {
+            var chart = createChart({
+                valueAxis:  {
+                    name: "Foo"
+                }
+            });
+
+            ok(chart.getAxis("Foo"));
+        });
+    })();
+
+    (function() {
+
+        // ------------------------------------------------------------
         module("custom gradients", {
             teardown: destroyChart
         });
