@@ -20,6 +20,7 @@ The following example demonstrates how to define the Menu by using the Menu Html
 ###### Example
 
 ```tab-Razor
+
     @(Html.Kendo().Menu()
         .Name("menu")
         .Items(items =>
@@ -72,8 +73,9 @@ The following example demonstrates how to define the Menu by using the Menu Html
                             innerChildren.Add().Text("Carpets");
                         });
                });
-      })
-)
+        })
+    )
+
 ```
 
 ## Configuration
@@ -81,6 +83,7 @@ The following example demonstrates how to define the Menu by using the Menu Html
 The following example demonstrates the basic configuration of the Menu HtmlHelper and how to get the Menu instance.
 
 ```tab-Razor
+
     @(Html.Kendo().Menu()
         .Name("menu")
         .Items(items =>
@@ -139,6 +142,7 @@ The following example demonstrates the basic configuration of the Menu HtmlHelpe
             console.log(menu);
         });
     </script>
+    
 ```
 
 ## See Also
