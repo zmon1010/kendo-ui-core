@@ -818,7 +818,7 @@
                         editor.selectRange(range);
                     }
                 },
-                "cut copy paste": function (e) {
+                "cut copy paste drop dragover": function (e) {
                     editor.clipboard["on" + e.type](e);
                 },
                 "focusin": function () {

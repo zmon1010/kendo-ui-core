@@ -1029,6 +1029,10 @@ var Clipboard = Class.extend({
 
         var items = clipboardData.items || clipboardData.files;
 
+        return this._insertImages(items);
+    },
+
+    _insertImages: function(items){
         if (!items) {
             return;
         }
@@ -1129,7 +1133,24 @@ var Clipboard = Class.extend({
             }
         );
     },
+    ondragover: function(e){
+        if (browser.msie || browser.edge) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    },
+    ondrop: function(e){
+        if (!('FileReader' in window)) {
+            return;
+        }
 
+        var dataTransfer = (e.originalEvent || e).dataTransfer || {};
+        var items = dataTransfer.items || dataTransfer.files;
+
+        if (this._insertImages(items)) {
+            e.preventDefault();
+        }
+    },
     _decoreateClipboardNode: function(node, body) {
         if (!browser.msie && !browser.webkit) {
             return;
