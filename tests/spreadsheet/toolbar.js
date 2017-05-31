@@ -340,9 +340,9 @@
         equal(element.find("span.k-icon.k-i-folder-open").length, 1);
     });
 
-    test("renders toolbar button for Save As command", function() {
+    test("renders toolbar button for Export command", function() {
         createWithTools();
-        equal(element.find("span.k-icon.k-i-file-excel").length, 1);
+        equal(element.find("span.k-icon.k-i-download").length, 1);
     });
 
     test("open popup on click", function() {

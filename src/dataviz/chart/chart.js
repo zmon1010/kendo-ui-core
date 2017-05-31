@@ -85,7 +85,8 @@
             showTooltip: '_showTooltip',
             hideTooltip: '_hideTooltip',
             legendItemClick: '_onLegendItemClick',
-            render: '_onRender'
+            render: '_onRender',
+            init: '_onInit'
         }
     });
 
@@ -360,6 +361,10 @@
             });
         },
 
+        _onInit: function(e) {
+            this._instance = e.sender;
+        },
+
         _initDataSource: function(userOptions) {
             var chart = this,
                 dataSource = (userOptions || {}).dataSource;
@@ -433,8 +438,6 @@
         },
 
         _copyMembers: function(instance) {
-            this._instance = instance;
-
             this.options = instance.options;
             this._originalOptions = instance._originalOptions;
             this.surface = instance.surface;

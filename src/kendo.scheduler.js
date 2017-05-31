@@ -2501,7 +2501,7 @@ var __meta__ = { // jshint ignore:line
                                     clonedEvent.end = kendo.timezone.toLocalDate(slot.endOffset(e.x.location, e.y.location, that.options.snap));
                                 }
                             } else {
-                                startSlot = view._slotByPosition(originSlotPosition.x, originSlotPosition.y);
+                                startSlot = $.extend(true, { }, originSlot);
                                 startTime = startSlot.startOffset(originSlotPosition.x, originSlotPosition.y, that.options.snap);
 
                                 clonedEvent.start = originStart;

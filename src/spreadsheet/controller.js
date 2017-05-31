@@ -837,7 +837,14 @@
 ////////////////////////////////////////////////////////////////////
 
         onEditorChange: function(e) {
-            this._workbook.activeSheet().isInEditMode(false);
+            var sheet = e.range._sheet;
+            if (this._workbook.activeSheet() !== sheet) {
+                // remove highlighted refs (XXX: which are mostly wrong, BTW)
+                this._workbook.activeSheet()._setFormulaSelections();
+                // go back to the original sheet
+                this._workbook.activeSheet(sheet);
+            }
+            sheet.isInEditMode(false);
             this._lastEditorValue = e.value;
             this._execute({
                 command: "EditCommand",
