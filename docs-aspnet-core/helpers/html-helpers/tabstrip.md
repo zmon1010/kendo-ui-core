@@ -117,7 +117,7 @@ The following example demonstrates the basic configuration of the TabStrip HtmlH
 
     <script type="text/javascript">
         $(function () {
-            //Notice that the Name() of the TreeView is used to get its client-side instance.
+            //Notice that the Name() of the TabStrip is used to get its client-side instance.
             var tabstrip = $("#tabstrip").data("kendoTabStrip");
             console.log(tabstrip);
         });
