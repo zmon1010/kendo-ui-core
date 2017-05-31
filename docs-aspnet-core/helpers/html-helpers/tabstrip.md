@@ -78,7 +78,7 @@ The following example demonstrates the basic configuration of the TabStrip HtmlH
 ```tab-Razor
 
     @(Html.Kendo().TabStrip()
-        .Name("tabstrip-bottom")
+        .Name("tabstrip")
         .TabPosition(TabStripTabPosition.Bottom)
         .Animation(animation =>
         {
@@ -114,6 +114,14 @@ The following example demonstrates the basic configuration of the TabStrip HtmlH
             .Error("onError")
         )
     )
+
+    <script type="text/javascript">
+        $(function () {
+            //Notice that the Name() of the TreeView is used to get its client-side instance.
+            var tabstrip = $("#tabstrip").data("kendoTabStrip");
+            console.log(tabstrip);
+        });
+    </script>
 
 ```
 
