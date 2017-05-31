@@ -78,6 +78,19 @@ The following example demonstrates how to define the Menu by using the Menu Html
 
 ```
 
+```tab-Controller
+
+    public partial class MenuController : Controller
+    {
+        [Demo]
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
+    
+```
+
 ## Configuration
 
 The following example demonstrates the basic configuration of the Menu HtmlHelper and how to get the Menu instance.
