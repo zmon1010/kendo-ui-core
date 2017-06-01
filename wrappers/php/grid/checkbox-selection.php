@@ -71,9 +71,25 @@ $grid->addColumn($selectColumn,$productName, $unitPrice, $unitsInStock, $discont
      ->dataSource($dataSource)
      ->persistSelection(true)
      ->sortable(true)
+     ->change('onChange')
      ->pageable(true);
 
 echo $grid->render();
 ?>
+
+<script>
+    function onChange(arg) {
+        kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+    }
+</script>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+<style>
+    .console div {
+        height: 3.3em;
+    }
+</style>
 
 <?php require_once '../include/footer.php'; ?>
