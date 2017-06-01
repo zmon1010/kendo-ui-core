@@ -7,7 +7,7 @@
 <c:url value="/grid/checkbox-selection/read" var="readUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" persistSelection="true" height="550px" >
+    <kendo:grid name="grid" pageable="true" sortable="true" change="onChange" persistSelection="true" height="550px" >
         <kendo:grid-columns>
         	<kendo:grid-column selectable="true" width="50px"/>
             <kendo:grid-column title="Product Name" field="productName" />
@@ -24,5 +24,19 @@
                 </kendo:dataSource-schema-model>
             </kendo:dataSource-schema>
         </kendo:dataSource>
-    </kendo:grid>    
+    </kendo:grid>
+    <script>
+    	function onChange(arg) {
+        	kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+    	}
+	</script>
+	<div class="box wide">
+    	<h4>Console log</h4>
+    	<div class="console"></div>
+	</div>
+	<style>
+    	.console div {
+        	height: 3.3em;
+    	}
+	</style>    
 <demo:footer />
