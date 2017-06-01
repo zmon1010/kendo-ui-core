@@ -1,5 +1,6 @@
 MVC_6_DEMOS_ROOT = 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/'
 MVC_6_DEMOS_WWWROOT = MVC_6_DEMOS_ROOT + 'wwwroot/'
+MVC_6_DEMOS_BACKUP = 'wrappers/mvc-6/Backup/demos/Kendo.Mvc.Examples/'
 MVC_6_DEMOS_LIBROOT = MVC_6_DEMOS_WWWROOT + 'lib/kendo/'
 
 # Delete all ~/Scripts/**/kendo*.js files when `rake clean`. They are copied by `rake mvc:assets`
@@ -50,7 +51,10 @@ MVC_6_DEMOS = FileList[MVC_6_DEMOS_ROOT + '**/*']
                         .sub('wrappers', MVC_6_DEMOS_WWWROOT + 'shared')
                 )
 
-def update_nuget_reference name
+    MVC_6_DEMOS_VS2015 = FileList[MVC_6_DEMOS]
+    .exclude('**/Kendo.Mvc.Examples.csproj')
+
+def update_projectjson_nuget_reference name
     return unless File.exists? name
 
     suffix = ''
@@ -66,14 +70,37 @@ def update_nuget_reference name
     end
 end
 
-def update_demo_deps bundle
-    root = "dist/bundles/#{bundle}/wrappers/aspnetcore/Examples/AspNet.Core/"
+def update_csproj_nuget_reference name
+    return unless File.exists? name
+
+    suffix = ''
+    suffix = '.Trial' if name =~ /trial/
+
+    content = File.read(name)
+    content.gsub!('ProjectReference Include="..\..\src\Kendo.Mvc\Kendo.Mvc.csproj"',
+     'PackageReference Include="Telerik.UI.for.AspNet.Core'+ suffix +'" Version="' + VERSION + '" ')
+   
+    puts "Updating examples csproj NuGet reference to #{VERSION}"
+
+    File.open(name, 'w') do |file|
+        file.write content
+    end
+end
+
+def update_demo_deps(bundle, vs)
+    root = "dist/bundles/#{bundle}/wrappers/aspnetcore/Examples/AspNet.Core/" + vs + "/"
 
     mkdir_p root
     cp 'build/NuGet.config.aspnetcore', "#{root}NuGet.config"
 
-    puts "Updating demo dependencies for #{bundle}"
-    update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
+    puts "Updating demo dependencies for #{bundle} #{vs}"
+
+    if vs == 'VS2015'
+        cp FileList[MVC_6_DEMOS_BACKUP + '*'], root + 'Kendo.Mvc.Examples'
+        update_projectjson_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
+    else
+        update_csproj_nuget_reference "#{root}Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj"
+    end
 end
 
 namespace :mvc_6 do
@@ -154,11 +181,15 @@ namespace :mvc_6 do
 
     desc('Copy NuGet packages to trial demos')
     task :update_demo_deps_trial do
-        update_demo_deps 'aspnet.core.trial'
+        ['VS2015', 'VS2017'].each do |vs|
+            update_demo_deps('aspnet.core.trial', vs)
+        end
     end
 
     desc('Copy NuGet packages to commercial demos')
     task :update_demo_deps_commercial do
-        update_demo_deps 'aspnet.core.commercial'
+        ['VS2015', 'VS2017'].each do |vs|
+            update_demo_deps('aspnet.core.commercial', vs)
+        end
     end
 end
