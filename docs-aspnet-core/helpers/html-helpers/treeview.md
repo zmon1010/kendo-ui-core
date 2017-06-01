@@ -9,7 +9,7 @@ slug: htmlhelpers_treeview_aspnetcore
 
 The TreeView HtmlHelper extension is a server-side wrapper for the [Kendo UI TreeView](http://demos.telerik.com/kendo-ui/treeview/index) widget.
 
-The [Kendo UI TreeView widget](http://docs.telerik.com/kendo-ui/controls/navigation/treeview/overview) displays hierarchical data in a traditional tree structure. It supports user interaction through mouse or touch events to perform re-ordering operations by using the drag-and-drop functionality.
+It allows you to configure the Kendo UI TreeView from server-side code. The [TreeView](http://docs.telerik.com/kendo-ui/controls/navigation/treeview/overview) displays hierarchical data in a traditional tree structure. It supports user interaction through mouse or touch events to perform re-ordering operations by using the drag-and-drop functionality.
 
 For more information on the HtmlHelper, refer to the article on the [TreeView HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/treeview/overview).
 
@@ -46,12 +46,12 @@ The following example demonstrates how to define the TreeView by using the TreeV
             var dataContext = new SampleEntities();
 
             var employees = from e in dataContext.Employees
-                            where (id.HasValue ? e.ReportsTo == id : e.ReportsTo == null)
-                            select new {
-                                id = e.EmployeeID,
-                                Name = e.FirstName + " " + e.LastName,
-                                hasChildren = e.Employees1.Any()
-                            };
+                where (id.HasValue ? e.ReportsTo == id : e.ReportsTo == null)
+                select new {
+                    id = e.EmployeeID,
+                    Name = e.FirstName + " " + e.LastName,
+                    hasChildren = e.Employees1.Any()
+                };
 
             return Json(employees);
         }

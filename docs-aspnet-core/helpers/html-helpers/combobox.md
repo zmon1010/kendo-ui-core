@@ -7,11 +7,11 @@ slug: htmlhelpers_combobox_aspnetcore
 
 # ComboBox HtmlHelper Overview
 
-The ComboBox HtmlHelper extension is a server-side wrapper for the [Kendo UI ComboBox](http://demos.telerik.com/aspnet-mvc/combobox/index).
+The ComboBox HtmlHelper extension is a server-side wrapper for the [Kendo UI ComboBox](http://demos.telerik.com/kendo-ui/combobox/index).
 
-It enables the user to enter custom values through the keyboard. The [ComboBox](http://docs.telerik.com/kendo-ui/controls/editors/combobox/overview) represents a richer version of the ```<select>``` element and provides support for local and remote data binding, item templates, and configurable options for controlling the list behavior.
+It enables you to configure the Kendo UI ComboBox widget from server-side code. The [ComboBox](http://docs.telerik.com/kendo-ui/controls/editors/combobox/overview) enables the user to enter custom values through the keyboard. It represents a richer version of the ```<select>``` element and provides support for local and remote data binding, item templates, and configurable options for controlling the list behavior.
 
-For more information on the HtmlHelper, refer to the article on the [ComboBox HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/combobox/overview).
+For more information on the HtmlHelper, refer to the article on the [ComboBox HtmlHelper for ASP.NET MVC](http://demos.telerik.com/aspnet-mvc/combobox/index).
 
 ## Basic Usage
 
@@ -20,8 +20,9 @@ The following example demonstrates how to define the ComboBox by using the Combo
 ###### Example
 
 ```tab-Razor
+
     @(Html.Kendo().ComboBox()
-        .Name("products")
+        .Name("combobox")
         .Placeholder("Select product")
         .DataTextField("ProductName")
         .DataValueField("ProductID")
@@ -34,8 +35,10 @@ The following example demonstrates how to define the ComboBox by using the Combo
             .ServerFiltering(true);
         })
     )
+
 ```
 ```tab-Controller
+
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -66,6 +69,7 @@ The following example demonstrates how to define the ComboBox by using the Combo
             return result;
         }
     }
+
 ```
 
 ## Configuration
@@ -73,8 +77,9 @@ The following example demonstrates how to define the ComboBox by using the Combo
 The following example demonstrates the basic configuration of the ComboBox HtmlHelper and how to get the ComboBox instance.
 
 ```tab-Razor
+
     @(Html.Kendo().ComboBox()
-        .Name("products")
+        .Name("combobox")
         .Placeholder("Select product")
         .DataTextField("ProductName")
         .DataValueField("ProductID")
@@ -100,10 +105,11 @@ The following example demonstrates the basic configuration of the ComboBox HtmlH
     <script type="text/javascript">
         $(function () {
             //Notice that the Name() of the ComboBox is used to get its client-side instance.
-            var combo = $("#products").data("kendoComboBox");
-            console.log(combo);
+            var combobox = $("#combobox").data("kendoComboBox");
+            console.log(combobox);
         });
     </script>
+
 ```
 
 ## See Also

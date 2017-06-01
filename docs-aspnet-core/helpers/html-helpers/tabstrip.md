@@ -7,9 +7,9 @@ slug: htmlhelpers_tabstrip_aspnetcore
 
 # TabStrip HtmlHelper Overview
 
-The TabStrip HtmlHelper extension is a server-side wrapper for the [Kendo UI TabStrip](http://demos.telerik.com/aspnet-mvc/tabstrip/index).
+The TabStrip HtmlHelper extension is a server-side wrapper for the [Kendo UI TabStrip](http://demos.telerik.com/kendo-ui/tabstrip/index).
 
-The [Kendo UI TabStrip widget](http://docs.telerik.com/kendo-ui/controls/navigation/tabstrip/overview) displays a collection of tabs with associated content. It is composed of an unordered list of items, representing tabs, and a collection of div elements, which contain the content for each tab.
+It allows you to configure the Kendo UI TabStrip from server-side code. The [TabStrip](http://docs.telerik.com/kendo-ui/controls/navigation/tabstrip/overview) displays a collection of tabs with associated content. It is composed of an unordered list of items, representing tabs, and a collection of div elements, which contain the content for each tab.
 
 For more information on the HtmlHelper, refer to the article on the [TabStrip HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/tabstrip/overview).
 
@@ -62,8 +62,7 @@ The following example demonstrates how to define the Menu by using the TabStrip 
 
     public class TabStripController : Controller
     {
-        [Demo]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
