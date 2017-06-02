@@ -504,6 +504,8 @@ bundle :name => 'aspnet.core.commercial',
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :post_build => ['mvc_6:update_demo_deps_commercial'],
        :prerequisites => [
+           'mvc:assets',
+ -         'type_script:master:test',
            'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples',
            'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared',
            'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples',
