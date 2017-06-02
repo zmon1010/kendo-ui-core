@@ -127,7 +127,7 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        content.sub!(/"version": ".*"/, '"version": "' + VERSION + '"')
+        csproj.gsub!('<VersionPrefix>*</VersionPrefix>', '<VersionPrefix>' + VERSION + '</VersionPrefix>')
 
         puts "Updating project version to #{VERSION}"
 
