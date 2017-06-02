@@ -28,7 +28,7 @@ The following example demonstrates how to define the DropDownList by using the D
         .DataSource(source => {
             source.Read(read =>
             {
-                read.Action("Products_Read", "Home");
+                read.Action("Products_Read", "DropDownList");
             }); 
         })
     )
@@ -81,7 +81,7 @@ The following example demonstrates the basic configuration of the DropDownList H
         {
             source.Read(read =>
             {
-                read.Action("Products_Read2", "Home");
+                read.Action("Products_Read2", "DropDownList");
             })
             .ServerFiltering(false);
         })
