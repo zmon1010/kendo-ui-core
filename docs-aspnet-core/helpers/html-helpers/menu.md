@@ -80,7 +80,7 @@ The following example demonstrates how to define the Menu by using the Menu Html
 
 ```tab-Controller
 
-    public partial class MenuController : Controller
+    public class MenuController : Controller
     {
         public IActionResult Index()
         {

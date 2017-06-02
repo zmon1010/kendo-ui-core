@@ -37,16 +37,24 @@ The following example demonstrates how to define the DropDownList by using the D
 
 ```tab-Controller
 
-    public JsonResult Products_Read()
+    public class DropDownListController : Controller
     {
-        var result = Enumerable.Range(0, 50).Select(i => new ProductViewModel
+        public IActionResult Index()
         {
-            ProductID = "" + i,
-            ProductName = "Product " + i
-        });
+            return View();
+        }
 
-        return Json(result);
-    }
+        public JsonResult Products_Read()
+        {
+            var result = Enumerable.Range(0, 50).Select(i => new ProductViewModel
+            {
+                ProductID = "" + i,
+                ProductName = "Product " + i
+            });
+
+            return Json(result);
+        }
+    }    
     
 ```
 

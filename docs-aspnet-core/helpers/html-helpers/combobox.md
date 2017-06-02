@@ -30,7 +30,7 @@ The following example demonstrates how to define the ComboBox by using the Combo
         .DataSource(source => {
             source.Read(read =>
             {
-                read.Action("Products_Read", "Home");
+                read.Action("Products_Read", "ComboBox");
             })
             .ServerFiltering(true);
         })
@@ -39,7 +39,7 @@ The following example demonstrates how to define the ComboBox by using the Combo
 ```
 ```tab-Controller
 
-    public class HomeController : Controller
+    public class ComboBoxController : Controller
     {
         public IActionResult Index()
         {
@@ -89,7 +89,7 @@ The following example demonstrates the basic configuration of the ComboBox HtmlH
         .MinLength(3)
         .Height(400)
         .DataSource(source => source
-            .Read(read => read.Action("Products_Read", "Home"))
+            .Read(read => read.Action("Products_Read", "ComboBox"))
             .ServerFiltering(true)
         )
         .Events(events => events

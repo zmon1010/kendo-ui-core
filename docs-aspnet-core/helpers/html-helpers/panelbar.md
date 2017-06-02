@@ -33,7 +33,7 @@ The following example demonstrates how to define the PanelBar by using the Panel
 
 ```tab-Controller
 
-    public partial class PanelBarController : Controller
+    public class PanelBarController : Controller
     {
         public IActionResult Templates()
         {
