@@ -602,6 +602,9 @@
 
             if (value != old) {
                 this.trigger("change");
+                if(textarea) {
+                    $(textarea.get(0).ownerDocument).trigger("change");
+                }
             }
         },
 
