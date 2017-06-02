@@ -38,6 +38,7 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.resx')
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
+            .include(MVC6_SRC_ROOT + '**/*.csproj')
 
 MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core"
 MVC6_REDIST_COMMERCIAL = FileList["#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"]
@@ -127,7 +128,7 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        csproj.gsub!('<VersionPrefix>*</VersionPrefix>', '<VersionPrefix>' + VERSION + '</VersionPrefix>')
+        content.gsub!(/<VersionPrefix.*VersionPrefix\>/, '<VersionPrefix>' + VERSION + '</VersionPrefix>')
 
         puts "Updating project version to #{VERSION}"
 
@@ -145,8 +146,8 @@ def project_file (*args, &block)
     ProjectFileTask.define_task(*args, &block)
 end
 
-# Update project.json whenever the VERSION constant changes
-project_file MVC6_SRC_ROOT + 'project.json'
+# Update Kendo.Mvc.csproj whenever the VERSION constant changes
+project_file MVC6_SRC_ROOT + 'Kendo.Mvc.csproj'
 
 namespace :mvc do
     tree :to => MVC_DEMOS_ROOT + 'Content',
@@ -221,7 +222,7 @@ namespace :mvc do
 
     desc('Update CommonAssemblyInfo.cs with current VERSION')
     task :assembly_version => FileList['wrappers/mvc/src/shared/CommonAssemblyInfo.cs',
-                                       MVC6_SRC_ROOT + 'project.json']
+                                       MVC6_SRC_ROOT + 'Kendo.Mvc.csproj']
 
     desc('Copy the minified CSS and JavaScript to Content and Scripts folder')
     task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets', 'spreadsheet:binaries', 'kendo_mvc_export:binaries']
