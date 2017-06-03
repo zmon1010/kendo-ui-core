@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>https://github.com/telerik/kendo-ui-core/issues/3278</title>
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+        <script src="../loader.js"></script>
+        <script>
+         requireSync([
+             "../../src/jquery.js",
+             "../../src/kendo.spreadsheet.js"
+         ]);
+        </script>
+        <body>
+        <body>
+            <button type="button" class="k-button" onclick="clickme()">Destroy the Spreadsheet and re-create it.</button>
+
+            <div id="spreadContainer">
+                <div id="spreadsheet"></div>
+            </div>
+
+            <script>
+             var rows = [{
+                 height: 70,
+                 cells: [{
+                     value: 1, fontSize: 32, textAlign: "center"
+                 },{
+                     value:1, fontSize: 32, textAlign: "center"
+                 }]
+             },{
+                 height: 70,
+                 cells: [{
+                     value: 1, fontSize: 32, textAlign: "center"
+                 },{
+                     formula:"=ROUND(B1*0.2132, 1)", fontSize: 32, textAlign: "center"
+                 }]
+             }];
+
+
+             $(document).ready(function(e){
+                 $("#spreadsheet").kendoSpreadsheet();
+
+
+                 var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+                 spreadsheet.fromJSON({
+                     sheets: [{
+                         name: "Food Order",
+                         rows: JSON.parse(JSON.stringify(rows))
+                     }]
+                 });
+             })
+
+
+
+
+
+
+             function clickme(){
+
+                 $("#spreadsheet").getKendoSpreadsheet().destroy();    
+
+                 $("#spreadsheet").remove();
+
+                 $("<div id='spreadsheet'></div>").appendTo($("#spreadContainer"));
+                 $("#spreadsheet").kendoSpreadsheet();
+
+
+                 var spreadsheet = $("#spreadsheet").getKendoSpreadsheet();
+
+                 spreadsheet.fromJSON({
+                     sheets: [{
+                         name: "Food Order",
+                         rows: JSON.parse(JSON.stringify(rows))
+                     }]
+                 });
+
+             }
+
+
+
+
+
+
+            </script>
+        </body>
+    </body>
+</html>
