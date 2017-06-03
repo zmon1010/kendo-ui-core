@@ -647,7 +647,7 @@
         ].join(";\n");
 
         formula = new runtime.Formula(exp.refs, makeClosure(code), printer, exp.sheet, exp.row, exp.col);
-        FORMULA_CACHE[hash] = formula;
+        FORMULA_CACHE[hash] = formula.clone(exp.sheet, exp.row, exp.col);
         return formula;
 
         function js(node){
