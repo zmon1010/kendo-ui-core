@@ -2702,6 +2702,7 @@
       {
         "text": "Sorting",
         "url": "grid/sorting",
+        "updated": true,
         "title": {
           "kendo-ui": "Demo for the sorting functionality of Kendo UI Grid control",
           "aspnet-mvc": "Sorting in Telerik ASP.NET MVC Grid"

@@ -24835,6 +24835,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>If set to true the user will see sort sequence indicators for sorted columns.</description>
+            <name>showIndexes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
 
     </tag>
 

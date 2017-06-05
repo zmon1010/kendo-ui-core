@@ -30,7 +30,8 @@
         .Pageable(pageable => pageable.ButtonCount(5))
         .Sortable(sortable => sortable
             .AllowUnsort(true)
-            .SortMode(GridSortMode.MultipleColumn))
+            .SortMode(GridSortMode.MultipleColumn)
+            .ShowIndexes(true))
         .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(5)

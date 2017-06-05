@@ -43,7 +43,7 @@
         <h4>Grid with multiple column sorting enabled</h4>
          <kendo:grid name="multipleSort" scrollable="false">
 	    	<kendo:grid-pageable buttonCount="5" />
-	    	<kendo:grid-sortable allowUnsort="true" mode="multiple" />
+	    	<kendo:grid-sortable allowUnsort="true" mode="multiple" showIndexes="true" />
 	        <kendo:grid-columns>
 	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
 	            <kendo:grid-column title="Freight" field="freight" width="300px" />

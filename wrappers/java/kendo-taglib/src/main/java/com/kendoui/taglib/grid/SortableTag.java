@@ -74,6 +74,14 @@ public class SortableTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("mode", value);
     }
 
+    public boolean getShowIndexes() {
+        return (Boolean)getProperty("showIndexes");
+    }
+
+    public void setShowIndexes(boolean value) {
+        setProperty("showIndexes", value);
+    }
+
 //<< Attributes
 
 }

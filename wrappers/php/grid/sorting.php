@@ -102,6 +102,7 @@ $grid = new \Kendo\UI\Grid('cellSelection');
 
 $sortable = new \Kendo\UI\GridSortable();
 $sortable->mode('multiple')
+    ->showIndexes(true)
     ->allowUnsort(true);
 
 $grid->addColumn($shipCountry, $freight, $orderDate)
