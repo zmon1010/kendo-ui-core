@@ -23,10 +23,12 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | [AutoComplete](http://demos.telerik.com/kendo-ui/autocomplete/index)  | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Color Picker](http://demos.telerik.com/kendo-ui/colorpicker/index)   | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [ComboBox](http://demos.telerik.com/kendo-ui/combobox/index)          | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
+| [DateInput](http://demos.telerik.com/kendo-ui/dateinput/index)        | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [DatePicker](http://demos.telerik.com/kendo-ui/datepicker/index)      | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [DateTimePicker](http://demos.telerik.com/kendo-ui/datetimepicker/index) | :white_check_mark: | :white_check_mark: | :white_check_mark:        |
 | [DropDownList](http://demos.telerik.com/kendo-ui/dropdownlist/index)  | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Editor](http://demos.telerik.com/kendo-ui/editor/index)              | :x:  | :white_check_mark: | :white_check_mark:           |
+| [ListBox](http://demos.telerik.com/kendo-ui/listbox/index)            | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [MaskedTextBox](http://demos.telerik.com/kendo-ui/maskedtextbox/index)| :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [MultiSelect](http://demos.telerik.com/kendo-ui/multiselect/index)    | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [NumericTextBox](http://demos.telerik.com/kendo-ui/numerictextbox/index) | :white_check_mark: | :white_check_mark: | :white_check_mark:        |
@@ -67,6 +69,8 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | [Calendar](http://demos.telerik.com/kendo-ui/calendar/index)          | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Gantt](http://demos.telerik.com/kendo-ui/gantt/index)                | :x:  | :white_check_mark: | :white_check_mark:           |
 | [Scheduler](http://demos.telerik.com/kendo-ui/scheduler/index)        | :x:  | :white_check_mark: | :white_check_mark:           |
+| **Media**                |
+| [MediaPlayer](http://demos.telerik.com/kendo-ui/mediaplayer/index)    | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | **Layout**                |
 | [Notification](http://demos.telerik.com/kendo-ui/notification/index)  | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Responsive Panel](http://demos.telerik.com/kendo-ui/responsive-panel/index)| :white_check_mark: | :white_check_mark: | :white_check_mark:     |
