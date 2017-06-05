@@ -399,10 +399,10 @@ bundle :name => 'aspnet.core.trial',
        :post_build => ['mvc_6:update_demo_deps_trial'],
        :prerequisites => [
            'mvc:assets',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/2015/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/2015/Kendo.Mvc.Examples/wwwroot/shared',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/2017/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/2017/Kendo.Mvc.Examples/wwwroot/shared'
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples/wwwroot/shared'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.trial',
