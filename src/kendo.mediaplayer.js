@@ -295,6 +295,7 @@
                         ]
                     });
 
+                    this._toolBar.wrapper.off("keydown");
                     toolBarElement.before(templates.slider);
 
                     this._volumeButton = toolBarElement.find(".k-volume-button");
@@ -863,7 +864,9 @@
                 if (this._youTubeVideo) {
                     this._ytmedia.playVideo();
                 } else {
-                    this._uiDisplay(false);
+                    if (kendo.support.mobileOS) {
+                        this._uiDisplay(false);
+                    }
                     this._media.play();
                 }
                 this._paused = false;
@@ -877,7 +880,9 @@
                 if (this._youTubeVideo && this._ytmedia) {
                     this._ytmedia.stopVideo();
                 } else if (this._media && !this._youTubeVideo) {
-                    this._uiDisplay(true);
+                    if (kendo.support.mobileOS) {
+                        this._uiDisplay(true);
+                    }
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
@@ -891,7 +896,9 @@
                 if (this._youTubeVideo) {
                     this._ytmedia.pauseVideo();
                 } else {
-                    this._uiDisplay(true);
+                    if (kendo.support.mobileOS) {
+                        this._uiDisplay(true);
+                    }
                     this._media.pause();
                 }
                 this._paused = true;
