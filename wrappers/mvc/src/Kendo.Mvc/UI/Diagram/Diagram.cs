@@ -124,7 +124,9 @@ namespace Kendo.Mvc.UI
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
-        
+
+        public string Theme { get; set; }
+
         public double? Zoom { get; set; }
         
         public double? ZoomMax { get; set; }
@@ -223,7 +225,12 @@ namespace Kendo.Mvc.UI
             {
                 json["template"] = Template;
             }
-                
+
+            if (!string.IsNullOrEmpty(Theme))
+            {
+                json["theme"] = Theme;
+            }
+
             if (Zoom.HasValue)
             {
                 json["zoom"] = Zoom;
