@@ -13,13 +13,13 @@ namespace Kendo.Mvc.Examples.Controllers
     public partial class PdfProcessingController : Controller
     {
         [Demo]
-        public ActionResult Index()
+        public ActionResult Bar_Chart_Export()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Download_Document()
+        public ActionResult Download_Chart_Document()
         {
             PdfFormatProvider formatProvider = new PdfFormatProvider();
             formatProvider.ExportSettings.ImageQuality = ImageQuality.High;
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.Examples.Controllers
             byte[] renderedBytes = null;
             using (MemoryStream ms = new MemoryStream())
             {
-                RadFixedDocument document = CreatePdfDocument.CreateDocument();
+                RadFixedDocument document = CreatePdfWithBarChart.CreateDocument();
                 formatProvider.Export(document, ms);
                 renderedBytes = ms.ToArray();
             }

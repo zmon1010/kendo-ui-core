@@ -61,6 +61,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -281,6 +283,7 @@
     <Compile Include="Controllers\PanelBar\Local_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\Remote_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
+    <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
@@ -783,6 +786,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CreatePdfDocument.cs" />
+    <Compile Include="Helpers\CreatePdfWithBarChart.cs" />
     <Compile Include="Helpers\HyphenatedRouteHandler.cs" />
     <Compile Include="ModelBinders\CultureAwareDateTimeModelBinder.cs" />
     <Compile Include="ModelBinders\CultureAwareDecimalModelBinder.cs" />
@@ -802,6 +806,7 @@
     <Compile Include="Models\IFrameworkDescription.cs" />
     <Compile Include="Models\PanelBarItemViewModel.cs" />
     <Compile Include="Models\PanelBarRepository.cs" />
+    <Compile Include="Models\ProductPdfProcessing.cs" />
     <Compile Include="Models\SpreadsheetProductService.cs" />
     <Compile Include="Models\SpreadsheetProductViewModel.cs" />
     <Compile Include="Models\Diagram\DiagramConnectionService.cs" />
@@ -1005,6 +1010,7 @@
     <Content Include="Content\shared\styles\horizontal-ruler-bottom.png" />
     <Content Include="Content\shared\styles\tags.png" />
     <Content Include="Content\shared\styles\units.png" />
+    <Content Include="Content\web\pdfprocessing\barChart.png" />
     <Content Include="favicon.ico" />
     <Content Include="SharedContent\Images\SampleApps\bootstrap.png" />
     <Content Include="SharedContent\Images\SampleApps\northwind.png" />
@@ -3034,6 +3040,7 @@
     <Content Include="Views\listbox\right_to_left_support.cshtml" />
     <Content Include="Views\listbox\drag_and_drop.cshtml" />
     <Content Include="Views\grid\checkbox_selection.cshtml" />
+    <Content Include="Views\pdfprocessing\bar_chart_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

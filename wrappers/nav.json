@@ -1,5 +1,4 @@
-﻿[
-    {
+﻿[{
         "text": "AutoComplete",
         "name": "autocomplete",
         "api": "web/autocomplete",
@@ -13,8 +12,7 @@
             "aspnet-mvc": "aspnet-mvc/autocomplete"
         },
         "spriteCssClass": "autoCompleteIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "autocomplete/index",
                 "title": {
@@ -24,7 +22,7 @@
                     "aspnet-mvc": "See how the Telerik $FRAMEWORK Autocomplete control works and view the demo source code."
                 }
             },
-            { 
+            {
                 "text": "Server filtering",
                 "url": "autocomplete/serverfiltering",
                 "title": {
@@ -129,8 +127,7 @@
             "aspnet-mvc": "aspnet-mvc/button"
         },
         "spriteCssClass": "buttonIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "button/index",
                 "title": {
@@ -217,8 +214,7 @@
             "aspnet-mvc": "aspnet-mvc/calendar"
         },
         "spriteCssClass": "calendarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "calendar/index",
                 "title": {
@@ -248,10 +244,10 @@
                     "aspnet-mvc": "This demo shows how $FRAMEWORK Calendar allows you to disable dates"
                 }
             },
-			{
+            {
                 "text": "Week Column",
                 "url": "calendar/week-column",
-				"new": true,
+                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK Calendar | $FRAMEWORK demos"
                 },
@@ -321,8 +317,7 @@
             "aspnet-mvc": "aspnet-mvc/colorpicker"
         },
         "spriteCssClass": "colorPickerIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "colorpicker/index",
                 "title": {
@@ -409,8 +404,7 @@
             "aspnet-mvc": "aspnet-mvc/combobox"
         },
         "spriteCssClass": "comboBoxIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "combobox/index",
                 "title": {
@@ -536,8 +530,7 @@
             "aspnet-mvc": "aspnet-mvc/datetime"
         },
         "spriteCssClass": "dateInputIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "dateinput/index",
                 "title": {
@@ -546,9 +539,9 @@
                 "meta": {
                     "aspnet-mvc": "This example shows Telerik DateInput basic features to select dates and times in $FRAMEWORK application."
                 },
-        "description": {
-          "aspnet-mvc": "The DateInput helper enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format."
-        }
+                "description": {
+                    "aspnet-mvc": "The DateInput helper enables you to enter date/time via direct input. It provides separate sections for day, month, year, hours and minutes. Furthermore, you can customize the date and time format."
+                }
             },
             {
                 "text": "Events",
@@ -559,9 +552,9 @@
                 "meta": {
                     "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use $FRAMEWORK Date Input to pick a date or change it manually from a dropdown calendar."
                 },
-        "description": {
-          "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of the <strong>change</strong> event. Note that the event is triggered after focus is removed from the component.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#events\">here</a>.</p>"
-        }
+                "description": {
+                    "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of the <strong>change</strong> event. Note that the event is triggered after focus is removed from the component.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#events\">here</a>.</p>"
+                }
             },
             {
                 "text": "API",
@@ -572,16 +565,16 @@
                 "meta": {
                     "aspnet-mvc": "This example demonstrates how the API of Telerik $FRAMEWORK Dateinput can be configured to modify the features of the extension."
                 },
-        "description": {
-          "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of <strong>value</strong>, <strong>enable</strong> and <strong>readonly</strong> methods.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#methods\">here</a>.</p>"
-        }
+                "description": {
+                    "aspnet-mvc": "<p>Telerik $FRAMEWORK Dateinput provides API that enables you to customize it and enable/disable specific features of the component.</p><p>The example shows the usage of <strong>value</strong>, <strong>enable</strong> and <strong>readonly</strong> methods.</p><p>You can find more information on client-side API of DateInput <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/dateinput#methods\">here</a>.</p>"
+                }
             },
             {
                 "text": "Globalization",
                 "url": "dateinput/globalization",
-        "description": {
-          "aspnet-mvc": "<p>This example shows Globalization supported by $FRAMEWORK DateInput.</p><p>Globalization is responsible for defining the format of the dates. Thus, the format in which the date is displayed will depend on the selected culture.</p>"
-        }
+                "description": {
+                    "aspnet-mvc": "<p>This example shows Globalization supported by $FRAMEWORK DateInput.</p><p>Globalization is responsible for defining the format of the dates. Thus, the format in which the date is displayed will depend on the selected culture.</p>"
+                }
             },
             {
                 "text": "RTL support",
@@ -592,9 +585,9 @@
                 "meta": {
                     "aspnet-mvc": "See how $FRAMEWORK DateInput component supports RTL functionality."
                 },
-        "description": {
-          "aspnet-mvc": "This example shows how RTL functionality is supported in the $FRAMEWORK DateInput component ."
-        }
+                "description": {
+                    "aspnet-mvc": "This example shows how RTL functionality is supported in the $FRAMEWORK DateInput component ."
+                }
             },
             {
                 "text": "Keyboard navigation",
@@ -605,9 +598,9 @@
                 "meta": {
                     "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput control."
                 },
-        "description": {
-          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput component."
-        }
+                "description": {
+                    "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput component."
+                }
             },
             {
                 "text": "Tag Helper",
@@ -616,8 +609,8 @@
                     "aspnet-mvc": "$FRAMEWORK DateInput Tag Helper sample"
                 },
                 "description": {
-          "mvc-core": "This example shows how you can use the tag-helper for $FRAMEWORK DateInput component."
-        },
+                    "mvc-core": "This example shows how you can use the tag-helper for $FRAMEWORK DateInput component."
+                },
                 "packages": [
                     "mvc-core"
                 ]
@@ -639,8 +632,7 @@
             "aspnet-mvc": "aspnet-mvc/datetime"
         },
         "spriteCssClass": "datePickerIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "datepicker/index",
                 "updated": true,
@@ -650,9 +642,9 @@
                 "meta": {
                     "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in $FRAMEWORK application."
                 },
-        "description": {
-          "aspnet-mvc": "<p>This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application.</p><p>Since <strong>R2 2017</strong> the DatePicker can use <a href=\"http://demos.telerik.com/aspnet-mvc/dateinput/index\">DateInput</a> as a default input. The second DatePicker in the example is configured to use DateInput.</p>"
-        }
+                "description": {
+                    "aspnet-mvc": "<p>This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application.</p><p>Since <strong>R2 2017</strong> the DatePicker can use <a href=\"http://demos.telerik.com/aspnet-mvc/dateinput/index\">DateInput</a> as a default input. The second DatePicker in the example is configured to use DateInput.</p>"
+                }
             },
             {
                 "text": "Range selection",
@@ -694,10 +686,10 @@
                     "aspnet-mvc": "This demo shows how $FRAMEWORK DatePicker allows you to disable dates"
                 }
             },
-			{
+            {
                 "text": "Week Column",
                 "url": "datepicker/week-column",
-				"new": true,
+                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK DatePicker | $FRAMEWORK demos"
                 },
@@ -766,8 +758,7 @@
             "aspnet-mvc": "aspnet-mvc/datetime"
         },
         "spriteCssClass": "dateTimePickerIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
                 "updated": true,
@@ -818,10 +809,10 @@
                     "aspnet-mvc": "This demo shows how $FRAMEWORK DateTImePicker allows you to disable dates"
                 }
             },
-			{
+            {
                 "text": "Week Column",
                 "url": "datetimepicker/week-column",
-				"new": true,
+                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK DateTimePicker | $FRAMEWORK demos"
                 },
@@ -890,8 +881,7 @@
             "aspnet-mvc": "aspnet-mvc/dropdownlist"
         },
         "spriteCssClass": "dropDownListIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "dropdownlist/index",
                 "title": {
@@ -1013,120 +1003,119 @@
         "category": "Editors"
     },
     {
-      "text": "Dialog",
-      "name": "dialog",
-      "api": "web/dialog",
-      "documentation": {
-        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview"
-      },
-      "forum": {
-        "aspnet-mvc": "aspnet-mvc/dialog"
-      },
-      "codelibrary": {
-        "aspnet-mvc": "aspnet-mvc/dialog"
-      },
-      "spriteCssClass": "dialogIcon",
-      "items": [
-        {
-          "text": "Basic usage",
-          "url": "dialog/index",
-          "title": {
-            "aspnet-mvc": "Basic usage demo for $FRAMEWORK Dialog | UI for $FRAMEWORK Demos"
-          },
-          "description": {
-            "aspnet-mvc": "<p>The <strong>Telerik Dialog for $FRAMEWORK</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog control is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Window</a> one where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>"
-          },
-          "meta": {
-            "aspnet-mvc": "This example demonstrates the basic usage of $FRAMEWORK Dialog control"
-          }
+        "text": "Dialog",
+        "name": "dialog",
+        "api": "web/dialog",
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview"
         },
-        {
-          "text": "Events",
-          "url": "dialog/events",
-          "title": {
-            "aspnet-mvc": "Events in $FRAMEWORK Dialog demo"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo shows how to fire events in $FRAMEWORK dialog control. Open and close are some of the events which you can trigger."
-          },
-          "requiresServer": "true"
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/dialog"
         },
-        {
-          "text": "API",
-          "url": "dialog/api",
-          "title": {
-            "aspnet-mvc": "Example of $FRAMEWORK Dialog API"
-          },
-          "meta": {
-            "kendo-ui": "This sample shows how you can use the API of kendoDialog widget to refresh the content of the dialog, open and close it.",
-            "aspnet-mvc": "This sample shows how you can use the API of $FRAMEWORK Dialog control to refresh the content of the dialog, open and close it."
-          },
-          "requiresServer": "true"
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/dialog"
         },
-        {
-          "text": "RTL support",
-          "url": "dialog/right-to-left-support",
-          "title": {
-            "aspnet-mvc": "Right-to-Left dialog position of $FRAMEWORK Dialog control"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo shows how $FRAMEWORK Dialog control supports right-to-left direction of the dialog to provide best end-user experience."
-          }
-        },
-        {
-          "text": "Keyboard navigation",
-          "url": "dialog/keyboard-navigation",
-          "title": {
-            "aspnet-mvc": "Keyboard navigation support | $FRAMEWORK Dialog Demo"
-          },
-          "meta": {
-            "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the $FRAMEWORK Dialog control."
-          }
-        },
-        {
-            "text": "Tag Helper",
-            "url": "dialog/tag-helper",
-            "title": {
-                "aspnet-mvc": "$FRAMEWORK Dialog Tag Helper sample"
+        "spriteCssClass": "dialogIcon",
+        "items": [{
+                "text": "Basic usage",
+                "url": "dialog/index",
+                "title": {
+                    "aspnet-mvc": "Basic usage demo for $FRAMEWORK Dialog | UI for $FRAMEWORK Demos"
+                },
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>Telerik Dialog for $FRAMEWORK</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog control is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Window</a> one where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example demonstrates the basic usage of $FRAMEWORK Dialog control"
+                }
             },
-            "packages": [
-                "mvc-core"
-            ]
-        },{
-          "text": "TreeView In Dialog",
-          "url": "dialog/treeview-integration",
-          "title": {
-            "aspnet-mvc": "Example of TreeView in $FRAMEWORK Dialog"
-          },
-		  "packages": [
-                "!mvc-core",
-				"!php",
-				"!jsp"
-            ],
-          "meta": {
-            "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field.",
-            "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field."
-          },
-          "requiresServer": "true"
-        },{
-          "text": "TreeList in Dialog",
-          "url": "dialog/treelist-integration",
-          "title": {
-            "aspnet-mvc": "Example of $FRAMEWORK Dialog API"
-          },
-		  "packages": [
-                "!mvc-core",
-				"!php",
-				"!jsp"
-            ],
-          "meta": {
-            "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field",
-            "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field"
-          },
-          "requiresServer": "true"
-        }
-      ],
-      "category": "Layout"
+            {
+                "text": "Events",
+                "url": "dialog/events",
+                "title": {
+                    "aspnet-mvc": "Events in $FRAMEWORK Dialog demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how to fire events in $FRAMEWORK dialog control. Open and close are some of the events which you can trigger."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "API",
+                "url": "dialog/api",
+                "title": {
+                    "aspnet-mvc": "Example of $FRAMEWORK Dialog API"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how you can use the API of kendoDialog widget to refresh the content of the dialog, open and close it.",
+                    "aspnet-mvc": "This sample shows how you can use the API of $FRAMEWORK Dialog control to refresh the content of the dialog, open and close it."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "RTL support",
+                "url": "dialog/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "Right-to-Left dialog position of $FRAMEWORK Dialog control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how $FRAMEWORK Dialog control supports right-to-left direction of the dialog to provide best end-user experience."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "dialog/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation support | $FRAMEWORK Dialog Demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the $FRAMEWORK Dialog control."
+                }
+            },
+            {
+                "text": "Tag Helper",
+                "url": "dialog/tag-helper",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Dialog Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
+            }, {
+                "text": "TreeView In Dialog",
+                "url": "dialog/treeview-integration",
+                "title": {
+                    "aspnet-mvc": "Example of TreeView in $FRAMEWORK Dialog"
+                },
+                "packages": [
+                    "!mvc-core",
+                    "!php",
+                    "!jsp"
+                ],
+                "meta": {
+                    "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field.",
+                    "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field."
+                },
+                "requiresServer": "true"
+            }, {
+                "text": "TreeList in Dialog",
+                "url": "dialog/treelist-integration",
+                "title": {
+                    "aspnet-mvc": "Example of $FRAMEWORK Dialog API"
+                },
+                "packages": [
+                    "!mvc-core",
+                    "!php",
+                    "!jsp"
+                ],
+                "meta": {
+                    "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field",
+                    "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field"
+                },
+                "requiresServer": "true"
+            }
+        ],
+        "category": "Layout"
     },
     {
         "text": "Editor",
@@ -1142,8 +1131,7 @@
             "aspnet-mvc": "aspnet-mvc/editor"
         },
         "spriteCssClass": "editorIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "editor/index",
                 "title": {
@@ -1196,12 +1184,10 @@
                     "aspnet-mvc": "<p>You can use the Insert Image and Insert File Browser managers to upload and insert Image and Hyperlink objects into the content area of the MVC Editor. Both dialogs consist of Address and Search fields, File Browser panel which shows the available files, File Upload, Create a New Folder and Delete features. In addition there is a file properties section with fields suitable for images: web address, alternate text, width and height as well as for hyperlinks: web address and title.</p> <p>You can configure the Image browser tool through the ImageBrowser configuration option and the Insert File browser through the FileBrowser one. You can find more information about the Image dialog in this Kendo UI documentation article: <a href=\"http://docs.telerik.com/kendo-ui/web/editor/imagebrowser\">Image Browser</a>.</p>"
                 },
                 "sources": {
-                    "aspnet-mvc": [
-                        {
-                            "name": "FileBrowserController.cs",
-                            "url": "~/src/aspnetmvc/controllers/Editor/FileBrowserController.cs"
-                        }
-                    ]
+                    "aspnet-mvc": [{
+                        "name": "FileBrowserController.cs",
+                        "url": "~/src/aspnetmvc/controllers/Editor/FileBrowserController.cs"
+                    }]
                 }
             },
             {
@@ -1379,8 +1365,7 @@
             "aspnet-mvc": "aspnet-mvc/grid"
         },
         "spriteCssClass": "gridIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "grid/index",
                 "title": {
@@ -1570,8 +1555,7 @@
                 "text": "Editing custom editor",
                 "url": "grid/editing-custom",
                 "sources": {
-                    "aspnet-mvc": [
-                        {
+                    "aspnet-mvc": [{
                             "name": "ClientCategory.cshtml",
                             "url": "~/src/aspnetmvc/views/razor/grid/EditorTemplates/ClientCategory.cshtml"
                         },
@@ -1631,8 +1615,7 @@
                     "aspnet-mvc": "This example demonstrates how to write custom validation rule that handles build-in Remote attributes in your model."
                 },
                 "sources": {
-                    "aspnet-mvc": [
-                        {
+                    "aspnet-mvc": [{
                             "name": "Validation Controller",
                             "url": "~/Controllers/ValidationController.cs"
                         },
@@ -1736,21 +1719,21 @@
                     "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>As of <strong>R2 2017</strong> you can persist the row selection after data operations by setting the <strong>PersistSelection</strong> property to <strong>true</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
                 }
             },
-			{
-				"text": "Checkbox selection",
-				"url": "grid/checkbox-selection",
-				"new": "true",
-				"title": {
-					"kendo-ui": "Checkbox selection"
-				},
-				"meta": {
-					"kendo-ui": "In this example we will learn how to enable the built-in checkbox column and selection persistence of the Kendo UI Grid."
-				},
-				"description": {
-					"kendo-ui": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define selectable column as shown below:</p> <p>&nbsp;columns: [{ selectable: true }]</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved  by setting the <strong>persistSelection</strong> property to <strong>true</strong>.</p>",
-					"aspnet-mvc": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define select column as shown below:</p> <p>&nbsp;.Columns(columns => { columns.Select(); })</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved by enabling the <strong>persistSelection</strong> as follows <strong>.PersistSelection()</strong>.</p>"
-				}
-			},
+            {
+                "text": "Checkbox selection",
+                "url": "grid/checkbox-selection",
+                "new": "true",
+                "title": {
+                    "kendo-ui": "Checkbox selection"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will learn how to enable the built-in checkbox column and selection persistence of the Kendo UI Grid."
+                },
+                "description": {
+                    "kendo-ui": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define selectable column as shown below:</p> <p>&nbsp;columns: [{ selectable: true }]</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved  by setting the <strong>persistSelection</strong> property to <strong>true</strong>.</p>",
+                    "aspnet-mvc": "<p>As of R2 2017 SP1, а checkbox based selection is provided by the grid. To enable this functionality you should define select column as shown below:</p> <p>&nbsp;.Columns(columns => { columns.Select(); })</p> <p>This column allows you to select grid rows automatically after changing the status of the checkbox to checked. A checkbox is also displayed in the column header to toggle the checked/selected state of all rows in the current page.</p> <p>Additionally in the demo you can see how to persist selected items across pages. This is achieved by enabling the <strong>persistSelection</strong> as follows <strong>.PersistSelection()</strong>.</p>"
+                }
+            },
             {
                 "text": "Aggregates",
                 "url": "grid/aggregates",
@@ -1811,7 +1794,7 @@
             {
                 "text": "Toolbar template",
                 "url": "grid/toolbar-template",
-				"updated": true,
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "Toolbar templates for Telerik $FRAMEWORK Grid"
                 },
@@ -2030,8 +2013,7 @@
             "aspnet-mvc": "aspnet-mvc/spreadsheet"
         },
         "spriteCssClass": "spreadsheetIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "spreadsheet/index",
                 "title": {
@@ -2064,12 +2046,10 @@
                     "!mvc-core"
                 ],
                 "sources": {
-                    "aspnet-mvc": [
-                        {
-                            "name": "Sheets settings",
-                            "url": "~/content/web/spreadsheet/prices.json"
-                        }
-                    ]
+                    "aspnet-mvc": [{
+                        "name": "Sheets settings",
+                        "url": "~/content/web/spreadsheet/prices.json"
+                    }]
                 }
             },
             {
@@ -2153,8 +2133,7 @@
             "aspnet-mvc": "aspnet-mvc/listbox"
         },
         "spriteCssClass": "listBoxIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "listbox/index",
                 "title": {
@@ -2163,11 +2142,11 @@
                 "meta": {
                     "aspnet-mvc": "Play with this basic example of Kendo UI ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
                 },
-				"description": {
-					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> is a helper that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multiple ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
-				}
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> is a helper that displays a list of items. It allows for multiple selection of items, reorder and transfer between two listboxes. Drag and drop is fully supported as well. You can easily control the appearance by arranging the buttons in different layouts or changing their text.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Single or Multiple selection</li><li>Reordering of selected items</li><li>Drag & Drop functionality</li><li>Item templates</li><li>Connecting multiple ListBox widgets</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li></ul>"
+                }
             },
-			{
+            {
                 "text": "Drag & Drop",
                 "url": "listbox/drag-and-drop",
                 "title": {
@@ -2176,9 +2155,9 @@
                 "meta": {
                     "aspnet-mvc": "This example shows the Drag & Drop functionality of ListBox in $FRAMEWORK and find all features of the helper for Kendo UI ListBox."
                 },
-				"description": {
-					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> allows Drag & Drop between two ListBoxes (for transfer) or within a single one (for reordering). This example demonstrates how you could use the Drag & Drop functionality with two ListBox widgets and furthermore, update the underlying data by handling the <strong>Add</strong> and <strong>Remove</strong> events."
-				}
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> allows Drag & Drop between two ListBoxes (for transfer) or within a single one (for reordering). This example demonstrates how you could use the Drag & Drop functionality with two ListBox widgets and furthermore, update the underlying data by handling the <strong>Add</strong> and <strong>Remove</strong> events."
+                }
             },
             {
                 "text": "Templates",
@@ -2189,9 +2168,9 @@
                 "meta": {
                     "aspnet-mvc": "This demo for $FRAMEWORK ListBox component shows how you can customize the widget apperience."
                 },
-				"description": {
-					"aspnet-mvc": "<p>This demo demonstrates how to configure a template for the <strong>ListBox for $FRAMEWORK</strong> items. It also demonstrates how to customize the draggable placeholder</p>"
-				}
+                "description": {
+                    "aspnet-mvc": "<p>This demo demonstrates how to configure a template for the <strong>ListBox for $FRAMEWORK</strong> items. It also demonstrates how to customize the draggable placeholder</p>"
+                }
             },
             {
                 "text": "Events",
@@ -2202,9 +2181,9 @@
                 "meta": {
                     "aspnet-mvc": "This example shows events which are triggered in $FRAMEWORK ListBox component."
                 },
-				"description": {
-					"aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features.</p><p>This particular example shows how to intercept the Change, DataBound, Reorder, DragStart, DragEnd, Drag, Drop, Add and Remove events of the ListBox to output messages in the console when these events are raised. They can also be hooked for customizations or to execute custom logic, if necessary.</p>"
-				}
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>ListBox for $FRAMEWORK</strong> exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features.</p><p>This particular example shows how to intercept the Change, DataBound, Reorder, DragStart, DragEnd, Drag, Drop, Add and Remove events of the ListBox to output messages in the console when these events are raised. They can also be hooked for customizations or to execute custom logic, if necessary.</p>"
+                }
             },
             {
                 "text": "API",
@@ -2215,11 +2194,11 @@
                 "meta": {
                     "aspnet-mvc": "This example shows how to use the API of the $FRAMEWORK ListBox component."
                 },
-				"description": {
-					"aspnet-mvc": "<p>This demo demonstrates how you could use the <strong>ListBox for $FRAMEWORK</strong> API for modify the its items and how to transfer items between two ListBox instances</p>"
-				}
+                "description": {
+                    "aspnet-mvc": "<p>This demo demonstrates how you could use the <strong>ListBox for $FRAMEWORK</strong> API for modify the its items and how to transfer items between two ListBox instances</p>"
+                }
             },
-			{
+            {
                 "text": "RTL support",
                 "url": "listbox/right-to-left-support",
                 "title": {
@@ -2228,9 +2207,9 @@
                 "meta": {
                     "aspnet-mvc": "This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control."
                 },
-				"description": {
-					"aspnet-mvc": "<p>This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control.</p>"
-				}
+                "description": {
+                    "aspnet-mvc": "<p>This demo shows how the right-to-left feature is supported in $FRAMEWORK ListBox control.</p>"
+                }
             },
             {
                 "text": "Keyboard navigation",
@@ -2259,8 +2238,7 @@
             "aspnet-mvc": "aspnet-mvc/listview"
         },
         "spriteCssClass": "listViewIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "listview/index",
                 "title": {
@@ -2341,8 +2319,7 @@
             "aspnet-mvc": "aspnet-mvc/pivotgrid"
         },
         "spriteCssClass": "pivotGridIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "pivotgrid/index",
                 "title": {
@@ -2429,8 +2406,7 @@
             "aspnet-mvc": "aspnet-mvc/maskedtextbox"
         },
         "spriteCssClass": "maskedtextboxIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "maskedtextbox/index",
                 "title": {
@@ -2493,84 +2469,83 @@
         ],
         "category": "Editors"
     },
-  {
-    "text": "MediaPlayer",
-    "name": "mediaplayer",
-    "api": "web/mediaplayer",
-    "documentation": {
-      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
+    {
+        "text": "MediaPlayer",
+        "name": "mediaplayer",
+        "api": "web/mediaplayer",
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
+        },
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/mediaplayer"
+        },
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/mediaplayer"
+        },
+        "spriteCssClass": "mediaPlayerIcon",
+        "items": [{
+                "text": "Basic usage",
+                "url": "mediaplayer/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK MediaPlayer demo | Telerik UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "Play with this basic example of Telerik MediaPlayer in $FRAMEWORK and find all features of the helper for Kendo UI MediaPlayer."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>Telerik MediaPlayer for $FRAMEWORK</strong> component plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 <code>&ltvideo&gt</code> element and brings powerful media capabilities to your applications.</p>"
+                }
+            },
+            {
+                "text": "Playlist",
+                "url": "mediaplayer/playlist",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK MediaPlayer with ListView as Playlist | Telerik UI for $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>MediaPlayer</strong> component provides convenient API to change its source dynamically and dictate the flow of the video. This sample uses a ListView component to create a practical Playlist which displays the available videos right next to the MediaPlayer element.</p>"
+                }
+            },
+            {
+                "text": "Events",
+                "url": "mediaplayer/events",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK KendoMediaPlayer Events Sample | $FRAMEWORK Demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample shows $FRAMEWORK KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in media player."
+                }
+            },
+            {
+                "text": "API",
+                "url": "mediaplayer/api",
+                "title": {
+                    "aspnet-mvc": "API functions demo for $FRAMEWORK KendoMediaPlayer"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "mediaplayer/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard Support demo for $FRAMEWORK KendoMediaPlayer"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo demonstrates the built-in Keyboard Shortcuts provided by the KendoMediaPlayer widget to ease the user navigation."
+                }
+            }
+        ],
+        "category": "Media"
     },
-    "forum": {
-      "aspnet-mvc": "aspnet-mvc/mediaplayer"
-    },
-    "codelibrary": {
-      "aspnet-mvc": "aspnet-mvc/mediaplayer"
-    },
-    "spriteCssClass": "mediaPlayerIcon",
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "mediaplayer/index",
-        "title": {
-          "aspnet-mvc": "$FRAMEWORK MediaPlayer demo | Telerik UI for $FRAMEWORK demos"
-        },
-        "meta": {
-          "aspnet-mvc": "Play with this basic example of Telerik MediaPlayer in $FRAMEWORK and find all features of the helper for Kendo UI MediaPlayer."
-        },
-        "description": {
-          "aspnet-mvc": "<p>The <strong>Telerik MediaPlayer for $FRAMEWORK</strong> component plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 <code>&ltvideo&gt</code> element and brings powerful media capabilities to your applications.</p>"
-        }
-      },
-      {
-        "text": "Playlist",
-        "url": "mediaplayer/playlist",
-        "title": {
-          "aspnet-mvc": "$FRAMEWORK MediaPlayer with ListView as Playlist | Telerik UI for $FRAMEWORK demos"
-        },
-        "meta": {
-          "aspnet-mvc": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist."
-        },
-        "description": {
-          "aspnet-mvc": "<p>The <strong>MediaPlayer</strong> component provides convenient API to change its source dynamically and dictate the flow of the video. This sample uses a ListView component to create a practical Playlist which displays the available videos right next to the MediaPlayer element.</p>"
-        }
-      },
-      {
-        "text": "Events",
-        "url": "mediaplayer/events",
-        "title": {
-          "aspnet-mvc": "$FRAMEWORK KendoMediaPlayer Events Sample | $FRAMEWORK Demos"
-        },
-        "meta": {
-          "aspnet-mvc": "This sample shows $FRAMEWORK KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in media player."
-        }
-      },
-      {
-        "text": "API",
-        "url": "mediaplayer/api",
-        "title": {
-          "aspnet-mvc": "API functions demo for $FRAMEWORK KendoMediaPlayer"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
-        }
-      },
-      {
-        "text": "Keyboard navigation",
-        "url": "mediaplayer/keyboard-navigation",
-        "title": {
-          "aspnet-mvc": "Keyboard Support demo for $FRAMEWORK KendoMediaPlayer"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo demonstrates the built-in Keyboard Shortcuts provided by the KendoMediaPlayer widget to ease the user navigation."
-        }
-      }
-    ],
-    "category": "Media"
-  },
     {
         "text": "Menu",
         "name": "menu",
-		"new": "true",
+        "new": "true",
         "api": "web/menu",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/menu/overview"
@@ -2582,8 +2557,7 @@
             "aspnet-mvc": "aspnet-mvc/menu"
         },
         "spriteCssClass": "menuIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "menu/index",
                 "title": {
@@ -2623,7 +2597,7 @@
                     "aspnet-mvc": "In this example we will see how the orientation of the $FRAMEWORK Menu can be easily modified through the orientation settings."
                 }
             },
-			{
+            {
                 "text": "Scrollable",
                 "new": "true",
                 "title": {
@@ -2657,7 +2631,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The <strong>Telerik Menu for $FRAMEWORK</strong> enables you apply Model binding to populate items dynamically from the server.</p><p>This demo shows an advanced approach to bind the items' attributes to fields from the Model passed so that you can apply client-side logic on item selection.</p>"
-                }   
+                }
             },
             {
                 "text": "Animation effects",
@@ -2736,8 +2710,7 @@
             "aspnet-mvc": "aspnet-mvc/multiselect"
         },
         "spriteCssClass": "multiselectIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "multiselect/index",
                 "title": {
@@ -2858,8 +2831,7 @@
             "aspnet-mvc": "aspnet-mvc/notification"
         },
         "spriteCssClass": "notificationIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "notification/index",
                 "title": {
@@ -2936,8 +2908,7 @@
             "aspnet-mvc": "aspnet-mvc/numerictextbox"
         },
         "spriteCssClass": "numericTextBoxIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "numerictextbox/index",
                 "title": {
@@ -2954,13 +2925,13 @@
                 "title": {
                     "aspnet-mvc": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
                 },
-              "meta": {
-                "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
-              },
-              "packages": [
-                "!mvc-core",
-                "!mvc"
-              ]
+                "meta": {
+                    "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
+                },
+                "packages": [
+                    "!mvc-core",
+                    "!mvc"
+                ]
             },
             {
                 "text": "Events",
@@ -3014,13 +2985,13 @@
                 "title": {
                     "aspnet-mvc": "Range validation in $FRAMEWORK NumericTextBox"
                 },
-              "meta": {
-                "aspnet-mvc": "The value in $FRAMEWORK NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
-              },
-              "packages": [
-                "!mvc-core",
-                "!mvc"
-              ]
+                "meta": {
+                    "aspnet-mvc": "The value in $FRAMEWORK NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
+                },
+                "packages": [
+                    "!mvc-core",
+                    "!mvc"
+                ]
             },
             {
                 "text": "Tag Helper",
@@ -3049,8 +3020,7 @@
             "aspnet-mvc": "aspnet-mvc/panelbar"
         },
         "spriteCssClass": "panelBarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "panelbar/index",
                 "title": {
@@ -3061,28 +3031,28 @@
                 }
             },
             {
-              "text": "Images",
-              "url": "panelbar/images",
-              "title": {
-                "aspnet-mvc": "Example of images in $FRAMEWORK PanelBar control"
-              },
-              "meta": {
-                "aspnet-mvc": "This demo shows how images and sprites can be implemented in $FRAMEWORK Expandable PanelBar component."
-              }
+                "text": "Images",
+                "url": "panelbar/images",
+                "title": {
+                    "aspnet-mvc": "Example of images in $FRAMEWORK PanelBar control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how images and sprites can be implemented in $FRAMEWORK Expandable PanelBar component."
+                }
             },
             {
-              "text": "Templates",
-              "url": "panelbar/templates",
-              "title": {
-                "aspnet-mvc": "Example of templates for $FRAMEWORK PanelBar"
-              },
-              "meta": {
-                "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK PanelBar component can be further customized by using templates."
-              },
-              "packages": [
-                "!jsp",
-                "!php"
-              ]
+                "text": "Templates",
+                "url": "panelbar/templates",
+                "title": {
+                    "aspnet-mvc": "Example of templates for $FRAMEWORK PanelBar"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK PanelBar component can be further customized by using templates."
+                },
+                "packages": [
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Loading content with AJAX",
@@ -3096,55 +3066,55 @@
                 "requiresServer": "true"
             },
             {
-              "text": "Animation effects",
-              "url": "panelbar/animation",
-              "title": {
-                "aspnet-mvc": "Animation effects example in $FRAMEWORK Accordion component"
-              },
-              "meta": {
-                "aspnet-mvc": "This demo shows how animations effects can be easily implemented into $FRAMEWORK PanelBar control."
-              }
+                "text": "Animation effects",
+                "url": "panelbar/animation",
+                "title": {
+                    "aspnet-mvc": "Animation effects example in $FRAMEWORK Accordion component"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how animations effects can be easily implemented into $FRAMEWORK PanelBar control."
+                }
             },
             {
-              "text": "Binding to local data",
-              "url": "panelbar/local-data-binding",
-              "title": {
-                "aspnet-mvc": "Binding to local data demo for $FRAMEWORK PanelBar control"
-              },
-              "meta": {
-                "aspnet-mvc": "This demo shows how items in the panelbar are displayed with the default settings of $FRAMEWORK PanelBar and how the component can be easily bound to local data."
-              },
-              "group": "Data Binding",
-              "packages": [
-                "!jsp",
-                "!php"
-              ]
+                "text": "Binding to local data",
+                "url": "panelbar/local-data-binding",
+                "title": {
+                    "aspnet-mvc": "Binding to local data demo for $FRAMEWORK PanelBar control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how items in the panelbar are displayed with the default settings of $FRAMEWORK PanelBar and how the component can be easily bound to local data."
+                },
+                "group": "Data Binding",
+                "packages": [
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
-              "text": "Binding to remote data",
-              "url": "panelbar/remote-data-binding",
-              "title": {
-                "aspnet-mvc": "Binding $FRAMEWORK panelbar component to remote data"
-              },
-              "meta": {
-                "aspnet-mvc": "This example illustrates how the $FRAMEWORK hierarchical panelbar can be bound to remote data and the items in the panelbar populated from an external source."
-              }
+                "text": "Binding to remote data",
+                "url": "panelbar/remote-data-binding",
+                "title": {
+                    "aspnet-mvc": "Binding $FRAMEWORK panelbar component to remote data"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example illustrates how the $FRAMEWORK hierarchical panelbar can be bound to remote data and the items in the panelbar populated from an external source."
+                }
             },
             {
-              "text": "Events",
-              "url": "panelbar/events",
-              "title": {
-                "aspnet-mvc": "Events in $FRAMEWORK accordion control | $FRAMEWORK PanelBar"
-              },
-              "meta": {
-                "aspnet-mvc": "This example demonstrates how events work in $FRAMEWORK PanelBar control and how you can set them to expand the content area of the accordion."
-              },
-              "requiresServer": "true",
-              "group": "API",
-              "packages": [
-                "!jsp",
-                "!php"
-              ]
+                "text": "Events",
+                "url": "panelbar/events",
+                "title": {
+                    "aspnet-mvc": "Events in $FRAMEWORK accordion control | $FRAMEWORK PanelBar"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example demonstrates how events work in $FRAMEWORK PanelBar control and how you can set them to expand the content area of the accordion."
+                },
+                "requiresServer": "true",
+                "group": "API",
+                "packages": [
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "API",
@@ -3157,15 +3127,15 @@
                 }
             },
             {
-              "text": "RTL support",
-              "url": "panelbar/right-to-left-support",
-              "title": {
-                "aspnet-mvc": "Keyboard navigation in $FRAMEWORK PanelBar | $FRAMEWORK demo"
-              },
-              "meta": {
-                "aspnet-mvc": "See how directions of the arrows in $FRAMEWORK PanelBar are easily changed when moving from right to left."
-              },
-              "group": "Accessibility and Internationalization"
+                "text": "RTL support",
+                "url": "panelbar/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK PanelBar | $FRAMEWORK demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how directions of the arrows in $FRAMEWORK PanelBar are easily changed when moving from right to left."
+                },
+                "group": "Accessibility and Internationalization"
             },
             {
                 "text": "Keyboard navigation",
@@ -3194,8 +3164,7 @@
             "aspnet-mvc": "aspnet-mvc/progressbar"
         },
         "spriteCssClass": "progressBarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "progressbar/index",
                 "title": {
@@ -3282,117 +3251,116 @@
             "aspnet-mvc": "aspnet-mvc/gantt"
         },
         "spriteCssClass": "ganttIcon",
-        "items": [
-      {
-        "text": "Basic usage",
-        "url": "gantt/index",
-        "title": {
-          "aspnet-mvc": "Example of Kendo UI jQuery-based Gantt chart"
-        },
-        "meta": {
-          "aspnet-mvc": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
-        }
-      },
-      {
-        "text": "Column resizing",
-        "url": "gantt/column-resizing",
-        "title": {
-          "aspnet-mvc": "Column resizing in Telerik $FRAMEWORK Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik $FRAMEWORK Gantt."
-        },
-        "group": "Functionality"
-      },
-      {
-        "text": "Export to PDF",
-        "url": "gantt/pdf-export",
-        "title": {
-          "aspnet-mvc": "Exporting to PDF"
-        },
-        "meta": {
-          "aspnet-mvc": "Export Kendo UI gantt as PDF file"
-        }
-      },
-      {
-        "text": "Resources",
-        "url": "gantt/resources",
-        "title": {
-          "aspnet-mvc": "Resources in Kendo UI Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo shows how to assign resources to gantt tasks."
-        }
-      },
-      {
-        "text": "Task Template",
-        "url": "gantt/task-template",
-        "title": {
-          "aspnet-mvc": "Task template support of Kendo UI Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo shows the Task template support of Kendo UI Gantt."
-        }
-      },
-      {
-        "text": "Selected Date and Range",
-        "url": "gantt/selected-date-and-range",
-        "title": {
-          "aspnet-mvc": "Setting selected date and selected visible range of Telerik $FRAMEWORK Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo shows how to select date and visible range, using the corresponding Telerik $FRAMEWORK Gantt properties."
-        },
-		"new": true
-      },
-      {
-        "text": "Events",
-        "url": "gantt/events",
-        "title": {
-          "aspnet-mvc": "Example of using events in Kendo UI Gantt control"
-        },
-        "meta": {
-          "aspnet-mvc": "This example demonstrates different events which are available in KendoGantt widget and the code explains how you can use them for your project."
-        },
-        "group": "API"
-      },
-      {
-        "text": "API",
-        "url": "gantt/api",
-        "title": {
-          "aspnet-mvc": "Kendo UI Gantt API Functions Example"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo shows API Functions of KendoGantt. Demo Source Code will show you how to call methods on the widget instance to script its behavior."
-        }
-      },
-      {
-        "text": "RTL Support",
-        "url": "gantt/right-to-left-support",
-        "title": {
-          "aspnet-mvc": "Right-to-left (RTL) support of Kendo UI Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
-        },
-        "group": "Accessibility and Internationalization"
-      },
-      {
-        "text": "Keyboard navigation",
-        "url": "gantt/keyboard-navigation",
-        "title": {
-          "aspnet-mvc": "Keyboard navigation in Kendo UI Gantt"
-        },
-        "meta": {
-          "aspnet-mvc": "Look at this Kendo UI Gantt demo to learn how different keyboard combinations could be used to navigate in the component."
-        }
-      },
-      {
-        "text": "Server binding",
-        "url": "gantt/serverbinding",
-        "group": "Binding"
-      }
-    ],
+        "items": [{
+                "text": "Basic usage",
+                "url": "gantt/index",
+                "title": {
+                    "aspnet-mvc": "Example of Kendo UI jQuery-based Gantt chart"
+                },
+                "meta": {
+                    "aspnet-mvc": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
+                }
+            },
+            {
+                "text": "Column resizing",
+                "url": "gantt/column-resizing",
+                "title": {
+                    "aspnet-mvc": "Column resizing in Telerik $FRAMEWORK Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik $FRAMEWORK Gantt."
+                },
+                "group": "Functionality"
+            },
+            {
+                "text": "Export to PDF",
+                "url": "gantt/pdf-export",
+                "title": {
+                    "aspnet-mvc": "Exporting to PDF"
+                },
+                "meta": {
+                    "aspnet-mvc": "Export Kendo UI gantt as PDF file"
+                }
+            },
+            {
+                "text": "Resources",
+                "url": "gantt/resources",
+                "title": {
+                    "aspnet-mvc": "Resources in Kendo UI Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how to assign resources to gantt tasks."
+                }
+            },
+            {
+                "text": "Task Template",
+                "url": "gantt/task-template",
+                "title": {
+                    "aspnet-mvc": "Task template support of Kendo UI Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows the Task template support of Kendo UI Gantt."
+                }
+            },
+            {
+                "text": "Selected Date and Range",
+                "url": "gantt/selected-date-and-range",
+                "title": {
+                    "aspnet-mvc": "Setting selected date and selected visible range of Telerik $FRAMEWORK Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how to select date and visible range, using the corresponding Telerik $FRAMEWORK Gantt properties."
+                },
+                "new": true
+            },
+            {
+                "text": "Events",
+                "url": "gantt/events",
+                "title": {
+                    "aspnet-mvc": "Example of using events in Kendo UI Gantt control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example demonstrates different events which are available in KendoGantt widget and the code explains how you can use them for your project."
+                },
+                "group": "API"
+            },
+            {
+                "text": "API",
+                "url": "gantt/api",
+                "title": {
+                    "aspnet-mvc": "Kendo UI Gantt API Functions Example"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows API Functions of KendoGantt. Demo Source Code will show you how to call methods on the widget instance to script its behavior."
+                }
+            },
+            {
+                "text": "RTL Support",
+                "url": "gantt/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "Right-to-left (RTL) support of Kendo UI Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
+                },
+                "group": "Accessibility and Internationalization"
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "gantt/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in Kendo UI Gantt"
+                },
+                "meta": {
+                    "aspnet-mvc": "Look at this Kendo UI Gantt demo to learn how different keyboard combinations could be used to navigate in the component."
+                }
+            },
+            {
+                "text": "Server binding",
+                "url": "gantt/serverbinding",
+                "group": "Binding"
+            }
+        ],
         "category": "Scheduling"
     },
     {
@@ -3409,18 +3377,16 @@
             "aspnet-mvc": "aspnet-mvc/mvc-responsivepanel"
         },
         "spriteCssClass": "responsivePanelIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "responsive-panel/index",
-                "title": {
-                    "aspnet-mvc": "$FRAMEWORK ResponsivePanel Control Demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the basic functionality of the Telerik $FRAMEWORK ResponsivePanel control."
-                }
+        "items": [{
+            "text": "Basic usage",
+            "url": "responsive-panel/index",
+            "title": {
+                "aspnet-mvc": "$FRAMEWORK ResponsivePanel Control Demo"
+            },
+            "meta": {
+                "aspnet-mvc": "This demo shows the basic functionality of the Telerik $FRAMEWORK ResponsivePanel control."
             }
-        ],
+        }],
         "category": "Layout"
     },
     {
@@ -3437,8 +3403,7 @@
             "aspnet-mvc": "aspnet-mvc/mvc-scheduler"
         },
         "spriteCssClass": "schedulerIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "scheduler/index",
                 "title": {
@@ -3666,8 +3631,7 @@
             "aspnet-mvc": "aspnet-mvc/slider"
         },
         "spriteCssClass": "sliderIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "slider/index",
                 "title": {
@@ -3734,8 +3698,7 @@
             "aspnet-mvc": "aspnet-mvc/sortable"
         },
         "spriteCssClass": "sortableIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "sortable/index",
                 "title": {
@@ -3858,8 +3821,7 @@
             "aspnet-mvc": "aspnet-mvc/splitter"
         },
         "spriteCssClass": "splitterIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "splitter/index",
                 "title": {
@@ -3939,56 +3901,52 @@
     {
         "text": "SpreadProcessing",
         "name": "spreadprocessing",
-        "packages":[ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "spreadprocessingIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "spreadprocessing/index",
-                "new": "true",
-                "title": {
-                    "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
-                },
-                "meta": {
-                    "aspnet-mvc": "See how the Telerik RadSpreadProcessing can be integrated in MVC applications."
-                },
-                "description": {
-                    "aspnet-mvc": "With <strong>RadSpreadProcessing</strong> you can effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF."
-                }
+        "items": [{
+            "text": "Basic usage",
+            "url": "spreadprocessing/index",
+            "new": "true",
+            "title": {
+                "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
+            },
+            "meta": {
+                "aspnet-mvc": "See how the Telerik RadSpreadProcessing can be integrated in MVC applications."
+            },
+            "description": {
+                "aspnet-mvc": "With <strong>RadSpreadProcessing</strong> you can effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF."
             }
-        ],
+        }],
         "documentation": {
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview"
         }
     },
     {
-    "text": "SpreadStreamProcessing",
-    "name": "spreadstreamprocessing",
-    "packages": [ "!mvc-core" ],
-    "api": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview",
-    "category": "Editors",
-    "spriteCssClass": "spreadstreamprocessingIcon",
-    "items": [
-      {
-        "text": "Large Document Export",
-        "url": "spreadstreamprocessing/index",
-        "title": {
-          "aspnet-mvc": "Demo and source code for Telerik RadSpreadStreamProcessing in MVC"
-        },
-        "meta": {
-          "aspnet-mvc": "See how the Telerik RadSpreadStreamProcessing can be integrated in MVC applications."
-        },
-        "description": {
-          "aspnet-mvc": "With <strong>SpreadStreamProcessing</strong> you can effortlessly generate large XLSX and CSV files."
+        "text": "SpreadStreamProcessing",
+        "name": "spreadstreamprocessing",
+        "packages": ["!mvc-core"],
+        "api": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview",
+        "category": "Editors",
+        "spriteCssClass": "spreadstreamprocessingIcon",
+        "items": [{
+            "text": "Large Document Export",
+            "url": "spreadstreamprocessing/index",
+            "title": {
+                "aspnet-mvc": "Demo and source code for Telerik RadSpreadStreamProcessing in MVC"
+            },
+            "meta": {
+                "aspnet-mvc": "See how the Telerik RadSpreadStreamProcessing can be integrated in MVC applications."
+            },
+            "description": {
+                "aspnet-mvc": "With <strong>SpreadStreamProcessing</strong> you can effortlessly generate large XLSX and CSV files."
+            }
+        }],
+        "documentation": {
+            "aspnet-mvc": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview"
         }
-      }
-    ],
-    "documentation": {
-      "aspnet-mvc": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview"
-    }
-  },
+    },
     {
         "text": "TabStrip",
         "name": "tabstrip",
@@ -4003,8 +3961,7 @@
             "aspnet-mvc": "aspnet-mvc/tabstrip"
         },
         "spriteCssClass": "tabStripIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "tabstrip/index",
                 "title": {
@@ -4123,8 +4080,7 @@
             "aspnet-mvc": "aspnet-mvc/datetime"
         },
         "spriteCssClass": "timePickerIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "timepicker/index",
                 "updated": true,
@@ -4216,8 +4172,7 @@
             "aspnet-mvc": "aspnet-mvc/toolbar"
         },
         "spriteCssClass": "toolbarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "toolbar/index",
                 "title": {
@@ -4311,8 +4266,7 @@
             "aspnet-mvc": "aspnet-mvc/tooltip"
         },
         "spriteCssClass": "tooltipIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "tooltip/index",
                 "title": {
@@ -4380,8 +4334,7 @@
             "aspnet-mvc": "aspnet-mvc/treelist"
         },
         "spriteCssClass": "treeListIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "treelist/index",
                 "title": {
@@ -4538,132 +4491,131 @@
             "aspnet-mvc": "aspnet-mvc/treeview"
         },
         "spriteCssClass": "treeViewIcon",
-      "items": [
-        {
-          "text": "Basic usage",
-          "url": "treeview/index",
-          "title": {
-            "aspnet-mvc": "$FRAMEWORK TreeView control | UI for $FRAMEWORK demo"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo illustrates the basic usage and functionality of $FRAMEWORK Tree component which represents items in a hierarchical tree structure."
-          }
-        },
-        {
-          "text": "Drag & drop",
-          "url": "treeview/dragdrop",
-          "title": {
-            "aspnet-mvc": "Drag & Drop support in $FRAMEWORK TreeView control"
-          },
-          "meta": {
-            "aspnet-mvc": "This example shows how to drag and drop items in $FRAMEWORK TreeView. Use the demo source code and play with the demo."
-          },
-          "group": "Functionality"
-        },
-        {
-          "text": "Animation effects",
-          "url": "treeview/animation",
-          "title": {
-            "aspnet-mvc": "Animation effects sample for $FRAMEWORK Treeview component"
-          },
-          "meta": {
-            "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for $FRAMEWORK TreeView component."
-          }
-        },
-        {
-          "text": "Images",
-          "url": "treeview/images",
-          "title": {
-            "aspnet-mvc": "Example of customized $FRAMEWORK TreeView using image"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo shows how you can add images to your $FRAMEWORK TreeView control, as well as implement TreeView with sprites in your website or project."
-          }
-        },
-        {
-          "text": "Checkboxes",
-          "url": "treeview/checkboxes",
-          "title": {
-            "aspnet-mvc": "Creating tree nodes with checkboxes | $FRAMEWORK TreeView Demo"
-          },
-          "meta": {
-            "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in $FRAMEWORK Treeview by simply setting the child item of the checkboxes to true."
-          }
-        },
-        {
-          "text": "Templates",
-          "url": "treeview/templates",
-          "title": {
-            "aspnet-mvc": "Example of templates for $FRAMEWORK TreeView"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK TreeView component can be further customized by using templates."
-          }
-        },
-        {
-          "text": "Binding to local data",
-          "url": "treeview/local-data-binding",
-          "title": {
-            "aspnet-mvc": "Binding to local data demo for $FRAMEWORK TreeView control"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of $FRAMEWORK TreeView and how the component can be easily bound to local data."
-          },
-          "group": "Data Binding"
-        },
-        {
-          "text": "Binding to remote data",
-          "url": "treeview/remote-data-binding",
-          "title": {
-            "aspnet-mvc": "Binding $FRAMEWORK tree component to remote data"
-          },
-          "meta": {
-            "aspnet-mvc": "This example illustrates how the $FRAMEWORK hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
-          }
-        },
-        {
-          "text": "Events",
-          "url": "treeview/events",
-          "title": {
-            "aspnet-mvc": "Demo for $FRAMEWORK TreeView control events"
-          },
-          "meta": {
-            "aspnet-mvc": "This sample shows built-in events in $FRAMEWORK tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
-          },
-          "group": "API"
-        },
-        {
-          "text": "API",
-          "url": "treeview/api",
-          "title": {
-            "aspnet-mvc": "$FRAMEWORK TreeView API Example"
-          },
-          "meta": {
-            "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of $FRAMEWORK TreeView."
-          }
-        },
-        {
-          "text": "RTL support",
-          "url": "treeview/right-to-left-support",
-          "title": {
-            "aspnet-mvc": "RTL Support in $FRAMEWORK TreeView component"
-          },
-          "meta": {
-            "aspnet-mvc": "Get familiar with the RTL support in $FRAMEWORK TreeView component. Look at the example and use the source code to play with the demo."
-          },
-          "group": "Accessibility and Internationalization"
-        },
-        {
-          "text": "Keyboard navigation",
-          "url": "treeview/keyboard-navigation",
-          "title": {
-            "aspnet-mvc": "$FRAMEWORK TreeView control | Keyboard support demo"
-          },
-          "meta": {
-            "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in $FRAMEWORK TreeView."
-          }
-        }
-      ],
+        "items": [{
+                "text": "Basic usage",
+                "url": "treeview/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK TreeView control | UI for $FRAMEWORK demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo illustrates the basic usage and functionality of $FRAMEWORK Tree component which represents items in a hierarchical tree structure."
+                }
+            },
+            {
+                "text": "Drag & drop",
+                "url": "treeview/dragdrop",
+                "title": {
+                    "aspnet-mvc": "Drag & Drop support in $FRAMEWORK TreeView control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows how to drag and drop items in $FRAMEWORK TreeView. Use the demo source code and play with the demo."
+                },
+                "group": "Functionality"
+            },
+            {
+                "text": "Animation effects",
+                "url": "treeview/animation",
+                "title": {
+                    "aspnet-mvc": "Animation effects sample for $FRAMEWORK Treeview component"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for $FRAMEWORK TreeView component."
+                }
+            },
+            {
+                "text": "Images",
+                "url": "treeview/images",
+                "title": {
+                    "aspnet-mvc": "Example of customized $FRAMEWORK TreeView using image"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how you can add images to your $FRAMEWORK TreeView control, as well as implement TreeView with sprites in your website or project."
+                }
+            },
+            {
+                "text": "Checkboxes",
+                "url": "treeview/checkboxes",
+                "title": {
+                    "aspnet-mvc": "Creating tree nodes with checkboxes | $FRAMEWORK TreeView Demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in $FRAMEWORK Treeview by simply setting the child item of the checkboxes to true."
+                }
+            },
+            {
+                "text": "Templates",
+                "url": "treeview/templates",
+                "title": {
+                    "aspnet-mvc": "Example of templates for $FRAMEWORK TreeView"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK TreeView component can be further customized by using templates."
+                }
+            },
+            {
+                "text": "Binding to local data",
+                "url": "treeview/local-data-binding",
+                "title": {
+                    "aspnet-mvc": "Binding to local data demo for $FRAMEWORK TreeView control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of $FRAMEWORK TreeView and how the component can be easily bound to local data."
+                },
+                "group": "Data Binding"
+            },
+            {
+                "text": "Binding to remote data",
+                "url": "treeview/remote-data-binding",
+                "title": {
+                    "aspnet-mvc": "Binding $FRAMEWORK tree component to remote data"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example illustrates how the $FRAMEWORK hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "treeview/events",
+                "title": {
+                    "aspnet-mvc": "Demo for $FRAMEWORK TreeView control events"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample shows built-in events in $FRAMEWORK tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
+                },
+                "group": "API"
+            },
+            {
+                "text": "API",
+                "url": "treeview/api",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK TreeView API Example"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of $FRAMEWORK TreeView."
+                }
+            },
+            {
+                "text": "RTL support",
+                "url": "treeview/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "RTL Support in $FRAMEWORK TreeView component"
+                },
+                "meta": {
+                    "aspnet-mvc": "Get familiar with the RTL support in $FRAMEWORK TreeView component. Look at the example and use the source code to play with the demo."
+                },
+                "group": "Accessibility and Internationalization"
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "treeview/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK TreeView control | Keyboard support demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in $FRAMEWORK TreeView."
+                }
+            }
+        ],
         "category": "Navigation"
     },
     {
@@ -4681,8 +4633,7 @@
             "aspnet-mvc": "aspnet-mvc/upload"
         },
         "spriteCssClass": "uploadIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "upload/index",
                 "title": {
@@ -4711,49 +4662,49 @@
                 "meta": {
                     "aspnet-mvc": "This example shows the chunk upload functionality of $FRAMEWORK Upload control."
                 },
-            "new": true
+                "new": true
             },
             {
-            "text": "Custom Drop Zone",
-            "url": "upload/customdropzone",
-            "title": {
-              "aspnet-mvc": "Custom drop zone demo for $FRAMEWORK File Upload"
+                "text": "Custom Drop Zone",
+                "url": "upload/customdropzone",
+                "title": {
+                    "aspnet-mvc": "Custom drop zone demo for $FRAMEWORK File Upload"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the custom drop zone functionality of $FRAMEWORK Upload control."
+                }
             },
-            "meta": {
-              "aspnet-mvc": "This example shows the custom drop zone functionality of $FRAMEWORK Upload control."
-            }
-          },
-          {
-            "text": "Directory Upload",
-            "url": "upload/directoryupload",
-            "title": {
-              "aspnet-mvc": "Directory upload demo for $FRAMEWORK File Upload"
+            {
+                "text": "Directory Upload",
+                "url": "upload/directoryupload",
+                "title": {
+                    "aspnet-mvc": "Directory upload demo for $FRAMEWORK File Upload"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the directory upload functionality of $FRAMEWORK Upload control."
+                },
+                "new": true
             },
-            "meta": {
-              "aspnet-mvc": "This example shows the directory upload functionality of $FRAMEWORK Upload control."
+            {
+                "text": "Validation",
+                "url": "upload/validation",
+                "title": {
+                    "aspnet-mvc": "Validation demo for $FRAMEWORK File Upload"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows the validation functionality of $FRAMEWORK Upload control."
+                }
             },
-            "new": true
-          },
-          {
-            "text": "Validation",
-            "url": "upload/validation",
-            "title": {
-              "aspnet-mvc": "Validation demo for $FRAMEWORK File Upload"
+            {
+                "text": "Events",
+                "url": "upload/events",
+                "title": {
+                    "aspnet-mvc": "Handling events in $FRAMEWORK Upload | UI for $FRAMEWORK Demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in $FRAMEWORK."
+                }
             },
-            "meta": {
-              "aspnet-mvc": "This example shows the validation functionality of $FRAMEWORK Upload control."
-            }
-          },
-          {
-              "text": "Events",
-              "url": "upload/events",
-              "title": {
-                  "aspnet-mvc": "Handling events in $FRAMEWORK Upload | UI for $FRAMEWORK Demos"
-              },
-              "meta": {
-                  "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in $FRAMEWORK."
-              }
-          },
             {
                 "text": "API",
                 "url": "upload/api",
@@ -4825,8 +4776,7 @@
             "aspnet-mvc": "aspnet-mvc/window"
         },
         "spriteCssClass": "windowIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "window/index",
                 "title": {
@@ -4925,26 +4875,24 @@
     {
         "text": "WordsProcessing",
         "name": "wordsprocessing",
-        "packages":[ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "wordprocessingIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "wordsprocessing/index",
-                "new": "true",
-                "title": {
-                    "aspnet-mvc": "Demo and source code for Telerik RadWordsProcessing in MVC"
-                },
-                "meta": {
-                    "aspnet-mvc": "See how the Telerik RadWordsProcessing can be integrated in MVC applications."
-                },
-                "description": {
-                    "aspnet-mvc": "With <strong>RadWordsProcessing</strong> you can virtually effortlessly convert documents from one to another file format among the supported DOCX, RTF, HTML and TXT."
-                }
+        "items": [{
+            "text": "Basic usage",
+            "url": "wordsprocessing/index",
+            "new": "true",
+            "title": {
+                "aspnet-mvc": "Demo and source code for Telerik RadWordsProcessing in MVC"
+            },
+            "meta": {
+                "aspnet-mvc": "See how the Telerik RadWordsProcessing can be integrated in MVC applications."
+            },
+            "description": {
+                "aspnet-mvc": "With <strong>RadWordsProcessing</strong> you can virtually effortlessly convert documents from one to another file format among the supported DOCX, RTF, HTML and TXT."
             }
-        ],
+        }],
         "documentation": {
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview"
         }
@@ -4963,52 +4911,47 @@
             "kendo-ui": "kendo-ui/data-source"
         },
         "spriteCssClass": "dataSourceIcon",
-        "items": [
-            {
-                "text": "Shared DataSource",
-                "url": "datasource/shared-datasource",
-                "title": {
-                    "kendo-ui": " Shared DataSource Demo | Kendo UI Web demos"
-                },
-                "meta": {
-                    "kendo-ui": "This example demonstrates a shared DataSource which can be created to enable multiple UI widgets to bind to the same data collection."
-                },
-                "requiresServer": "true"
-            }
-        ],
+        "items": [{
+            "text": "Shared DataSource",
+            "url": "datasource/shared-datasource",
+            "title": {
+                "kendo-ui": " Shared DataSource Demo | Kendo UI Web demos"
+            },
+            "meta": {
+                "kendo-ui": "This example demonstrates a shared DataSource which can be created to enable multiple UI widgets to bind to the same data collection."
+            },
+            "requiresServer": "true"
+        }],
         "category": "Framework"
     },
     {
         "category": "Framework",
         "text": "PDF Export",
         "name": "export",
-        "packages": [ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "spriteCssClass": "drawingIcon",
-        "items": [
-            {
-                "text": "Document Export",
-                "url": "pdf-export/index",
-                "packages": [
-                    "!mvc-core"
-                ],
-                "title": {
-                    "aspnet-mvc": "Kendo UI Drawing API Export functionality"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how to export HTML elements and Drawing surfaces to PDF, PNG Images or SVG and save them directly in the browser."
-                }
+        "items": [{
+            "text": "Document Export",
+            "url": "pdf-export/index",
+            "packages": [
+                "!mvc-core"
+            ],
+            "title": {
+                "aspnet-mvc": "Kendo UI Drawing API Export functionality"
+            },
+            "meta": {
+                "aspnet-mvc": "This demo shows how to export HTML elements and Drawing surfaces to PDF, PNG Images or SVG and save them directly in the browser."
             }
-        ]
+        }]
     },
     {
         "text": "PdfProcessing",
         "name": "pdfprocessing",
-        "packages":[ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "pdfIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "pdfprocessing/index",
                 "new": "true",
@@ -5022,12 +4965,30 @@
                     "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to create a document containing images, text and shapes and export it to PDF."
                 },
                 "sources": {
-                    "aspnet-mvc": [
-                        {
-                            "name": "CreatePdfDocument.cs",
-                            "url": "~/Helpers/CreatePdfDocument.cs"
-                        }
-                    ]
+                    "aspnet-mvc": [{
+                        "name": "CreatePdfDocument.cs",
+                        "url": "~/Helpers/CreatePdfDocument.cs"
+                    }]
+                }
+            },
+            {
+                "text": "Bar Chart Export",
+                "url": "pdfprocessing/bar-chart-export",
+                "new": "true",
+                "title": {
+                    "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
+                },
+                "description": {
+                    "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to create a document containing images, text and shapes and export it to PDF."
+                },
+                "sources": {
+                    "aspnet-mvc": [{
+                        "name": "CreatePdfWithBarChart.cs",
+                        "url": "~/Helpers/CreatePdfWithBarChart.cs"
+                    }]
                 }
             }
         ],
@@ -5039,7 +5000,7 @@
         "text": "Globalization",
         "name": "globalization",
         "api": "framework/kendo",
-        "packages": [ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "documentation": {
             "kendo-ui": "getting-started/framework/globalization/overview"
         },
@@ -5050,28 +5011,26 @@
             "kendo-ui": "kendo-ui/globalization"
         },
         "spriteCssClass": "globalizationIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "globalization/index",
-                "title": {
-                    "aspnet-mvc": "Globalization example in Kendo UI Web framework"
-                },
-                "meta": {
-                    "aspnet-mvc": "This is an example of globalization which is supported in Kendo UI Web framework."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
-            }
-        ],
+        "items": [{
+            "text": "Basic usage",
+            "url": "globalization/index",
+            "title": {
+                "aspnet-mvc": "Globalization example in Kendo UI Web framework"
+            },
+            "meta": {
+                "aspnet-mvc": "This is an example of globalization which is supported in Kendo UI Web framework."
+            },
+            "packages": [
+                "!mvc-core"
+            ]
+        }],
         "category": "Framework"
     },
     {
         "text": "Validator",
         "name": "validator",
         "api": "web/validator",
-        "packages": [ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "documentation": {
             "kendo-ui": "getting-started/framework/validator/overview"
         },
@@ -5082,29 +5041,26 @@
             "kendo-ui": "kendo-ui/validator"
         },
         "spriteCssClass": "validatorIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "validator/index",
-                "title": {
-                    "aspnet-mvc": "Kendo UI Validator Demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo illustrates the core functionality of Kendo UI Validator component in Kendo UI Web framework."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
-            }
-        ],
+        "items": [{
+            "text": "Basic usage",
+            "url": "validator/index",
+            "title": {
+                "aspnet-mvc": "Kendo UI Validator Demo"
+            },
+            "meta": {
+                "aspnet-mvc": "This demo illustrates the core functionality of Kendo UI Validator component in Kendo UI Web framework."
+            },
+            "packages": [
+                "!mvc-core"
+            ]
+        }],
         "category": "Editors"
     },
     {
         "text": "Styling",
         "name": "styling",
         "spriteCssClass": "stylingIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Forms",
                 "url": "styling/index",
                 "title": {
@@ -5124,19 +5080,19 @@
                     "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
                 }
             },
-          {
-            "text": "Radio buttons",
-            "url": "styling/radios",
-            "title": {
-              "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
-            },
-            "meta": {
-              "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-            },
-            "packages": [
-              "!mvc-core"
-            ]
-          }
+            {
+                "text": "Radio buttons",
+                "url": "styling/radios",
+                "title": {
+                    "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
+                },
+                "packages": [
+                    "!mvc-core"
+                ]
+            }
         ],
         "category": "Interactivity & UX"
     },
@@ -5154,8 +5110,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartAreaIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "area-charts/index",
                 "title": {
@@ -5334,8 +5289,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartBarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "bar-charts/index",
                 "title": {
@@ -5579,8 +5533,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/barcode"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "barcode/index",
                 "title": {
@@ -5617,8 +5570,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartBoxPlotIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "box-plot-charts/index",
                 "title": {
@@ -5688,8 +5640,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartBubbleIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "bubble-charts/index",
                 "title": {
@@ -5760,8 +5711,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartBulletIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "bullet-charts/index",
                 "title": {
@@ -5818,8 +5768,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/chart"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Methods",
                 "url": "chart-api/index",
                 "title": {
@@ -5902,8 +5851,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartDonutIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "donut-charts/index",
                 "title": {
@@ -5973,8 +5921,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartFunnelIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "funnel-charts/index",
                 "title": {
@@ -6044,8 +5991,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/gauge"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "linear-gauge/index",
                 "title": {
@@ -6102,8 +6048,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/gauge"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "radial-gauge/index",
                 "title": {
@@ -6160,8 +6105,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartLineIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "line-charts/index",
                 "title": {
@@ -6356,7 +6300,7 @@
         "text": "Diagram",
         "name": "diagram",
         "api": "dataviz/diagram",
-        "packages": [ "!mvc-core" ],
+        "packages": ["!mvc-core"],
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/diagram/overview"
         },
@@ -6367,8 +6311,7 @@
             "aspnet-mvc": "aspnet-mvc/diagram"
         },
         "spriteCssClass": "diagramIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "diagram/index",
                 "title": {
@@ -6476,8 +6419,7 @@
             "aspnet-mvc": "aspnet-mvc/map"
         },
         "spriteCssClass": "mapIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "map/index",
                 "title": {
@@ -6579,8 +6521,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartPieIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "pie-charts/index",
                 "title": {
@@ -6650,8 +6591,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartPolarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Polar line",
                 "url": "polar-charts/index",
                 "title": {
@@ -6747,8 +6687,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/qrcode"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "qrcode/index",
                 "title": {
@@ -6785,8 +6724,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartRadarIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Radar line",
                 "url": "radar-charts/index",
                 "title": {
@@ -6895,8 +6833,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/chart"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "range-bar-charts/index",
                 "title": {
@@ -6955,8 +6892,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartScatterIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "scatter-charts/index",
                 "title": {
@@ -7096,8 +7032,7 @@
             "aspnet-mvc": "aspnet-mvc/sparkline"
         },
         "spriteCssClass": "sparklineIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "sparklines/index",
                 "title": {
@@ -7153,8 +7088,7 @@
             "aspnet-mvc": "aspnet-mvc/chart"
         },
         "spriteCssClass": "chartStockIcon",
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "financial/index",
                 "title": {
@@ -7237,8 +7171,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/treemap"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "treemap/index",
                 "title": {
@@ -7281,8 +7214,7 @@
         "codelibrary": {
             "aspnet-mvc": "aspnet-mvc/chart"
         },
-        "items": [
-            {
+        "items": [{
                 "text": "Basic usage",
                 "url": "waterfall-charts/index",
                 "title": {
