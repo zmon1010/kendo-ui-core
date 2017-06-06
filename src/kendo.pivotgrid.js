@@ -1460,7 +1460,9 @@ var __meta__ = { // jshint ignore:line
             columnIndexes = this._normalizeTuples(axes.columns.tuples, this._axes.columns.tuples, columnDescriptors, this._columnMeasures());
             rowIndexes = this._normalizeTuples(axes.rows.tuples, this._axes.rows.tuples, rowDescriptors, this._rowMeasures());
 
-            this._skipNormalize -= 1;
+            if (this._skipNormalize > 0) {
+                this._skipNormalize -= 1;
+            }
 
             if (!this.cubeBuilder) {
                 data = this._normalizeData({
@@ -2330,6 +2332,7 @@ var __meta__ = { // jshint ignore:line
             }
         }
     }
+
 
     function findParentMember(tuple, map) {
         var members = tuple.members;
