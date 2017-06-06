@@ -2774,7 +2774,6 @@ The [`template`](/api/javascript/kendo#methods-template) which renders the conte
 The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the [Sass-based themes]({% slug sassbasedthemes_kendoui %}).
 
 The supported values are:
-
 * "sass" - special value, see notes
 * "black"
 * "blueopal"

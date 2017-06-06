@@ -13731,7 +13731,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are:</description>
+            <description>The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are:
+* "sass" - special value, see notes
+* "black"
+* "blueopal"
+* "bootstrap"
+* "default"
+* "highcontrast"
+* "metro"
+* "metroblack"
+* "moonlight"
+* "silver"
+* "uniform"</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

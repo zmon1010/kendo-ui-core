@@ -141,6 +141,17 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are:
+* "sass" - special value, see notes
+* "black"
+* "blueopal"
+* "bootstrap"
+* "default"
+* "highcontrast"
+* "metro"
+* "metroblack"
+* "moonlight"
+* "silver"
+* "uniform"
     * @param string $value
     * @return \Kendo\Dataviz\UI\Diagram
     */
