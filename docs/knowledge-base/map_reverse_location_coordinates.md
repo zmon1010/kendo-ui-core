@@ -30,9 +30,9 @@ I need to draw a bubble on Kendo Map from from GeoJSON response.
 I am receiving the data in _\[Longitude, Latitude\]_ format, but when the data is bound to Kendo Map it is handled as _\[latitude, longitude\]_.
 
 ## Solution
-There is no built-in solution. Check the [suggested workaround](#suggested-workaround) instead.
+There is no built-in solution. Check the [suggested workarounds](#suggested-workarounds) instead.
 
-## Suggested Workaround
+## Suggested Workarounds
 
 The Map widget excepts the location field in the _[Latitude, Longitude]_ format and if you are receiving the data in reversed order you should modify the array prior to the binding. You could use **schema.parse** to modify the array:
 
