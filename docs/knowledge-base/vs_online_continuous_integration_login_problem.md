@@ -1,13 +1,14 @@
 ---
-title: VS Online Continuous Integration Asking For Login
-description: The login dialog is randomly displayed during builds VS Online builds
+title: Visual Studio Online Continuous Integration Asking for Login
+description: The login dialog is randomly displayed during builds in VS Online builds
 type: troubleshooting
-page_title: VS Online Continuous Integration keeps authentication issue
+page_title: VS Online Continuous Integration has authentication issue
 slug: vs_online_continuous_integration_login_problem
 position: 0
-tags: vs 2017
+tags: vs2017
 ticketid: 1106905
-
+publish: false
+pitsid:
 ---
 
 ## Environment
@@ -34,27 +35,21 @@ ticketid: 1106905
  </tr>
  <tr>
   <td>Visual Studio version</td>
-  <td>Visual Studio 2017</td>
+  <td>Visual Studio Online</td>
  </tr>
  <tr>
   <td>Preferred Language</td>
   <td>C#</td>
  </tr>
-</table>
- 
+</table> 
  
 ## Description
-
-We have stored passwords using clear
-text on developer systems, yet the login dialog is (randomly) displayed.Other nuget repositories that are
-secured work as expected. 
+We have stored passwords using clear text on developer systems, yet the login dialog is (randomly) displayed.Other nuget repositories that are secured work as expected. 
 
 ## Solutions
+There is no built-in solution. Check the [suggested workarounds](#suggested-workarounds) instead.
 
-There is no known solution that works for all scenarios.
-
-## Possible Solutions
-  
+## Suggested Workarounds
 In our experience, the following options have helped other clients who have reported issues with credentials in ASP.NET MVC & Core Projects.
   
 1) Reset the Nuget.config file and use nuget restore
