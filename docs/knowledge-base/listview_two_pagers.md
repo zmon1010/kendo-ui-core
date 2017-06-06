@@ -1,15 +1,15 @@
 ---
-title: How To Place Pager At Top And Bottom Of ListView
+title: How to Place Pager at Top and Bottom of ListView
 description: Example for displaying two pagers for ListView
-type: howto
+type: how-to
 page_title: Use two pagers for Progress® Kendo UI® ListView for ASP.NET MVC
 slug: listview_two_pagers
 position: 0
 tags: listview, paging, pager, mvc, kendo ui, two pagers
 teampulseid:
 ticketid: 1111995
+publish: false
 pitsid:
-
 ---
 
 ## Environment
@@ -17,6 +17,10 @@ pitsid:
  <tr>
   <td>Product</td>
   <td>Progress® Kendo UI® ListView for ASP.NET MVC (version 2017.2 504)</td>
+ </tr>
+ <tr>
+  <td>Progress® Kendo UI® version</td>
+  <td>2017.2 504</td>
  </tr>
  <tr>
   <td>Visual Studio version</td>
@@ -32,13 +36,10 @@ pitsid:
  </tr>
 </table>
 
-
 ## Description
-
 I have a ListView with a pager that works great.  The pager is at the bottom of the ListView, but we want it at both the top AND bottom.
 
-## Possible Solution
-  
+## Possible Solution  
 The ListView for ASP.NET MVC does not support the functionality out of the box, but you could take a look at the following example, demonstrating such implementation with the Kendo UI ListView:
 #### ListView for Kendo UI example
 ```html
