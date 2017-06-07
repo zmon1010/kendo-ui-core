@@ -1703,7 +1703,7 @@
                     "aspnet-mvc": "This demo shows how to sort data in Telerik $FRAMEWORK Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
                 },
                 "description": {
-                    "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
+                    "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p> <p>Check the <a href=\"http://docs.telerik.com/kendo-ui/controls/data-management/grid/how-to/Layout/add-background-sorted-columns-LESS-themes\" target=\"_blank\">Add a Background to the Sorted Columns with LESS Themes</a> How To article</p>"
                 }
             },
             {
