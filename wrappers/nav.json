@@ -247,7 +247,6 @@
             {
                 "text": "Week Column",
                 "url": "calendar/week-column",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK Calendar | $FRAMEWORK demos"
                 },

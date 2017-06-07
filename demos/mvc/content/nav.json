@@ -458,7 +458,6 @@
 	  {
         "text": "Week Column",
         "url": "calendar/week-column",
-		"new": "true",
         "title": {
           "kendo-ui": "Week column in the Kendo UI Calendar widget | Kendo UI Web demos",
           "aspnet-mvc": "Week column in the ASP.NET MVC Calendar | ASP.NET MVC demos"
@@ -1154,7 +1153,6 @@
 	  {
         "text": "Week Column",
         "url": "datepicker/week-column",
-		"new": "true",
         "title": {
           "kendo-ui": "Week column in the Kendo UI DatePicker widget | Kendo UI Web demos",
           "aspnet-mvc": "Week column in the ASP.NET MVC DatePicker | ASP.NET MVC demos"
