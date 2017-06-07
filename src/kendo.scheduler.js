@@ -3754,7 +3754,9 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function() {
+            toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function(e) {
+                e.preventDefault();
+
                 that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");
                 $(document).on(MOUSEDOWN + NS, function(e) {
                     if($(e.target).closest(".k-scheduler-views").length === 0)
