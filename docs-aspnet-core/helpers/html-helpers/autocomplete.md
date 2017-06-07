@@ -5,11 +5,11 @@ description: "Learn the basics when working with the AutoComplete HtmlHelper for
 slug: htmlhelpers_autocomplete_aspnetcore
 ---
 
-# ComboBox HtmlHelper Overview
+# AutoComplete HtmlHelper Overview
 
 The AutoComplete HtmlHelper extension is a server-side wrapper for the [Kendo UI AutoComplete](http://demos.telerik.com/kendo-ui/autocomplete/index).
 
-It enables you to configure the Kendo UI AutoComplete widget from server-side code. The [AutoComplete](http://docs.telerik.com/kendo-ui/controls/editors/autocomplete/overview) provides suggestions depending on the typed text.It also allows multiple value entries. The suggestions shown by the widget can come from a local array or from a remote data service.
+It enables you to configure the Kendo UI AutoComplete widget from server-side code. The [AutoComplete](http://docs.telerik.com/kendo-ui/controls/editors/autocomplete/overview) provides suggestions depending on the typed text. It also allows multiple value entries. The suggestions shown by the widget can come from a local array or from a remote data service.
 
 For more information on the HtmlHelper, refer to the article on the [AutoComplete HtmlHelper for ASP.NET MVC](http://demos.telerik.com/aspnet-mvc/autocomplete/index).
 
