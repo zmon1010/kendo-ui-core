@@ -12,14 +12,14 @@
     "requireLicenseAcceptance": true
   },
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
-    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.1.0",
-    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.1.0",
-    "Microsoft.AspNetCore.Routing": "1.1.0",
-    "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
-    "System.Linq.Queryable": "4.0.0",
-    "System.Data.Common": "4.3.0"
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.0.0",
+    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+    "System.Linq.Queryable": "4.0.1",
+    "System.Data.Common": "4.1.0"
   },
   "buildOptions": {
     "warningsAsErrors": false,

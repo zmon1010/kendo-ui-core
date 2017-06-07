@@ -210,13 +210,17 @@ MVC_CONTENT = {
 end
 
 ROOT_MAP.merge!( {
-    "wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared',
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CORE_CONTENT = {
-    "wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS_VS2015,
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*'],
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 }
 
 JSP_CONTENT = {
@@ -395,8 +399,10 @@ bundle :name => 'aspnet.core.trial',
        :post_build => ['mvc_6:update_demo_deps_trial'],
        :prerequisites => [
            'mvc:assets',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples/wwwroot/shared'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.trial',
@@ -499,9 +505,11 @@ bundle :name => 'aspnet.core.commercial',
        :post_build => ['mvc_6:update_demo_deps_commercial'],
        :prerequisites => [
            'mvc:assets',
-           'type_script:master:test',
-           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
+ -         'type_script:master:test',
+           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2015/Kendo.Mvc.Examples/wwwroot/shared',
+           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.commercial/wrappers/aspnetcore/Examples/AspNet.Core/VS2017/Kendo.Mvc.Examples/wwwroot/shared'
        ]
 
 bundle :name => 'aspnetmvc.commercial-source',

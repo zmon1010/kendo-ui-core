@@ -79,6 +79,14 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        
+        /// <summary>
+        /// If set to true the user will see sort sequence indicators for sorted columns.
+        /// </summary>
+        /// <param name="value">The value for ShowIndexes</param>
+        public GridSortSettingsBuilder<TModel> ShowIndexes(bool value)
+        {
+            settings.ShowIndexes = value;
+            return this;
+        }
     }
 }

@@ -10,7 +10,7 @@ using Telerik.Windows.Documents.Fixed.Model;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class PdfProcessingController : Controller
+    public partial class PdfProcessingController : Controller
     {
         [Demo]
         public ActionResult Index()

@@ -17,7 +17,7 @@ namespace :tests do
         msbuild "wrappers/mvc/Kendo.Mvc.sln"
         sh "build/xunit/xunit.console.clr4.exe wrappers/mvc/tests/Kendo.Mvc.Tests/bin/Release/Kendo.Mvc.Tests.dll"
 
-        sh "cd wrappers/mvc-6 && dotnet restore && dotnet test tests/Kendo.Mvc.Tests"
+        sh "cd wrappers/mvc-6/tests/Kendo.Mvc.Tests && dotnet restore && dotnet test"
     end
 
     task :spreadsheet => ["spreadsheet:binaries"] do

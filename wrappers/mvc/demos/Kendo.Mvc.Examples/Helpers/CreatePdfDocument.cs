@@ -71,7 +71,7 @@ namespace Kendo.Mvc.Examples
         {
             Block block = new Block();
             block.GraphicProperties.FillColor = RgbColors.Black;
-            block.HorizontalAlignment = HorizontalAlignment.Left;
+            block.HorizontalAlignment = Telerik.Windows.Documents.Fixed.Model.Editing.Flow.HorizontalAlignment.Left;
 
             block.TextProperties.Font = FontsRepository.HelveticaBoldOblique;
             block.InsertText("RadPdfProcessing");
@@ -142,8 +142,8 @@ namespace Kendo.Mvc.Examples
 
             Block block = new Block();
             block.TextProperties.Font = FontsRepository.Helvetica;
-            block.HorizontalAlignment = HorizontalAlignment.Center;
-            block.VerticalAlignment = VerticalAlignment.Center;
+            block.HorizontalAlignment = Telerik.Windows.Documents.Fixed.Model.Editing.Flow.HorizontalAlignment.Center;
+            block.VerticalAlignment = Telerik.Windows.Documents.Fixed.Model.Editing.Flow.VerticalAlignment.Center;
             editor.DrawBlock(block, new Size(96, 96));
 
             using (editor.SaveGraphicProperties())
@@ -211,8 +211,8 @@ namespace Kendo.Mvc.Examples
 
             block = new Block();
             block.GraphicProperties.FillColor = RgbColors.Black;
-            block.HorizontalAlignment = HorizontalAlignment.Center;
-            block.VerticalAlignment = VerticalAlignment.Top;
+            block.HorizontalAlignment = Telerik.Windows.Documents.Fixed.Model.Editing.Flow.HorizontalAlignment.Center;
+            block.VerticalAlignment = Telerik.Windows.Documents.Fixed.Model.Editing.Flow.VerticalAlignment.Top;
             block.TextProperties.FontSize = 18;
             block.InsertText("PDF");
 

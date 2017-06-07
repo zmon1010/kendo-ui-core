@@ -9,6 +9,7 @@
     })
     .Pageable()
     .Sortable()
+    .Events(ev=>ev.Change("onChange"))
     .PersistSelection()
     .DataSource(dataSource => dataSource
         .Ajax()
@@ -16,3 +17,18 @@
         .Read(read => read.Action("Selection_Read", "Grid"))
     )
 )
+
+<script>
+    function onChange(arg) {
+        kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+    }
+</script>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+<style>
+    .console div {
+        height: 3.3em;
+    }
+</style>

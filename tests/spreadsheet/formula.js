@@ -723,6 +723,13 @@
         equal(f.print(1, 3), "sum(A9:A11)");
     });
 
+    test("formula cache after adjustment", function(){
+        var f1 = calc.compile(calc.parse(Sheet1, 1, 0, "=A1"));
+        f1.adjust(Sheet1, "row", 0, -1);
+        var f2 = calc.compile(calc.parse(Sheet1, 1, 0, "=A1"));
+        equal(f2.print(1, 0), "A1");
+    });
+
     /* -----[ reference operations ]----- */
 
     test("reference intersection", function(){

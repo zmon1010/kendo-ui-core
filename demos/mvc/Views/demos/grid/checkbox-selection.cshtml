@@ -2,6 +2,10 @@
             <div id="grid"></div>
 
             <script>
+                function onChange(arg) {
+                    kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+                }
+
                 $(document).ready(function () {
                     $("#grid").kendoGrid({
                         dataSource: {
@@ -21,6 +25,7 @@
                         pageable: true,
                         persistSelection: true,
                         sortable: true,
+                        change: onChange,
                         height: 550,
                         columns: [
                             { selectable: true, width: "50px" },
@@ -31,4 +36,13 @@
                     });
                 });
             </script>
+            <div class="box wide">
+                <h4>Console log</h4>
+                <div class="console"></div>
+            </div>
+            <style>
+                .console div {
+                    height: 3.3em;
+                }
+            </style>
         </div>

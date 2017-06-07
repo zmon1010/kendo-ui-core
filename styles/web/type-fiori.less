@@ -249,7 +249,9 @@
 .k-button-group .k-tool,
 .k-upload-files,
 .k-popup.k-align .k-list .k-item:last-child,
-.k-editor-dialog .k-tabstrip-items
+.k-editor-dialog .k-tabstrip-items,
+.k-maskedtextbox.k-state-disabled > .k-textbox:hover,
+.k-dateinput.k-state-disabled > .k-textbox:hover
 {
     border-color: @widget-border-color;
 }
@@ -3427,6 +3429,7 @@ div.k-window.k-state-focused
     .k-sort-order {
         color: @accent;
         opacity: 1;
+        margin-bottom: -1px;
     }
 }
 

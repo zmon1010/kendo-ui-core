@@ -25,6 +25,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public bool ShowIndexes
+        {
+            get;
+            set;
+        }
+
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {
             if (!AllowUnsort)
@@ -35,6 +41,11 @@ namespace Kendo.Mvc.UI
             if (SortMode != GridSortMode.SingleColumn)
             {
                 json["mode"] = "multiple";
+            }
+
+            if (ShowIndexes)
+            {
+                json["showIndexes"] = ShowIndexes;
             }
         }
     }

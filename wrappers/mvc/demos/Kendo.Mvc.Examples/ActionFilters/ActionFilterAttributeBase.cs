@@ -79,7 +79,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             var navJson = IOFile.ReadAllText(Controller.Server.MapPath("~/content/nav.json"));
 
-            return Serializer.Deserialize<NavigationWidget[]>(navJson.Replace("$FRAMEWORK", "ASP.NET MVC"));
+            return Serializer.Deserialize<NavigationWidget[]>(navJson);
         }
     }
 }

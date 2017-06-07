@@ -214,7 +214,7 @@ namespace KendoScaffolder.UI.Models
                         SelectedModelFields = EfMetadata.Properties;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     EfMetadata = null;
                     //throw new InvalidOperationException("Invalid model configuration", ex);

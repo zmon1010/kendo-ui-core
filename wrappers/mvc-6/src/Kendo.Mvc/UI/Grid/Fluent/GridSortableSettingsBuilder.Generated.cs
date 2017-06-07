@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the user will see sort sequence indicators for sorted columns.
+        /// </summary>
+        /// <param name="value">The value for ShowIndexes</param>
+        public GridSortableSettingsBuilder<T> ShowIndexes(bool value)
+        {
+            Container.ShowIndexes = value;
+            return this;
+        }
+
+        /// <summary>
         /// Determines the inital (from un-sorted to sorted state) sort direction. The supported values are asc and desc.
         /// </summary>
         /// <param name="value">The value for InitialDirection</param>

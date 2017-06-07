@@ -215,6 +215,14 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
         setProperty("template", value);
     }
 
+    public java.lang.String getTheme() {
+        return (java.lang.String)getProperty("theme");
+    }
+
+    public void setTheme(java.lang.String value) {
+        setProperty("theme", value);
+    }
+
     public float getZoom() {
         return (Float)getProperty("zoom");
     }

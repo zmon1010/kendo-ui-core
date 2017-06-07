@@ -12,6 +12,7 @@
         var hook = $(
             '<div style="display: none">' +
             '  <div class="k-var--accent"></div>' +
+            '  <div class="k-var--accent-contrast"></div>' +
             '  <div class="k-var--base"></div>' +
             '  <div class="k-var--background"></div>' +
             '  <div class="k-var--normal-background"></div>' +
@@ -103,6 +104,23 @@
             mapColor("chart.title.color", "normal-text-color");
 
             set("chart.seriesDefaults.labels.opacity", queryStyle("chart-area-opacity", "opacity"));
+
+            mapColor("diagram.shapeDefaults.fill.color", "accent");
+            mapColor("diagram.shapeDefaults.content.color", "accent-contrast");
+            mapColor("diagram.shapeDefaults.connectorDefaults.fill.color", "normal-text-color");
+            mapColor("diagram.shapeDefaults.connectorDefaults.stroke.color", "accent-contrast");
+            mapColor("diagram.shapeDefaults.connectorDefaults.hover.fill.color", "accent-contrast");
+            mapColor("diagram.shapeDefaults.connectorDefaults.hover.stroke.color", "normal-text-color");
+            mapColor("diagram.editable.resize.handles.stroke.color", "normal-text-color");
+            mapColor("diagram.editable.resize.handles.fill.color", "normal-background");
+            mapColor("diagram.editable.resize.handles.hover.stroke.color", "normal-text-color");
+            mapColor("diagram.editable.resize.handles.hover.fill.color", "normal-text-color");
+            mapColor("diagram.selectable.stroke.color", "normal-text-color");
+            mapColor("diagram.connectionDefaults.stroke.color", "normal-text-color");
+            mapColor("diagram.connectionDefaults.content.color", "normal-text-color");
+            mapColor("diagram.connectionDefaults.selection.handles.fill.color", "accent-contrast");
+            mapColor("diagram.connectionDefaults.selection.handles.stroke.color", "normal-text-color");
+            mapColor("diagram.connectionDefaults.selection.stroke.color", "normal-text-color");
         })();
 
         (function setFonts() {
