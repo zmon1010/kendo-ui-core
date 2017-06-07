@@ -99,6 +99,7 @@ var __meta__ = { // jshint ignore:line
         SELECTION_CELL_SELECTOR = "tbody>tr:not(.k-grouping-row):not(.k-detail-row):not(.k-group-footer) > td:not(.k-group-cell):not(.k-hierarchy-cell)",
         NAVROW = "tr:not(.k-footer-template):visible",
         NAVCELL = ":not(.k-group-cell):not(.k-hierarchy-cell):visible",
+        ITEMROW = "tr:not(.k-grouping-row):not(.k-detail-row):not(.k-footer-template):not(.k-group-footer):visible",
         FIRSTNAVITEM = NAVROW + ":first>" + NAVCELL + ":first",
         HEADERCELLS = "th.k-header:not(.k-group-cell):not(.k-hierarchy-cell)",
         NS = ".kendoGrid",
@@ -3879,32 +3880,56 @@ var __meta__ = { // jshint ignore:line
                     elements.on("keydown" + NS, function(e) {
                         var current = that.current();
                         var target = e.target;
-                        if (e.keyCode === keys.SPACEBAR && $.inArray(target, elements) > -1 &&
+                        if (e.keyCode === keys.SPACEBAR && !e.shiftKey && $.inArray(target, elements) > -1 &&
                             !current.is(".k-edit-cell,.k-header") &&
                             current.parent().is(":not(.k-grouping-row,.k-detail-row,.k-group-footer)")) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                current = cell ? current : current.parent();
+
+                                if (isLocked && !cell) {
+                                    current = current.add(that._relatedRow(current));
+                                }
+
+                                if(multi) {
+                                    if(!e.ctrlKey) {
+                                        that.selectable.clear();
+                                    } else {
+                                        if(current.hasClass(SELECTED)) {
+                                            current.removeClass(SELECTED);
+                                            that.trigger(CHANGE);
+                                            return;
+                                        }
+                                    }
+                                } else {
+                                    that.selectable.clear();
+                                }
+                                if (!cell) {
+                                    that.selectable._lastActive = current;
+                                }
+                                that.selectable.value(current);
+                        } else if(!cell && ((e.shiftKey && e.keyCode == keys.LEFT)||
+                           (e.shiftKey && e.keyCode == keys.RIGHT)||
+                           (e.shiftKey && e.keyCode == keys.UP)||
+                           (e.shiftKey && e.keyCode == keys.DOWN)||
+                           (e.keyCode === keys.SPACEBAR && e.shiftKey))) {
                             e.preventDefault();
                             e.stopPropagation();
-                            current = cell ? current : current.parent();
+                            current = current.parent();
 
-                            if (isLocked && !cell) {
+                            if (isLocked) {
                                 current = current.add(that._relatedRow(current));
                             }
 
-                            if(multi) {
-                                if(!e.ctrlKey) {
-                                    that.selectable.clear();
-                                } else {
-                                    if(current.hasClass(SELECTED)) {
-                                        current.removeClass(SELECTED);
-                                        that.trigger(CHANGE);
-                                        return;
-                                    }
+                            if (multi) {
+                                if(!that.selectable._lastActive) {
+                                    that.selectable._lastActive = current;
                                 }
+                                that.selectable.selectRange(that.selectable._firstSelectee(), current);
                             } else {
                                 that.selectable.clear();
+                                that.selectable.value(current);
                             }
-
-                            that.selectable.value(current);
                         }
                     });
                 }
@@ -4477,19 +4502,19 @@ var __meta__ = { // jshint ignore:line
             var handled = false;
 
             if (canHandle && e.keyCode == keys.UP) {
-                handled = this._moveUp(current);
+                handled = this._moveUp(current, e.shiftKey);
             }
 
             if (canHandle && e.keyCode == keys.DOWN) {
-                handled = this._moveDown(current);
+                handled = this._moveDown(current, e.shiftKey);
             }
 
             if (canHandle && e.keyCode == (isRtl ? keys.LEFT : keys.RIGHT)) {
-                handled = this._moveRight(current, e.altKey);
+                handled = this._moveRight(current, e.altKey, e.shiftKey, e.currentTarget);
             }
 
             if (canHandle && e.keyCode == (isRtl ? keys.RIGHT : keys.LEFT)) {
-                handled = this._moveLeft(current, e.altKey);
+                handled = this._moveLeft(current, e.altKey, e.shiftKey, e.currentTarget);
             }
 
             if (canHandle && e.keyCode == keys.PAGEDOWN) {
@@ -4520,7 +4545,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _moveLeft: function(current, altKey) {
+        _moveLeft: function(current, altKey, shiftKey, currentTable) {
             var next, index;
             var row = current.parent();
             //thead or tbody
@@ -4533,12 +4558,24 @@ var __meta__ = { // jshint ignore:line
                 next = this._prevHorizontalCell(container, current, index);
 
                 if (!next[0]) {
-                    container = this._horizontalContainer(container);
+                    if (shiftKey) {
+                        if (this.lockedTable) {
+                            next = this._relatedRow(row);
+                            if ($.contains(this.lockedTable[0], row[0])) {
+                                next = next.prevAll(ITEMROW + ":first");
+                            }
+                            next = next.children(DATA_CELL + ":last");
+                        } else {
+                            next = this._tabNext(current, currentTable, true);
+                        }
+                    } else {
+                        container = this._horizontalContainer(container);
 
-                    next = this._prevHorizontalCell(container, current, index);
+                        next = this._prevHorizontalCell(container, current, index);
 
-                    if (next[0] !== current[0]) {
-                        focusTable(container.parent(), true);
+                        if (next[0] !== current[0]) {
+                            focusTable(container.parent(), true);
+                        }
                     }
                 }
 
@@ -4548,7 +4585,7 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
-        _moveRight: function(current, altKey) {
+        _moveRight: function(current, altKey, shiftKey, currentTable) {
             var next, index;
             var row = current.parent();
             //thead or tbody
@@ -4561,12 +4598,24 @@ var __meta__ = { // jshint ignore:line
                 next = this._nextHorizontalCell(container, current, index);
 
                 if (!next[0]) {
-                    container = this._horizontalContainer(container, true);
+                    if (shiftKey) {
+                       if (this.lockedTable) {
+                            next = this._relatedRow(row);
+                            if ($.contains(this.table[0], row[0])) {
+                                next = next.nextAll(ITEMROW + ":first");
+                            }
+                            next = next.children(DATA_CELL + ":first");
+                        } else {
+                            next = this._tabNext(current, currentTable, false);
+                        }
+                    } else {
+                        container = this._horizontalContainer(container, true);
 
-                    next = this._nextHorizontalCell(container, current, index);
+                        next = this._nextHorizontalCell(container, current, index);
 
-                    if (next[0] !== current[0]) {
-                        focusTable(container.parent(), true);
+                        if (next[0] !== current[0]) {
+                            focusTable(container.parent(), true);
+                        }
                     }
                 }
 
@@ -4576,19 +4625,26 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
-        _moveUp: function(current) {
+        _moveUp: function(current, shiftKey) {
             //thead or tbody
             var container = current.parent().parent();
-            var next = this._prevVerticalCell(container, current);
+            var next;
 
-            if (!next[0]) {
-                container = this._verticalContainer(container, true);
+            if (shiftKey) {
+               next = current.parent();
+               next = next.prevAll(ITEMROW + ":first");
+               next = current.parent().is(ITEMROW) ? next.children().eq(current.index()) : next.children(DATA_CELL + ":last" );
+            } else {
+               next = this._prevVerticalCell(container, current);
+               if (!next[0]) {
+                  container = this._verticalContainer(container, true);
 
-                next = this._prevVerticalCell(container, current);
+                  next = this._prevVerticalCell(container, current);
 
-                if (next[0]) {
-                    focusTable(container.parent(), true);
-                }
+                  if (next[0]) {
+                      focusTable(container.parent(), true);
+                  }
+               }
             }
 
             this._setCurrent(next);
@@ -4596,17 +4652,24 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
-        _moveDown: function(current) {
+        _moveDown: function(current, shiftKey) {
             //thead or tbody
             var container = current.parent().parent();
-            var next = this._nextVerticalCell(container, current);
+            var next;
 
-            if (!next[0]) {
-                container = this._verticalContainer(container);
-
+            if (shiftKey) {
+                next = current.parent();
+                next = next.nextAll(ITEMROW + ":first");
+                next = current.parent().is(ITEMROW)? next.children().eq(current.index()) : next.children(DATA_CELL + ":first" );
+            } else {
                 next = this._nextVerticalCell(container, current);
-                if (next[0]) {
-                    focusTable(container.parent(), true);
+                if (!next[0]) {
+                    container = this._verticalContainer(container);
+
+                    next = this._nextVerticalCell(container, current);
+                    if (next[0]) {
+                        focusTable(container.parent(), true);
+                    }
                 }
             }
 
