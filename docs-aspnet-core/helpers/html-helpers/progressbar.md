@@ -15,7 +15,7 @@ For more information on the HtmlHelper, refer to the article on the [ProgressBar
 
 ## Basic Usage
 
-The following example demonstrates how to define the ProgressBar by using the PanelBar HtmlHelper.
+The following example demonstrates how to define the ProgressBar by using the ProgressBar HtmlHelper.
 
 ###### Example
 
@@ -42,7 +42,7 @@ The following example demonstrates the basic configuration of the ProgressBar Ht
 ```tab-Razor
 
     @(Html.Kendo().ProgressBar()
-        .Name("totalProgressBar")
+        .Name("progressBar")
         .Type(ProgressBarType.Chunk)
         .ChunkCount(4)
         .Min(0)
