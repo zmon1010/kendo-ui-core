@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Grid.Html
                 .Attribute("aria-label", "Select all rows");
             checkbox.AppendTo(th);
             var label = new HtmlElement("label")
-                .AddClass("k-checkbox-label")
+                .AddClass("k-checkbox-label k-no-text")
                 .Text(HttpUtility.HtmlDecode("&#8203;"));
             label.AppendTo(th);
 
