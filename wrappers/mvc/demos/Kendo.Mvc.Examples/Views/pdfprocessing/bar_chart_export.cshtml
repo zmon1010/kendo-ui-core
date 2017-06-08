@@ -1,12 +1,14 @@
 ﻿<div id="example">
-<div class="demo-section k-header" >
-    <img src='@Url.Content("~/content/web/pdfprocessing/barChart.png")' class="documentImage">
+    <div class="demo-section k-header">
+        <img src='@Url.Content("~/content/web/pdfprocessing/barChart.png")' class="documentImage" />
         @using (Html.BeginForm("Download_Chart_Document", "PdfProcessing"))
-        {   
+        {
             <input type="submit" value="Download Document" class="k-button downloadBtn" />
         }
-</img>
+    </div>
 </div>
+
+
 
 <style>
 .downloadBtn {
