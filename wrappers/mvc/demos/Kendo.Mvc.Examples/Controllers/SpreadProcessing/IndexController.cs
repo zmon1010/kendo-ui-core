@@ -14,14 +14,14 @@ using Telerik.Windows.Documents.Spreadsheet.Model;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class SpreadProcessingController : Controller
+    public partial class SpreadProcessingController : Controller
     {
         [Demo]
         public ActionResult Index()
         {
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Download_Document(HttpPostedFileBase customDocument, string convertTo)
         {

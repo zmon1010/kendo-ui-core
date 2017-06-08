@@ -1,0 +1,80 @@
+﻿<div id="example">
+    <div class="demo-section k-header custom-width">
+        @using (Html.BeginForm("GenerateDocument", "SpreadProcessing"))
+        {
+
+            @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
+                .Name("products")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.ProductName).Title("ITEM");
+                columns.Bound(p => p.UnitsInStock).Width(80).Title("QTY");
+                columns.Bound(p => p.UnitPrice).Width(140).Title("PRICE");
+                columns.Template(@<text></text>).ClientTemplate("#=subTotal(data)#").Title("SUB TOTAL").ClientFooterTemplate("#=footerTemplate()#").Width(150);
+            })
+            .HtmlAttributes(new { style = "width: 550px;" })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(20)
+                .Model(model => model.Id(p => p.ProductID))
+                .Read("GenerateDocument_Read", "SpreadProcessing")
+                )
+            )
+
+            <script>
+                function subTotal(product) {
+                    return kendo.format("{0:c}", (product.UnitsInStock * product.UnitPrice));
+                }
+
+                function footerTemplate() {
+                    debugger;
+                    var grid = $("#products").data("kendoGrid");
+                    var items = grid.dataSource.view();
+                    var subTotal = 0;
+                    var grandTotal = 0;
+
+                    for (var i = 0; i < items.length; i++) {
+                        subTotal = items[i].UnitsInStock * items[i].UnitPrice;
+                        grandTotal = grandTotal + subTotal;
+                    }
+
+                    return kendo.format("Total: {0:c}", grandTotal);
+                }
+            </script>
+            
+            <br />
+            <br />
+            <br />
+
+            <div class="file-options-wrapper">
+                <div class="column float-right">
+                    @Html.Label("fileExtension", "Format: ")
+                    @(Html.Kendo().ComboBox()
+                        .Name("fileFormat")
+                        .Filter("contains")
+                        .Suggest(true)
+                        .SelectedIndex(0)
+                        .Items(items =>
+                            {
+                                items.Add().Text("XLSX").Value("xlsx");
+                                items.Add().Text("CSV").Value("csv");
+                                items.Add().Text("TXT").Value("txt");
+                            }
+                        )
+                    )
+
+                </div>
+            </div>
+
+            <hr class="clear" />
+
+            <input type="submit" class="k-button k-primary wide-btn" value="Save" />
+        }
+    </div>
+</div>
+
+<style>
+    .demo-section.custom-width {
+        max-width: 550px;
+    }
+</style>

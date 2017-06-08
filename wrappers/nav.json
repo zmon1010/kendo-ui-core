@@ -3918,6 +3918,20 @@
             "description": {
                 "aspnet-mvc": "With <strong>RadSpreadProcessing</strong> you can effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF."
             }
+        },
+        {
+            "text": "Generate documents",
+            "url": "spreadprocessing/generate-documents",
+            "new": "true",
+            "title": {
+                "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
+            },
+            "meta": {
+                "aspnet-mvc": "See how the Telerik RadSpreadProcessing can be integrated in MVC applications."
+            },
+            "description": {
+                "aspnet-mvc": "<strong>RadSpreadProcessing</strong> allows you to create a document from scratch using only code. This is particulary convenient when you need to export large amount of data to one of the supported formats - Xlsx, Csv, Txt."
+            }
         }],
         "documentation": {
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview"
