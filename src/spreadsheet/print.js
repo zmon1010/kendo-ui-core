@@ -115,8 +115,8 @@
         rowHeights = rowHeights.slice(0, maxRow + 1);
         colWidths = colWidths.slice(0, maxCol + 1);
 
-        var pageWidth = options.pageWidth;
-        var pageHeight = options.pageHeight;
+        var pageWidth = Math.floor(options.pageWidth);
+        var pageHeight = Math.floor(options.pageHeight);
         var scaleFactor = 1;
 
         // when fitWidth is requested, we must update the page size
