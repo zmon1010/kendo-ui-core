@@ -15,7 +15,7 @@ For more information on the HtmlHelper, refer to the article on the [TabStrip Ht
 
 ## Basic Usage
 
-The following example demonstrates how to define the Menu by using the TabStrip HtmlHelper.
+The following example demonstrates how to define the TabStrip by using the TabStrip HtmlHelper.
 
 ###### Example
 
