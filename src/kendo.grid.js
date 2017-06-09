@@ -4317,6 +4317,9 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            if (next && next.length) {
+                this._lastCellIndex = next.parent().children(DATA_CELL).index(next);
+            }
             return this._current;
         },
 
@@ -4570,7 +4573,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
 
-                this._setCurrent(next);
+                this._setCurrent(next);                
             }
 
             return true;
@@ -4591,7 +4594,9 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            var tmp = this._lastCellIndex || 0;
             this._setCurrent(next);
+            this._lastCellIndex = tmp;
 
             return true;
         },
@@ -4609,9 +4614,9 @@ var __meta__ = { // jshint ignore:line
                     focusTable(container.parent(), true);
                 }
             }
-
+            var tmp = this._lastCellIndex || 0;
             this._setCurrent(next);
-
+            this._lastCellIndex = tmp;
             return true;
         },
 
@@ -4847,7 +4852,7 @@ var __meta__ = { // jshint ignore:line
                 return cells.eq(cells.length - 2);
             }
 
-            index = row.children(DATA_CELL).index(current);
+            index = Math.max(row.children(DATA_CELL).index(current), this._lastCellIndex || 0);
 
             //if current is inside filter row
             if (row.hasClass("k-filter-row")) {
@@ -4889,6 +4894,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             index = index ? parseInt(index, 10) : row.children(DATA_CELL).index(current);
+            index = Math.max(index, this._lastCellIndex || 0);
 
             //move down to data container
             if (rowIndex == -1) {
