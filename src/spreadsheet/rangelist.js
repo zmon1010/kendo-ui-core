@@ -22,10 +22,6 @@
         this.level = 0;
     })();
 
-    function passThrough(value) {
-        return value;
-    }
-
     function skew(node) {
         if (node.left.level === node.level) {
             var temp = node;
@@ -105,7 +101,7 @@
     }
 
     var Range = kendo.Class.extend({
-        init: function Value(start, end, value) {
+        init: function ValueRange(start, end, value) {
             this.start = start;
             this.end = end;
             this.value = value;
@@ -113,6 +109,10 @@
 
         intersects: function(range) {
             return range.start <= this.end && range.end >= this.start;
+        },
+
+        clone: function() {
+            return new Range(this.start, this.end, this.value);
         }
     });
 
@@ -164,7 +164,9 @@
         },
 
         clone: function() {
-            return this.map(passThrough);
+            return this.map(function(value) {
+                return value.clone();
+            });
         },
 
         first: function() {
@@ -412,7 +414,7 @@
         },
 
         setState: function(state) {
-            this.tree = state;
+            this.tree = state.clone();
         }
     });
 
