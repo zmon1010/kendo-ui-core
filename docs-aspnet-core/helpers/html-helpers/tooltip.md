@@ -21,7 +21,7 @@ The following example demonstrates how to define the Tooltip by using the Toolti
 
 ```tab-Razor
   
-   <span id="autohide-true" class="k-button wider">Hover me!</span>
+   <span id="tooltip" class="k-button wider">Hover me!</span>
 
     @(Html.Kendo().Tooltip()
         .For("#tooltip")
@@ -37,7 +37,9 @@ The following example demonstrates the basic configuration of the Tooltip HtmlHe
 
 ```tab-Razor    
 
-    <span id="tooltip" class="k-button wider">Hover me!</span>
+    <span id="tooltip" class="k-button wider">
+      <а href="#">Hover me</a>
+    </span>
 
     @(Html.Kendo().Tooltip()
         .For("#tooltip")
