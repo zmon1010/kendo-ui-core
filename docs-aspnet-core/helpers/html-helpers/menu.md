@@ -11,7 +11,7 @@ The Menu HtmlHelper extension is a server-side wrapper for the [Kendo UI Menu](h
 
 It enables you to configure the Kendo UI Menu widget from server-side code.The [Menu](http://docs.telerik.com/kendo-ui/controls/navigation/menu/overview) displays hierarchical data as a multi-level menu. It provides rich styling for unordered lists of items, and can be used for both navigation and executing JavaScript commands. 
 
-For more information on the HtmlHelper, refer to the article on the [Menu HtmlHelper for ASP.NET MVC](http://demos.telerik.com/aspnet-mvc/menu/index).
+For more information on the HtmlHelper, refer to the article on the [Menu HtmlHelper for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/helpers/menu/overview).
 
 ## Basic Usage
 
