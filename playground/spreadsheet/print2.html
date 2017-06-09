@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+        <script src="../loader.js"></script>
+        <script>
+         requireSync([
+             "../../src/jquery.js",
+             "../../src/kendo.spreadsheet.js"
+         ]);
+        </script>
+    </head>
+    <body>
+        <div id="example">
+            <div id="spreadsheet" style="width: 100%;"></div>
+            <script>
+             $(function() {
+                 $("#spreadsheet").kendoSpreadsheet({
+                     excel: {
+                         proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
+                     },
+                     pdf: {
+                         proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
+                     },
+                     sheets: [
+                         {
+                             "name":"report",
+                             "columns":[
+                                 {
+                                     "index":0,
+                                     "width":196.0
+                                 },
+                                 {
+                                     "index":1,
+                                     "width":98.0
+                                 },
+                                 {
+                                     "index":2,
+                                     "width":98.0
+                                 },
+                                 {
+                                     "index":3,
+                                     "width":98.0
+                                 },
+                                 {
+                                     "index":4,
+                                     "width":98.0
+                                 },
+                                 {
+                                     "index":5,
+                                     "width":252.0
+                                 }
+                             ],
+                             "rows":[
+                                 {
+                                     "cells":[
+                                         {
+                                             "index":0
+                                         },
+                                         {
+                                             "index":1,
+                                             "value":"Jan 2017"
+                                         },
+                                         {
+                                             "index":2,
+                                             "value":"Feb 2017"
+                                         },
+                                         {
+                                             "index":3,
+                                             "value":"Mar 2017"
+                                         },
+                                         {
+                                             "index":4,
+                                             "textAlign":"right",
+                                             "value":"Total"
+                                         },
+                                         {
+                                             "index":5,
+                                             "value":"Comments",
+                                             "background":"yellow"
+                                         }
+                                     ],
+                                     "index":0
+                                 }
+                             ]
+                         }
+                     ]
+                 });
+                 window.spreadsheet = $("#spreadsheet").getKendoSpreadsheet();
+                 spreadsheet.saveAsPDF({
+                     paperSize  : "A4",
+                     margin     : {bottom: "0.75in", left: "0.7in", right: "0.7in", top: "0.75in"},
+                     landscape  : false,
+                     guidelines : true,
+                     hCenter    : true,
+                     vCenter    : true,
+                     fitWidth   : true
+                 });
+             });
+            </script>
+        </div>
+    </body>
+</html>
