@@ -881,7 +881,7 @@
             }
             this.editor
                 .activate({
-                    range: this._workbook.activeSheet()._viewActiveCell(),
+                    range: this._workbook.activeSheet().selection(),
                     rect: this.view.activeCellRectangle(),
                     tooltip: this._activeTooltip()
                 });
