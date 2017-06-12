@@ -25,9 +25,8 @@ namespace :vs_scaffold do
     end
 
     file VS_SCAFFOLD_OUTPUT => VS_SCAFFOLD_SRC do |t|
-        options = '/p:Configuration=Release /p:VisualStudioVersion=12.0'
-
-        msbuild VS_SCAFFOLD_PROJECT, options
+        sh "cd #{VS_SCAFFOLD_SRC_ROOT} && ..\\..\\build\\nuget\\nuget.exe restore"
+        system('"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\MSBuild\\15.0\\Bin\\MSBuild.exe" plugins\\KendoScaffolder\\KendoScaffolder.sln /p:Configuration=Release')
     end
 
     desc 'Builds the VS Scaffolder extension'
