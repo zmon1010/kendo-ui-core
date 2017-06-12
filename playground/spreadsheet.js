@@ -56,7 +56,7 @@ $("#spreadsheet").kendoSpreadsheet({
             {
                 type: "button",
                 text: "Foo",
-                spriteCssClass: "k-icon k-font-icon k-i-cog",
+                spriteCssClass: "k-icon k-i-cog",
                 click: function(e) {
                     window.alert("custom tool");
                 }

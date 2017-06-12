@@ -50,8 +50,8 @@ kendo.spreadsheet.registerEditor("color", function(){
             context = options;
             open();
         },
-        icon: "k-font-icon k-i-background"
-    };
+        icon: "k-i-background"
+    }
 });
 
 sheet.batch(function(){
