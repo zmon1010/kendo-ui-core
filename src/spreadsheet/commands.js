@@ -752,26 +752,42 @@
         }
     });
 
-    var DeleteCommand = kendo.spreadsheet.DeleteCommand = Command.extend({
+    var DeleteCommand = Command.extend({
+        exec: function() {
+            this._state = this.range().getState();
+            this._indexes = this._exec();
+        },
         undo: function() {
-            var sheet = this.range().sheet();
-            sheet.setState(this._state);
+            var self = this;
+            var range = self.range();
+            var sheet = range.sheet();
+            sheet.batch(function(){
+                self._indexes.forEach(function(x){
+                    self._undoOne(sheet, x);
+                    sheet._restoreModifiedFormulas(x.formulas);
+                });
+                range.setState(self._state);
+            }, { layout: true, recalc: true });
         }
     });
 
     kendo.spreadsheet.DeleteRowCommand = DeleteCommand.extend({
-        exec: function() {
-            var sheet = this.range().sheet();
-            this._state = sheet.getState();
-            sheet.axisManager().deleteSelectedRows();
+        _exec: function() {
+            return this.range().sheet().axisManager().deleteSelectedRows();
+        },
+        _undoOne: function(sheet, x) {
+            sheet.insertRow(x.index);
+            sheet.rowHeight(x.index, x.height);
         }
     });
 
     kendo.spreadsheet.DeleteColumnCommand = DeleteCommand.extend({
-        exec: function() {
-            var sheet = this.range().sheet();
-            this._state = sheet.getState();
-            sheet.axisManager().deleteSelectedColumns();
+        _exec: function() {
+            return this.range().sheet().axisManager().deleteSelectedColumns();
+        },
+        _undoOne: function(sheet, x) {
+            sheet.insertColumn(x.index);
+            sheet.columnWidth(x.index, x.width);
         }
     });
 

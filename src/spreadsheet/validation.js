@@ -221,6 +221,15 @@
             ));
         },
 
+        deepClone: function() {
+            var v = new Validation(this);
+            v.from = v.from.deepClone();
+            if (v.to) {
+                v.to = v.to.deepClone();
+            }
+            return v;
+        },
+
         exec: function(ss, compareValue, compareFormat, callback) {
             var self = this;
 

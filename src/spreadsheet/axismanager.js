@@ -50,15 +50,37 @@
         },
 
         deleteSelectedColumns: function() {
+            var indexes = [];
             this.forEachSelectedColumn(function(sheet, index, i) {
-                sheet.deleteColumn(index - i);
+                index -= i;
+                var formulas = [];
+                indexes.unshift({
+                    index    : index,
+                    formulas : formulas,
+                    width    : sheet.columnWidth(index)
+                });
+                sheet._saveModifiedFormulas(formulas, function(){
+                    sheet.deleteColumn(index);
+                });
             });
+            return indexes;
         },
 
         deleteSelectedRows: function() {
+            var indexes = [];
             this.forEachSelectedRow(function(sheet, index, i) {
-                sheet.deleteRow(index - i);
+                index -= i;
+                var formulas = [];
+                indexes.unshift({
+                    index    : index,
+                    formulas : formulas,
+                    height   : sheet.rowHeight(index)
+                });
+                sheet._saveModifiedFormulas(formulas, function(){
+                    sheet.deleteRow(index);
+                });
             });
+            return indexes;
         },
 
         hideSelectedColumns: function() {

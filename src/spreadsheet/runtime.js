@@ -552,6 +552,10 @@
             }
             return new Formula(refs, this.handler, this.print, sheet, row, col);
         },
+        deepClone: function() {
+            var refs = this.refs.map(function(ref){ return ref.clone(); });
+            return new Formula(refs, this.handler, this.print, this.sheet, this.row, this.col);
+        },
         resolve: function(val) {
             this.pending = false;
             this.onReady.forEach(function(callback){
@@ -641,7 +645,23 @@
             var newFormulaRow = this.row;
             var newFormulaCol = this.col;
             this.absrefs = null;
-            this.refs = this.refs.map(function(ref){
+            var prevRefs = this.refs;
+            var modified = formulaMoves;
+            this.refs = prevRefs.map(function(ref){
+                var newRef = adjust(ref);
+                if (!modified && !sameRef(newRef, ref)) {
+                    modified = true;
+                }
+                return newRef;
+            });
+
+            if (modified) {
+                // return a clone of the original formula.  needed to undo operations like
+                // deleteRow, which can transform a reference into NULL.
+                return new Formula(prevRefs, this.handler, this.print, this.sheet, formulaRow, formulaCol);
+            }
+
+            function adjust(ref){
                 if (ref === NULL) {
                     return ref;
                 }
@@ -665,12 +685,44 @@
                     operation == "row",
                     start, delta
                 );
-            }, this);
+            }
         },
         toString: function() {
             return this.print(this.row, this.col);
         }
     });
+
+    function sameRef(r1, r2) {
+        // note: r1.eq(r2) will not do, because it returns true for A1 and A1:A1 (CellRef
+        // vs. RangeRef).  To properly undo we need to assert that the references are exactly the
+        // same (including type).
+        if (r1.constructor !== r2.constructor) {
+            return false;
+        }
+        if (r1 instanceof CellRef) {
+            return r1.sheet == r2.sheet
+                && r1.row == r2.row
+                && r1.col == r2.col
+                && r1.rel == r2.rel;
+        }
+        if (r1 instanceof RangeRef) {
+            return sameRef(r1.topLeft     , r2.topLeft)
+                && sameRef(r1.bottomRight , r2.bottomRight)
+                && r1.endSheet == r2.endSheet;
+        }
+        if (r1 instanceof UnionRef) {
+            var i = r1.refs.length;
+            if (i != r2.refs.length) {
+                return false;
+            }
+            while (--i >= 0) {
+                if (!sameRef(r1.refs[i], r2.refs[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     // spreadsheet functions --------
     var FUNCS = Object.create(null);

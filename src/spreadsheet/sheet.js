@@ -11,6 +11,8 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
 
+    var MODIFIED_FORMULAS;
+
     var Selection = kendo.Class.extend({
         init: function(sheet) {
             this._sheet = sheet;
@@ -277,6 +279,26 @@
             this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
+        _saveModifiedFormulas: function(array, callback) {
+            var save = MODIFIED_FORMULAS;
+            MODIFIED_FORMULAS = array;
+            var ret = callback();
+            MODIFIED_FORMULAS = save;
+            return ret;
+        },
+
+        _restoreModifiedFormulas: function(array) {
+            var wb = this._workbook;
+            array.forEach(function(f){
+                var sheet = wb.sheetByName(f.sheet);
+                if (f instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    var index = sheet._grid.cellRefIndex(f); // f has row, col
+                    sheet._properties.set("formula", index, index, f);
+                }
+                // XXX: validations
+            });
+        },
+
         _adjustReferences: function(operation, start, delta, mergedCells) {
             this._mergedCells = mergedCells.reduce(function(a, ref){
                 ref = ref.adjust(null, null, null, null, operation == "row", start, delta);
@@ -289,7 +311,18 @@
                 var affectedSheet = this._name();
                 this._workbook._sheets.forEach(function(sheet){
                     sheet._forFormulas(function(formula){
-                        formula.adjust(affectedSheet, operation, start, delta);
+                        var prev = formula.adjust(affectedSheet, operation, start, delta);
+                        if (prev && MODIFIED_FORMULAS) {
+                            // if formula.adjust returns non-null,
+                            // that means the formula was indeed
+                            // modified and the returned value is a
+                            // copy of the previous Formula, which we
+                            // can use for undoing the operation.
+                            MODIFIED_FORMULAS.push(prev);
+
+                            // XXX: the same should be done with
+                            // validations below.
+                        }
                     });
 
                     sheet._forValidations(function(validation){

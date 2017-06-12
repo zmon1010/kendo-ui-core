@@ -631,7 +631,13 @@
                 data[dr][dc] = cellState;
 
                 properties.forEach(function(property) {
-                    cellState[property] = typeof cell[property] == "undefined" ? null : cell[property];
+                    var value = typeof cell[property] == "undefined" ? null : cell[property];
+                    if (value instanceof kendo.spreadsheet.calc.runtime.Formula ||
+                        value instanceof kendo.spreadsheet.validation.Validation)
+                    {
+                        value = value.deepClone();
+                    }
+                    cellState[property] = value;
                 });
             });
 

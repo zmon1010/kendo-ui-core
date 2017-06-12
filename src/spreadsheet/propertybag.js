@@ -121,7 +121,7 @@
             // formulas are objects maintaining complex state.
             // https://github.com/telerik/kendo-ui-core/issues/2816
             this.lists.formula.tree.clone = cloneFormulaTree;
-            this.lists.validation.tree.clone = cloneValidationTree;
+            this.lists.validation.tree.clone = cloneFormulaTree;
         },
 
         getState: function() {
@@ -282,42 +282,15 @@
         }
     });
 
-    function cloneFormula(f) {
-        f = f.clone(f.sheet, f.row, f.col);
-        f.refs = f.refs.map(function(ref){ return ref.clone(); });
-        return f;
-    }
-
     function cloneFormulaValue(x) {
         x = x.clone();
-        x.value = cloneFormula(x.value);
+        x.value = x.value.deepClone(); // x.value Formula
         return x;
     }
 
     function cloneFormulaTree() {
         var tree = this.map(cloneFormulaValue);
         tree.clone = cloneFormulaTree; // because it's a new RangeTree now
-        return tree;
-    }
-
-    function cloneValidation(v) {
-        v = new kendo.spreadsheet.validation.Validation(v);
-        v.from = cloneFormula(v.from);
-        if (v.to) {
-            v.to = cloneFormula(v.to);
-        }
-        return v;
-    }
-
-    function cloneValidationValue(x) {
-        x = x.clone();
-        x.value = cloneValidation(x.value);
-        return x;
-    }
-
-    function cloneValidationTree() {
-        var tree = this.map(cloneValidationValue);
-        tree.clone = cloneValidationTree; // because it's a new RangeTree now
         return tree;
     }
 
