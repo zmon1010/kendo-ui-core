@@ -778,10 +778,6 @@
         init: function(options) {
             Command.fn.init.call(this, options);
             this._value = options.value;
-        },
-        undo: function() {
-            var sheet = this.range().sheet();
-            sheet.setState(this._state);
         }
     });
 
@@ -794,13 +790,20 @@
                 return result;
             }
 
-            this._state = sheet.getState();
-
             if (this._value === "left") {
-                sheet.axisManager().addColumnLeft();
+                this._pos = sheet.axisManager().addColumnLeft();
             } else {
-                sheet.axisManager().addColumnRight();
+                this._pos = sheet.axisManager().addColumnRight();
             }
+        },
+        undo: function() {
+            var self = this;
+            var sheet = self.range().sheet();
+            sheet.batch(function(){
+                for (var i = self._pos.count; --i >= 0;) {
+                    sheet.deleteColumn(self._pos.base);
+                }
+            }, { layout: true, recalc: true });
         }
     });
 
@@ -813,13 +816,20 @@
                 return result;
             }
 
-            this._state = sheet.getState();
-
             if (this._value === "above") {
-                sheet.axisManager().addRowAbove();
+                this._pos = sheet.axisManager().addRowAbove();
             } else {
-                sheet.axisManager().addRowBelow();
+                this._pos = sheet.axisManager().addRowBelow();
             }
+        },
+        undo: function() {
+            var self = this;
+            var sheet = self.range().sheet();
+            sheet.batch(function(){
+                for (var i = self._pos.count; --i >= 0;) {
+                    sheet.deleteRow(self._pos.base);
+                }
+            }, { layout: true, recalc: true });
         }
     });
 
