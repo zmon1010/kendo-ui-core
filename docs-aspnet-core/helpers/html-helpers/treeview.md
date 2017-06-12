@@ -26,7 +26,7 @@ The following example demonstrates how to define the TreeView by using the TreeV
         .DataTextField("Name")
         .DataSource(dataSource => dataSource
             .Read(read => read
-                .Action("Employees", "TreeView")
+                .Action("Read_TreeViewData", "TreeView")
             )            
         )
     )
@@ -41,19 +41,33 @@ The following example demonstrates how to define the TreeView by using the TreeV
             return View();
         }
 
-        public JsonResult Employees(int? id)
+        public static IList<HierarchicalViewModel> GetHierarchicalData()
         {
-            var dataContext = new SampleEntities();
+            var result = new List<HierarchicalViewModel>()
+            {
+                new HierarchicalViewModel() { ID = 1, ParendID = null, HasChildren = true, Name = "Parent item" },
+                new HierarchicalViewModel() { ID = 2, ParendID = 1, HasChildren = true, Name = "Parent item" },
+                new HierarchicalViewModel() { ID = 3, ParendID = 1, HasChildren = false, Name = "Item" },
+                new HierarchicalViewModel() { ID = 4, ParendID = 2, HasChildren = false, Name = "Item" },
+                new HierarchicalViewModel() { ID = 5, ParendID = 2, HasChildren = false, Name = "Item" }
+            };
 
-            var employees = from e in dataContext.Employees
-                where (id.HasValue ? e.ReportsTo == id : e.ReportsTo == null)
-                select new {
-                    id = e.EmployeeID,
-                    Name = e.FirstName + " " + e.LastName,
-                    hasChildren = e.Employees1.Any()
-                };
+            return result;
+        }
 
-            return Json(employees);
+        public IActionResult Read_TreeViewData(int? id)
+        {
+            var result = GetHierarchicalData()
+                .Where(x => id.HasValue ? x.ParendID == id : x.ParendID == null)
+                .Select(item => new {
+                    id = item.ID,
+                    Name = item.Name,
+                    expanded = item.Expanded,
+                    imageUrl = item.ImageUrl,
+                    hasChildren = item.HasChildren
+                });           
+
+            return Json(result);
         }
     }
 

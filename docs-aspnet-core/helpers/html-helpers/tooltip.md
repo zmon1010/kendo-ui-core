@@ -48,7 +48,6 @@ The following example demonstrates the basic configuration of the Tooltip HtmlHe
         .Width(120)
         .AutoHide(false)
         .Filter("a")
-        .ContentTemplateId("template")
         .Events(events => events.Hide("onHide").Show("onShow"))
     )
 

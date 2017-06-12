@@ -33,24 +33,38 @@ The following example demonstrates how to define the PanelBar by using the Panel
 
 ```tab-Controller
 
-    public class PanelBarController : Controller
+     public class PanelBarController : Controller
     {
-        public IActionResult Templates()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Read_PanelBarData(string id)
+        public static IList<HierarchicalViewModel> GetHierarchicalData()
         {
-            IEnumerable<PanelBarItemViewModel> result;
-            if (string.IsNullOrEmpty(id))
+            var result = new List<HierarchicalViewModel>()
             {
-                result = PanelBarRepository.GetProjectData().Select(o => o.Clone());
-            }
-            else
-            {
-                result = PanelBarRepository.GetChildren(id);
-            }
+                new HierarchicalViewModel() { ID = 1, ParendID = null, HasChildren = true, Name = "Parent item" },
+                new HierarchicalViewModel() { ID = 2, ParendID = 1, HasChildren = true, Name = "Parent item" },
+                new HierarchicalViewModel() { ID = 3, ParendID = 1, HasChildren = false, Name = "Item" },
+                new HierarchicalViewModel() { ID = 4, ParendID = 2, HasChildren = false, Name = "Item" },
+                new HierarchicalViewModel() { ID = 5, ParendID = 2, HasChildren = false, Name = "Item" }
+            };
+
+            return result;
+        }
+
+        public IActionResult Read_PanelBarData(int? id)
+        {
+            var result = GetHierarchicalData()
+                .Where(x => id.HasValue ? x.ParendID == id : x.ParendID == null)
+                .Select(item => new {
+                    id = item.ID,
+                    Name = item.Name,
+                    expanded = item.Expanded,
+                    imageUrl = item.ImageUrl,
+                    hasChildren = item.HasChildren
+                });           
 
             return Json(result);
         }
