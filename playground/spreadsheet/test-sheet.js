@@ -1,6 +1,4 @@
 var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
-    columns: 10,
-    rows: 20
 }).data("kendoSpreadsheet");
 
 var sheet = spreadsheet.activeSheet();
@@ -131,7 +129,7 @@ sheet.batch(function(){
         dataType: "list",
         showButton: true,
         comparerType: "list",
-        from: "H:H",
+        from: "H1:H5",
         allowNulls: true,
         type: "reject"
     }).background("#fea");
@@ -172,7 +170,6 @@ sheet.batch(function(){
     sheet.range("F16").input("=TEST+TEST");
     sheet.range("G20").input("=TOTAL");
     sheet.range("G19").input("=Const_PI");
-    sheet.range("20:20").background("#fea").bold(true);
     sheet.range("J1").input("=SUM(NoSheet)");
 
     sheet.range("F1").input('=json.encode(E1)');
