@@ -1204,7 +1204,9 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var dropZone = $(that.options.dropZone);
 
-            $(".k-upload-button", that.wrapper).wrap("<div class='k-dropzone'></div>");
+            $(".k-upload-button", that.wrapper)
+                .wrap("<div class='k-dropzone'></div>")
+                .after($("<em>" + that.localization.dropFilesHere + "</em>"));
 
             var ns = that._ns;
             dropZone.on("dragenter" + ns, stopEvent)
