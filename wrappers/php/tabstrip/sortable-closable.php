@@ -15,12 +15,12 @@ require_once '../lib/Kendo/Autoload.php';
         ->selected(true)
         ->startContent();
 ?>
-  <p>Baseball is a bat-and-ball sport played between two teams of nine players each. 
-  The aim is to score runs by hitting a thrown ball with a bat and touching a series of four bases arranged at the corners of a ninety-foot diamond. 
-  Players on the batting team take turns hitting against the pitcher of the fielding team, which tries to stop them from scoring runs by getting hitters out in any of several ways. 
-  A player on the batting team can stop at any of the bases and later advance via a teammate's hit or other means. 
-  The teams switch between batting and fielding whenever the fielding team records three outs. 
-  One turn at bat for each team constitutes an inning and nine innings make up a professional game. 
+  <p>Baseball is a bat-and-ball sport played between two teams of nine players each.
+  The aim is to score runs by hitting a thrown ball with a bat and touching a series of four bases arranged at the corners of a ninety-foot diamond.
+  Players on the batting team take turns hitting against the pitcher of the fielding team, which tries to stop them from scoring runs by getting hitters out in any of several ways.
+  A player on the batting team can stop at any of the bases and later advance via a teammate's hit or other means.
+  The teams switch between batting and fielding whenever the fielding team records three outs.
+  One turn at bat for each team constitutes an inning and nine innings make up a professional game.
   The team with the most runs at the end of the game wins.</p>
 <?php
     $item->endContent();
@@ -93,10 +93,10 @@ require_once '../lib/Kendo/Autoload.php';
 			}
 		});
 	};
-	
+
 	var configureCloseTab = function () {
 		var tabsElements = $('#tabstrip li[role="tab"]');
-		tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-font-icon k-i-x"></span></span>');
+		tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
 
 		tabstrip.tabGroup.on("click", "[data-type='remove']", function (e) {
 			e.preventDefault();
@@ -110,7 +110,7 @@ require_once '../lib/Kendo/Autoload.php';
 			}
 		});
 	};
-	
+
 	$(document).ready(function () {
 		tabstrip = $('#tabstrip').data('kendoTabStrip');
         configureSortable();
@@ -153,5 +153,5 @@ require_once '../lib/Kendo/Autoload.php';
 			padding: 0;
 		}
 </style>
-  
+
 <?php require_once '../include/footer.php'; ?>
