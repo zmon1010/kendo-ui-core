@@ -143,18 +143,6 @@
             });
         },
 
-        addColumnLeft: function() {
-            this.forEachSelectedColumn(function(sheet, index, i) {
-                sheet.insertColumn(index - i);
-            });
-        },
-
-        addColumnRight: function() {
-            this.forEachSelectedColumn(function(sheet, index, i) {
-                sheet.insertColumn(index + (i+1));
-            });
-        },
-
         preventAddRow: function() {
             var range = this._sheet.select().toRangeRef();
             var rowCount = range.height();
@@ -167,16 +155,64 @@
             return this._sheet.preventInsertColumn(0, columnCount);
         },
 
+        addColumnLeft: function() {
+            var sheet = this._sheet;
+            var base, count = 0;
+            sheet.batch(function(){
+                sheet.select().forEachColumnIndex(function(index) {
+                    if (!base) {
+                        base = index;
+                    }
+                    sheet.insertColumn(base);
+                    ++count;
+                });
+            }, { recalc: true, layout: true });
+            return { base: base, count: count };
+        },
+
+        addColumnRight: function() {
+            var sheet = this._sheet;
+            var base, count = 0;
+            sheet.batch(function(){
+                sheet.select().forEachColumnIndex(function(index) {
+                    base = index + 1;
+                    ++count;
+                });
+                for (var i = 0; i < count; ++i) {
+                    sheet.insertColumn(base);
+                }
+            }, { recalc: true, layout: true });
+            return { base: base, count: count };
+        },
+
         addRowAbove: function() {
-            this.forEachSelectedRow(function(sheet, index, i) {
-                sheet.insertRow(index - i);
-            });
+            var sheet = this._sheet;
+            var base, count = 0;
+            sheet.batch(function(){
+                sheet.select().forEachRowIndex(function(index) {
+                    if (!base) {
+                        base = index;
+                    }
+                    sheet.insertRow(base);
+                    ++count;
+                });
+            }, { recalc: true, layout: true });
+            return { base: base, count: count };
         },
 
         addRowBelow: function() {
-            this.forEachSelectedRow(function(sheet, index, i) {
-                sheet.insertRow(index + (i+1));
-            });
+            var sheet = this._sheet;
+            var base, count = 0;
+            sheet.batch(function(){
+                sheet.select().forEachRowIndex(function(index) {
+                    base = index + 1;
+                    ++count;
+                });
+                for (var i = 0; i < count; ++i) {
+                    sheet.insertRow(base);
+                }
+            }, { recalc: true, layout: true });
+            return { base: base, count: count };
         }
     });
 

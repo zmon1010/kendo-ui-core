@@ -301,7 +301,7 @@
     }
 
     function cloneValidation(v) {
-        v = new kendo.spreadsheet.Validation(v);
+        v = new kendo.spreadsheet.validation.Validation(v);
         v.from = cloneFormula(v.from);
         if (v.to) {
             v.to = cloneFormula(v.to);
