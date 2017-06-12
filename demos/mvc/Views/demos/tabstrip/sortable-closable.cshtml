@@ -60,7 +60,7 @@
 
         var configureCloseTab = function () {
             var tabsElements = $('#tabstrip li[role="tab"]');
-            tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-font-icon k-i-x"></span></span>');
+            tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
 
             tabstrip.tabGroup.on("click", "[data-type='remove']", function (e) {
                 e.preventDefault();
