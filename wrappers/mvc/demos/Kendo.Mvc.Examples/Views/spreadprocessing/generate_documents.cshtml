@@ -7,10 +7,10 @@
                 .Name("products")
             .Columns(columns =>
             {
-                columns.Bound(p => p.ProductName).Title("ITEM");
-                columns.Bound(p => p.UnitsInStock).Width(80).Title("QTY");
-                columns.Bound(p => p.UnitPrice).Width(140).Title("PRICE");
-                columns.Template(@<text></text>).ClientTemplate("#=subTotal(data)#").Title("SUB TOTAL").ClientFooterTemplate("#=footerTemplate()#").Width(150);
+                columns.Bound(p => p.ProductName).Title("ITEM").Width(400);
+                columns.Bound(p => p.UnitsInStock).Title("QTY").Width(60);
+                columns.Bound(p => p.UnitPrice).Title("PRICE").Width(140);
+                columns.Template(@<text></text>).ClientTemplate("#=subTotal(data)#").Title("SUB TOTAL").ClientFooterTemplate("#=footerTemplate()#").Width(180);
             })
             .HtmlAttributes(new { style = "width: 550px;" })
             .DataSource(dataSource => dataSource
