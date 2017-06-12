@@ -33,6 +33,7 @@
             this._range = range;
         },
         redo: function() {
+            this.range().select();
             this.exec();
         },
         undo: function() {
