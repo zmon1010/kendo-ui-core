@@ -27,7 +27,6 @@
                 }
 
                 function footerTemplate() {
-                    debugger;
                     var grid = $("#products").data("kendoGrid");
                     var items = grid.dataSource.view();
                     var subTotal = 0;
@@ -49,10 +48,8 @@
             <div class="file-options-wrapper">
                 <div class="column float-right">
                     @Html.Label("fileExtension", "Format: ")
-                    @(Html.Kendo().ComboBox()
-                        .Name("fileFormat")
-                        .Filter("contains")
-                        .Suggest(true)
+                    @(Html.Kendo().DropDownList()
+                        .Name("fileFormat")  
                         .SelectedIndex(0)
                         .Items(items =>
                             {
