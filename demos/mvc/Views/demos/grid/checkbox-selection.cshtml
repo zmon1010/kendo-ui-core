@@ -9,7 +9,7 @@
                 $(document).ready(function () {
                     $("#grid").kendoGrid({
                         dataSource: {
-                            pageSize: 20,
+                            pageSize: 10,
                             transport: {
                                 read:  {
                                     url: "https://demos.telerik.com/kendo-ui/service/Products",
@@ -23,10 +23,10 @@
                             }
                         },
                         pageable: true,
+                        scrollable: false,
                         persistSelection: true,
                         sortable: true,
                         change: onChange,
-                        height: 550,
                         columns: [
                             { selectable: true, width: "50px" },
                             { field:"ProductName", title: "Product Name" },

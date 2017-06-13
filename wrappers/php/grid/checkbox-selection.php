@@ -39,7 +39,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(20)
+           ->pageSize(10)
            ->schema($schema);
 
 $grid = new \Kendo\UI\Grid('grid');

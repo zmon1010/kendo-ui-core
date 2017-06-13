@@ -7,7 +7,7 @@
 <c:url value="/grid/checkbox-selection/read" var="readUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" change="onChange" persistSelection="true" height="550px" >
+    <kendo:grid name="grid" pageable="true" sortable="true" change="onChange" persistSelection="true">
         <kendo:grid-columns>
         	<kendo:grid-column selectable="true" width="50px"/>
             <kendo:grid-column title="Product Name" field="productName" />
@@ -15,7 +15,7 @@
             <kendo:grid-column title="Units In Stock" field="unitsInStock" width="120px" />
             <kendo:grid-column title="Discontinued" field="discontinued" width="120px"/>
         </kendo:grid-columns>
-        <kendo:dataSource pageSize="20">
+        <kendo:dataSource pageSize="10">
             <kendo:dataSource-transport>
                 <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json"/>
             </kendo:dataSource-transport>
