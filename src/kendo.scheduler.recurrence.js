@@ -2194,8 +2194,13 @@ var __meta__ = { // jshint ignore:line
                 count = until = null;
             }
 
-            that._count.enable(enableCount);
-            that._until.enable(enableUntil);
+            if(that._count){
+                that._count.enable(enableCount);
+            }
+
+            if(that._until){
+                that._until.enable(enableUntil);
+            }
 
             that._value.count = count;
             that._value.until = until;
