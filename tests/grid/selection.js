@@ -1,7 +1,8 @@
 (function() {
    var Grid = kendo.ui.Grid,
         DataSource = kendo.data.DataSource,
-        div;
+        div,
+        NAVCELL = ":not(.k-group-cell):not(.k-hierarchy-cell):visible";
 
     function setup(element, options) {
         if (arguments.length !== 2) {
@@ -1301,6 +1302,186 @@
         });
         grid.select("tr:eq(1)");
         equal(grid.selectedKeyNames()[0], 2);
+    });
+
+    test("when the last cell is focused shift+right arrow moves the focus to the first cell in the next row", 1,  function() {
+        var grid = setup();
+        var cell = grid.table.find("tr:first > td:last");
+        grid.current(cell);
+        cell.press(kendo.keys.RIGHT, false, true);
+        ok(grid.table.find("tr:eq(1) > td:first").hasClass("k-state-focused"));
+    });
+
+    test("when the first cell is focused shift+left arrow moves the focus to the last cell in the previous row", 1,  function() {
+        var grid = setup();
+        var cell = grid.table.find("tr:last > td:first");
+        grid.current(cell);
+        cell.press(kendo.keys.LEFT, false, true);
+        ok(grid.table.find("tr:eq(1) > td:last").hasClass("k-state-focused"));
+    });
+
+    test("when grouped shift+right arrow behaves as tab and jumps over the group header", 1,  function() {
+        var grid = setup({
+            dataSource: {
+                data: [
+                    { foo: 1, bar: 1 },
+                    { foo: 2, bar: 1 },
+                    { foo: 3, bar: 2 },
+                    { foo: 4, bar: 2 }
+                ],
+                group: { field: "bar" }
+            }
+        });
+        var cell = grid.table.find("tr:eq(2) > td:last");
+        grid.current(cell);
+        cell.press(kendo.keys.RIGHT, false, true);
+        ok(grid.table.find("tr:eq(4) > " + NAVCELL).hasClass("k-state-focused"));
+    });
+
+    test("when grouped shift+left arrow behaves as tab and jumps over the group header", 1,  function() {
+        var grid = setup({
+            dataSource: {
+                data: [
+                    { foo: 1, bar: 1 },
+                    { foo: 2, bar: 1 },
+                    { foo: 3, bar: 2 },
+                    { foo: 4, bar: 2 }
+                ],
+                group: { field: "bar" }
+            }
+        });
+        var cell = grid.table.find("tr:eq(4) > " + NAVCELL).first();
+        grid.current(cell);
+        cell.press(kendo.keys.LEFT, false, true);
+        ok(grid.table.find("tr:eq(2) > " + NAVCELL).last().hasClass("k-state-focused"));
+    });
+
+    test("selection with shift works similar to selection with mouse", 2,  function() {
+        var grid = setup({
+            selectable: "multiple, row"
+        });
+        var firstCell = grid.table.find("tr:eq(0) > td:first");
+        var secondCell = grid.table.find("tr:eq(1) > td:first");
+        grid.select("tr:eq(0)");
+        grid.select("tr:eq(1)");
+        grid.selectable._lastActive = secondCell;
+        grid.current(secondCell);
+        secondCell.press(kendo.keys.DOWN, false, true);
+        equal(firstCell.hasClass("k-state-focused"), false);
+        equal(grid.select().length, 3);
+    });
+
+    test("using shift + single item selection works correctly", 4,  function() {
+        var grid = setup({
+            selectable: "single, row"
+        });
+        var firstCell = grid.table.find("tr:eq(0) > td:first");
+        var secondCell = grid.table.find("tr:eq(1) > td:first");
+        grid.select("tr:eq(0)");
+        grid.current(firstCell);
+        secondCell.press(kendo.keys.DOWN, false, true);
+        ok(grid.table.find("tr:eq(1) > td:first").hasClass("k-state-focused"));
+        ok(grid.table.find("tr:eq(1)").hasClass("k-state-selected"));
+        equal(grid.table.find("tr:eq(0) > td:first").hasClass("k-state-focused"), false);
+        equal(grid.select().length, 1);
+    });
+
+    test("using shift arrow key does not navigate outside selectable area", 2,  function() {
+        var grid = setup();
+        var firstCell = grid.table.find("tr:eq(0) > td:first");
+        var lastCell = grid.table.find("tr:eq(2) > td:last");
+        grid.current(firstCell);
+        firstCell.press(kendo.keys.UP, false, true);
+        equal(grid.current()[0], firstCell[0]);
+        grid.current(lastCell);
+        lastCell.press(kendo.keys.DOWN, false, true);
+        equal(grid.current()[0], lastCell[0]);
+    });
+
+    test("shift + arrow keys selection works with row selection", 1,  function() {
+        var grid = setup({
+            selectable: "multiple, row"
+        });
+        var firstCell = grid.table.find("tr:eq(0) > td:first");
+        grid.current(firstCell);
+        firstCell.press(kendo.keys.DOWN, false, true);
+        ok(grid.table.find("tr:eq(1)").hasClass("k-state-selected"));
+    });
+
+     test("header is focused shift + up/down arrow should select the first available row", 2,  function() {
+        var grid = setup({
+            dataSource: {
+                data: [
+                    { foo: 1, bar: 1 },
+                    { foo: 2, bar: 1 },
+                    { foo: 3, bar: 2 },
+                    { foo: 4, bar: 2 }
+                ],
+                group: { field: "bar" }
+            },
+            selectable: "multiple, row"
+        });
+        var cell = grid.table.find("tr:eq(0) > td:first ");
+        cell.addClass("k-state-focused");
+        grid.current(cell);
+        cell.press(kendo.keys.DOWN, false, true);
+        equal(grid.select().length, 1);
+        equal(grid.select()[0], grid.table.find("tr:eq(1)")[0]);
+    });
+
+    test("selection with shift works correctly with locked columns", 4,  function() {
+        var grid = setup({
+            dataSource: {
+                data: [
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 }
+                ]
+            },
+            columns: [{ field: "field1", locked:true }, { field: "field2", locked:true }, { field: "field3" },{ field: "field4" }],
+            selectable: "multiple, row"
+        });
+        var cell1 = grid.table.find("tr:eq(0) > td:first");
+        cell1.addClass("k-state-focused");
+        grid.current(cell1);
+        cell1.press(kendo.keys.LEFT, false, true);
+        var cell2 = grid.lockedTable.find("tr:eq(0) > td:last");
+        ok(cell2.hasClass("k-state-focused"));
+        grid.current(cell2);
+        cell2.press(kendo.keys.RIGHT, false, true);
+        ok(cell1.hasClass("k-state-focused"));
+        var cell3 = grid.table.find("tr:eq(0) > td:last ");
+        grid.current(cell3);
+        cell3.press(kendo.keys.RIGHT, false, true);
+        var cell4 = grid.lockedTable.find("tr:eq(1) > td:first");
+        ok(cell4.hasClass("k-state-focused"));
+        grid.current(cell4);
+        cell4.press(kendo.keys.LEFT, false, true);
+        ok(cell3.hasClass("k-state-focused"));
+    });
+
+    test("selection's last active item is not cleared when shift+space is used", 1,  function() {
+        var grid = setup({
+            dataSource: {
+                data: [
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 },
+                    { field1: 1, field2: 1, field3: 1, field4: 1 }
+                ]
+            },
+            columns: [{ field: "field1" }, { field: "field2" }, { field: "field3" },{ field: "field4" }],
+            selectable: "multiple, row"
+        });
+        grid.table.focus()
+                    .press(kendo.keys.DOWN)
+                    .press(kendo.keys.SPACEBAR)
+                    .press(kendo.keys.DOWN)
+                    .press(kendo.keys.SPACEBAR, false, true)
+                    .press(kendo.keys.DOWN)
+                    .press(kendo.keys.SPACEBAR, false, true)
+        ok(grid.select().length === 3);
     });
 })();
 

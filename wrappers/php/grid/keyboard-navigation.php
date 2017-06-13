@@ -67,7 +67,7 @@ $phone = new \Kendo\UI\GridColumn();
 $phone->field('HomePhone');
 
 $grid->addColumn($firstName, $lastName, $city, $address, $phone)
-     ->selectable('cell multiple')
+     ->selectable('row multiple')
      ->pageable(true)
      ->navigatable(true)
      ->sortable(true)
@@ -181,7 +181,7 @@ echo $grid->render();
                     <span class="key-button">Space</span>
                 </span>
                 <span class="button-descr">
-                    selects currently highlighted cell
+                    selects the row holding the currently highlighted cell
                 </span>
             </li>
             <li>
@@ -191,7 +191,27 @@ echo $grid->render();
                     <span class="key-button">Space</span>
                 </span>
                 <span class="button-descr">
-                    same as Space, but perists previously selected cells(only for selection mode "multiple")
+                    selects or deselects the current row, while persisting previously selected rows (only for selection mode "multiple")
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Shift</span>
+                    +
+                    <span class="key-button">Space</span>
+                </span>
+                <span class="button-descr">
+                    performs range selection, selects all the rows between the last selected one (with SPACE or mouse click) and the one holding the focused cell
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Shift</span>
+                    +
+                    <span class="key-button">Arrow Keys</span>
+                </span>
+                <span class="button-descr">
+                    adds the row which holds the focused cell to the selection (only for selection mode "multiple")
                 </span>
             </li>
         </ul>

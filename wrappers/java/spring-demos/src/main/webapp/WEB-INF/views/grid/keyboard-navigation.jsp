@@ -4,7 +4,7 @@
 
 <demo:header />
     <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" 
-    	selectable="multiple cell" navigatable="true" >
+    	selectable="multiple row" navigatable="true" >
         <kendo:grid-columns>
             <kendo:grid-column title="First Name" field="firstName" />
             <kendo:grid-column title="Last Name" field="lastName" />
@@ -143,7 +143,7 @@
                       <span class="key-button">Space</span>
                   </span>
                   <span class="button-descr">
-                      selects currently highlighted cell
+                      selects the row holding the currently highlighted cell
                   </span>
               </li>
               <li>
@@ -153,8 +153,28 @@
                       <span class="key-button">Space</span>
                   </span>
                   <span class="button-descr">
-                      same as Space, but perists previously selected cells(only for selection mode "multiple")
+                      selects or deselects the current row, while persisting previously selected rows (only for selection mode "multiple")
                   </span>
+              </li>
+              <li>
+              	<span class="button-preview">
+                	<span class="key-button leftAlign">Shift</span>
+                    	+
+                    <span class="key-button">Space</span>
+              	</span>
+                <span class="button-descr">
+                	performs range selection, selects all the rows between the last selected one (with SPACE or mouse click) and the one holding the focused cell
+                </span>
+              </li>
+              <li>
+              	<span class="button-preview">
+                	<span class="key-button leftAlign">Shift</span>
+                    	+
+                    <span class="key-button">Arrow Keys</span>
+                </span>
+                <span class="button-descr">
+                	adds the row which holds the focused cell to the selection (only for selection mode "multiple")
+                </span>
               </li>
           </ul>
           </div>
