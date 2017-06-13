@@ -565,8 +565,9 @@ var __meta__ = { // jshint ignore:line
                 this._selectedIndexes = [];
 
                 for (var i = 0; i < this._selectedDataItems.length; i++) {
-                    this._selectedIndexes.push(undefined);
-                    this._getElementByDataItem(this._selectedDataItems[i]).addClass(SELECTED);
+                    var item = this._getElementByDataItem(this._selectedDataItems[i]);
+                    this._selectedIndexes.push(this._getIndecies(item)[0]);
+                    item.addClass(SELECTED);
                 }
 
                 this._triggerChange(removed, added);
