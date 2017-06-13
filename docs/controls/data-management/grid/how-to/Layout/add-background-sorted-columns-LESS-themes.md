@@ -27,20 +27,22 @@ The following examples demonstrate how to change the background color of selecte
 
 ### Dark Themes
 
-When working with dark theme, use light colors.
+When your project uses a dark theme, use light colors for the background of the selected rows.
+
+The following example demonstrates how to apply the suggested background colors to the selected Grid rows if your project uses the Black or Material Black theme.  
 
 ###### Example
 
-```tab-Black-theme
-    .k-grid .k-alt{
+```tab-Black
+    .k-grid .k-alt {
         background-color: rgba(255, 255, 255, 0.04);
     }
     col.k-sorted, th.k-sorted {
         background-color: rgba(255, 255, 255, 0.2);
     }
 ```
-```tab-Material-Black-theme
-    .k-grid .k-alt{
+```tab-MaterialBlack
+    .k-grid .k-alt {
         background-color: rgba(255, 255, 255, 0);
     }
     col.k-sorted, th.k-sorted {
@@ -50,22 +52,22 @@ When working with dark theme, use light colors.
 
 ### Light Themes
 
-When working with light themes, use dark colors.
+When your project uses a light theme, use dark colors for the background of the selected rows.
+
+The following example demonstrates how to apply the suggested background colors to the selected Grid rows if your project uses the Default or Material theme.
 
 ###### Example
 
-For the Kendo UI **Default** theme, the CSS code could look like this:
-
-```tab-Default-theme
-    .k-grid .k-alt{
+```tab-Default
+    .k-grid .k-alt {
         background-color: rgba(0, 0, 0, 0.06);
     }
     col.k-sorted, th.k-sorted {
         background-color: rgba(0, 0, 0, 0.1);
     }
 ```
-```tab-Material-theme
-    .k-grid .k-alt{
+```tab-Material
+    .k-grid .k-alt {
         background-color: rgba(0, 0, 0, 0);
     }
     col.k-sorted, th.k-sorted {
