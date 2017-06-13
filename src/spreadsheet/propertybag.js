@@ -284,7 +284,7 @@
 
     function cloneFormulaValue(x) {
         x = x.clone();
-        x.value = x.value.deepClone(); // x.value Formula
+        x.value = x.value.deepClone(); // x.value is Formula or Validation
         return x;
     }
 

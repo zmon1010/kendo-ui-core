@@ -11,6 +11,17 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
 
+    // This is a “dynamic variable” (see Greenspun's 10th rule).  It's
+    // bound to an array via sheet._saveModifiedFormulas (which see)
+    // while the callback runs.  The goal is to enable external code
+    // to get a list of formulas or validations that have been
+    // adjusted as an effect of an insert/delete row/column operation,
+    // to be able to undo it.
+    //
+    // The reason why simply saving the state via sheet.getState() or
+    // range.getState() won't suffice is that an insert or delete
+    // operation can have far-reaching effects, like adjusting
+    // formulas from another sheet.
     var MODIFIED_FORMULAS;
 
     var Selection = kendo.Class.extend({
@@ -290,12 +301,15 @@
         _restoreModifiedFormulas: function(array) {
             var wb = this._workbook;
             array.forEach(function(f){
-                var sheet = wb.sheetByName(f.sheet);
+                var sheet = wb.sheetByName(f.sheet), index;
                 if (f instanceof kendo.spreadsheet.calc.runtime.Formula) {
-                    var index = sheet._grid.cellRefIndex(f); // f has row, col
+                    index = sheet._grid.cellRefIndex(f); // f has row, col
                     sheet._properties.set("formula", index, index, f);
                 }
-                // XXX: validations
+                if (f instanceof kendo.spreadsheet.validation.Validation) {
+                    index = sheet._grid.cellRefIndex(f); // f has row, col
+                    sheet._properties.set("validation", index, index, f);
+                }
             });
         },
 
@@ -319,14 +333,14 @@
                             // copy of the previous Formula, which we
                             // can use for undoing the operation.
                             MODIFIED_FORMULAS.push(prev);
-
-                            // XXX: the same should be done with
-                            // validations below.
                         }
                     });
 
                     sheet._forValidations(function(validation){
-                        validation.adjust(affectedSheet, operation, start, delta);
+                        var prev = validation.adjust(affectedSheet, operation, start, delta);
+                        if (prev && MODIFIED_FORMULAS) {
+                            MODIFIED_FORMULAS.push(prev);
+                        }
                     });
                 });
                 this._workbook.adjustNames(affectedSheet, operation == "row", start, delta);
