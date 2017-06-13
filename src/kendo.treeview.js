@@ -270,7 +270,7 @@ var __meta__ = { // jshint ignore:line
                 .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-i-expand,.k-i-collapse", proxy(that._mousedown, that))
                 .on("change" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxChange, that))
                 .on("click" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxClick, that))
-                .on("click" + NS, ".k-checkbox-label", proxy(that._checkboxLabelClick, that))
+                .on("click" + NS, ".checkbox-span", proxy(that._checkboxLabelClick, that))
                 .on("click" + NS, ".k-request-retry", proxy(that._retryRequest, that))
                 .on("click" + NS, function(e) {
                     if (!$(e.target).is(":kendoFocusable")) {
@@ -1242,7 +1242,7 @@ var __meta__ = { // jshint ignore:line
                     defaultTemplate += " name='" + checkboxes.name + "'";
                 }
 
-                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><span class='k-checkbox-label'></span>";
+                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><span class='k-checkbox-label checkbox-span'></span>";
 
                 checkboxes = extend({
                     template: defaultTemplate
