@@ -795,6 +795,15 @@
         init: function(options) {
             Command.fn.init.call(this, options);
             this._value = options.value;
+        },
+        undo: function() {
+            var self = this;
+            var sheet = self.range().sheet();
+            sheet.batch(function(){
+                for (var i = self._pos.count; --i >= 0;) {
+                    self._undoOne(sheet, self._pos.base);
+                }
+            }, { layout: true, recalc: true });
         }
     });
 
@@ -813,14 +822,8 @@
                 this._pos = sheet.axisManager().addColumnRight();
             }
         },
-        undo: function() {
-            var self = this;
-            var sheet = self.range().sheet();
-            sheet.batch(function(){
-                for (var i = self._pos.count; --i >= 0;) {
-                    sheet.deleteColumn(self._pos.base);
-                }
-            }, { layout: true, recalc: true });
+        _undoOne: function(sheet, index) {
+            sheet.deleteColumn(index);
         }
     });
 
@@ -839,14 +842,8 @@
                 this._pos = sheet.axisManager().addRowBelow();
             }
         },
-        undo: function() {
-            var self = this;
-            var sheet = self.range().sheet();
-            sheet.batch(function(){
-                for (var i = self._pos.count; --i >= 0;) {
-                    sheet.deleteRow(self._pos.base);
-                }
-            }, { layout: true, recalc: true });
+        _undoOne: function(sheet, index) {
+            sheet.deleteRow(index);
         }
     });
 
