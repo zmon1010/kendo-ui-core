@@ -125,4 +125,20 @@
         equal(sheet.range("A1").validation().from, "Sheet2!B1:B3"); // it's back
     });
 
+    test("undo after delete row restores contents of the entire row", function(){
+        sheet.range("3:3").value("foo");
+        sheet.range("C3").select();
+        sheet._workbook.execute({ command: "DeleteRowCommand" });
+        sheet._workbook.undoRedoStack.undo();
+        equal(sheet.range("A3").value(), "foo");
+    });
+
+    test("undo after delete column restores contents of the entire column", function(){
+        sheet.range("C:C").value("foo");
+        sheet.range("C3").select();
+        sheet._workbook.execute({ command: "DeleteColumnCommand" });
+        sheet._workbook.undoRedoStack.undo();
+        equal(sheet.range("C1").value(), "foo");
+    });
+
 })();

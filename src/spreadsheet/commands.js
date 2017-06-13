@@ -754,12 +754,13 @@
 
     var DeleteCommand = Command.extend({
         exec: function() {
-            this._state = this.range().getState();
-            this._indexes = this._exec();
+            this._expandedRange = this._expand(this.range());
+            this._state = this._expandedRange.getState();
+            this._indexes = this._exec(this._expandedRange.sheet());
         },
         undo: function() {
             var self = this;
-            var range = self.range();
+            var range = self._expandedRange;
             var sheet = range.sheet();
             sheet.batch(function(){
                 self._indexes.forEach(function(x){
@@ -772,8 +773,11 @@
     });
 
     kendo.spreadsheet.DeleteRowCommand = DeleteCommand.extend({
-        _exec: function() {
-            return this.range().sheet().axisManager().deleteSelectedRows();
+        _expand: function(range) {
+            return range.resize({ left: -Infinity, right: +Infinity });
+        },
+        _exec: function(sheet) {
+            return sheet.axisManager().deleteSelectedRows();
         },
         _undoOne: function(sheet, x) {
             sheet.insertRow(x.index);
@@ -782,8 +786,11 @@
     });
 
     kendo.spreadsheet.DeleteColumnCommand = DeleteCommand.extend({
-        _exec: function() {
-            return this.range().sheet().axisManager().deleteSelectedColumns();
+        _expand: function(range) {
+            return range.resize({ top: -Infinity, bottom: +Infinity });
+        },
+        _exec: function(sheet) {
+            return sheet.axisManager().deleteSelectedColumns();
         },
         _undoOne: function(sheet, x) {
             sheet.insertColumn(x.index);
