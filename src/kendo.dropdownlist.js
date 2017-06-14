@@ -599,6 +599,7 @@ var __meta__ = { // jshint ignore:line
             e.preventDefault();
             this.popup.unbind("activate", this._focusInputHandler);
             this._focused = this.wrapper;
+            this._prevent = false;
             this._toggle();
         },
 
@@ -625,6 +626,7 @@ var __meta__ = { // jshint ignore:line
                     .on("focusin" + ns, proxy(that._focusinHandler, that))
                     .on("focusout" + ns, proxy(that._focusoutHandler, that))
                     .on("mousedown" + ns, proxy(that._wrapperMousedown, that))
+                    // .on("dblclick" + ns, proxy(that._wrapperDblClick, that))
                     .on("paste" + ns, proxy(that._filterPaste, that));
 
                 that.wrapper.on("click" + ns, proxy(that._wrapperClick, that));
@@ -701,7 +703,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (!isPopupVisible || !that.filterInput) {
-                var current = that._focus();                
+                var current = that._focus();
 
                 if (key === keys.HOME) {
                     handled = true;
