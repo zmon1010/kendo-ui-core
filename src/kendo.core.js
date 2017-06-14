@@ -1325,6 +1325,8 @@ function pad(number, digits, end) {
                     hours = getNumber(2);
                     if (hours == 12) {
                         hours = 0;
+                    } else if (hours > 12) {
+                        hours = hours - 12;
                     }
                     if (hours === null || outOfRange(hours, 0, 11)) {
                         return null;
@@ -3831,7 +3833,7 @@ function pad(number, digits, end) {
             return 1 + Math.floor(days / 7);
         }
 
-        function weekInYear(date, weekStartDay){   
+        function weekInYear(date, weekStartDay){
             var prevWeekDate = addDays(date, -7);
             var nextWeekDate = addDays(date, 7);
 

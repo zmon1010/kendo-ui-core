@@ -157,8 +157,8 @@
             }
             // time (interpret as a date)
             if ((m = input.skip(/^(hh?|ss?)/i))) { // m and mm are handled above
-                m = m[1].toLowerCase();
-                return maybeFraction({ type: "time", part: m.charAt(0), format: m.length });
+                m = m[1];
+                return maybeFraction({ type: "time", part: m.toLowerCase().charAt(0), format: m.length, ampm: m == 'hh' });
             }
             // elapsed time (interpret as interval of days)
             if ((m = input.skip(/^\[(hh?|mm?|ss?)\]/i))) {
@@ -420,6 +420,7 @@
                 }
             }
             else if (tok.type == "time") {
+                hasAmpm = hasAmpm || !!tok.ampm;
                 hasTime = true;
             }
             else if (tok.type == "date") {
