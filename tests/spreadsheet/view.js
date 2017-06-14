@@ -37,7 +37,7 @@
     });
 
     test("renders format", function() {
-        sheet.fromJSON(singleCell({ format: "hh:mm", value: new Date("7/1/2014 15:15") }));
+        sheet.fromJSON(singleCell({ format: "HH:mm", value: new Date("7/1/2014 15:15") }));
         equal(firstDataCell(element).text(), "15:15");
     });
 
