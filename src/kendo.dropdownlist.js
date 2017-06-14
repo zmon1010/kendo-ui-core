@@ -626,7 +626,6 @@ var __meta__ = { // jshint ignore:line
                     .on("focusin" + ns, proxy(that._focusinHandler, that))
                     .on("focusout" + ns, proxy(that._focusoutHandler, that))
                     .on("mousedown" + ns, proxy(that._wrapperMousedown, that))
-                    // .on("dblclick" + ns, proxy(that._wrapperDblClick, that))
                     .on("paste" + ns, proxy(that._filterPaste, that));
 
                 that.wrapper.on("click" + ns, proxy(that._wrapperClick, that));
