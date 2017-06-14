@@ -733,11 +733,17 @@ var __meta__ = { // jshint ignore:line
                 var head = this.get(model.recurrenceId);
 
                 if (head) {
-                    var start = model.start;
+                    var start = model.defaults.start;
                     var replaceRegExp = new RegExp("(\\" + EXCEPTION_SEPARATOR + "?)" + recurrence.toExceptionString(start, this.reader.timezone));
                     var recurrenceException = (head.recurrenceException || "").replace(OLD_EXCEPTION_SEPARATOR_REGEXP, EXCEPTION_SEPARATOR).replace(/\,$/, "");
 
-                    head.set(RECURRENCE_EXCEPTION, recurrenceException.replace(replaceRegExp, ""));
+                    if(replaceRegExp.test(recurrenceException)){
+                        head.set(RECURRENCE_EXCEPTION, recurrenceException.replace(replaceRegExp, ""));
+                    }else{
+                        start = model.start;
+                        replaceRegExp = new RegExp("(\\" + EXCEPTION_SEPARATOR + "?)" + recurrence.toExceptionString(start, this.reader.timezone));
+                        head.set(RECURRENCE_EXCEPTION, recurrenceException.replace(replaceRegExp, ""));
+                    }
                 }
             }
         },
@@ -750,6 +756,7 @@ var __meta__ = { // jshint ignore:line
 
             if (!recurrence.isException(recurrenceException, start, zone)) {
                 var newException = recurrence.toExceptionString(start, zone);
+                model.defaults.start = start;
                 head.set(RECURRENCE_EXCEPTION, recurrenceException + (recurrenceException && newException ? EXCEPTION_SEPARATOR : "") + newException);
             }
         }
