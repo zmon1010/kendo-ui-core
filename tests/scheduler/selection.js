@@ -843,7 +843,7 @@
         });
     });
 
-    test("events from previous group are removed", 2, function() {
+    test("events from previous group are removed", 3, function() {
         var today = kendo.date.today();
         var end = new Date(today);
         end.setHours(1);
@@ -881,8 +881,9 @@
         scheduler.bind("change", function(selection) {
             var dataItem = scheduler.dataSource.view()[0];
 
-            equal(selection.events.length, 1);
-            equal(selection.events[0].uid, scheduler.wrapper.find(".k-event").eq(1).data("uid"));
+            equal(selection.events.length, 2);
+            equal(selection.events[0].uid, scheduler.wrapper.find(".k-event").eq(0).data("uid"));
+            equal(selection.events[1].uid, scheduler.wrapper.find(".k-event").eq(1).data("uid"));
         });
 
         scheduler.wrapper.trigger({

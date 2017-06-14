@@ -1661,7 +1661,7 @@ var __meta__ = { // jshint ignore:line
         _selectEvents: function(selection) {
             var found = false;
             var events = selection.events;
-            var groupEvents = this.groups[selection.groupIndex]._continuousEvents || [];
+            var groupEvents = this._getAllEvents();
             var idx, length = groupEvents.length;
 
             if (!events[0] || !groupEvents[0]) {
