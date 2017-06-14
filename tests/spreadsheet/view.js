@@ -36,7 +36,12 @@
         equal(element.find(".k-spreadsheet-vborder").css("borderRightColor"), "rgb(255, 0, 0)");
     });
 
-    test("renders format", function() {
+    test("renders 12 hours format", function() {
+        sheet.fromJSON(singleCell({ format: "hh:mm", value: new Date("7/1/2014 15:15") }));
+        equal(firstDataCell(element).text(), "03:15");
+    });
+
+    test("renders 24 hours format", function() {
         sheet.fromJSON(singleCell({ format: "HH:mm", value: new Date("7/1/2014 15:15") }));
         equal(firstDataCell(element).text(), "15:15");
     });
