@@ -136,6 +136,14 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("data", value);
     }
 
+    public boolean getInPlaceSort() {
+        return (Boolean)getProperty("inPlaceSort");
+    }
+
+    public void setInPlaceSort(boolean value) {
+        setProperty("inPlaceSort", value);
+    }
+
     public java.lang.Object getOfflineStorage() {
         return (java.lang.Object)getProperty("offlineStorage");
     }

@@ -12198,6 +12198,12 @@
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>If set to true the original Array used as data will be sorted when sorting operation is performed. This setting supported only with local data, bound to a JavaScript array via the data option.</description>
+            <name>inPlaceSort</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The offline storage key or custom offline storage implementation.</description>
             <name>offlineStorage</name>
             <rtexprvalue>true</rtexprvalue>

@@ -31,8 +31,10 @@
                     $("#grid").kendoGrid({
                         dataSource: {
                             data: data,
-                            pageSize: 20
+                            pageSize: 20,
+                            inPlaceSort: true
                         },
+                        sortable:true,
                         height: 543,
                         scrollable: {
                             virtual: true

@@ -60,6 +60,15 @@ class DataSource extends \Kendo\SerializableObject {
     }
 
     /**
+    * If set to true the original Array used as data will be sorted when sorting operation is performed. This setting supported only with local data, bound to a JavaScript array via the data option.
+    * @param boolean $value
+    * @return \Kendo\Data\DataSource
+    */
+    public function inPlaceSort($value) {
+        return $this->setProperty('inPlaceSort', $value);
+    }
+
+    /**
     * The offline storage key or custom offline storage implementation.
     * @param string| $value
     * @return \Kendo\Data\DataSource
