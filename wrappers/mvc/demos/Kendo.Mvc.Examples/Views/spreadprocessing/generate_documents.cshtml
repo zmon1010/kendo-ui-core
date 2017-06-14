@@ -46,8 +46,9 @@
             <br />
 
             <div class="file-options-wrapper">
-                <div class="column float-right">
-                    @Html.Label("fileExtension", "Format: ")
+                <div class="column">
+                    @Html.Label("fileExtension", "File format: ")
+
                     @(Html.Kendo().DropDownList()
                         .Name("fileFormat")  
                         .SelectedIndex(0)
@@ -73,5 +74,13 @@
 <style>
     .demo-section.custom-width {
         max-width: 550px;
+    }
+
+    input.wide-btn {
+        width: 100%;
+    }
+    .file-options-wrapper {
+        margin: auto;
+        width: 50%;
     }
 </style>
