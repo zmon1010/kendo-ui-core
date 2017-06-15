@@ -1872,7 +1872,7 @@ var __meta__ = { // jshint ignore:line
                 event = events[idx];
 
                 if (this._isInDateSlot(event)) {
-                    var isMultiDayEvent = event.isAllDay || event.end.getTime() - event.start.getTime() >= MS_PER_DAY;
+                    var isMultiDayEvent = event.isAllDay || event.duration() >= MS_PER_DAY;
                     var container = this.content;
 
                     if (isMultiDayEvent || this._isInTimeSlot(event)) {
