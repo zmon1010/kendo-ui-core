@@ -2345,6 +2345,36 @@
         ok(view.content.find(".k-event").length);
     });
 
+    test("24 hours day event which starts and end between DST date", function() {
+        var view = setup({ dates: [new Date(2017, 2, 25)] });
+
+        view.render([new SchedulerEvent({
+            uid: "foo", title: "",
+            start: new Date(2017, 2, 25, 5, 0, 0),
+            end: new Date(2017, 2, 26, 5, 0, 0),
+            id: "2"
+        })]);
+
+        equal(view.groups[0].getDaySlotCollection(0).events()[0].start, 0);
+
+        ok(view.datesHeader.find(".k-event").length);
+    });
+
+    test("Long hours event which starts and end between DST date", function() {
+        var view = setup({ dates: [new Date(2016, 9, 30)] });
+
+        view.render([new SchedulerEvent({
+            uid: "foo", title: "",
+            start: new Date(2016, 9, 30, 0, 0, 0),
+            end: new Date(2016, 9, 30, 23, 30, 0),
+            id: "2"
+        })]);
+
+        equal(view.groups[0].getTimeSlotCollection(0).events()[0].start, 0);
+
+        ok(view.content.find(".k-event").length);
+    });
+
     test("same day event which starts before the startTime and ends at midnight is rendered", function() {
         var view = setup({ dates: [new Date(2013, 1, 2)], startTime: new Date(2013, 1, 2, 7, 0, 0) });
 
