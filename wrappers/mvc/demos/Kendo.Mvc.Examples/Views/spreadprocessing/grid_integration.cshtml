@@ -1,0 +1,112 @@
+﻿<script type="text/javascript">
+     kendo.culture("en-US");
+</script>
+
+<div id="example">
+    <div class="demo-section k-header custom-width">
+        @model ItemsModel
+
+        @using (Html.BeginForm("GenerateFile", "SpreadProcessing"))
+        {
+
+            @(Html.Kendo().Grid(Model.Products)
+                .Name("productsGrid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.ProductName).Title("Name").ClientTemplate("#= ProductName #" + "<input type='hidden' name='Products[#= index(data)#].ProductName' value='#= ProductName #' />").Width(300);
+                    columns.Bound(p => p.UnitPrice).Title("Price").ClientTemplate("#= kendo.format('{0:c2}', UnitPrice) #" + "<input type='hidden' name='Products[#= index(data)#].UnitPrice' value='#= UnitPrice #' />").Width(100);
+                    columns.Bound(p => p.UnitPrice).Title("Stock").ClientTemplate("#= UnitsInStock #" + "<input type='hidden' name='Products[#= index(data)#].UnitsInStock' value='#= UnitsInStock #' />").Width(100);
+                })
+                .Scrollable()
+                .Pageable(pageable => pageable.Enabled(false))
+                .HtmlAttributes(new { style = "width: 550px; height: 500px;" })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .ServerOperation(false)
+                    .Model(model =>
+                        {
+                            model.Id(p => p.ProductID);
+                        }
+                    )
+                )
+            )
+
+            <script>
+                function index(dataItem) {
+                    var data = $("#productsGrid").data("kendoGrid").dataSource.data();
+                    return data.indexOf(dataItem);
+                }
+            </script>
+
+            <br />
+            <br />
+            <br />
+            
+            <div class="color-pickers">
+                <div class="column">
+                    <span>Header background: </span>
+                   
+                    @(Html.Kendo().ColorPicker()
+                        .Name("headerColor")
+                        .Value("#ffffff")
+                    )
+                </div>
+                <div class="column float-right">
+                    <span>Rows background: </span>
+                     
+                    @(Html.Kendo().ColorPicker()
+                        .Name("rowColor")
+                        .Value("#ffffff")
+                    )
+                </div>
+            </div>
+
+            <br />
+
+            <div class="file-options-wrapper">
+                
+                <div class="column">
+                    @Html.Label("fileExtension", "File format: ")
+
+                    @(Html.Kendo().DropDownList()
+                    .Name("fileFormat")
+                    .SelectedIndex(0)
+                    .Items(items =>
+                    {
+                        items.Add().Text("XLSX").Value("xlsx");
+                        items.Add().Text("CSV").Value("csv");
+                        items.Add().Text("TXT").Value("txt");
+                    }
+                    )
+                    )
+
+                </div>
+                </div>
+
+            <hr class="clear" />
+
+            <input type="submit" class="k-button k-primary wide-btn" value="Export" />
+        }
+    </div>
+</div>
+
+
+<style>
+    .demo-section.custom-width {
+        max-width: 550px;
+    }
+    .column {
+        vertical-align: middle;
+        display: inline-block;
+    }
+    input.wide-btn {
+        width: 100%;
+    }
+    .float-right {
+        float: right;
+    }
+    .file-options-wrapper {
+        margin: auto;
+        width: 50%;
+    }
+</style>

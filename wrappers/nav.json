@@ -3924,13 +3924,27 @@
             "url": "spreadprocessing/generate-documents",
             "new": "true",
             "title": {
-                "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
+                "aspnet-mvc": "Generate documets with Telerik RadSpreadProcessing in MVC"
             },
             "meta": {
-                "aspnet-mvc": "See how the Telerik RadSpreadProcessing can be integrated in MVC applications."
+                "aspnet-mvc": "See how the you can generate documetns with Telerik RadSpreadProcessing in MVC applications."
             },
             "description": {
                 "aspnet-mvc": "<strong>RadSpreadProcessing</strong> allows you to create a document from scratch using only code. This is particulary convenient when you need to export large amount of data to one of the supported formats - Xlsx, Csv, Txt."
+            }
+        },
+        {
+            "text": "Grid integration",
+            "url": "spreadprocessing/grid-integration",
+            "new": "true",
+            "title": {
+                "aspnet-mvc": "Kendo MVC Grid and Telerik RadSpreadProcessing integration in MVC"
+            },
+            "meta": {
+                "aspnet-mvc": "See how the Telerik RadSpreadProcessing and Kendo MVC Grid wrapper can be integrated in MVC applications."
+            },
+            "description": {
+                "aspnet-mvc": "This example illustrates integration between Telerik SpreadProcessing and the Kendo MVC Grid component. You can visualize data in Grid and easily export it to Xlsx, Csv or Txt format."
             }
         }],
         "documentation": {

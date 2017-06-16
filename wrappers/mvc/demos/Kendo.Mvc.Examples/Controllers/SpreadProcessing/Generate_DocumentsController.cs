@@ -30,7 +30,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public ActionResult GenerateDocument_Read([DataSourceRequest]DataSourceRequest request)
         {
-            return Json(GetProducts().Take(20).ToDataSourceResult(request));
+            return Json(GetProducts().Take(15).ToDataSourceResult(request));
         }
 
         private IEnumerable<ProductViewModel> GetProducts()
@@ -41,10 +41,10 @@ namespace Kendo.Mvc.Examples.Controllers
                 .Where(p => p.UnitsInStock > 0)
                 .Select(p => new ProductViewModel
                 {
-                ProductID = p.ProductID,
-                ProductName = p.ProductName,
-                UnitsInStock = (int)p.UnitsInStock,
-                UnitPrice = (decimal)p.UnitPrice,
+                    ProductID = p.ProductID,
+                    ProductName = p.ProductName,
+                    UnitsInStock = (int)p.UnitsInStock,
+                    UnitPrice = (decimal)p.UnitPrice
                 });
         }
 
@@ -108,7 +108,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             Worksheet worksheet = workbook.ActiveWorksheet;
 
-            var products = GetProducts().Take(20);
+            var products = GetProducts().Take(15);
 
             this.PrepareInvoiceDocument(worksheet, products.Count());
 
