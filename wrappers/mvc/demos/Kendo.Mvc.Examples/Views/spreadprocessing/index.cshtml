@@ -85,7 +85,9 @@
             ev.preventDefault();
         } else {
             var fileExt = file.extension.substr(1);
-            $(".imageContainer.custom-doc img").attr("src", "/Content/web/spreadprocessing/" + fileExt + "_file.png");
+            var imgPath = '@Url.Content("~/Content/web/spreadprocessing/")' + fileExt + '_file.png';
+
+            $(".imageContainer.custom-doc img").attr("src", imgPath);
             $(".imageContainer.custom-doc").addClass("highlighted");
             $("#fileName").text(file.name);
         }
@@ -94,7 +96,9 @@
     function clearHighlights() {
         $("#fileName").text("");
         $(".imageContainer").removeClass("highlighted");
-        $(".imageContainer.custom-doc img").attr("src", "/Content/web/spreadprocessing/CustomDocument_file.png");
+        var imgPath = '@Url.Content("~/Content/web/spreadprocessing/CustomDocument_file.png")';
+
+        $(".imageContainer.custom-doc img").attr("src", imgPath);
 
         // clear uploaded files
         var upload = $("#customDocument").data("kendoUpload");

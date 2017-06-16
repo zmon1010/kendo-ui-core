@@ -286,6 +286,8 @@
     <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
     <Compile Include="Controllers\PdfProcessing\ReadWriteFormFields.cs" />
     <Compile Include="Controllers\SourceController.cs" />
+    <Compile Include="Controllers\SpreadProcessing\Generate_DocumentsController.cs" />
+    <Compile Include="Controllers\SpreadProcessing\Grid_IntegrationController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
     <Compile Include="Controllers\SpreadStreamProcessing\IndexController.cs" />
@@ -805,6 +807,7 @@
     <Compile Include="Models\Chart\ChartScatterPoint.cs" />
     <Compile Include="Models\ExampleFile.cs" />
     <Compile Include="Models\IFrameworkDescription.cs" />
+    <Compile Include="Models\ItemsModel.cs" />
     <Compile Include="Models\PanelBarItemViewModel.cs" />
     <Compile Include="Models\PanelBarRepository.cs" />
     <Compile Include="Models\ProductPdfProcessing.cs" />
@@ -3044,6 +3047,8 @@
     <Content Include="Views\grid\checkbox_selection.cshtml" />
     <Content Include="Views\pdfprocessing\bar_chart_export.cshtml" />
     <Content Include="Views\pdfprocessing\read_write_form_fields.cshtml" />
+    <Content Include="Views\spreadprocessing\generate_documents.cshtml" />
+    <Content Include="Views\spreadprocessing\grid_integration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
