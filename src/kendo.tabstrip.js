@@ -51,6 +51,7 @@ var __meta__ = { // jshint ignore:line
         TABONTOP = "k-tab-on-top",
         NAVIGATABLEITEMS = ".k-item:not(." + DISABLEDSTATE + ")",
         HOVERABLEITEMS = ".k-tabstrip-items > " + NAVIGATABLEITEMS + ":not(." + ACTIVESTATE + ")",
+        DEFAULTDISTANCE = 200,
 
         templates = {
             content: template(
@@ -549,7 +550,7 @@ var __meta__ = { // jshint ignore:line
             navigatable: true,
             contentUrls: false,
             scrollable: {
-                distance: 200
+                distance: DEFAULTDISTANCE
             }
         },
 
@@ -1104,6 +1105,11 @@ var __meta__ = { // jshint ignore:line
 
         _scrollableAllowed: function() {
             var options = this.options;
+
+            if(options.scrollable && !options.scrollable.distance){
+                options.scrollable = {distance: DEFAULTDISTANCE};
+            }
+
             return options.scrollable && !isNaN(options.scrollable.distance) && (options.tabPosition == "top" || options.tabPosition == "bottom");
         },
 
