@@ -247,6 +247,7 @@
             {
                 "text": "Week Column",
                 "url": "calendar/week-column",
+                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK Calendar | $FRAMEWORK demos"
                 },
@@ -1702,7 +1703,7 @@
                     "aspnet-mvc": "This demo shows how to sort data in Telerik $FRAMEWORK Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
                 },
                 "description": {
-                    "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p> <p>Check the <a href=\"http://docs.telerik.com/kendo-ui/controls/data-management/grid/how-to/Layout/add-background-sorted-columns-LESS-themes\" target=\"_blank\">Add a Background to the Sorted Columns with LESS Themes</a> How To article</p>"
+                    "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
                 }
             },
             {
@@ -4981,12 +4982,32 @@
                     "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
                 },
                 "description": {
-                    "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to create a document containing images, text and shapes and export it to PDF."
+                    "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to create a document containing Bar Chart, Data Table and export it to PDF."
                 },
                 "sources": {
                     "aspnet-mvc": [{
                         "name": "CreatePdfWithBarChart.cs",
                         "url": "~/Helpers/CreatePdfWithBarChart.cs"
+                    }]
+                }
+            },
+            {
+                "text": "Read And Write Form Fields",
+                "url": "pdfprocessing/read-write-form-fields",
+                "new": "true",
+                "title": {
+                    "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
+                },
+                "description": {
+                    "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to use a PDF from the server, modify its fields based on user input and exported to PDF on the client."
+                },
+                "sources": {
+                    "aspnet-mvc": [{
+                        "name": "ReadWriteFormFields.cs",
+                        "url": "~/Controllers/PdfProcessing/ReadWriteFormFields.cs"
                     }]
                 }
             }

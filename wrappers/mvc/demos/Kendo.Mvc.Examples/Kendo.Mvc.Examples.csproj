@@ -284,6 +284,7 @@
     <Compile Include="Controllers\PanelBar\Remote_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
     <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
+    <Compile Include="Controllers\PdfProcessing\ReadWriteFormFields.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
@@ -1025,6 +1026,7 @@
     <Content Include="Views\calendar\week_column.cshtml" />
     <Compile Include="Controllers\ListBox\TemplatesController.cs" />
     <Compile Include="Controllers\ListBox\KeyboardNavigationController.cs" />
+    <Content Include="Content\web\pdfprocessing\InteractiveForms.pdf" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3041,6 +3043,7 @@
     <Content Include="Views\listbox\drag_and_drop.cshtml" />
     <Content Include="Views\grid\checkbox_selection.cshtml" />
     <Content Include="Views\pdfprocessing\bar_chart_export.cshtml" />
+    <Content Include="Views\pdfprocessing\read_write_form_fields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
