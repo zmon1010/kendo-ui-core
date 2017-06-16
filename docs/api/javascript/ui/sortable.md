@@ -1,7 +1,6 @@
 ---
 title: Sortable
 page_title: Configuration, methods and events of Kendo UI Sortable
-res_type: api
 ---
 
 # kendo.ui.Sortable

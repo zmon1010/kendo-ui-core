@@ -1,6 +1,5 @@
 ---
 title: Class
-res_type: api
 ---
 
 

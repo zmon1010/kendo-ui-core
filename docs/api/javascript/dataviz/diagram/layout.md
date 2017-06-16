@@ -1,6 +1,5 @@
 ---
 title: Layout
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Layout

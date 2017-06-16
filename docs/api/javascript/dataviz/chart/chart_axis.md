@@ -1,7 +1,6 @@
 ---
 title: ChartAxis
 page_title: Methods of Kendo UI ChartAxis
-res_type: api
 ---
 
 # kendo.dataviz.ChartAxis

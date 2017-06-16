@@ -1,7 +1,6 @@
 ---
 title: ChartPlotArea
 page_title: API reference for Kendo UI ChartPlotArea
-res_type: api
 ---
 
 # kendo.dataviz.ChartPlotArea

@@ -2,7 +2,6 @@
 title: Popup
 page_title: Configuration, methods and events of Kendo UI Popup
 description: Easy to follow steps guide how to quickly configure Popup UI widget.
-res_type: api
 ---
 
 # kendo.ui.Popup

@@ -9,7 +9,6 @@ tags: grid, reordering, items
 teampulseid:
 ticketid: 1112024
 pitsid:
-res_type: kb
 ---
 
 ## Environment

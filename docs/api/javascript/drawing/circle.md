@@ -1,7 +1,6 @@
 ---
 title: Circle
 page_title: API reference for Kendo UI Drawing API Circle
-res_type: api
 ---
 
 # kendo.drawing.Circle : kendo.drawing.Element

@@ -2,7 +2,6 @@
 title: Confirm
 page_title: Configuration, methods and events of Kendo UI Confirm
 description: How to initialize an Confirm UI widget, configure its properties and open it.
-res_type: api
 ---
 
 # kendo.ui.Confirm : kendo.ui.Dialog

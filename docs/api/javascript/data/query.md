@@ -2,7 +2,6 @@
 title: Query
 page_title: Configuration and methods of the Kendo Query component.
 description: Easy to follow steps for Query component configuration and examples of supported methods.
-res_type: api
 ---
 
 # kendo.data.Query

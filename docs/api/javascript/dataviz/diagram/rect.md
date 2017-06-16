@@ -1,6 +1,5 @@
 ---
 title: Rect
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Rect

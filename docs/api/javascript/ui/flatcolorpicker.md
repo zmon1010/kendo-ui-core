@@ -1,7 +1,6 @@
 ---
 title: FlatColorPicker
 page_title: Configuration, methods and events of Kendo UI FlatColorPicker
-res_type: api
 ---
 
 # kendo.ui.FlatColorPicker

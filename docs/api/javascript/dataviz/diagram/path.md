@@ -1,6 +1,5 @@
 ---
 title: Path
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Path

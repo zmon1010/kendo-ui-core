@@ -1,6 +1,5 @@
 ---
 title: Binder
-res_type: api
 ---
 
 # kendo.data.Binder

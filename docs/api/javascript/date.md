@@ -1,7 +1,6 @@
 ---
 title: date
 page_title: API reference for Kendo UI Date
-res_type: api
 ---
 
 # kendo.date

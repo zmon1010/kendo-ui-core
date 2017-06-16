@@ -1,7 +1,6 @@
 ---
 title: MultiPath
 page_title: API reference for methods and fields of Kendo UI DataViz Drawing MultiPath
-res_type: api
 ---
 
 # kendo.drawing.MultiPath : kendo.drawing.Element

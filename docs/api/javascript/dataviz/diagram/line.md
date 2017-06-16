@@ -1,6 +1,5 @@
 ---
 title: Line
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Line

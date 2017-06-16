@@ -1,7 +1,6 @@
 ---
 title: Location
 page_title: API reference for Kendo UI Map Location
-res_type: api
 ---
 
 # kendo.dataviz.map.Location : kendo.Class

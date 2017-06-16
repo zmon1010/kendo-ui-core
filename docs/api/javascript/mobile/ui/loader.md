@@ -2,7 +2,6 @@
 title: Loader
 page_title: Configuration, methods and events of Kendo UI Mobile Loader
 description: Use methods to hide or show the loading animation of the Kendo UI mobile Loader widget.
-res_type: api
 ---
 
 # kendo.mobile.ui.Loader

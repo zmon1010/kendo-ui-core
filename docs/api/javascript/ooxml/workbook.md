@@ -1,7 +1,6 @@
 ---
 title: Workbook
 page_title: Configuration and methods of kendo.ooxml.Workbook
-res_type: api
 ---
 
 # kendo.ooxml.Workbook

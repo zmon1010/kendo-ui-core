@@ -1,7 +1,6 @@
 ---
 title: Element
 page_title: API reference for Kendo UI Drawing API Element
-res_type: api
 ---
 
 # kendo.drawing.Element : kendo.Class

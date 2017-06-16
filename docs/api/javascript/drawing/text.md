@@ -1,7 +1,6 @@
 ---
 title: Text
 page_title: API reference for methods and fields of Kendo UI Drawing Text
-res_type: api
 ---
 
 # kendo.drawing.Text : kendo.drawing.Element

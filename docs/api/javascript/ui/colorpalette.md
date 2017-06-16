@@ -1,7 +1,6 @@
 ---
 title: ColorPalette
 page_title: Configuration, methods and events of Kendo UI ColorPalette
-res_type: api
 ---
 
 # kendo.ui.ColorPalette

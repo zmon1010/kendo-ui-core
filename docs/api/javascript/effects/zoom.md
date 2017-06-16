@@ -1,6 +1,5 @@
 ---
 title: FX Zoom
-res_type: api
 ---
 
 # Zoom

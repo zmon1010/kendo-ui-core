@@ -1,7 +1,6 @@
 ---
 title: ChartPane
 page_title: API reference for Kendo UI ChartPane
-res_type: api
 ---
 
 # kendo.dataviz.ChartPane

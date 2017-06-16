@@ -1,6 +1,5 @@
 ---
 title: Image
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Image

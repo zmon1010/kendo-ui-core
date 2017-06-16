@@ -1,7 +1,6 @@
 ---
 title: Point
 page_title: API reference for methods and fields of Kendo UI Geometry Point
-res_type: api
 ---
 
 # kendo.geometry.Point

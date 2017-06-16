@@ -1,6 +1,5 @@
 ---
 title: Router
-res_type: api
 ---
 
 # kendo.Router

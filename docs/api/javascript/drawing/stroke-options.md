@@ -1,7 +1,6 @@
 ---
 title: StrokeOptions
 page_title: API reference for Kendo UI Drawing API Stroke options
-res_type: api
 ---
 
 # kendo.drawing.StrokeOptions

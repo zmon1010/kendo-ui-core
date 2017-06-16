@@ -1,6 +1,5 @@
 ---
 title: FX Expand
-res_type: api
 ---
 
 # Expand

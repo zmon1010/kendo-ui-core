@@ -1,6 +1,5 @@
 ---
 title: Group
-res_type: api
 ---
 
 # kendo.dataviz.diagram.Group

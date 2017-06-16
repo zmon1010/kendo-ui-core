@@ -2,7 +2,6 @@
 title: TreeListModel
 page_title: API Reference for Kendo Data TreeListModel
 description: Documentation how to get started with the TreeListModel.
-res_type: api
 ---
 
 # kendo.data.TreeListModel

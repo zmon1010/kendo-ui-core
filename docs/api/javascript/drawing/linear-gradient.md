@@ -1,7 +1,6 @@
 ---
 title: LinearGradient
 page_title: API reference for Kendo UI Drawing API LinearGradient
-res_type: api
 ---
 
 # kendo.drawing.LinearGradient : kendo.drawing.Gradient

@@ -1,6 +1,5 @@
 ---
 title: FX Fade
-res_type: api
 ---
 
 # Fade

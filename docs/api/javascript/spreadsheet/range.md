@@ -1,7 +1,6 @@
 ---
 title: Range
 page_title: Configuration, methods and events of Kendo UI Spreadsheet Range Instance object
-res_type: api
 ---
 
 # kendo.spreadsheet.Range

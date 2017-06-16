@@ -2,7 +2,6 @@
 title: TreeListDataSource
 page_title: API Reference for Kendo UI TreeListDataSource
 description: Learn more about the configuration of Kendo UI TreeListDataSource, methods and events.
-res_type: api
 ---
 
 # kendo.data.TreeListDataSource

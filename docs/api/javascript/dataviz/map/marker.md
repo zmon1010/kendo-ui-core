@@ -1,7 +1,6 @@
 ---
 title: Marker
 page_title: API reference for Kendo UI Map Marker
-res_type: api
 ---
 
 # kendo.dataviz.map.Marker

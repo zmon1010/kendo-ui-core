@@ -1,7 +1,6 @@
 ---
 title: effects
 page_title: API reference for Kendo UI Effects
-res_type: api
 ---
 
 # kendo.effects

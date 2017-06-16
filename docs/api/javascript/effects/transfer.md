@@ -1,6 +1,5 @@
 ---
 title: FX Transfer
-res_type: api
 ---
 
 # Transfer

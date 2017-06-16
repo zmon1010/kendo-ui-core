@@ -1,7 +1,6 @@
 ---
 title: ChartSeries
 page_title: API reference for Kendo UI ChartSeries
-res_type: api
 ---
 
 # kendo.dataviz.ChartSeries

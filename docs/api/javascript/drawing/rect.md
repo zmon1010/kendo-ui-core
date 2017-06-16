@@ -1,7 +1,6 @@
 ---
 title: Rect
 page_title: API reference for Kendo UI Drawing API Rect
-res_type: api
 ---
 
 # kendo.drawing.Rect : kendo.drawing.Element

@@ -2,7 +2,6 @@
 title: Pane
 page_title: Configuration, methods and events of Kendo UI Mobile Pane
 description: See how to easily configure the id of the initial mobile View to display, the default Pane layout, loading popup text, default View transition and more.
-res_type: api
 ---
 
 # kendo.mobile.ui.Pane

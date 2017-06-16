@@ -1,7 +1,6 @@
 ---
 title: BingLayer
 page_title: API reference for Kendo UI Map Layer
-res_type: api
 ---
 
 # kendo.dataviz.map.BingLayer : kendo.dataviz.map.TileLayer

@@ -1,6 +1,5 @@
 ---
 title: FX SlideIn
-res_type: api
 ---
 
 # SlideIn

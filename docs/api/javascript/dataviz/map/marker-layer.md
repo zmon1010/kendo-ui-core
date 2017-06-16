@@ -1,7 +1,6 @@
 ---
 title: MarkerLayer
 page_title: API reference for Kendo UI Map Layer
-res_type: api
 ---
 
 # kendo.dataviz.map.MarkerLayer : kendo.dataviz.map.Layer

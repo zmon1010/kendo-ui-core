@@ -10,7 +10,6 @@ teampulseid:
 ticketid: 663290
 pitsid:
 
-res_type: kb
 ---
 
 ## Environment

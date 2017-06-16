@@ -1,6 +1,5 @@
 ---
 title: View
-res_type: api
 ---
 
 # kendo.View

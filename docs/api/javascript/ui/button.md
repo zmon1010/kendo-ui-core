@@ -1,7 +1,6 @@
 ---
 title: Button
 description: Configuration, methods and events of the Kendo UI Button
-res_type: api
 ---
 
 # kendo.ui.Button

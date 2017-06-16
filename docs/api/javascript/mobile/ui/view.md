@@ -2,7 +2,6 @@
 title: View
 page_title: Configuration, methods and events of Kendo UI Mobile View
 description: How to configure Kendo UI mobile view widget and use events to create highly interactive mobile applications.
-res_type: api
 ---
 
 # kendo.mobile.ui.View
