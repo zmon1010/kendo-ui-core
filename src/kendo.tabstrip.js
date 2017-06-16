@@ -1299,6 +1299,17 @@ var __meta__ = { // jshint ignore:line
                                 kendo.resize(contentHolder);
 
                                 that.scrollWrap.css("height", "").css("height");
+
+                                // Force IE and Edge rendering to fix visual glitches telerik/kendo-ui-core#2777.
+                                if (kendo.support.browser.msie || kendo.support.browser.edge) {
+                                    contentHolder.finish().animate({
+                                        opacity: 0.9
+                                    },"fast", "linear", function(){
+                                        contentHolder.finish().animate({
+                                            opacity: 1
+                                        },"fast", "linear");
+                                    });
+                                }
                             }
                         } ) );
                 },
