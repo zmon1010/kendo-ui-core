@@ -1,0 +1,39 @@
+% puts "generating component:"
+<%= name %>
+
+/// <reference types="kendo-ui" />
+
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
+import '@progress/kendo-ui';
+
+import KendoBaseComponent from '@progress/kendo-base-component-react-wrapper';
+
+export interface <%= name %>Props {
+    <% options.each do |option| %>
+        <%= option.react_def %><% if option != options.last %>, <% end %>
+    <% end %>
+}
+
+export default class <%= name %> extends KendoBaseComponent<<%= name %>Props, undefined> {
+    componentDidMount(): void {
+        const domNode: Element = ReactDOM.findDOMNode<HTMLElement>((this as React.ReactInstance));
+        const { children, widgetRef, ...props } = this.props;
+
+        this.widgetInstance = new <%= full_name %>(domNode, props);
+
+        super.componentDidMount();
+    }
+
+    componentWillReceiveProps(nextProps: <%= full_name %>Props) {
+        const { children, ...props } = nextProps;
+
+        this.widgetInstance.setOptions(props);
+        (this.widgetInstance as <%= full_name %>).value(props.value);
+    }
+
+    render(): any {
+        return (this.props.children || <input />);
+    }
+}

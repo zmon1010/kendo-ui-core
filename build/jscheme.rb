@@ -27,7 +27,7 @@ module CodeGen::Jscheme
         def array_option_class
             ArrayOption
         end
-    end 
+    end
 
     class Component < CodeGen::Component
         include Options
@@ -65,7 +65,6 @@ end
 def get_jscheme(sources)
     components = sources.map do |source|
         parser = CodeGen::MarkdownParser.new
-
         File.open(source, 'r:bom|utf-8') do |file|
             parser.parse(file.read, CodeGen::Jscheme::Component)
         end
@@ -96,7 +95,6 @@ namespace :jscheme do
                         end
                     end
                 rescue JSON::ParserError
-                    
                 end
                 puts "Success!"
             end

@@ -1,0 +1,5 @@
+class <%= full_name %> {
+    % options.each do |option| %>
+        <%= option.jscheme_def %><% if option != options.last %>, <% end %>
+    <% end %>
+}
