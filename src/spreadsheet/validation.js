@@ -221,6 +221,15 @@
             ));
         },
 
+        deepClone: function() {
+            var v = new Validation(this);
+            v.from = v.from.deepClone();
+            if (v.to) {
+                v.to = v.to.deepClone();
+            }
+            return v;
+        },
+
         exec: function(ss, compareValue, compareFormat, callback) {
             var self = this;
 
@@ -264,27 +273,38 @@
         },
 
         adjust: function(affectedSheet, operation, start, delta) {
+            var prevFrom, prevTo, modified;
+            var formulaRow = this.row;
+            var formulaCol = this.col;
             if (this.from) {
-                this.from.adjust(affectedSheet, operation, start, delta);
+                prevFrom = this.from.adjust(affectedSheet, operation, start, delta);
             }
             if (this.to) {
-                this.to.adjust(affectedSheet, operation, start, delta);
+                prevTo = this.to.adjust(affectedSheet, operation, start, delta);
             }
             if (this.sheet.toLowerCase() == affectedSheet.toLowerCase()) {
-                var formulaRow = this.row;
-                var formulaCol = this.col;
                 switch (operation) {
                   case "row":
                     if (formulaRow >= start) {
+                        modified = true;
                         this.row += delta;
                     }
                     break;
                   case "col":
                     if (formulaCol >= start) {
+                        modified = true;
                         this.col += delta;
                     }
                     break;
                 }
+            }
+            if (modified || prevFrom || prevTo) {
+                var v = new Validation(this);
+                v.from = prevFrom;
+                v.to = prevTo;
+                v.row = formulaRow;
+                v.col = formulaCol;
+                return v;
             }
         },
 

@@ -114,6 +114,14 @@
                 this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
                 this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
             }, this);
+
+            // XXX: this is a hack but I have no better ideas at this
+            // point.  The getState() method in a SparseRangeList
+            // clones the tree (which just copies values over), but
+            // formulas are objects maintaining complex state.
+            // https://github.com/telerik/kendo-ui-core/issues/2816
+            this.lists.formula.tree.clone = cloneFormulaTree;
+            this.lists.validation.tree.clone = cloneFormulaTree;
         },
 
         getState: function() {
@@ -273,6 +281,18 @@
             }
         }
     });
+
+    function cloneFormulaValue(x) {
+        x = x.clone();
+        x.value = x.value.deepClone(); // x.value is Formula or Validation
+        return x;
+    }
+
+    function cloneFormulaTree() {
+        var tree = this.map(cloneFormulaValue);
+        tree.clone = cloneFormulaTree; // because it's a new RangeTree now
+        return tree;
+    }
 
     kendo.spreadsheet.ALL_PROPERTIES = kendo.spreadsheet.PropertyBag.prototype.specs.reduce(function(a, spec) {
         if (spec.serializable) {

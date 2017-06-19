@@ -11,6 +11,19 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
 
+    // This is a “dynamic variable” (see Greenspun's 10th rule).  It's
+    // bound to an array via sheet._saveModifiedFormulas (which see)
+    // while the callback runs.  The goal is to enable external code
+    // to get a list of formulas or validations that have been
+    // adjusted as an effect of an insert/delete row/column operation,
+    // to be able to undo it.
+    //
+    // The reason why simply saving the state via sheet.getState() or
+    // range.getState() won't suffice is that an insert or delete
+    // operation can have far-reaching effects, like adjusting
+    // formulas from another sheet.
+    var MODIFIED_FORMULAS;
+
     var Selection = kendo.Class.extend({
         init: function(sheet) {
             this._sheet = sheet;
@@ -277,6 +290,29 @@
             this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
+        _saveModifiedFormulas: function(array, callback) {
+            var save = MODIFIED_FORMULAS;
+            MODIFIED_FORMULAS = array;
+            var ret = callback();
+            MODIFIED_FORMULAS = save;
+            return ret;
+        },
+
+        _restoreModifiedFormulas: function(array) {
+            var wb = this._workbook;
+            array.forEach(function(f){
+                var sheet = wb.sheetByName(f.sheet), index;
+                if (f instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    index = sheet._grid.cellRefIndex(f); // f has row, col
+                    sheet._properties.set("formula", index, index, f);
+                }
+                if (f instanceof kendo.spreadsheet.validation.Validation) {
+                    index = sheet._grid.cellRefIndex(f); // f has row, col
+                    sheet._properties.set("validation", index, index, f);
+                }
+            });
+        },
+
         _adjustReferences: function(operation, start, delta, mergedCells) {
             this._mergedCells = mergedCells.reduce(function(a, ref){
                 ref = ref.adjust(null, null, null, null, operation == "row", start, delta);
@@ -289,11 +325,22 @@
                 var affectedSheet = this._name();
                 this._workbook._sheets.forEach(function(sheet){
                     sheet._forFormulas(function(formula){
-                        formula.adjust(affectedSheet, operation, start, delta);
+                        var prev = formula.adjust(affectedSheet, operation, start, delta);
+                        if (prev && MODIFIED_FORMULAS) {
+                            // if formula.adjust returns non-null,
+                            // that means the formula was indeed
+                            // modified and the returned value is a
+                            // copy of the previous Formula, which we
+                            // can use for undoing the operation.
+                            MODIFIED_FORMULAS.push(prev);
+                        }
                     });
 
                     sheet._forValidations(function(validation){
-                        validation.adjust(affectedSheet, operation, start, delta);
+                        var prev = validation.adjust(affectedSheet, operation, start, delta);
+                        if (prev && MODIFIED_FORMULAS) {
+                            MODIFIED_FORMULAS.push(prev);
+                        }
                     });
                 });
                 this._workbook.adjustNames(affectedSheet, operation == "row", start, delta);
