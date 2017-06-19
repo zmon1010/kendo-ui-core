@@ -31,9 +31,9 @@ Some developers may want to use the edit, delete, update, cancel, or add buttons
 
 ## Solution
 
-The required approach is to set the `text` of the `command` to a space:
+1. Set the `text` of the `command` to a space:
 
-1. http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command.text
+    http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command.text
 
     ```
         columns: [
@@ -44,7 +44,7 @@ The required approach is to set the `text` of the `command` to a space:
         ]
     ```
 
-1. http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-toolbar.text
+    http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-toolbar.text
 
     ```
         toolbar: [{name: "create", text: " "}]
