@@ -27,7 +27,7 @@ res_type: kb
 
 ## Description
 
-Some developers may want to use the edit, delete, update, cancel, or add buttons of the Grid with icons only and no text. For example, when they want to save space.
+You might want to use the **Edit**, **Delete**, **Update**, **Cancel**, or **Add** buttons of the Grid with icons only and without text. For example, if you have to save space.
 
 ## Solution
 
@@ -50,7 +50,7 @@ Some developers may want to use the edit, delete, update, cancel, or add buttons
         toolbar: [{name: "create", text: " "}]
     ```
 
-1. In addition, you also need to reset some default margins of the buttons' icons `zero` by using CSS.
+1. In addition, reset some of the default margins of the buttons' icons to `0` (zero) by using CSS.
 
     ```
       .k-grid .k-grid-toolbar .k-grid-add,
