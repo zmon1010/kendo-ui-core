@@ -147,7 +147,11 @@ var __meta__ = { // jshint ignore:line
         whitespaceRegExp = "[\\x20\\t\\r\\n\\f]",
         nonDataCellsRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-group-cell|k-hierarchy-cell)" + "(" + whitespaceRegExp + "|$)"),
         filterRowRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-filter-row)" + "(" + whitespaceRegExp + "|$)"),
-        COMMANDBUTTONTMPL = '<a role="button" class="k-button k-button-icontext #=className#" #=attr# href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
+        COMMANDBUTTONTMPL = '# if (iconClass) {#' +
+                                '<a role="button" class="k-button k-button-icontext #=className#" #=attr# href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>' +
+                            '# } else { #' +
+                                '<a role="button" class="k-button k-button-icontext #=className#" #=attr# href="\\#">#=text#</a>' +
+                            '# } #',
         SELECTCOLUMNTMPL = '<input class="' + CHECKBOX + '" data-role="checkbox" aria-label="Select row" aria-checked="false" type="checkbox"><label class="k-checkbox-label k-no-text">&\\#8203;</label>',
         SELECTCOLUMNHEADERTMPL = '<input class="' + CHECKBOX + '" data-role="checkbox" aria-label="Select all rows" aria-checked="false" type="checkbox"><label class="k-checkbox-label k-no-text">&#8203;</label>',
         isRtl = false,

@@ -2572,4 +2572,46 @@
         });
     });
 
+    test("Inner span is not rendered for default command buttons when iconClass is not present", 2, function() {
+        var grid = new Grid(table, {
+            dataSource: [
+                { foo: "foo", bar: "bar" }
+            ],
+            columns: [
+                { command: [{ name: "edit", iconClass:'' }, { name: "destroy", iconClass:'' }] }
+            ],
+            messages: {
+                commands: {
+                    edit: "foo",
+                    destroy: "bar"
+                }
+            }
+        });
+
+        equal(grid.wrapper.find(".k-grid-edit").children().length, 0);
+        equal(grid.wrapper.find(".k-grid-delete").children().length, 0);
+    });
+
+    test("Span is rendered as child for default command buttons", 4, function() {
+        var grid = new Grid(table, {
+            dataSource: [
+                { foo: "foo", bar: "bar" }
+            ],
+            columns: [
+                { command: [{ name: "edit" }, { name: "destroy" }] }
+            ],
+            messages: {
+                commands: {
+                    edit: "foo",
+                    destroy: "bar"
+                }
+            }
+        });
+
+        equal(grid.wrapper.find(".k-grid-edit").children().length, 1);
+        equal(grid.wrapper.find(".k-grid-delete").children().length, 1);
+        equal(grid.wrapper.find(".k-grid-edit").find("span").length, 1);
+        equal(grid.wrapper.find(".k-grid-delete").find("span").length, 1);
+    });
+
 })();
