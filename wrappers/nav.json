@@ -247,7 +247,6 @@
             {
                 "text": "Week Column",
                 "url": "calendar/week-column",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Week column in the $FRAMEWORK Calendar | $FRAMEWORK demos"
                 },
@@ -277,8 +276,7 @@
             },
             {
                 "text": "Globalization",
-                "url": "calendar/globalization",
-                "new": true
+                "url": "calendar/globalization"
             },
             {
                 "text": "RTL support",
@@ -3905,11 +3903,11 @@
     "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
     "category": "Document Processing",
     "spriteCssClass": "spreadprocessingIcon",
+    "updated": "true",
     "items": [
       {
         "text": "Basic usage",
         "url": "spreadprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
         },
@@ -4915,7 +4913,6 @@
       {
         "text": "Basic usage",
         "url": "wordsprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadWordsProcessing in MVC"
         },
@@ -4985,11 +4982,11 @@
     "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
     "category": "Document Processing",
     "spriteCssClass": "pdfIcon",
+    "updated": "true",
     "items": [
       {
         "text": "Basic usage",
         "url": "pdfprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
         },

@@ -6205,12 +6205,11 @@
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview" },
     "category": "Document Processing",
     "spriteCssClass": "spreadprocessingIcon",
-    "new": "true",
+    "updated": "true",
     "items": [
       {
         "text": "Basic usage",
         "url": "spreadprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
         },
@@ -7730,12 +7729,10 @@
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview" },
     "category": "Document Processing",
     "spriteCssClass": "wordprocessingIcon",
-    "new": "true",
     "items": [
       {
         "text": "Basic usage",
         "url": "wordsprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadWordsProcessing in MVC"
         },
@@ -7961,12 +7958,11 @@
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview" },
     "category": "Document Processing",
     "spriteCssClass": "pdfIcon",
-    "new": "true",
+    "updated": "true",
     "items": [
       {
         "text": "Basic usage",
         "url": "pdfprocessing/index",
-        "new": "true",
         "title": {
           "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
         },
