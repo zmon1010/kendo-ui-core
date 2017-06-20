@@ -2360,6 +2360,20 @@
         ok(view.datesHeader.find(".k-event").length);
     });
 
+    test("9 AM event which starts on a DST date is visible", function() {
+        var view = setup({ dates: [new Date("2017/3/26")] });
+
+        view.render([new SchedulerEvent({
+            uid: "foo", title: "",
+            start: new Date("2017/3/26 9:00"),
+            end: new Date("2017/3/26 10:00"),
+            id: "2"
+        })]);
+
+        ok(view.content.find(".k-event").length);
+        ok(!view.content.find(".k-event").find(".k-i-arrow-60-up").length);
+    });
+
     test("Long hours event which starts and end between DST date", function() {
         var view = setup({ dates: [new Date(2016, 9, 30)] });
 

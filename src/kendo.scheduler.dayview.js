@@ -1568,8 +1568,8 @@ var __meta__ = { // jshint ignore:line
                endTime = +event._date("end") + (MS_PER_DAY - 1);
             }
 
-            endTime = endTime - event._date("end");
-            startTime = startTime - event._date("start");
+            endTime = getMilliseconds(new Date(endTime));
+            startTime = getMilliseconds(new Date(startTime));
             slotEndTime = getMilliseconds(slotEndTime);
             slotStartTime = getMilliseconds(slotStartTime);
 
@@ -1642,7 +1642,7 @@ var __meta__ = { // jshint ignore:line
                             if (!group._continuousEvents) {
                                 group._continuousEvents = [];
                             }
-
+                            
                             ranges = group.slotRanges(event);
 
                             var rangeCount = ranges.length;
