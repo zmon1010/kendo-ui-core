@@ -101,17 +101,13 @@
                 return overflow ? index + 1 : index;
             }
 
-            index += 1;
-            var range = this._hidden.intersecting(index, index)[0];
-            if (range.value !== 0) { // hidden
-                if (range.end === end) { // reached the last visible
-                    return index - 1;
-                } else {
-                    return range.end + 1;
+            for (var i = index + 1; i <= end; ++i) {
+                if (!this.hidden(i)) {
+                    return i;
                 }
-            } else {
-                return index;
             }
+
+            return index;
         },
 
         nextPage: function(index, pageSize) {
@@ -145,17 +141,13 @@
                 return overflow ? -1 : 0;
             }
 
-            index -= 1;
-            var range = this._hidden.intersecting(index, index)[0];
-            if (range.value !== 0) { // hidden
-                if (range.start === 0) { // reached the last visible
-                    return index + 1;
-                } else {
-                    return range.start - 1;
+            for (var i = index - 1; i >= 0; --i) {
+                if (!this.hidden(i)) {
+                    return i;
                 }
-            } else {
-                return index;
             }
+
+            return index;
         },
 
         unhide: function(index) {
