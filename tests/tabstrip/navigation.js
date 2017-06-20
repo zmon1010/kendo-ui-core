@@ -149,8 +149,6 @@ test("selects last if current is first", function() {
 
 });
 
-////////
-
 test("in rtl and horizontal layout selects next on DOWN", function() {
     div.addClass("k-rtl").kendoTabStrip({animation: false});
     addItems(3);
@@ -278,9 +276,6 @@ test("in rtl and vertical layout selects next on RIGHT", function() {
 
     equal(div.find(".k-state-active").index(), 1);
 });
-
-
-//////////
 
 test("misses prev item if disabled", function() {
     div.kendoTabStrip();
