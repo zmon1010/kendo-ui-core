@@ -185,6 +185,7 @@ sheet.batch(function(){
     });
 
     sheet.range("F5").format("d mmm yyyy").value(20000);
+    sheet.range("E2").format('_(#.##0_);_((#.##0);_("-"??_);_(@_)').value(0).background("yellow");
 
 }, { recalc: true });
 
