@@ -702,20 +702,21 @@
             return Math.abs(rectangle.right - x) < 8 && Math.abs(rectangle.bottom - y) < 8;
         },
 
-        isEditButton: function(x, y) {
+        isEditButton: function(x, y, column, columnCount) {
             var ed = this._sheet.activeCellCustomEditor();
             if (ed) {
+                var editorOnLastColumn = column == columnCount - 2;
                 var r = this.activeCellRectangle();
                 // XXX: hard-coded button width (20)
-                if (x > r.right && x <= r.right + 20 && y >= r.top && y <= r.bottom) {
-                    return true;
+                if (y >= r.top && y <= r.bottom) {
+                    return editorOnLastColumn ? x < r.left && x >= r.left - 20
+                        : x > r.right && x <= r.right + 20;
                 }
             }
         },
 
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
-
             var object, pane;
 
             if (x < 0 || y < 0 || x > this.scroller.clientWidth || y > this.scroller.clientHeight) {
@@ -745,7 +746,7 @@
                     } else if (!selecting && y < grid._headerHeight) {
                         ref = new CellRef(-Infinity, column);
                         type = this.isColumnResizer(x, pane, ref) ? "columnresizehandle" : "columnheader";
-                    } else if (this.isEditButton(x, y)) {
+                    } else if (this.isEditButton(x, y, column, grid.columnCount)) {
                         type = "editor";
                     }
 
@@ -1640,6 +1641,7 @@
             var self = this;
             var sheet = self._sheet;
             var view = self._currentView;
+            var columnCount = self._grid.columns._axis._count;
 
             if (view.ref.intersects(ref)) {
                 var rectangle = self._rectangle(ref);
@@ -1652,10 +1654,15 @@
                     drawCell(collection, cell, className, true);
 
                     if (ed) {
+                        var btnClass = "k-button k-spreadsheet-editor-button";
+                        var isLastColumn = col == columnCount - 1;
+                        if (isLastColumn) {
+                            btnClass += " k-spreadsheet-last-column";
+                        }
                         var btn = kendo.dom.element("div", {
-                            className: "k-button k-spreadsheet-editor-button",
+                            className: btnClass,
                             style: {
-                                left   : (cell.left + cell.width) + "px",
+                                left   : (cell.left + (isLastColumn ? 0 : cell.width)) + "px",
                                 top    : cell.top + "px",
                                 height : cell.height + "px"
                             }
