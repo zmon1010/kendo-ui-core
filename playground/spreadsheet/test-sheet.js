@@ -125,14 +125,16 @@ sheet.batch(function(){
         [ "Fusce" ]
     ]);
 
-    sheet.range("E10:E12").validation({
+    var listvalidation = {
         dataType: "list",
         showButton: true,
         comparerType: "list",
         from: "H1:H5",
         allowNulls: true,
         type: "reject"
-    }).background("#fea");
+    };
+    sheet.range("E10:E12").validation(listvalidation).background("#fea");
+    sheet.range("AX1:AX12").validation(listvalidation).background("#fea");
 
     sheet.range("C10:C12").editor("color");
     sheet.range("C10:C12").values([ ["red"], ["green"], ["blue"] ]);
