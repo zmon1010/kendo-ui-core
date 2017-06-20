@@ -2,7 +2,7 @@ var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
 }).data("kendoSpreadsheet");
 
 var sheet = spreadsheet.activeSheet();
-spreadsheet.insertSheet();
+var sheet2 = spreadsheet.insertSheet();
 var calc = kendo.spreadsheet.calc;
 
 kendo.spreadsheet.defineFunction("json.encode", function(x){
@@ -51,7 +51,7 @@ kendo.spreadsheet.registerEditor("color", function(){
             open();
         },
         icon: "k-font-icon k-i-background"
-    }
+    };
 });
 
 sheet.batch(function(){
@@ -186,4 +186,9 @@ sheet.batch(function(){
 
     sheet.range("F5").format("d mmm yyyy").value(20000);
 
+}, { recalc: true });
+
+sheet2.batch(function(){
+    sheet2.range("A2:A10").formula("ROW()");
+    sheet2.range("B11").formula("AGGREGATE(1, 5, A1:A8)").background("yellow");
 }, { recalc: true });
