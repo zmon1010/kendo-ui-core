@@ -55,12 +55,6 @@ namespace Kendo.Mvc.Examples
             }
 
             editor.Position.Translate(defaultLeftIndent * 4, page.Size.Height - 100);
-            
-           using (FileStream fs = new FileStream(System.Web.HttpContext.Current.Server.MapPath("~/Content/web/pdfprocessing/telerik.png"), 
-                FileMode.Open, FileAccess.Read))
-            {
-                editor.DrawImage(fs);
-            }
 
             DrawText(editor);
 
