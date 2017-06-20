@@ -1552,7 +1552,7 @@
                     ref: ref,
                     columns: columns
                 };
-            }, { layout: true, filter: true });
+            }, { recalc: true, layout: true, filter: true });
         },
 
         filterColumn: function(ref) {
@@ -1576,7 +1576,7 @@
                     });
 
                     this._refreshFilter();
-                }, { layout: true, filter: true });
+                }, { recalc: true, layout: true, filter: true });
             }
         },
 
