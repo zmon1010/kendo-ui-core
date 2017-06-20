@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+        <script src="../loader.js"></script>
+        <script>
+         requireSync([
+             "../../src/jquery.js",
+             "../../src/kendo.spreadsheet.js",
+         ]);
+        </script>
+        <style>
+         body { font: 14px Arial }
+        </style>
+    </head>
+    <body>
+        <div id="spreadsheet"></div>
+        <script>
+         spreadsheet = $("#spreadsheet").kendoSpreadsheet({
+             defaultCellStyle: {
+                 color: "#FF0000",
+                 fontFamily: "Times New Roman"
+             },
+             sheets: [{
+                 name: "Food Order",
+                 mergedCells: [
+                     "A1:G1"
+                 ],
+                 rows: [{
+                     height: 70,
+                     cells: [{
+                         value: "My Company", fontSize: 32, textAlign: "center"
+                     }]
+                 }],
+             }]
+         }).getKendoSpreadsheet();
+         s = spreadsheet.activeSheet();
+        </script>
+    </body>
+</html>
