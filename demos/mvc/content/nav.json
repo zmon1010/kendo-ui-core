@@ -6203,7 +6203,7 @@
     "text": "SpreadProcessing",
     "name": "spreadprocessing",
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview" },
-    "category": "Editors",
+    "category": "Document Processing",
     "spriteCssClass": "spreadprocessingIcon",
     "new": "true",
     "items": [
@@ -7728,7 +7728,7 @@
     "text": "WordsProcessing",
     "name": "wordsprocessing",
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview" },
-    "category": "Editors",
+    "category": "Document Processing",
     "spriteCssClass": "wordprocessingIcon",
     "new": "true",
     "items": [
@@ -7959,7 +7959,7 @@
     "text": "PdfProcessing",
     "name": "pdfprocessing",
     "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview" },
-    "category": "Editors",
+    "category": "Document Processing",
     "spriteCssClass": "pdfIcon",
     "new": "true",
     "items": [
