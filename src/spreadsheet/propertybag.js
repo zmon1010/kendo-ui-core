@@ -112,7 +112,8 @@
                     value = spec.value;
                 }
                 this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
-                this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
+                var prop = this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
+                prop.spec = spec;
             }, this);
 
             // XXX: this is a hack but I have no better ideas at this
@@ -218,7 +219,7 @@
                 return index > cellCount ? null : prop.parse(at.call(iter, index));
             };
             iter.name = name;
-            iter.value = prop.list.range.value;
+            iter.value = prop.spec.value;
             return iter;
         },
 
