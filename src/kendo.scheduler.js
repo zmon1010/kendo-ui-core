@@ -3728,12 +3728,20 @@ var __meta__ = { // jshint ignore:line
                 var li = $(this);
                 var date = new Date(that.date());
                 var action = "";
+                var currentDate = new Date();
+                var timezone = that.options.timezone;
 
                 e.preventDefault();
 
                 if (li.hasClass("k-nav-today")) {
                     action = "today";
-                    date = new Date();
+                    if(timezone){
+                        var timezoneOffset = kendo.timezone.offset(currentDate, timezone);
+                        date = kendo.timezone.convert(currentDate, currentDate.getTimezoneOffset(), timezoneOffset);
+                    }else{
+                        date = currentDate;
+                    }
+
                 } else if (li.hasClass("k-nav-next")) {
                     action = "next";
                     date = that.view().nextDate();

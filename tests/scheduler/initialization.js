@@ -153,6 +153,21 @@
         equal(scheduler.date().getTime(), getDate(new Date()).getTime());
     });
 
+    test("clicking on the today selects today's date with TimeZone set", function() {
+        var scheduler = new Scheduler(container, {
+            date: new Date("1/2/2013"),
+            timezone: "Pacific/Tongatapu"
+        });
+
+        scheduler.toolbar.find(".k-nav-today").click();
+
+        var currentdateTime = new Date();
+        var timezoneOffset = kendo.timezone.offset(currentdateTime, scheduler.options.timezone);
+        date = kendo.timezone.convert(currentdateTime, currentdateTime.getTimezoneOffset(), timezoneOffset);
+        
+        equal(scheduler.date().getTime(), getDate(date).getTime());
+    });
+
     test("clicking on the next date calls the view", function() {
         var selectedDate = new Date("1/2/2013"),
             scheduler = new Scheduler(container, {
