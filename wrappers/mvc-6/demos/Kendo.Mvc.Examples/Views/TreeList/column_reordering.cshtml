@@ -9,7 +9,7 @@
     })
     .Reorderable(true)
     .DataSource(dataSource => dataSource
-        .Read(read => read.Action("Index", "EmployeeDirectory"))
+        .Read(read => read.Action("All", "EmployeeDirectory"))
         .Model(m =>
         {
             m.Id(f => f.EmployeeId);

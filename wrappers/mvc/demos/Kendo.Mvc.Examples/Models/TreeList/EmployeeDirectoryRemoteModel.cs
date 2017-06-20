@@ -4,7 +4,7 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public class EmployeeDirectoryModel
+    public class EmployeeDirectoryRemoteModel
     {
         [ScaffoldColumn(false)]
         public int EmployeeId { get; set; }
@@ -33,6 +33,8 @@
         [DataType("Integer")]
         public int? Extension { get; set; }
 
+        [ScaffoldColumn(false)]
+        public bool hasChildren { get { return true; } set { } }
         public string Position { get; set; }
 
         private DateTime? birthDate;

@@ -4,17 +4,17 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public class EmployeeDirectoryModel
+    public class EmployeeDirectoryRemoteModel
     {
         [ScaffoldColumn(false)]
         public int EmployeeId { get; set; }
 
         [Required]
-        [DisplayName("First name")]
+        [Display(Name = "First name")]		
         public string FirstName { get; set; }
 
         [Required]
-        [DisplayName("Last name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [ScaffoldColumn(false)]
@@ -35,9 +35,12 @@
 
         public string Position { get; set; }
 
+        [ScaffoldColumn(false)]
+        public bool hasChildren { get { return true; } set { } }
+
         private DateTime? birthDate;
         [DataType(DataType.Date)]
-        [DisplayName("Birthday")]
+        [Display(Name = "Birthday")]
         public DateTime? BirthDate
         {
             get
@@ -60,7 +63,7 @@
 
         private DateTime? hireDate;
         [DataType(DataType.Date)]
-        [DisplayName("Hire Date")]
+        [Display(Name = "Hire Date")]
         public DateTime? HireDate
         {
             get

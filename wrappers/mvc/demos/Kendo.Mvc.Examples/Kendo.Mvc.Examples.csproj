@@ -848,6 +848,7 @@
     <Compile Include="Models\SpreadStreamProcessing\DocumentSettings.cs" />
     <Compile Include="Models\SpreadStreamProcessing\Shipping.cs" />
     <Compile Include="Models\StyleGroups.cs" />
+    <Compile Include="Models\TreeList\EmployeeDirectoryRemoteModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
     <Compile Include="Models\Video.cs" />

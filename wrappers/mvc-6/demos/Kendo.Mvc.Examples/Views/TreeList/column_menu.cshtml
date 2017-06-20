@@ -12,7 +12,7 @@
     .ColumnMenu()
     .DataSource(dataSource => dataSource
         .ServerOperation(false)
-        .Read(read => read.Action("Index", "EmployeeDirectory"))
+        .Read(read => read.Action("All", "EmployeeDirectory"))
         .Model(m =>
         {
             m.Id(f => f.EmployeeId);

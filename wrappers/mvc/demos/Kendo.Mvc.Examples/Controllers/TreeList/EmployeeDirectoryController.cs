@@ -21,7 +21,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public JsonResult Index([DataSourceRequest] DataSourceRequest request, int? id)
         {
-            var result = GetDirectory().ToTreeDataSourceResult(request,
+            var result = ((EmployeeDirectoryService) employeeDirectory).GetAllRemote().ToTreeDataSourceResult(request,
                 e => e.EmployeeId,
                 e => e.ReportsTo,
                 e => id.HasValue ? e.ReportsTo == id : e.ReportsTo == null,

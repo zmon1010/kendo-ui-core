@@ -30,6 +30,25 @@
                 Extension = employee.Extension
             };
         }
+
+        public static EmployeeDirectoryRemoteModel ToEmployeeDirectoryRemoteModel(this EmployeeDirectory employee)
+        {
+            return new EmployeeDirectoryRemoteModel
+            {
+                EmployeeId = employee.EmployeeID,
+                ReportsTo = employee.ReportsTo,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Address = employee.Address,
+                City = employee.City,
+                Country = employee.Country,
+                BirthDate = employee.BirthDate,
+                HireDate = employee.HireDate,
+                Phone = employee.Phone,
+                Position = employee.Position,
+                Extension = employee.Extension
+            };
+        }
     }
 
     public class EmployeeDirectoryService
@@ -59,6 +78,11 @@
             }
 
             return result;
+        }
+
+        public virtual IList<EmployeeDirectoryRemoteModel> GetAllRemote()
+        {
+            return db.EmployeeDirectory.ToList().Select(employee => employee.ToEmployeeDirectoryRemoteModel()).ToList();
         }
 
         public virtual void Insert(EmployeeDirectoryModel employee, ModelStateDictionary modelState)
