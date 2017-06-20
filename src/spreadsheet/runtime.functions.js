@@ -478,17 +478,15 @@
     ]);
 
     defineFunction("min", function(numbers){
-        return Math.min.apply(Math, numbers);
+        return numbers.length ? Math.min.apply(Math, numbers) : 0;
     }).args([
-        [ "numbers", [ "collect", "number" ] ],
-        [ "?", [ "assert", "$numbers.length > 0", "N/A" ] ]
+        [ "numbers", [ "collect", "number" ] ]
     ]);
 
     defineFunction("max", function(numbers){
-        return Math.max.apply(Math, numbers);
+        return numbers.length ? Math.max.apply(Math, numbers) : 0;
     }).args([
-        [ "numbers", [ "collect", "number" ] ],
-        [ "?", [ "assert", "$numbers.length > 0", "N/A" ] ]
+        [ "numbers", [ "collect", "number" ] ]
     ]);
 
     defineFunction("counta", function(values){
