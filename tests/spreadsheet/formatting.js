@@ -118,6 +118,10 @@
         htmlEqual(format(123.578), " 123.58");
         htmlEqual(format(1234.578), "1,234.58");
         htmlEqual(format(12345.578), "12,345.58");
+
+        // a value of zero with format ? just prints a space
+        var format = F.compile("?");
+        htmlEqual(format(0), " ");
     });
 
     test("percent", function(){

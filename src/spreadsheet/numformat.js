@@ -674,7 +674,12 @@
                             add(" ");
                         }
                     } else {
-                        add(value.charAt(iv--));
+                        if (value == "0" && chf == "?") {
+                            add(" ");
+                        } else {
+                            add(value.charAt(iv));
+                        }
+                        iv--;
                     }
                 }
                 if (j === 0) {
