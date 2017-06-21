@@ -1,8 +1,8 @@
 ---
-title: Confirm dialog before uploading file
-description: 
+title: Confirm Dialog Before Uploading File
+description: How to pop-up dialog asking for confirmation to save uploaded file
 type: how to
-page_title: Confirm dialog before uploading file
+page_title: Prompt user before uploading with Kendo Upload
 slug: confirm_dialog_before_uploading_file
 position: 0
 tags: kendo, upload, dialog, confirm
@@ -22,10 +22,10 @@ pitsid:
 
 
 ## Description
-The following KB article describes how to implement a Confirm dialog before uploading a file with Kendo UI Upload in Async mode.
+This article describes how to implement a Confirm dialog before uploading a file with Kendo UI Upload in Async mode.
 
 ## Solution
-The required could be achieved by using [Kendo Confirm Dialog](https://demos.telerik.com/kendo-ui/dialog/predefined-dialogs) and Async Upload with [AutoUpload](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload#configuration-async.autoUpload) turned off. The Confirm Dialog is opened within the [select](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload#events-select) event handler and it displays some information about the file (its name):
+This could be achieved by using [Kendo Confirm Dialog](https://demos.telerik.com/kendo-ui/dialog/predefined-dialogs) and Async Upload with [AutoUpload](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload#configuration-async.autoUpload) turned off. The Confirm Dialog is opened within the [select](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload#events-select) event handler and it displays some information about the file (its name):
 
 ###### Example
 
