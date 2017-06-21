@@ -161,19 +161,6 @@ table.k-editor
     font-size: 16px;
 }
 
-.editor-icon(@x, @y) {
-    background-position: @x @y;
-
-    .k-state-hover &,
-    .k-state-selected & {
-        background-position: (@x - 24) @y;
-
-        & when (@icon-positioning = "material") {
-            background-position: @x @y;
-        }
-    }
-}
-
 /* default tool widths */
 .k-fontName { width: 110px; }
 .k-fontSize { width: 124px; }
