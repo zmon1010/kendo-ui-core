@@ -1303,7 +1303,7 @@
 
     function parseDate(str, format) {
         if (format) {
-            return kendo.parseDate(str, format) || kendo.parseDate(str);
+            return kendo.parseDate(str, format) || kendo.parseDate(str, format.replace(/h/g, 'H')) || kendo.parseDate(str);
         }
         return kendo.parseDate(str) || kendo.parseDate(str, [
             "MMMM dd yyyy",

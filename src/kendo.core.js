@@ -1325,8 +1325,6 @@ function pad(number, digits, end) {
                     hours = getNumber(2);
                     if (hours == 12) {
                         hours = 0;
-                    } else if (hours > 12) {
-                        hours = hours - 12;
                     }
                     if (hours === null || outOfRange(hours, 0, 11)) {
                         return null;
