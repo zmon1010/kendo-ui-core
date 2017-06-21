@@ -639,6 +639,22 @@
         deepEqual(events[5].start, new Date(2016, 2, 31, 5, 45));
     });
 
+	tzTest("Sofia", "DAILY occurrences method honours INTERVAL=6 (DST change)", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "uid",
+            id: 1,
+            title: "Title",
+            start: new Date("2016/10/24"),
+            end: new Date("2016/10/24"),
+            recurrenceRule: "FREQ=DAILY;INTERVAL=2;COUNT=6"
+        });
+
+        var events = occurrences(schedulerEvent, new Date("2016/10/24"), new Date("2016/11/24"));
+
+        equal(events.length, 6);
+        deepEqual(events[4].start, new Date(2016, 10, 1));
+    });
+
     test("DAILY occurrences method honours BYDAY and INTERVAL", function() {
         var schedulerEvent = new SchedulerEvent({
             uid: "id",
