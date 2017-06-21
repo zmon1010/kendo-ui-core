@@ -277,8 +277,10 @@ navigation:
         title: "Breaking Changes"
         position: 13
     "updates":
-        title: "Updates and  Contribution"
+        title: "Updates and Contribution"
         position: 14
+    "knowledge_base":
+        title: "Knowledge Base"
     "copyright":
         title: "Copyright"
         position: 15

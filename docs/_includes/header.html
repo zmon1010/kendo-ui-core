@@ -4,9 +4,11 @@
     </a>
 </div>
 
+{% if page.slug != 'knowledge_base' %}
 <div id="page-search">
     {% include search.html %}
 </div>
+{% endif %}
 
 <span class="show-search">
 	<span class="k-icon k-i-search"></span>
