@@ -1381,6 +1381,7 @@
                     dataURI: dataURI,
                     fileName: options.fileName,
                     proxyURL: options.proxyURL,
+                    proxyTarget: options.proxyTarget,
                     forceProxy: options.forceProxy
                 });
                 progress.resolve();
