@@ -2238,9 +2238,15 @@ var __meta__ = { // jshint ignore:line
 
                 selection.index = dataItem.index;
                 if (this._ctrlKey) {
-                    selection.events = selection.events.concat(events || []);
+                    var indexOfEvent = (events && events.length) ? selection.events.indexOf(events[0]): -1;
+
+                    if(indexOfEvent > -1){
+                        selection.events.splice(indexOfEvent, 1);
+                    }else{
+                        selection.events = selection.events.concat(events || []);
+                    }
                 } else {
-                    selection.events = events || [];
+                        selection.events = events || [];
 
                 }
             }
