@@ -1,8 +1,8 @@
 ---
-title: Start typing in unordered list in Editor
-description: 
+title: Start Typing in Unordered List in Editor
+description: How to start typing in Kendo Editor and automatically create ul li elements
 type: troubleshooting
-page_title: Start typing in unordered list in Editor
+page_title: Kendo Editor value to start as bulleted list
 slug: start_typing_in_unordered_list_in_editor
 position: 0
 tags: kendo, editor, list, unordered, bullets
@@ -22,10 +22,10 @@ pitsid:
 
 
 ## Description
-The following article shows how to force the Editor to automatically start typing in unordered list (bullets).
+How to force the Editor to automatically start typing in unordered list (bullets).
 
 ## Solution
-In order to achieve the desired, you could handle the **select** event of the widget and execute the **insertUnorderedList** command:
+To achieve the above, you could handle the **select** event of the widget and execute the **insertUnorderedList** command:
 
 ###### Example
 
