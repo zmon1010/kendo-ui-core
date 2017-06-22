@@ -1938,6 +1938,13 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (!isRight) {
+                    if( e.ctrlKey){
+                        that._ctrlKey = e.ctrlKey;
+                    }
+
+                    if(e.shiftKey){
+                        that._shiftKey = e.shiftKey;
+                    }
                     that._createSelection(e.currentTarget);
                 }
 
@@ -2247,7 +2254,6 @@ var __meta__ = { // jshint ignore:line
                     }
                 } else {
                         selection.events = events || [];
-
                 }
             }
         },
