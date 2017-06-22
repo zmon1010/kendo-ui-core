@@ -96,6 +96,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public string EditorTemplateName
+        {
+            get;
+            set;
+        }
+
         public bool Filterable
         {
             get;

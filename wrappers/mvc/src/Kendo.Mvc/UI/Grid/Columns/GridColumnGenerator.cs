@@ -133,9 +133,11 @@ namespace Kendo.Mvc.UI
 
             var column = (GridColumnBase<T>)constructor.Invoke(new object[] { grid, lambdaExpression });
 
-            if (memberType != null)
+            var boundColumn = (column as IGridBoundColumn);
+
+            if (memberType != null && boundColumn != null)
             {
-                (column as IGridBoundColumn).MemberType = memberType;
+                boundColumn.MemberType = memberType;
             }
 
             column.Settings = settings;
@@ -148,6 +150,11 @@ namespace Kendo.Mvc.UI
             if (settings.HeaderTemplate.HasValue())
             {
                 column.HeaderTemplate.Html = settings.HeaderTemplate;
+            }
+
+            if (!string.IsNullOrEmpty(settings.EditorTemplateName) && boundColumn != null)
+            {
+                boundColumn.EditorTemplateName = settings.EditorTemplateName;
             }
 
             return column;

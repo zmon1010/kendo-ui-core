@@ -118,8 +118,14 @@ namespace Kendo.Mvc.UI
 
         public string EditorTemplateName
         {
-            get;
-            set;
+            get
+            {
+                return Settings.EditorTemplateName;
+            }
+            set
+            {
+                Settings.EditorTemplateName = value;
+            }
         }
 
         public ClientHandlerDescriptor Editable
