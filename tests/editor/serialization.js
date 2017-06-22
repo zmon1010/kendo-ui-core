@@ -500,6 +500,47 @@ test("presentational tags are nested properly", function() {
     equal(editor.value(), '<span class="red"><u><font color="#ff0000" face="verdana">foo</font></u></span>');
 });
 
+test("attributes are persisted for iframe tag", function() {
+    editor.value('<iframe data-attr="same data"></iframe>');
+
+    equal(editor.value(), '<iframe data-attr="same data"></iframe>');
+});
+
+test("attributes are persisted for strong tag", function() {
+    editor.value('<strong data-attr="same data">foo</strong>');
+    editor.setOptions({ serialization: { semantic: false } });
+
+    equal(editor.value(), '<b data-attr="same data">foo</b>');
+});
+
+test("attributes are persisted for em tag", function() {
+    editor.value('<em data-attr="same data">foo</em>');
+    editor.setOptions({ serialization: { semantic: false } });
+
+    equal(editor.value(), '<i data-attr="same data">foo</i>');
+});
+
+test("attributes are persisted for b tag", function() {
+    editor.value('<b data-attr="same data">foo</b>');
+    editor.setOptions({ serialization: { semantic: true } });
+
+    equal(editor.value(), '<strong data-attr="same data">foo</strong>');
+});
+
+test("attributes are persisted for i tag", function() {
+    editor.value('<i data-attr="same data">foo</i>');
+    editor.setOptions({ serialization: { semantic: true } });
+
+    equal(editor.value(), '<em data-attr="same data">foo</em>');
+});
+
+test("attributes are persisted for u tags", function() {
+    editor.value('<u data-attr="same data">foo</u>');
+    editor.setOptions({ serialization: { semantic: true } });
+
+    equal(editor.value(), '<span data-attr="same data" style="text-decoration:underline;">foo</span>');
+});
+
 test("elements with class k-table-resize-handle are not serialized", function() {
     editor.body.innerHTML = '<div class="k-table-resize-handle-wrapper"><div class="k-table-resize-handle"></div></div>';
 
@@ -646,6 +687,7 @@ test('data-role resize attribute is removed from table rows and cells removed', 
 
     equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
 });
+
 
     var root;
     editor_module("custom serialization", {

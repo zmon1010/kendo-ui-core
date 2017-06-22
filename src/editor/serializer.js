@@ -203,13 +203,19 @@ var Serializer = {
             });
         }
 
+        function mapStart(node, tag) {
+            result.push('<' + tag);
+            attr(node);
+            result.push('>');
+        }
+
         var tagMap = {
             iframe: {
-                start: function (node) { result.push('<iframe'); attr(node); result.push('>'); },
+                start: function (node) { mapStart(node, "iframe"); },
                 end: function () { result.push('</iframe>'); }
             },
             'k:script': {
-                start: function (node) { result.push('<script'); attr(node); result.push('>'); },
+                start: function (node) { mapStart(node, "script"); },
                 end: function () { result.push('</script>'); },
                 skipEncoding: true
             },
@@ -264,27 +270,45 @@ var Serializer = {
             },
             strong: {
                 semantic: true,
-                start: function () { result.push('<b>'); },
+                start: function (node) { mapStart(node, "b"); },
                 end: function () { result.push('</b>'); }
             },
             em: {
                 semantic: true,
-                start: function () { result.push('<i>'); },
+                start: function (node) { mapStart(node, "i"); },
                 end: function () { result.push('</i>'); }
             },
             b: {
                 semantic: false,
-                start: function () { result.push('<strong>'); },
+                start: function (node) { mapStart(node, "strong"); },
                 end: function () { result.push('</strong>'); }
             },
             i: {
                 semantic: false,
-                start: function () { result.push('<em>'); },
+                start: function (node) { mapStart(node, "em"); },
                 end: function () { result.push('</em>'); }
             },
             u: {
                 semantic: false,
-                start: function () { result.push('<span style="text-decoration:underline;">'); },
+                start: function (node) {
+                    result.push('<span');
+
+                    var attributes = specifiedAttributes(node);
+                    var style = $(attributes).filter(function(i, item){ return item.name == "style"; })[0];
+                    var styleObj = { nodeName: "style", value: "text-decoration:underline;"};
+
+                    if (style) {
+                        styleObj.value  = style.value;
+                        if (!/text-decoration/i.test(styleObj.value)) {
+                            styleObj.value = "text-decoration:underline;" + styleObj.value;
+                        }
+                        attributes.splice($.inArray(style, attributes), 1);
+                    }
+                    attributes.push(styleObj);
+
+                    attr(node, attributes);
+                    result.push('>');
+                },
                 end: function () { result.push('</span>'); }
             },
             font: {
