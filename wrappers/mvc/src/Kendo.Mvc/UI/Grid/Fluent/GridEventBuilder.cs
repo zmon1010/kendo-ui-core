@@ -1023,7 +1023,29 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
+        /// <summary>
+        /// Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the filterMenuOpen event.</param>
+        public GridEventBuilder FilterMenuOpen(string handler)
+        {
+            Handler("filterMenuOpen", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder FilterMenuOpen(Func<object, object> handler)
+        {
+            Handler("filterMenuOpen", handler);
+
+            return this;
+        }
+
         /// <summary>
         /// Defines the name of the JavaScript function that will handle the the ColumnLock client-side event.
         /// </summary>
