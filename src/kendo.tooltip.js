@@ -171,7 +171,6 @@ var __meta__ = { // jshint ignore:line
                     duration: 0
                 },
                 close: {
-                    effects: "fade:out",
                     duration: 40,
                     hide: true
                 }
