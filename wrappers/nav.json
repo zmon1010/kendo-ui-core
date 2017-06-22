@@ -1633,6 +1633,7 @@
                 "meta": {
                     "aspnet-mvc": "This demo illustrates the virtualization of remote data in $FRAMEWORK Grid."
                 },
+				"group": "Scrolling",
                 "description": {
                     "aspnet-mvc": "<p>The virtualization feature of Telerik $FRAMEWORK Grid allows you to handle large amount of data without negatively impacting the user experience and the browser performance. <br /> <br /> You can enable the virtual scrolling via the .<strong>Scrollable</strong>(scrollable =&gt; scrollable.Virtual(true)) configuration setting, which shows a vertical scrollbar for the grid content and renders only the number of items set via the <strong>PageSize</strong> setting of the grid data source. After you drag the scrollbar and the <strong>PageSize</strong> parameter value is exceeded, it makes automatic requests to retrieve and render the next set of grid rows.</p>"
                 }
@@ -1710,6 +1711,7 @@
                 "title": {
                     "aspnet-mvc": "Multiple row and cell selection in Telerik Grid for $FRAMEWORK"
                 },
+				"group": "Functionality",
                 "meta": {
                     "aspnet-mvc": "This demo illustrates how you can use Telerik $FRAMEWORK grid with multiple row or cell selection enabled."
                 },
@@ -1966,7 +1968,8 @@
             },
             {
                 "text": "Globalization",
-                "url": "grid/globalization"
+                "url": "grid/globalization",
+				"group": "Accessibility and Internationalization"
             },
             {
                 "text": "RTL support",
