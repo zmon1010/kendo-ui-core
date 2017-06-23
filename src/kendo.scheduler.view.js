@@ -1662,7 +1662,8 @@ var __meta__ = { // jshint ignore:line
             var found = false;
             var events = selection.events;
             var groupEvents = this._getAllEvents();
-            var idx, length = groupEvents.length;
+            var idx, groupEvent, length = groupEvents.length;
+            var occurencceUIDs = [];
 
             if (!events[0] || !groupEvents[0]) {
                 return found;
@@ -1672,14 +1673,23 @@ var __meta__ = { // jshint ignore:line
             selection.events = [];
             for (idx = 0; idx < length; idx ++) {
                 if ($.inArray(groupEvents[idx].uid, events) > -1) {
-                    result = result.add(groupEvents[idx].element);
-                    selection.events.push(groupEvents[idx].uid);
+                    groupEvent = groupEvents[idx];
+                    result = result.add(groupEvent.element);
+                    if(selection.events.indexOf(groupEvent.uid) === -1){
+                        selection.events.push(groupEvent.uid);
+                    }else{
+                        if(occurencceUIDs.indexOf(groupEvent.uid) === -1){
+                            occurencceUIDs.push(groupEvent.uid);
+                        }
+                    }
                 }
             }
 
             if (result[0]) {
                 result.addClass("k-state-selected").attr("aria-selected", true);
-                this.current(result.last()[0]);
+                if(occurencceUIDs.indexOf(result.last().attr("data-uid")) === -1){
+                    this.current(result.last()[0]);
+                }
                 this._selectedSlots = [];
                 found = true;
             }
