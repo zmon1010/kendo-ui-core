@@ -1604,6 +1604,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         _triggerSelect: function (target, itemElement) {
+            target = target.is(".k-link") ? target : target.closest(".k-link");
+
             var selectHandler = target.data("selectHandler"),
                 itemSelectEventData;
 
