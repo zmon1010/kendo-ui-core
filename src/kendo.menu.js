@@ -659,7 +659,7 @@ var __meta__ = { // jshint ignore:line
             var menuWidth = that.element.outerWidth();
             var borders = that.element[0].offsetWidth - that.element[0].clientWidth;
 
-            if (menuWidth != wrapperWidth) {
+            if (menuWidth != wrapperWidth && wrapperWidth > 0) {
                 var width = initialCssWidth ? Math.min(initialWidth, wrapperWidth) : wrapperWidth;
                 that.element.width(width - borders);
                 that._scrollWrapper.width(width);
