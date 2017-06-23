@@ -93,6 +93,10 @@ def get_option(option)
     REACT_COMPOSITE.result(binding)
 end
 
+def get_tsconfig
+    REACT_TS_TEMPLATE.result(binding)
+end
+
 def get_components(sources)
     components = sources.map do |source|
         parser = CodeGen::MarkdownParser.new
@@ -127,6 +131,7 @@ namespace :react do
                         if source.empty?
                             next
                         end
+                        tsconfig = get_tsconfig()
                         package = get_package(component)
                         index = get_index(component)
                         fileName = source.lines.first.downcase.strip
@@ -139,8 +144,10 @@ namespace :react do
                         FileUtils::mkdir_p(pathToSource)
 
                         write_to_file(root, "package.json", package)
+                        write_to_file(root, "tsconfig.json", tsconfig)
                         write_to_file(pathToSource, "index.tsx", source.lines[2..-1].join)
                         write_to_file(pathToIndex, "index.ts", index)
+
                         puts "Write Composite Options"
                         compositeOptions.each do |option|
                             write_to_file(pathToSource, option.name + ".ts", get_option(option))
