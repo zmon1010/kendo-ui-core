@@ -13,6 +13,7 @@ REACT_TEMPLATE = ERB.new REACT_TEMPLATE_CONTENTS, 0, '%<>'
 REACT_COMPONENT = ERB.new File.read("build/codegen/lib/react/component.tsx.erb"), 0, '%<>'
 REACT_OPTION = ERB.new File.read("build/codegen/lib/react/option.tsx.erb"), 0, '%<>'
 REACT_COMPOSITE = ERB.new File.read("build/codegen/lib/react/composite_option.tsx.erb"), 0, '%<>'
+REACT_COMPOSITE_DEF = ERB.new File.read("build/codegen/lib/react/composite_option_def.tsx.erb"), 0, '%<>'
 REACT_ARRAY = ERB.new File.read("build/codegen/lib/react/array_option.tsx.erb"), 0, '%<>'
 REACT_PACKAGE_TEMPLATE = ERB.new File.read("build/codegen/lib/react/package.json.erb"), 0, '%<>'
 REACT_TS_TEMPLATE = ERB.new File.read("build/codegen/lib/react/tsconfig.json.erb"), 0, '%<>'
@@ -61,11 +62,7 @@ module CodeGen::React
         include Options
 
         def react_def
-            REACT_OPTION.result(binding)
-        end
-
-        def react_class_def
-            REACT_COMPOSITE.result(binding)
+            REACT_COMPOSITE_DEF.result(binding)
         end
     end
 
