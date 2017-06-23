@@ -1,1 +1,1 @@
-"<%= name %>": "<%= type.first.downcase %>"
+<%= name %>: <%= if type.respond_to?("first") then type.first.downcase else type end  %>

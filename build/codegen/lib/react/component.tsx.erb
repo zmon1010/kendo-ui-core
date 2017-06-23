@@ -1,4 +1,4 @@
-% puts "generating component:"
+<% puts "generating component:" %>
 <%= name %>
 
 /// <reference types="kendo-ui" />
@@ -7,13 +7,17 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import '@progress/kendo-ui';
-
 import KendoBaseComponent from '@progress/kendo-base-component-react-wrapper';
 
+% composite_options.each do |option|
+<%= "import #{option.name.capitalize} from './#{option.name}';" %>
+% end
+
+
 export interface <%= name %>Props {
-    <% options.each do |option| %>
-        <%= option.react_def %><% if option != options.last %>, <% end %>
-    <% end %>
+% options.each do |option|
+    <%= option.react_def %><% if option != options.last %>, <% end %>
+% end
 }
 
 export default class <%= name %> extends KendoBaseComponent<<%= name %>Props, undefined> {

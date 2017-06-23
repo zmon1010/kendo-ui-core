@@ -1,5 +1,5 @@
-class <%= full_name %> {
-    % options.each do |option| %>
-        <%= option.jscheme_def %><% if option != options.last %>, <% end %>
-    <% end %>
+class <%= option.name.capitalize %> {
+% option.options.each do |op|
+    <%= op.react_def %><% if option != option.options.last %>, <% end %>
+% end
 }

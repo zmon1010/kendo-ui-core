@@ -33,6 +33,12 @@ module CodeGen::React
         end
     end
 
+    module Array
+        def item_class
+            ArrayItem
+        end
+    end
+
     class Component < CodeGen::Component
         include Options
         def react_class
@@ -51,22 +57,26 @@ module CodeGen::React
         end
     end
 
-    class ArrayOption < CodeGen::ArrayOption
+    class CompositeOption < CodeGen::CompositeOption
         include Options
+
+        def react_def
+            REACT_OPTION.result(binding)
+        end
+
+        def react_class_def
+            REACT_COMPOSITE.result(binding)
+        end
+    end
+
+    class ArrayOption < CodeGen::ArrayOption
+        include Array
         def react_def
             REACT_ARRAY.result(binding)
         end
     end
 
-    class CompositeOption < CodeGen::CompositeOption
-        include Options
-
-        def react_def
-            REACT_COMPOSITE.result(binding)
-        end
-
-        def react_class_def
-        end
+    class ArrayItem < CompositeOption
     end
 end
 
@@ -80,6 +90,10 @@ end
 
 def get_index(component)
     REACT_INDEX_TS_TEMPLATE.result(binding)
+end
+
+def get_option(option)
+    REACT_COMPOSITE.result(binding)
 end
 
 def get_components(sources)
@@ -119,18 +133,21 @@ namespace :react do
                         package = get_package(component)
                         index = get_index(component)
                         fileName = source.lines.first.downcase.strip
-                        puts "Processng: " + fileName
+                        compositeOptions = component.composite_options
+                        puts "Processing: " + fileName
 
-                        puts "mkdir"
                         root = "dist/react/kendo-#{fileName}-react-wrapper/"
                         pathToSource = root  + "src/#{fileName}/"
                         pathToIndex = root + "src/"
                         FileUtils::mkdir_p(pathToSource)
 
-                        puts "write to file"
                         write_to_file(root, "package.json", package)
                         write_to_file(pathToSource, "index.tsx", source.lines[2..-1].join)
                         write_to_file(pathToIndex, "index.ts", index)
+                        puts "Write Composite Options"
+                        compositeOptions.each do |option|
+                            write_to_file(pathToSource, option.name + ".ts", get_option(option))
+                        end
                     end
                 rescue Exception => e
                     puts e.message
