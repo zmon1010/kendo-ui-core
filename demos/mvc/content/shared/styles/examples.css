@@ -122,6 +122,58 @@ html
     height: 100%;
 }
 
+.TK-Hat {
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid #eff0f1;
+    color: #4d4f52;
+    background: #ffffff;
+    position: relative;
+    z-index: 42042;
+}
+.TK-Hat::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+.TK-Hat *,
+.TK-Hat:after,
+.TK-Hat:before {
+    box-sizing: border-box;
+}
+.TK-Hat-Brand {
+    float: left;
+    width: 150px;
+    margin: 0;
+}
+.TK-PRGS-Logo {
+    display: block;
+    outline: none!important;
+    text-decoration: none!important;
+    transition: color .1s linear, background .1s linear, opacity .1s linear;
+}
+.TK-PRGS-Logo:focus,
+.TK-PRGS-Logo:hover {
+    opacity: .75;
+}
+.TK-PRGS-Logo svg {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+@media only screen and (max-width: 1100px) and (min-width: 880px) {
+    .TK-Hat-Brand {
+        width: 120px;
+        min-width: 120px;
+    }
+}
+@media only screen and (max-width: 880px) {
+    .TK-Hat-Brand {
+        width: 100px;
+        min-width: 100px;
+    }
+}
+
 #header, .suite-demos-nav, .demos-nav,
 #footer, .centerWrap, .submenu-box a
 {
@@ -146,7 +198,7 @@ a:hover
     font-weight: normal;
 }
 
-header*/
+/* header */
 #header h1
 {
     width:134px;
@@ -1872,6 +1924,7 @@ ul.keyboard-legend li a {
 
 /* Demos-update */
 #header {
+    padding: 20px 15px;
     background-color: #2a2d33;
 }
 
@@ -1881,13 +1934,15 @@ ul.keyboard-legend li a {
 
 #logo-bar {
     float: left;
-    margin-top: 1.617em;
-    margin-bottom: 1.717em;
-    margin-left: 1.667em;
+}
+#logo-bar a {
+    display: inline-block;
 }
 
 .logo {
-  height: 35px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #logo-bar span {
@@ -1905,23 +1960,24 @@ ul.keyboard-legend li a {
 }
 
 .btn {
+    margin: 0 4px;
+    padding: 5px 30px;
+    border: 1px solid #505156;
     color: #fff;
     background-color: #2a2d33;
-    border: 1px solid #505156;
     background-clip: padding-box;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.33334;
     position: relative;
     display: inline-block;
-    padding: 0.6em 2.000em 0.5em;
-    line-height: 0.933em;
     transition-property: background-color, color;
     transition-duration: 0.2s;
     transition-timing-function: ease;
     border-radius: 2px;
     -webkit-appearance: none;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    margin: 1.467em 0.267em;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -1931,14 +1987,11 @@ ul.keyboard-legend li a {
 .btn-primary {
     background-color: #ee5315;
     border-color: #ee5315;
-    margin-right: 1.200em;
 }
 
-.btn-primary:hover
-{
+.btn-primary:hover {
     background-color: #c2410e;
     border-color: #c2410e;
-    cursor: pointer;
 }
 
 /* Footer */
