@@ -40,7 +40,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
 
-            if (!request.Sorts.Any())
+            if (request.Sorts != null && !request.Sorts.Any())
             {
                 // Entity Framework doesn't support paging on unsorted data.
                 orders = orders.OrderBy(o => o.OrderID);
@@ -222,7 +222,7 @@ namespace Kendo.Mvc.Examples.Controllers
         public static IQueryable<OrderViewModel> ApplyOrdersFiltering(this IQueryable<OrderViewModel> data,
            IList<IFilterDescriptor> filterDescriptors)
         {
-            if (filterDescriptors.Any())
+            if (filterDescriptors != null && filterDescriptors.Any())
             {
                 data = data.Where(ExpressionBuilder.Expression<OrderViewModel>(filterDescriptors, false));
             }
