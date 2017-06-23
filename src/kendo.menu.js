@@ -1567,7 +1567,7 @@ var __meta__ = { // jshint ignore:line
                 link[0].click();
             }
 
-            if ((!that._isRootItem(element) || !options.openOnClick) && !kendo.support.touch && !(allPointers && that._isRootItem(element.closest(allItemsSelector)))) {
+            if ((!that._isRootItem(element) || !options.openOnClick) && !kendo.support.touch && !(isPointerTouch(e) && that._isRootItem(element.closest(allItemsSelector)))) {
                 return;
             }
 
