@@ -1139,4 +1139,18 @@
         ok(!dialog.isMaximized());
     });
 
+    test("maximize() takes borders into account", function() {
+        var borderWidth = 10;
+
+        var dialog = createWindow({
+                visible: true,
+                animation: false
+            });
+
+        dialog.wrapper.css("border-width", borderWidth + "px")
+
+        dialog.maximize();
+
+        equal(dialog.wrapper.width() + borderWidth * 2, $(window).width());
+    });
 })();
