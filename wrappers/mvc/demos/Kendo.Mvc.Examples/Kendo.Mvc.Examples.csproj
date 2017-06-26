@@ -285,6 +285,7 @@
     <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
     <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
     <Compile Include="Controllers\PdfProcessing\ReadWriteFormFields.cs" />
+    <Compile Include="Controllers\PdfProcessing\SignDocument.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\Generate_DocumentsController.cs" />
     <Compile Include="Controllers\SpreadProcessing\Grid_IntegrationController.cs" />
@@ -1031,6 +1032,7 @@
     <Compile Include="Controllers\ListBox\TemplatesController.cs" />
     <Compile Include="Controllers\ListBox\KeyboardNavigationController.cs" />
     <Content Include="Content\web\pdfprocessing\InteractiveForms.pdf" />
+    <Content Include="Content\web\pdfprocessing\Unsigned.pdf" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3050,6 +3052,7 @@
     <Content Include="Views\pdfprocessing\read_write_form_fields.cshtml" />
     <Content Include="Views\spreadprocessing\generate_documents.cshtml" />
     <Content Include="Views\spreadprocessing\grid_integration.cshtml" />
+    <Content Include="Views\pdfprocessing\sign_pdf_document.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
