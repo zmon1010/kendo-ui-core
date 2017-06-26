@@ -2597,7 +2597,7 @@ An object containing the created (`e.data.created`), updated (`e.data.updated`),
 
 A callback that should be called for each operation with two parameters - items and operation. See example below.
 
-##### e.fail `Function`
+##### e.error `Function`
 
 A callback that should be called in case of failure of any of the operations.
 
@@ -2627,7 +2627,7 @@ A callback that should be called in case of failure of any of the operations.
                 e.success(data.updated,"update");
                 e.success(data.created,"create");
                 e.success(data.destroyed,"destroy");
-                e.fail(null, "customerror", "custom error");
+                e.error(null, "customerror", "custom error");
               }
             },
             batch: true,
