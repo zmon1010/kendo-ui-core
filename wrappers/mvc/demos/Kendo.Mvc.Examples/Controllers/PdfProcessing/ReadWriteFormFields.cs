@@ -84,15 +84,19 @@ namespace Kendo.Mvc.Examples.Controllers
         {
 
             listField.Options.Clear();
-            if (values.Length > 1)
+            if (values.Length >= 1)
             {
 
                 foreach (string value in values)
                 {
 
-                    ChoiceOption option = new ChoiceOption(value);
-                    listField.Options.Add(option);
-                    listField.Value = new ChoiceOption[] { option };
+                    if(value.Length > 0)
+                    {
+                        ChoiceOption option = new ChoiceOption(value);
+                        listField.Options.Add(option);
+                        listField.Value = new ChoiceOption[] { option };
+                    }
+                    
                 }
             }
         }

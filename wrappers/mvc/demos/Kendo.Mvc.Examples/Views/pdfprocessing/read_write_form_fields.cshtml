@@ -1,43 +1,45 @@
 ﻿@using (Html.BeginForm("Download_Modified_Document", "PdfProcessing"))
 {
     <div id="example">
-        <ul class="fieldlist">
-            <li>
-                @Html.Label("Text field:")
-                @Html.Kendo().TextBox().Name("textbox").HtmlAttributes(new { style = "width: 100%;" })
-            </li>
-            <li>
-                @Html.Label("Choice field:")
-                @Html.TextArea("textarea", new { @class = "k-textbox", style = "width: 100%;", id = "textArea" })
-            </li>
-        </ul>
-        <div class="container">
-            <div id="radioButton">
-                <ul class="fieldlist">
-                    <li>
-                        @(Html.Kendo().RadioButton().Name("rb1").Value("1").HtmlAttributes(new { @name = "rb" }).Label("Radio button 1"))
-                    </li>
-                    <li>
-                        @(Html.Kendo().RadioButton().Name("rb2").Value("2").Checked(true).HtmlAttributes(new { @name = "rb" }).Label("Radio button 2"))
-                    </li>
-                    <li>
-                        @(Html.Kendo().RadioButton().Name("rb3").Value("3").HtmlAttributes(new { @name = "rb" }).Label("Radio button 3"))
-                    </li>
-                </ul>
-            </div>
-            <div id="checkBox">
-                <ul class="fieldlist">
-                    <li>
-                        @(Html.Kendo().CheckBox().Name("cb1").Checked(true).Label("CheckBox 1"))
-                    </li>
-                    <li>
-                        @(Html.Kendo().CheckBox().Name("cb2").Checked(true).Label("CheckBox 2"))
-                    </li>
-                    <li>
-                        @(Html.Kendo().CheckBox().Name("cb3").Checked(false).Label("CheckBox 3"))
-                    </li>
+        <div class="form">
+            <ul class="fieldlist">
+                <li>
+                    @Html.Label("Text field:")
+                    @Html.Kendo().TextBox().Name("textbox").HtmlAttributes(new { style = "width: 100%;" })
+                </li>
+                <li>
+                    @Html.Label("Choice field:")
+                    @Html.TextArea("textarea", new { @class = "k-textbox", style = "width: 100%;", id = "textArea" })
+                </li>
+            </ul>
+            <div class="container">
+                <div id="radioButton">
+                    <ul class="fieldlist">
+                        <li>
+                            @(Html.Kendo().RadioButton().Name("rb1").Value("1").HtmlAttributes(new { @name = "rb" }).Label("Radio button 1"))
+                        </li>
+                        <li>
+                            @(Html.Kendo().RadioButton().Name("rb2").Value("2").Checked(true).HtmlAttributes(new { @name = "rb" }).Label("Radio button 2"))
+                        </li>
+                        <li>
+                            @(Html.Kendo().RadioButton().Name("rb3").Value("3").HtmlAttributes(new { @name = "rb" }).Label("Radio button 3"))
+                        </li>
+                    </ul>
+                </div>
+                <div id="checkBox">
+                    <ul class="fieldlist">
+                        <li>
+                            @(Html.Kendo().CheckBox().Name("cb1").Checked(true).Label("CheckBox 1"))
+                        </li>
+                        <li>
+                            @(Html.Kendo().CheckBox().Name("cb2").Checked(true).Label("CheckBox 2"))
+                        </li>
+                        <li>
+                            @(Html.Kendo().CheckBox().Name("cb3").Checked(false).Label("CheckBox 3"))
+                        </li>
 
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -50,6 +52,11 @@
     .container {
         margin-top: 30px;
         display: inline-block;
+    }
+
+    .k-primary{
+        display: block;
+        margin : 0 auto;
     }
 
     #radioButton {
@@ -71,17 +78,25 @@
         padding: 0;
     }
 
-        .fieldlist li {
+    .fieldlist li {
             list-style: none;
             padding-bottom: 2em;
-        }
+    }
 
-        .fieldlist label {
+    .fieldlist label {
             display: block;
             padding-bottom: 1em;
             font-weight: bold;
             text-transform: uppercase;
             font-size: 12px;
             color: #444;
-        }
+    }
+
+    .form {
+        width: 50%;
+        padding:30px;
+        margin: 0 auto;
+        border: 1px solid black;
+        border-radius:15px;
+    }
 </style>
