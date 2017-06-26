@@ -1111,10 +1111,10 @@
                     return;
                 }
 
-                var lrBorderWidth = parseInt(wrapper.css("border-left-width"), 10 )
-                                        + parseInt(wrapper.css("border-right-width"), 10);
-                var tbBorderWidth = parseInt(wrapper.css("border-top-width"), 10 )
-                                        + parseInt(wrapper.css("border-bottom-width"), 10);
+                var lrBorderWidth = parseInt(wrapper.css("border-left-width"), 10 ) +
+                                        parseInt(wrapper.css("border-right-width"), 10);
+                var tbBorderWidth = parseInt(wrapper.css("border-top-width"), 10 ) +
+                                        parseInt(wrapper.css("border-bottom-width"), 10);
 
                 w = wnd.width() / zoomLevel - lrBorderWidth;
                 h = wnd.height() / zoomLevel - parseInt(wrapper.css("padding-top"), 10) - tbBorderWidth;
