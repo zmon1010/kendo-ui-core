@@ -1,7 +1,7 @@
 require 'version'
 require 'pathname'
 
-API_KEY = 'f6d3aacd-0b33-40e9-ba51-e19bc05a6bcf'
+API_KEY = '963bde29-a01e-4508-bb63-aaa0426b7638'
 
 def archive_path
     if ENV["BETA"] != nil
