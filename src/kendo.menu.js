@@ -995,6 +995,10 @@ var __meta__ = { // jshint ignore:line
                 element.find(visiblePopups).each(closePopup);
             }
 
+            if (that.options.openOnClick) {
+                that.clicked = true;
+            }
+
             element.each(function () {
                 var li = $(this);
 
