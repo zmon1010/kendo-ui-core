@@ -25,7 +25,7 @@ var __meta__ = { // jshint ignore:line
         getMilliseconds = kendoDate.getMilliseconds,
         DAYS_IN_LEAPYEAR = [0,31,60,91,121,152,182,213,244,274,305,335,366],
         DAYS_IN_YEAR = [0,31,59,90,120,151,181,212,243,273,304,334,365],
-        MONTHS = [31, 28, 30, 31, 30, 31, 30, 31, 30, 31, 30, 31],
+        MONTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         WEEK_DAYS = {
             0: "SU",
             1: "MO",
@@ -86,7 +86,7 @@ var __meta__ = { // jshint ignore:line
                     hours = date.getHours(),
                     normalize = function(monthDay) {
                         if (monthDay < 0) {
-                            monthDay = monthLength + monthDay;
+                            monthDay = monthLength + monthDay + 1;
                         }
                         return monthDay;
                     };

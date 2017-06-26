@@ -525,8 +525,8 @@
 
         equal(events.length, 2);
 
-        equal(events[1].start.getTime(), +new Date(2013, 4, 27, 16, 30));
-        equal(events[1].end.getTime(), +new Date(2013, 4, 27, 17, 0));
+        equal(events[1].start.getTime(), +new Date(2013, 4, 29, 16, 30));
+        equal(events[1].end.getTime(), +new Date(2013, 4, 29, 17, 0));
     });
 
     test("DAILY occurrences method limits BYDAY", function() {
