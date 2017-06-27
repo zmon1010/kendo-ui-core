@@ -1,8 +1,8 @@
 ---
-title: Reversed Coordinates for Bubble Type Layer with GeoJson in Map
+title: Reversed Coordinates for Bubble Type Layer with GeoJson Are Not Displayed in Map
 description: A solution for displaying a bubble-type layer with reversed coordinates in a Kendo UI Map
 type: troubleshooting
-page_title: Show data for a bubble-type layer that is received as [Longitude, Latitude]
+page_title: Reversed Coordinates for Bubble Type Layer with GeoJson Are Not Displayed in Map
 slug: map_reverse_location_coordinates
 position: 0
 tags: kendo ui map, location, coordinates, longitude, latitude

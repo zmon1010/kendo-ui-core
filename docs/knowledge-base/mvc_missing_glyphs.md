@@ -1,8 +1,8 @@
 ---
-title: Icons Do Not Display in Kendo UI MVC Project 
+title: Web Font Icons Are Missing After Switching to Local Files in MVC
 description: Kendo UI Web Font Icons do not display after switching to local Kendo UI files.
 type: troubleshooting
-page_title: Web Font Icons Are Missing After Switching to Local Files
+page_title: Web Font Icons Are Missing After Switching to Local Files in MVC
 slug: mvc_missing_glyphs
 position: 0
 tags: mvc, font icons
