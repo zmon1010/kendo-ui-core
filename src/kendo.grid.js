@@ -4626,7 +4626,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
 
-                this._setCurrent(next);                
+                this._setCurrent(next);
             }
 
             return true;
@@ -8101,7 +8101,7 @@ var __meta__ = { // jshint ignore:line
            clone.find(".k-grid-content").css({ height: "auto", width: "auto", overflow: "visible" });
            clone.find('table[role="grid"]').css({ height: "auto", width: "100%", overflow: "visible" });
            clone.find(".k-grid-pager, .k-grid-toolbar, .k-grouping-header").remove();
-           clone.find(".k-grid-header").css({ paddingRight: 0 });
+           clone.find(".k-grid-header, .k-grid-footer").css({ paddingRight: 0 });
 
            this._initPDFProgress(progress);
 
