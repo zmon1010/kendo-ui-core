@@ -1036,6 +1036,40 @@
         ok(true);
     });
 
+    test("setOptions should make deep extend of options.position", function() {
+        var dialog = createWindow({
+            visible: false,
+            position:{
+                top: 100,
+                left: 200
+            }
+        });
+
+        dialog.setOptions({
+            position:{
+                top:200
+            }
+        });
+
+        deepEqual(dialog.options.position, { top: 200, left: 200 }, "position.top should be changed, but position.left stays the same");
+
+        dialog.setOptions({
+            position:{
+                left:300
+            }
+        });
+
+        deepEqual(dialog.options.position, { top: 200, left: 300 }, "position.top stays the same, but position.left is changed");
+
+        dialog.setOptions({
+            position:{
+                left:"50%"
+            }
+        });
+
+        deepEqual(dialog.options.position, { top: 200, left: "50%" }, "string values should work too");
+    });
+
     asyncTest("overlay is not hidden when showing second modal window after closing first", function () {
         var dialog = createWindow({
             animation: { close: { duration: 500 } },

@@ -383,6 +383,11 @@
             },
 
             setOptions: function(options) {
+                // make a deep extend over options.position telerik/kendo-ui-core#844
+                var cachedOptions = JSON.parse(JSON.stringify(options));
+                extend(options.position, this.options.position);
+                extend(options.position, cachedOptions.position);
+
                 Widget.fn.setOptions.call(this, options);
                 var scrollable = this.options.scrollable !== false;
 
