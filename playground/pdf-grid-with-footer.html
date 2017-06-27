@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+        <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+        <script src="./loader.js"></script>
+        <script>
+         requireSync([
+             "../src/jquery.js",
+             "../src/kendo.all.js"
+         ]);
+        </script>
+        <style>
+         body {
+             font-size: 14px;
+             font-family: "DejaVu Serif";
+         }
+        </style>
+    <body>
+        <div id="grid"></div>
+        <script>
+         jQuery("#grid").kendoGrid({
+             "columns": [{
+                 "title": "Firm ID",
+                 "footerTemplate": "Grand total:",
+                 "groupFooterTemplate": "Total:",
+                 "field": "Id"
+             }, {
+                 "title": "Firm Name",
+                 "field": "Name"
+             },{
+                 "title": "Counter",
+                 "footerTemplate": "#=sum#",
+                 "groupFooterTemplate": "#=sum#",
+                 "field": "MobileCount",
+                 "aggregates": ["sum"]
+             }, {
+                 "title": "Amount",
+                 "template": "#= kendo.format('{0:0.00}', MobileAmount) #",
+                 "field": "MobileAmount"
+             }],
+             "pdf": {
+                 "allPages": true,
+                 "avoidLinks": true,
+                 "fileName": "MyReport.pdf",
+                 "paperSize": "A4",
+                 "landscape": true,
+                 "margin": {
+                     "top": "2cm",
+                     "right": "1cm",
+                     "bottom": "2cm",
+                     "left": "1cm"
+                 },
+                 "title": "My Test Report",  
+                 "repeatHeaders": true,
+                 "scale": 0.7
+             },
+             "scrollable": true,
+             "toolbar": ["pdf"],
+             "dataSource": {
+                 "data": [{
+                     "Id": 1,
+                     "Name": "Firm 1",
+                     "MobileCount": 10,
+                     "MobileAmount": 110.11,
+                     "WebCount": 20,
+                     "WebAmount": 120.12,
+                     "SmsCount": 30,
+                     "SmsAmount": 130.13,
+                     "TotalCount": 60,
+                     "TotalAmount": 0,
+                     "CurrNum": 643,
+                     "CurrCode": "RUB"
+                 }, {
+                     "Id": 1,
+                     "Name": "Firm 1",
+                     "MobileCount": 11,
+                     "MobileAmount": 111.11,
+                     "WebCount": 21,
+                     "WebAmount": 121.12,
+                     "SmsCount": 31,
+                     "SmsAmount": 131.13,
+                     "TotalCount": 63,
+                     "TotalAmount": 0,
+                     "CurrNum": 840,
+                     "CurrCode": "USD"
+                 }, {
+                     "Id": 1,
+                     "Name": "Firm 1",
+                     "MobileCount": 12,
+                     "MobileAmount": 112.11,
+                     "WebCount": 22,
+                     "WebAmount": 122.12,
+                     "SmsCount": 32,
+                     "SmsAmount": 132.13,
+                     "TotalCount": 66,
+                     "TotalAmount": 0,
+                     "CurrNum": 978,
+                     "CurrCode": "EUR"
+                 }, {
+                     "Id": 2,
+                     "Name": "Firm 2",
+                     "MobileCount": 13,
+                     "MobileAmount": 113.11,
+                     "WebCount": 23,
+                     "WebAmount": 123.12,
+                     "SmsCount": 33,
+                     "SmsAmount": 133.13,
+                     "TotalCount": 69,
+                     "TotalAmount": 0,
+                     "CurrNum": 643,
+                     "CurrCode": "RUB"
+                 }, {
+                     "Id": 2,
+                     "Name": "Firm 2",
+                     "MobileCount": 14,
+                     "MobileAmount": 114.11,
+                     "WebCount": 24,
+                     "WebAmount": 124.12,
+                     "SmsCount": 34,
+                     "SmsAmount": 134.13,
+                     "TotalCount": 72,
+                     "TotalAmount": 0,
+                     "CurrNum": 840,
+                     "CurrCode": "USD"
+                 }, {
+                     "Id": 2,
+                     "Name": "Firm 2",
+                     "MobileCount": 15,
+                     "MobileAmount": 115.11,
+                     "WebCount": 25,
+                     "WebAmount": 125.12,
+                     "SmsCount": 35,
+                     "SmsAmount": 135.13,
+                     "TotalCount": 75,
+                     "TotalAmount": 0,
+                     "CurrNum": 978,
+                     "CurrCode": "EUR"
+                 }, {
+                     "Id": 3,
+                     "Name": "Firm 3",
+                     "MobileCount": 16,
+                     "MobileAmount": 116.11,
+                     "WebCount": 26,
+                     "WebAmount": 126.12,
+                     "SmsCount": 36,
+                     "SmsAmount": 136.13,
+                     "TotalCount": 78,
+                     "TotalAmount": 0,
+                     "CurrNum": 643,
+                     "CurrCode": "RUB"
+                 }, {
+                     "Id": 3,
+                     "Name": "Firm 3",
+                     "MobileCount": 17,
+                     "MobileAmount": 117.11,
+                     "WebCount": 27,
+                     "WebAmount": 127.12,
+                     "SmsCount": 37,
+                     "SmsAmount": 137.13,
+                     "TotalCount": 81,
+                     "TotalAmount": 0,
+                     "CurrNum": 840,
+                     "CurrCode": "USD"
+                 }, {
+                     "Id": 3,
+                     "Name": "Firm 3",
+                     "MobileCount": 18,
+                     "MobileAmount": 118.11,
+                     "WebCount": 28,
+                     "WebAmount": 128.12,
+                     "SmsCount": 38,
+                     "SmsAmount": 138.13,
+                     "TotalCount": 84,
+                     "TotalAmount": 0,
+                     "CurrNum": 978,
+                     "CurrCode": "EUR"
+                 }],
+
+                 "group": [{
+                     "field": "Name",
+                     "dir": "asc",
+                     "aggregates": [{
+                         "field": "MobileCount",
+                         "aggregate": "sum"
+                     }, {
+                         "field": "WebCount",
+                         "aggregate": "sum"
+                     }, {
+                         "field": "SmsCount",
+                         "aggregate": "sum"
+                     }, {
+                         "field": "TotalCount",
+                         "aggregate": "sum"
+                     }]
+                 }],
+                 "aggregate": [{
+                     "field": "MobileCount",
+                     "aggregate": "sum"
+                 }, {
+                     "field": "WebCount",
+                     "aggregate": "sum"
+                 }, {
+                     "field": "SmsCount",
+                     "aggregate": "sum"
+                 }, {
+                     "field": "TotalCount",
+                     "aggregate": "sum"
+                 }],
+                 "schema": {
+                     "model": {
+                         "fields": {
+                             "Id": {
+                                 "type": "number"
+                             },
+                             "Name": {
+                                 "type": "string"
+                             },
+                             "MobileCount": {
+                                 "type": "number"
+                             },
+                             "MobileAmount": {
+                                 "type": "number"
+                             },
+                             "WebCount": {
+                                 "type": "number"
+                             },
+                             "WebAmount": {
+                                 "type": "number"
+                             },
+                             "SmsCount": {
+                                 "type": "number"
+                             },
+                             "SmsAmount": {
+                                 "type": "number"
+                             },
+                             "TotalCount": {
+                                 "type": "number"
+                             },
+                             "TotalAmount": {
+                                 "type": "number"
+                             },
+                             "CurrNum": {
+                                 "type": "number"
+                             },
+                             "CurrCode": {
+                                 "type": "string"
+                             }
+                         }
+                     }
+                 }
+             }
+         });
+        </script>
+    </body>
+</html>
