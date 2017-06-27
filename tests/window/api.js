@@ -12,6 +12,8 @@
             QUnit.fixture.closest("body").find(".k-overlay").remove();
             $.mockjax.clear();
             kendo.effects.enable();
+            // Destroy all possible .k-animation-container elements left by previous test suites.
+            kendo.destroy($("body"));
         }
     });
 
