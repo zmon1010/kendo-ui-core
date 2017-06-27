@@ -266,7 +266,7 @@
                 }
 
                 if (width) {
-                    if (width.toString().indexOf("%") > 0) {
+                    if (isNaN(width) && width.toString().indexOf("px") < 0) {
                         wrapper.width(width);
                     } else {
                         wrapper.width(constrain(width, options.minWidth, options.maxWidth));
@@ -277,7 +277,7 @@
                 }
 
                 if (height) {
-                    if (height.toString().indexOf("%") > 0) {
+                    if (isNaN(height) && height.toString().indexOf("px") < 0) {
                         wrapper.height(height);
                     } else {
                         wrapper.height(constrain(height, options.minHeight, options.maxHeight));
