@@ -12796,7 +12796,7 @@ makes a HTTP request for every CRUD operation.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function that will handle create, update and delete operations in a single batch.Typically, you have the transport.read and transport.submit operations defined together. The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
+            <description>A function that will handle create, update and delete operations in a single batch when custom transport is used, i.e. the transport.read is defined as a function.The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
             <name>submit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13059,7 +13059,7 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>A function that will handle create, update and delete operations in a single batch.Typically, you have the transport.read and transport.submit operations defined together. The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
+        <description>A function that will handle create, update and delete operations in a single batch when custom transport is used, i.e. the transport.read is defined as a function.The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
         <name>dataSource-transport-submit</name>
         <tag-class>com.kendoui.taglib.datasource.TransportSubmitFunctionTag</tag-class>
         <body-content>JSP</body-content>
