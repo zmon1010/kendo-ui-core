@@ -68,5 +68,5 @@ The following example demonstrates how to open the **Confirm** Dialog within the
 
 ## See Also
 
-* [Upload JavaScript API Reference](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload)
+* [Kendo UI Upload JavaScript API Reference](http://docs.telerik.com/kendo-ui/api/javascript/ui/upload)
 * [Predefined Kendo UI Dialogs Demo](https://demos.telerik.com/kendo-ui/dialog/predefined-dialogs)

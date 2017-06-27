@@ -69,4 +69,4 @@ To simulate modality in a Kendo UI Tooltip, place a semi-transparent &lth;div&gt
 
 ## See Also
 
-* [Tooltip JavaScript API Reference](http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip)
+* [Kendo UI Tooltip JavaScript API Reference](http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip)
