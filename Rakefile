@@ -28,6 +28,7 @@ if PLATFORM =~ /linux|darwin|bsd/
 else
     distributions = "\\\\telerik.com\\distributions\\DailyBuilds"
     ADMIN_RELEASE_UPLOAD_PASS = IO.read("~\\passfile")
+    putc ADMIN_RELEASE_UPLOAD_PASS.length
     RELEASE_ROOT = File.join(distributions, "KendoUI")
     WEB_INSTALLER_ROOT = File.join(distributions, "Guidance", "WebInstallers", "Current", "Release")
 end
