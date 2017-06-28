@@ -27,8 +27,7 @@ if PLATFORM =~ /linux|darwin|bsd/
     WEB_INSTALLER_ROOT = "/installers-dist"
 else
     distributions = "\\\\telerik.com\\distributions\\DailyBuilds"
-    ADMIN_RELEASE_UPLOAD_PASS = IO.read("~\\passfile")
-    putc ADMIN_RELEASE_UPLOAD_PASS.length
+    ADMIN_RELEASE_UPLOAD_PASS = ENV['KendoBuildUser_PASS']
     RELEASE_ROOT = File.join(distributions, "KendoUI")
     WEB_INSTALLER_ROOT = File.join(distributions, "Guidance", "WebInstallers", "Current", "Release")
 end
@@ -1013,7 +1012,7 @@ namespace :build do
     end
 
     def map_archive_root drive
-        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:telerik.com\\KendoBuildUser #{ADMIN_RELEASE_UPLOAD_PASS} /YES )"
+        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:progress\\KendoBuildUser \"#{ADMIN_RELEASE_UPLOAD_PASS}\" /YES )"
     end
 
     { :production => "Production", :master => "Stable" }.each do |env, destination|
