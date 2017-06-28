@@ -1012,7 +1012,7 @@ namespace :build do
     end
 
     def map_archive_root drive
-        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:progress\\KendoBuildUser \"#{ADMIN_RELEASE_UPLOAD_PASS}\" /YES )"
+        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:progress\\KendoBuildUser \"#{ADMIN_RELEASE_UPLOAD_PASS}\" /YES >nul 2>nul )"
     end
 
     { :production => "Production", :master => "Stable" }.each do |env, destination|
