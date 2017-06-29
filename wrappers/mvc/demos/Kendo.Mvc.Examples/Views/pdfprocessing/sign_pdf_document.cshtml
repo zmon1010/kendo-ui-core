@@ -7,17 +7,6 @@
             <iframe src='@Url.Content("~/content/web/pdfprocessing/Unsigned.pdf")'
                     width="400px" height="600px"></iframe>
 
-
-                    <ul class="fieldlist">
-                        <li>
-                            @Html.Label("First Name")
-                            @Html.Kendo().TextBox().Name("firstName").HtmlAttributes(new { style = "width: 100%;" })
-                        </li>
-                        <li>
-                            @Html.Label("Last Name")
-                            @Html.Kendo().TextBox().Name("lastName").HtmlAttributes(new { style = "width: 100%;" })
-                        </li>
-                    </ul>
                     <input type="submit" value="Sign and Download Document" class="k-button downloadBtn" />
         }
     </div>
@@ -25,24 +14,6 @@
 
 
 <style>
-    .fieldlist {
-        margin: 0 0 -2em;
-        padding: 0;
-    }
-
-        .fieldlist li {
-            list-style: none;
-            padding-bottom: 2em;
-        }
-
-        .fieldlist label {
-            display: block;
-            padding-bottom: 1em;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
-
     input {
         margin-top: 20px;
         margin-bottom:10px;

@@ -29,7 +29,7 @@ namespace Kendo.Mvc.Examples.Controllers
         }
 
         [HttpPost]
-        public ActionResult Sign_PDF_Document(string firstName, string lastName)
+        public ActionResult Sign_PDF_Document()
         {
             string fileDownloadName = "test.pdf";
             string mimeType = String.Empty;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.Examples.Controllers
                         fileAllBytes = ms.ToArray();
                     }
 
-                    AddSignature(document, fileAllBytes, firstName, lastName);
+                    AddSignature(document, fileAllBytes);
                 }
 
                 byte[] renderedBytes = null;
@@ -73,7 +73,7 @@ namespace Kendo.Mvc.Examples.Controllers
             }
         }
 
-        private static void AddSignature(RadFixedDocument document, byte[] certificateFileBytes, string firstName, string lastName)
+        private static void AddSignature(RadFixedDocument document, byte[] certificateFileBytes)
         {
             FormSource formSource = new FormSource();
 
@@ -89,7 +89,7 @@ namespace Kendo.Mvc.Examples.Controllers
                 FixedContentEditor ed = new FixedContentEditor(formSource);
                 ed.TextProperties.FontSize = 80;
                 ed.Position.Translate(30, 0);
-                ed.DrawText(firstName + ' ' + lastName);
+                ed.DrawText("John Doe");
                 ed.Position.Translate(0, 90);
                 ed.TextProperties.FontSize = 25;
                 ed.DrawText("Digitally signed on: " + DateTime.Now.ToString());
