@@ -5,11 +5,11 @@
             <ul class="fieldlist">
                 <li>
                     @Html.Label("Text field:")
-                    @Html.Kendo().TextBox().Name("textbox").HtmlAttributes(new { style = "width: 100%;" })
+                    @Html.Kendo().TextBox().Name("textbox").HtmlAttributes(new { style = "width: 100%;", @Value = "Sample text" })
                 </li>
                 <li>
                     @Html.Label("Choice field:")
-                    @Html.TextArea("textarea", new { @class = "k-textbox", style = "width: 100%;", id = "textArea" })
+                    @Html.TextArea("textarea", new { @class = "k-textbox", style = "width: 100%; height:80px", id = "textArea", value = "test" }  )
                 </li>
             </ul>
             <div class="container">
@@ -44,14 +44,20 @@
         </div>
     </div>
 
-    <hr class="clear" />
     <input type="submit" class="k-button k-primary wide-btn" value="Download" />
 }
+
+<script type="text/javascript">
+    $(function () {
+        $("#textArea").html("Choice 1" + "\n" + "Choice 2" + "\n" + "Choice 3");
+    });
+</script>
 
 <style>
     .container {
         margin-top: 30px;
         display: inline-block;
+        width:100%;
     }
 
     .k-primary{
@@ -60,12 +66,12 @@
     }
 
     #radioButton {
-        width: 40%;
+        width: 45%;
         float: left;
     }
 
     #checkBox {
-        width: 40%;
+        width: 45%;
         float: right;
     }
 
@@ -92,11 +98,15 @@
             color: #444;
     }
 
+    .k-button {
+        margin-top:1em;
+    }
+
+
     .form {
         width: 50%;
         padding:30px;
         margin: 0 auto;
         border: 1px solid black;
-        border-radius:15px;
     }
 </style>
