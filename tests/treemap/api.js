@@ -12,9 +12,9 @@
         roots =  treemap._root.children;
     }
 
-    function testSizes(expected, type) {
+    function testSizes(expected, type, dataSource) {
         createTreeMap({
-            dataSource: [{
+            dataSource: dataSource || [{
                 text: "root",
                 items: [{value: 1, text: "item1"}, {value: 1, text: "item2"}, {value: 1, text: "item3"}]
             }],
@@ -47,14 +47,14 @@
     });
 
     test("updates tiles", function() {
-        testSizes([{ width: 380.8, height: 261.8, left: 0, top: 0 }, 
-            { width: 380.8, height: 261.8, left: 0, top: 281.5 }, 
+        testSizes([{ width: 380.8, height: 261.8, left: 0, top: 0 },
+            { width: 380.8, height: 261.8, left: 0, top: 281.5 },
             { width: 181.8, height: 542.8, left: 401.333, top: 0 }]);
     });
 
     test("updates tiles(horizontal)", function() {
-        testSizes([{ width: 542.8, height: 180.8, left: 0, top: 0 }, 
-            { width: 542.8, height: 180.8, left: 0, top: 200.667 }, 
+        testSizes([{ width: 542.8, height: 180.8, left: 0, top: 0 },
+            { width: 542.8, height: 180.8, left: 0, top: 200.667 },
             { width: 542.8, height: 181.8, left: 0, top: 401.333 }], "horizontal");
     });
 
@@ -62,6 +62,28 @@
         testSizes([{ width: 180.8, height: 542.8, left: 0, top: 0 },
             { width: 180.8, height: 542.8, left: 200.667, top: 0 },
             { width: 181.8, height: 542.8, left: 401.333, top: 0 }], "vertical");
+    });
+
+    test("updates tiles(horizontal) works when name is not defined", function() {
+        var dataSource =  [{
+                text: "",
+                items: [{value: 1, text: "item1"}, {value: 1, text: "item2"}, {value: 1, text: "item3"}]
+            }];
+
+        testSizes([{ width: 581.8, height: 180.8, left: 0, top: 0 },
+            { width: 581.8, height: 180.8, left: 0, top: 200.667 },
+            { width: 581.8, height: 181.8, left: 0, top: 401.333 }], "horizontal", dataSource);
+    });
+
+    test("updates tiles(vertical) works when name is not defined", function() {
+        var dataSource =  [{
+                text: "",
+                items: [{value: 1, text: "item1"}, {value: 1, text: "item2"}, {value: 1, text: "item3"}]
+            }];
+
+         testSizes([{ width: 180.8, height: 581.8, left: 0, top: 0 },
+            { width: 180.8, height: 581.8, left: 200.667, top: 0 },
+            { width: 181.8, height: 581.8, left: 401.333, top: 0 }], "vertical", dataSource);
     });
 
 })();

@@ -591,7 +591,7 @@ var __meta__ = { // jshint ignore:line
 
         titleSize: function(item, element) {
             var text = element.children(".k-treemap-title");
-            return text.height();
+            return text.height() || 0;
         },
 
         htmlSize: function(root) {
@@ -782,6 +782,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         compute: function(children, rootCoord, htmlSize) {
+
             if (children.length > 0) {
                 var width = rootCoord.width;
                 var height = rootCoord.height;
@@ -916,7 +917,7 @@ var __meta__ = { // jshint ignore:line
             } else {
                size = element.children(".k-treemap-title-vertical").width();
             }
-            return size;
+            return size || 0;
         },
 
         _createTitle: function(item) {
