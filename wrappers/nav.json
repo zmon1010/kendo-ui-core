@@ -5073,6 +5073,28 @@
             }
           ]
         }
+      },
+      {
+        "text": "Check PDF Signature",
+        "url": "pdfprocessing/check-pdf-signature",
+        "new": "true",
+        "title": {
+          "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
+        },
+        "meta": {
+          "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
+        },
+        "description": {
+          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to check a signature of a PDF document."
+        },
+        "sources": {
+          "aspnet-mvc": [
+            {
+              "name": "CheckSignature.cs",
+              "url": "~/Controllers/PdfProcessing/CheckSignature.cs"
+            }
+          ]
+        }
       }
     ],
     "documentation": {

@@ -1,0 +1,147 @@
+﻿@model Kendo.Mvc.Examples.Models.SignatureFieldsModel
+
+<div id="example">
+    <div>
+
+        <div class="header">
+            <h2>Validate Documents</h2>
+        </div>
+
+        <div class="demo-section">
+            @using (Html.BeginForm("Check_Pdf_Signature", "PdfProcessing"))
+            {
+
+                <input type="text" id="selectedItem" name="selectedItem" />
+                <p><span class="bold"> Signature status: </span><img src="@Model.ImgUrl"></p>
+                <p><span class="bold"> Is document modified: </span><span>@Model.IsDocumentModified</span> </p>
+                <p><span class="bold"> Is certificate valid: </span><span>@Model.IsCertificateValid</span> </p>
+                <p><span class="bold"> Signer information: </span><span>@Model.SignerInformation</span> </p>
+                <p><span class="bold"> Hash algorithm: </span><span>@Model.HashAlgorithm</span></p>
+
+
+                @(Html.Kendo().Upload()
+                        .Name("customDocument")
+                        .Multiple(false)
+                        .ShowFileList(false)
+                        .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
+                        .Events(events => events.Select("onSelect"))
+                )
+                <input type="submit" class="k-button wide-btn" value="Check signature" id="submit" />
+            }
+
+
+        </div>
+        <div class="list-box-container">
+            <div class="centered">
+
+
+                <p class="bold">Load document with:</p>
+                @(Html.Kendo().ListBox()
+                  .Name("options")
+                  .TemplateId("item-template")
+                  .HtmlAttributes(new { title = "options" })
+                  .Events(events => events
+                  .Change("onChange")
+                   )
+                  .BindTo(new List<string>
+                   {
+                    "Valid",
+                    "Invalid",
+                    "Unknown",
+                   })
+                )
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<script id="item-template" type="text/x-kendo-template">
+    <span> <img src="/Content/web/pdfprocessing/#:data#.png" /></span>
+    <span>#:data# signature</span>
+</script>
+
+
+<script>
+    function onSelect(е) {
+        setTimeout(function () {
+            $("#submit").click()
+        })
+
+    }
+
+    function onChange(e) {
+        var selectedValue = e.sender.select()
+        $("#selectedItem").val(selectedValue[0].innerText)
+        $("#submit").click()
+    }
+</script>
+
+<style>
+    .clear {
+        clear: both;
+    }
+
+    .centered {
+        width: 486px;
+        margin: 0 auto;
+    }
+
+    #submit {
+        display: none;
+    }
+
+    .k-item > span {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        margin: auto;
+    }
+
+    hr {
+        margin: 15px 0;
+        border-width: 0 0 1px 0;
+        border-color: #c9c9c9;
+        border-style: solid;
+    }
+
+    span > img {
+        padding-right: 1em;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+    p {
+        padding: 10px;
+    }
+
+    .k-listbox {
+        width: 486px;
+        height: 100px;
+    }
+
+    #selectedItem {
+        display: none;
+    }
+
+    .demo-section{
+       margin: 0 auto 2.5em;
+    }
+
+    .header {
+        border: 1px solid black;
+        max-width: 400px;
+        margin: auto;
+        color: #29b344;
+        background-color: #c5c5c5;
+        vertical-align: middle;
+        text-align: center;
+        padding: 3em;
+        border: 1px solid rgba(20,53,80,0.14);
+    }
+</style>

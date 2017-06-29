@@ -283,6 +283,7 @@
     <Compile Include="Controllers\PanelBar\Local_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\Remote_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
+    <Compile Include="Controllers\PdfProcessing\CheckSignature.cs" />
     <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
     <Compile Include="Controllers\PdfProcessing\ReadWriteFormFields.cs" />
     <Compile Include="Controllers\PdfProcessing\SignDocument.cs" />
@@ -812,6 +813,7 @@
     <Compile Include="Models\PanelBarItemViewModel.cs" />
     <Compile Include="Models\PanelBarRepository.cs" />
     <Compile Include="Models\ProductPdfProcessing.cs" />
+    <Compile Include="Models\SignatureFieldsModel.cs" />
     <Compile Include="Models\SpreadsheetProductService.cs" />
     <Compile Include="Models\SpreadsheetProductViewModel.cs" />
     <Compile Include="Models\Diagram\DiagramConnectionService.cs" />
@@ -1017,6 +1019,9 @@
     <Content Include="Content\shared\styles\tags.png" />
     <Content Include="Content\shared\styles\units.png" />
     <Content Include="Content\web\pdfprocessing\barChart.png" />
+    <Content Include="Content\web\pdfprocessing\InvalidSignature.png" />
+    <Content Include="Content\web\pdfprocessing\UnknownSignature.png" />
+    <Content Include="Content\web\pdfprocessing\ValidSignature.png" />
     <Content Include="favicon.ico" />
     <Content Include="SharedContent\Images\SampleApps\bootstrap.png" />
     <Content Include="SharedContent\Images\SampleApps\northwind.png" />
@@ -1033,6 +1038,8 @@
     <Compile Include="Controllers\ListBox\KeyboardNavigationController.cs" />
     <Content Include="Content\web\pdfprocessing\InteractiveForms.pdf" />
     <Content Include="Content\web\pdfprocessing\Unsigned.pdf" />
+    <Content Include="Content\web\pdfprocessing\Invalid.pdf" />
+    <Content Include="Content\web\pdfprocessing\Unknown.pdf" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -3053,6 +3060,7 @@
     <Content Include="Views\spreadprocessing\generate_documents.cshtml" />
     <Content Include="Views\spreadprocessing\grid_integration.cshtml" />
     <Content Include="Views\pdfprocessing\sign_pdf_document.cshtml" />
+    <Content Include="Views\pdfprocessing\check_pdf_signature.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
