@@ -1,19 +1,4 @@
-<div id="last-updated-articles-section">
-    <script src="http://www.google.com/jsapi"></script>
-    {% javascript kb %}
-    <select id="resource-type-options">
-        <option value="documentation">Documentation</option>
-        <option value="api">API</option>
-        <option value="kb">Knowledge Base</option>
-    </select>
+<h1>Knowledge base</h1>
 
-    <div id="kb-search">
-        <h1>Knowledge Base</h1>
-        <div class="gcse-search" data-gname="google-search" data-sort_by="relevance" data-sort="relevance"></div>
-        <!--data-webSearchQueryAddition="more:pagemap:restype:kb">-->
-
-        <div id="last-updated-articles">
-            <h2>Last Updated Results</h2>
-            <div id="updated-articles-results"></div>
-        </div>
-    </div>
+{% include search.html %}
+{% javascript kb %}
