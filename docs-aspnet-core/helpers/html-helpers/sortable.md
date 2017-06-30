@@ -254,7 +254,7 @@ To reference an existing Kendo UI Sortable instance, use the [`jQuery.data()`](h
 
 ## See Also
 
-* [ASP.NET MVC API Reference: SortableBuilder](http://docs.telerik.com/kendo-ui/api/Kendo.Mvc.UI.Fluent/SortableBuilder)
+* [ASP.NET MVC API Reference: SortableBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/SortableBuilder)
 * [Overview of Telerik UI for ASP.NET Core	]({% slug overview_aspnetmvc6_aspnetmvc %})
 * [Overview of the Kendo UI Sortable Widget](http://docs.telerik.com/kendo-ui/controls/interactivity/sortable/overview)
 * [Get Started with Telerik UI for ASP.NET MVC in ASP.NET Core Projects]({% slug gettingstarted_aspnetmvc6_aspnetmvc %})
