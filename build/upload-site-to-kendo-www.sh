@@ -16,7 +16,7 @@ fi
 for host in "${HOSTS[@]}"
 do
     log "Uploading site to $host"
-    $SYNC $1/_site/ $USER@$host:$DEST
+    $SYNC $1/_site/ $USER@$host:$DEST || exit 1
 done
 
 log "Done"
