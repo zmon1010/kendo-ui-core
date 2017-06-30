@@ -81,7 +81,7 @@ The following example demonstrates a basic declaration of a Sortable widget usin
 The Sortable can operate without a hint. To disable the hint, set it to an empty function ([jQuery.noop](http://api.jquery.com/jQuery.noop/)).
 
 ###### Example
-    ```
+
       @(Html.Kendo().Sortable()
           .For("#sortable")
           .HintHandler("noHint")
@@ -90,33 +90,33 @@ The Sortable can operate without a hint. To disable the hint, set it to an empty
       <script>
           var noHint = $.noop;
       </script>
-    ```
+
 
 ##### Disable and Filter Items
 You can make items non-sortable if you disable them. To do this, provide a selector that matches the items, which you do not want to be sortable:
 
 ###### Example
-   ```
+
 	@(Html.Kendo().Sortable()
     	.For("#sortable-basic")
     	.Disable(".disable")
 	)
-   ```
+
 
 The user will not be able to drag these items to change their position, but they will be valid sort targets. If you want to prevent items from being dragged *and* being sort targets, you can specify a filter:
 
 ###### Example
-   ```
+
 	@(Html.Kendo().Sortable()
     	.For("#sortable-basic")
     	.Filter(".sortable")
 	)
-   ```
+
 ##### Create Linked Lists
 
 To enable dragging of items between two links, create a Sortable for each list and use the **ConnectWith** configuration in both Sortables:
 
-    ```
+
     @(Html.Kendo().Sortable()
         .For("#sortable-listA")
         .ConnectWith("#sortable-listB")
@@ -134,7 +134,6 @@ To enable dragging of items between two links, create a Sortable for each list a
             return $("<li class='list-item' id='placeholder'>Drop Here!</li>");
         }
     </script>
-    ```
 
 ## Event Handling
 
