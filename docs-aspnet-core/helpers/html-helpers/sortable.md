@@ -19,7 +19,7 @@ Unlike most of the HtmlHelpers, the Sortable does not render HTML mark-up.
 
 The following example demonstrates a basic declaration of a Sortable widget using the Sortable HtmlHelper. The widget is initialized for the "sortable-basic" element making its list items sortable.
 
-    ```tab-ASPX
+```tab-ASPX
 
           <ul id="sortable-basic">
               <li class="sortable">Papercut <span>3:04</span></li>
@@ -45,8 +45,8 @@ The following example demonstrates a basic declaration of a Sortable widget usin
                   return element.clone().addClass("placeholder").text("drop here");
               }
           </script>
-    ```
-    ```tab-Razor
+```
+```tab-Razor
 
           <ul id="sortable-basic">
               <li class="sortable">Papercut <span>3:04</span></li>
@@ -72,7 +72,7 @@ The following example demonstrates a basic declaration of a Sortable widget usin
                   return element.clone().addClass("placeholder").text("drop here");
               }
           </script>
-    ```
+```
 
 ### Configuration
 
@@ -81,7 +81,7 @@ The following example demonstrates a basic declaration of a Sortable widget usin
 The Sortable can operate without a hint. To disable the hint, set it to an empty function ([jQuery.noop](http://api.jquery.com/jQuery.noop/)).
 
 ###### Example
-	```
+    ```
       @(Html.Kendo().Sortable()
           .For("#sortable")
           .HintHandler("noHint")
@@ -90,7 +90,7 @@ The Sortable can operate without a hint. To disable the hint, set it to an empty
       <script>
           var noHint = $.noop;
       </script>
-	```
+    ```
 
 ##### Disable and Filter Items
 You can make items non-sortable if you disable them. To do this, provide a selector that matches the items, which you do not want to be sortable:
@@ -116,25 +116,25 @@ The user will not be able to drag these items to change their position, but they
 
 To enable dragging of items between two links, create a Sortable for each list and use the **ConnectWith** configuration in both Sortables:
 
-	```
-	@(Html.Kendo().Sortable()
-    	.For("#sortable-listA")
-    	.ConnectWith("#sortable-listB")
-    	.PlaceholderHandler("placeholder")
-	)
+    ```
+    @(Html.Kendo().Sortable()
+        .For("#sortable-listA")
+        .ConnectWith("#sortable-listB")
+        .PlaceholderHandler("placeholder")
+    )
 
-	@(Html.Kendo().Sortable()
-    	.For("#sortable-listB")
-    	.ConnectWith("#sortable-listB")
-    	.PlaceholderHandler("placeholder")
-	)
+    @(Html.Kendo().Sortable()
+        .For("#sortable-listB")
+        .ConnectWith("#sortable-listB")
+        .PlaceholderHandler("placeholder")
+    )
 
-	<script>
-    function placeholder(element) {
-        return $("<li class='list-item' id='placeholder'>Drop Here!</li>");
-    }
-	</script>
-	```
+    <script>
+        function placeholder(element) {
+            return $("<li class='list-item' id='placeholder'>Drop Here!</li>");
+        }
+    </script>
+    ```
 
 ## Event Handling
 
