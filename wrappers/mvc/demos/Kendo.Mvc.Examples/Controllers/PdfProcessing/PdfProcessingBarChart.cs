@@ -19,7 +19,7 @@ namespace Kendo.Mvc.Examples.Controllers
         }
 
         [HttpPost]
-        public ActionResult Download_Chart_Document()
+        public ActionResult Download_Chart_Document(bool cb1, bool cb2, bool cb3, bool cb4, string products, double currency)
         {
             PdfFormatProvider formatProvider = new PdfFormatProvider();
             formatProvider.ExportSettings.ImageQuality = ImageQuality.High;
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.Examples.Controllers
             byte[] renderedBytes = null;
             using (MemoryStream ms = new MemoryStream())
             {
-                RadFixedDocument document = CreatePdfWithBarChart.CreateDocument();
+                RadFixedDocument document = CreatePdfWithBarChart.CreateDocument(cb1, cb2, cb3, cb4, products, currency);
                 formatProvider.Export(document, ms);
                 renderedBytes = ms.ToArray();
             }

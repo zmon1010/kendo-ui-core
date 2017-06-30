@@ -1,8 +1,62 @@
 ﻿<div id="example">
+    <div class="img-container"> <img class="chartImg"src='@Url.Content("~/content/web/pdfprocessing/barChart.png")' class="documentImage" /></div>
+
     <div class="demo-section k-header">
-        <img src='@Url.Content("~/content/web/pdfprocessing/barChart.png")' class="documentImage" />
         @using (Html.BeginForm("Download_Chart_Document", "PdfProcessing"))
         {
+            <div class="options-field">
+                <h3 align="center">Select Chart options</h3>
+                <div class="left-container">
+                    <span class="options" style="margin-right:20px;">Quarters: </span>
+                    @(Html.Kendo().CheckBox().Name("cb1").Checked(true).Label("CheckBox 1"))
+
+                    @(Html.Kendo().CheckBox().Name("cb2").Checked(true).Label("CheckBox 2"))
+
+                    @(Html.Kendo().CheckBox().Name("cb3").Checked(true).Label("CheckBox 3"))
+
+                    @(Html.Kendo().CheckBox().Name("cb4").Checked(true).Label("CheckBox 3"))
+                </div>
+                <div class="right-container">
+                    <span class="options">Number of products: </span>
+                    @(Html.Kendo().DropDownList()
+          .Name("products")
+          .DataValueField("Value")
+          .DataTextField("Value")
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Value = "1"
+              },
+              new SelectListItem() {
+                  Value = "2"
+              },
+              new SelectListItem() {
+                  Value = "3"
+              },
+              new SelectListItem() {
+                  Value = "4"
+              },
+              new SelectListItem() {
+                  Value = "5"
+              },
+              new SelectListItem() {
+                  Value = "6"
+              }
+          })
+          .Value("6")
+          .HtmlAttributes(new { style = "width: 95%; margin-bottom:30px;margin-top:10px" })
+                    )
+                    <span class="options">Chart Value Step: </span>
+                    @(Html.Kendo().NumericTextBox<decimal>()
+            .Name("currency")
+            .Format("c")
+            .Min(1000)
+            .Max(10000)
+            .Value(5000)
+            .HtmlAttributes(new { style = "width: 95%;margin-top:10px", title = "currency" })
+                    )
+                </div>
+            </div>
+
             <input type="submit" value="Download Document" class="k-button downloadBtn" />
         }
     </div>
@@ -11,12 +65,49 @@
 
 
 <style>
-.downloadBtn {
-    margin: 0 auto;
-    display: block;
-}
 
-.documentImage {
-    width: 100%;
-}
+    .img-container{
+     margin: 0 auto 4.5em;
+     width:500px;
+    }
+
+    .options{
+        margin-bottom:10px;
+        font-weight:bold;
+    }
+    .chartImg {
+        width:490px;
+        height:400px;
+    }
+    .downloadBtn {
+        margin: 0 auto;
+        display: block;
+        margin-top:15px;
+    }
+
+    .options-field {
+        display: inline-block;
+        width: 100%;
+        height:200px
+    }
+
+    .left-container {
+        float: left;
+        width: 45%;
+    }
+
+    .right-container {
+        float: right;
+        width: 45%;
+    }
+
+    .k-checkbox-label{
+        margin-bottom:10px;
+        margin-top:10px;
+    }
+
+    h3{
+        margin-bottom:15px;
+        aling: center;
+    }
 </style>

@@ -38,8 +38,6 @@ namespace Kendo.Mvc.Examples
         private static readonly double valuesMargin = 10;
         private static readonly double rectSize = 8;
         private static readonly double barMargin = 2;
-        private static readonly double StepValue = 5000;
-        private static readonly int ExportedProductsCount = 6;
         private static readonly int markersCount = 7;
         private static readonly RgbColor[] colors =
             {
@@ -58,6 +56,9 @@ namespace Kendo.Mvc.Examples
         private static bool q2 = true;
         private static bool q3 = true;
         private static bool q4 = true;
+
+        private static int ExportedProductsCount = 1;
+        private static double StepValue = 5000;
 
         public static void ExampleViewModel()
         {
@@ -94,10 +95,10 @@ namespace Kendo.Mvc.Examples
 
         private static void InitializeData()
         {
-            quartersToExport.Add(0, true);
-            quartersToExport.Add(1, true);
-            quartersToExport.Add(2, true);
-            quartersToExport.Add(3, true);
+            quartersToExport.Add(0, q1);
+            quartersToExport.Add(1, q2);
+            quartersToExport.Add(2, q3);
+            quartersToExport.Add(3, q4);
             Products = new List<int>();
             for (int currentIndex = 0; currentIndex < products.Length; currentIndex++)
             {
@@ -110,11 +111,17 @@ namespace Kendo.Mvc.Examples
         public static List<int> Products { get; private set; }
 
 
-        public static RadFixedDocument CreateDocument()
+        public static RadFixedDocument CreateDocument(bool cb1, bool cb2, bool cb3, bool cb4, string products, double currency)
         {
             RadFixedDocument document = new RadFixedDocument();
             RadFixedPage page = document.Pages.AddPage();
             page.Size = new Size(792, 1128);
+            q1 = cb1;
+            q2 = cb2;
+            q3 = cb3;
+            q4 = cb4;
+            ExportedProductsCount = int.Parse(products);
+            StepValue = currency;
             FixedContentEditor editor = new FixedContentEditor(page);
             ExampleViewModel();
             DrawBarChartContent(editor);
