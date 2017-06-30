@@ -2,8 +2,8 @@
 title: Enable Reordering in Grid by Adding Buttons to Each Row
 description: How to reorder Kendo UI Grid rows by adding buttons to each row to move items up and down.
 type: how-to
-page_title: Enable Reordering in Grid by Adding Buttons to Each Row
-slug: reorder_grid_rows_with_buttons
+page_title: Reorder Progress® Kendo UI® Grid Rows with Buttons
+slug: reorder-grid-rows-using-buttons
 position: 0
 tags: grid, reordering, items
 teampulseid:
@@ -27,7 +27,7 @@ res_type: kb
 
 ## Description
 
-Your project might require you to implement a reordering functionality for Grid rows by adding buttons to each row to move items up and down.
+I have a kendo grid, and my users need to be able to re-order rows. I'd like to add buttons on each row to move items up and down.
 
 ## Possible Solution
 

@@ -2,8 +2,8 @@
 title: Visual Studio Online Continuous Integration Asks for Login
 description: A solution for preventing the Login dialog from being randomly displayed during builds in VS Online builds.
 type: troubleshooting
-page_title: Visual Studio Online Continuous Integration Asks for Login
-slug: vs_online_continuous_integration_login_problem
+page_title: VS Online Continuous Integration has an Authentication Issue
+slug: vs-online-continuous-integration-login-problem
 position: 0
 tags: vs2017
 ticketid: 1106905
@@ -50,7 +50,7 @@ I have stored the passwords on the developer systems by using clear text. Yet, w
 
 ## Possible Solution
 
-While the project does not provide a built-in solution, you can still work around this behavior.
+While the project does not provide a built-in solution, you can still workaround this behavior.
 
 Users have applied the following workarounds to overcome issues related to credentials in ASP.NET MVC and Core projects.
 

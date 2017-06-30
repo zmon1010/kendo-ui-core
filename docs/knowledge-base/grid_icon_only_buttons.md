@@ -2,8 +2,8 @@
 title: Use Grid Edit Buttons with Icons Only and No Text
 description: How to remove the text of the Grid Edit buttons and leave only the icons in a Kendo UI Grid.
 type: how-to
-page_title: Use Grid Edit Buttons with Icons Only and No Text
-slug: grid_icon_only_buttons
+page_title: Use Kendo UI Grid Edit Buttons with Icons Only and No Text
+slug: grid-icon-only-buttons
 position: 0
 tags: grid, editing, buttons, kendo ui, icons
 teampulseid:

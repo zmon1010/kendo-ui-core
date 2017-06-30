@@ -1,9 +1,9 @@
----
+lo---
 title: Show Popup next to a Custom Cell Editor in Spreadsheet
 description: How to display a popup next to a custom cell editor in a Kendo UI Spreadsheet.
 type: how-to
-page_title: Show Popup next to a Custom Cell Editor in Spreadsheet
-slug: spreadsheet_custom_cell_editor_popup
+page_title: Spreadsheet Custom Cell Editor with Kendo Popup
+slug: spreadsheet-custom-cell-editor-popup
 position: 0
 tags: spreadsheet, custom, editor, cell, popup
 teampulseid:
@@ -22,11 +22,7 @@ pitsid:
 
 ## Description
 
-Your project might require you to:
-
-1. Use the custom editor of the Spreadsheet with a Kendo UI Popup.
-1. Show the editor next to the selected cell of the Spreadsheet.
-1. Make the Popup editor disappear when the user clicks outside its boundaries.
+Is there an example of using the spreadsheet custom editor with a kendoPopup? I want the editor to be shown just to the side of the cell that is selected, and disappear when a user clicks a location other than the popup.
 
 ## Possible Solution
 

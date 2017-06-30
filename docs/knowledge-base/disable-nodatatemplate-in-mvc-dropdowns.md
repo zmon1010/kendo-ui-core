@@ -3,7 +3,7 @@ title: Disable noDataTemplate in AutoComplete, MultiSelect, ComboBox, and DropDo
 description: How to disable the noDataTemplate option in the UI for MVC AutoComplete, MultiSelect, ComboBox, and DropDownList wrappers.
 type: how-to
 page_title: Disable noDataTemplate in AutoComplete, MultiSelect, ComboBox or DropDownList for MVC
-slug: disable_nodatatemplate_in_mvc_dropdowns
+slug: disable-nodatatemplate-in-mvc-dropdowns
 position: 0
 tags: disable,nodatatemplate,mvc,wrappers,autocomplete,multiselect,combobox,dropdownlist
 teampulseid:

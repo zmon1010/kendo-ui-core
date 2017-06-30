@@ -1,15 +1,14 @@
 ---
-title: Grid: Cancel changes per row using the mode incell editing
+title: Grid: Cancel Changes Per Row Using the Mode Incell Editing
 description: How to cancel changes for specific row with incell editing
 type: howto
-page_title: How to Cancel Changes for Specific Row With Incell Editing
+page_title: How to Cancel Changes for Specific Row with Incell Editing
 slug: how-to-cancel-changes-for-specific-row-with-incell-editing
 position: 0
 tags:grid, editing
 teampulseid:
 ticketid: 1111657
 pitsid:
-
 ---
 
 ## Environment
@@ -34,7 +33,6 @@ pitsid:
 
  
 ## Description
-Hello,
 
 I am using a grid with a remote Datasource that has batch : true. The grid is using the incell editing mode.  The grid toolbar has the commands: create, save and cancel.  
   
@@ -45,7 +43,6 @@ The problem is that the "cancel" command, discards "all" changes made. Is there 
 is there a way to realise such a requirement? 
 
 ## Solution
-
 
 The desired result is not fully supported from the Kendo UI Grid, but a similar result can be achieved via custom logic. I can suggest adding a custom button, and on the button click the get the item by Uid, and then call cancelChanges only for that item:  
   
@@ -66,13 +63,3 @@ I modified the provided example to demonstrate this:
 [http://dojo.telerik.com/iGEPE/2](http://dojo.telerik.com/iGEPE/2)  
   
 As for the event, it is expected, as this is a custom approach to cancel the changes for a specific row. I hope the button click event or another event to be suitable as well for executing the custom logic.  
-
-## Suggested Workarounds
-
-## Steps to Reproduce
-
-## Error Message
-
-## Cause\Possible Cause(s)
-
-## Notes

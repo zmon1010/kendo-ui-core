@@ -2,14 +2,13 @@
 title: Cannot install Kendo UI Professional from Bower
 description: Kendo UI professional fails to authenticate and install
 type: troubleshooting
-page_title: Problem with Bower installation 
+page_title: Problem with Bower Installation 
 slug:bower-credentials-authentication-failed-kendo-ui-professional
 position: 0
 tags:bower,git,credentials,kendo,professional
 teampulseid:
 ticketid: 1116013
 pitsid:
-
 ---
 
 ## Environment

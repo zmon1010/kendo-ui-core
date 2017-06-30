@@ -1,5 +1,5 @@
 ---
-title: Install Kendo UI Pro with npm and webpack
+title: Install Kendo UI Pro With NPM and Webpack
 description: kendo.all.min.js is missing when using NPM packages
 type: troubleshooting
 page_title: Kendo.all.min.js Not Present in the NPM Distribution.
@@ -9,7 +9,6 @@ tags: npm, webpack
 teampulseid:
 ticketid: 1110344
 pitsid:
-
 ---
 
 ## Environment
@@ -54,13 +53,3 @@ http://docs.telerik.com/kendo-ui/third-party/webpack
 As for the integration with Webpack, we have a working example in one of ours GitHub repositories. The example is using Webpack 1, but a similar approach can be used in Webpack 2:
 
 https://github.com/telerik/kendo-ui-npm-example
-
-## Suggested Workarounds
-
-## Steps to Reproduce
-
-## Error Message
-
-## Cause\Possible Cause(s)
-
-## Notes
