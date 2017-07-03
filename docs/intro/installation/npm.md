@@ -42,6 +42,8 @@ npm install --save kendo-ui-core
 
 The Kendo UI Professional NPM Package, named `@progress/kendo-ui` is available at the NPM registry.
 
+> The Progress registry has been retired in favor of npmjs.com. Please remove the two lines containing 'registry.npm.telerik.com' from your .npmrc file to start using the default registry.
+
 ### Installation
 
 ###### Example
