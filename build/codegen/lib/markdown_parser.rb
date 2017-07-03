@@ -285,6 +285,26 @@ class MarkdownParser
                     description += element_text(child)
                 end
             end
+
+             if element.type == :ul
+                element.children.each_with_index do |child, index|
+                    next if index == 0 && child.type == :codespan
+                    is_last_elm = index == element.children.size - 1
+
+                    if !is_last_elm && index > 0 && element.children.size > 2
+                        description += ";"
+                    elsif is_last_elm && element.children.size > 1
+                        description += " or"
+                    end
+
+                    description += " " + element_text(child)
+
+                    if is_last_elm
+                        description += ". "
+                    end
+                end
+            end
+
         end
 
         description.strip
@@ -298,7 +318,7 @@ class MarkdownParser
         if element.children.any?
             element.children.map { |child| element_text(child) }.join
         else
-            element.value || ""
+            element.value ? element.value.split(/\n/).join(" ") : ""
         end
     end
 
