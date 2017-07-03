@@ -162,7 +162,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public StockChartNavigatorCategoryAxisLabelsSettingsBuilder<T> Template(string value)
@@ -172,7 +172,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public StockChartNavigatorCategoryAxisLabelsSettingsBuilder<T> TemplateId(string templateId)

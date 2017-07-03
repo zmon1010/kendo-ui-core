@@ -42,10 +42,7 @@ class Editor extends \Kendo\UI\Widget {
     }
 
     /**
-    * Relaxes the same-origin policy when using the iframe-based editor.
-This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
-In that case, this property must be used to allow the editor to function properly across browsers.
-This property has been introduced in internal builds after 2014.1.319.
+    * Relaxes the same-origin policy when using the iframe-based editor. This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain. In that case, this property must be used to allow the editor to function properly across browsers. This property has been introduced in internal builds after 2014.1.319.
     * @param string $value
     * @return \Kendo\UI\Editor
     */
@@ -117,8 +114,7 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
-    * Allows custom stylesheets to be included within the editing area. This setting is applicable only when the Editor is initialized from a textarea
-and a contenteditable iframe is generated.
+    * Allows custom stylesheets to be included within the editing area. This setting is applicable only when the Editor is initialized from a textarea and a contenteditable iframe is generated.
     * @param array $value
     * @return \Kendo\UI\Editor
     */

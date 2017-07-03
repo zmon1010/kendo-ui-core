@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The background color of the labels.
-		/// Any valid CSS color string will work here, including hex and rgb
+        /// The background color of the labels. Any valid CSS color string will work here, including hex and rgb
         /// </summary>
         /// <param name="value">The value for Background</param>
         public LinearGaugeScaleLabelsSettingsBuilder Background(string value)
@@ -35,8 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The text color of the labels.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The text color of the labels. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public LinearGaugeScaleLabelsSettingsBuilder Color(string value)
@@ -92,8 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The label template.
-		/// Template variables:
+        /// The label template. Template variables: value - the value.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public LinearGaugeScaleLabelsSettingsBuilder Template(string value)
@@ -103,8 +100,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The label template.
-		/// Template variables:
+        /// The label template. Template variables: value - the value.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public LinearGaugeScaleLabelsSettingsBuilder TemplateId(string templateId)

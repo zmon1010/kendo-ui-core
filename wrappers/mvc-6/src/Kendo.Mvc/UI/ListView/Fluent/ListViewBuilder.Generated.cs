@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public ListViewBuilder<T> AutoBind(bool value)

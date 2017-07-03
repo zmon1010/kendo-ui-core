@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class, ISchedulerEvent 
     {
         /// <summary>
-        /// The template used to render the "all day" scheduler events.The fields which can be used in the template are:
+        /// The template used to render the "all day" scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; isAllDay Boolean - if true the event is "all day"; resources Array - the event resources; start Date - the event start date or title String - the event title.
         /// </summary>
         /// <param name="value">The value for AllDayEventTemplate</param>
         public SchedulerBuilder<T> AllDayEventTemplate(string value)
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "all day" scheduler events.The fields which can be used in the template are:
+        /// The template used to render the "all day" scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; isAllDay Boolean - if true the event is "all day"; resources Array - the event resources; start Date - the event start date or title String - the event title.
         /// </summary>
         /// <param name="value">The ID of the template element for AllDayEventTemplate</param>
         public SchedulerBuilder<T> AllDayEventTemplateId(string templateId)
@@ -40,8 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public SchedulerBuilder<T> AutoBind(bool value)
@@ -85,9 +84,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-		/// The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture.
-		/// If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are:
+        /// The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd". The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture. If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The value for DateHeaderTemplate</param>
         public SchedulerBuilder<T> DateHeaderTemplate(string value)
@@ -97,9 +94,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-		/// The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture.
-		/// If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are:
+        /// The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd". The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture. If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The ID of the template element for DateHeaderTemplate</param>
         public SchedulerBuilder<T> DateHeaderTemplateId(string templateId)
@@ -119,7 +114,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the scheduler events.The fields which can be used in the template are:
+        /// The template used to render the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
         /// </summary>
         /// <param name="value">The value for EventTemplate</param>
         public SchedulerBuilder<T> EventTemplate(string value)
@@ -129,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the scheduler events.The fields which can be used in the template are:
+        /// The template used to render the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
         /// </summary>
         /// <param name="value">The ID of the template element for EventTemplate</param>
         public SchedulerBuilder<T> EventTemplateId(string templateId)
@@ -163,7 +158,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are: text String - the group text; color String - the group color; value - the group value; field String - the field of the scheduler event which contains the resource id; title String - the 'title' option of the resource or name  String - the 'name' option of the resource.
         /// </summary>
         /// <param name="value">The value for GroupHeaderTemplate</param>
         public SchedulerBuilder<T> GroupHeaderTemplate(string value)
@@ -173,7 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are: text String - the group text; color String - the group color; value - the group value; field String - the field of the scheduler event which contains the resource id; title String - the 'title' option of the resource or name  String - the 'name' option of the resource.
         /// </summary>
         /// <param name="value">The ID of the template element for GroupHeaderTemplate</param>
         public SchedulerBuilder<T> GroupHeaderTemplateId(string templateId)
@@ -203,7 +198,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
+        /// The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The value for MajorTimeHeaderTemplate</param>
         public SchedulerBuilder<T> MajorTimeHeaderTemplate(string value)
@@ -213,7 +208,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
+        /// The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The ID of the template element for MajorTimeHeaderTemplate</param>
         public SchedulerBuilder<T> MajorTimeHeaderTemplateId(string templateId)
@@ -266,7 +261,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the minor ticks.By default the scheduler renders a "&amp;nbsp;".The fields which can be used in the template are:
+        /// The template used to render the minor ticks.By default the scheduler renders a "&amp;nbsp;".The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The value for MinorTimeHeaderTemplate</param>
         public SchedulerBuilder<T> MinorTimeHeaderTemplate(string value)
@@ -276,7 +271,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the minor ticks.By default the scheduler renders a "&amp;nbsp;".The fields which can be used in the template are:
+        /// The template used to render the minor ticks.By default the scheduler renders a "&amp;nbsp;".The fields which can be used in the template are: date - represents the major tick date..
         /// </summary>
         /// <param name="value">The ID of the template element for MinorTimeHeaderTemplate</param>
         public SchedulerBuilder<T> MinorTimeHeaderTemplateId(string templateId)
@@ -357,9 +352,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The timezone which the scheduler will use to display the scheduler appointment dates. By default the current system timezone is used. This is an acceptable default when the
-		/// scheduler widget is bound to local array of events. It is advisable to specify a timezone if the scheduler is bound to a remote service.
-		/// That way all users would see the same dates and times no matter their configured system timezone.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
+        /// The timezone which the scheduler will use to display the scheduler appointment dates. By default the current system timezone is used. This is an acceptable default when the scheduler widget is bound to local array of events. It is advisable to specify a timezone if the scheduler is bound to a remote service. That way all users would see the same dates and times no matter their configured system timezone.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
         /// </summary>
         /// <param name="value">The value for Timezone</param>
         public SchedulerBuilder<T> Timezone(string value)

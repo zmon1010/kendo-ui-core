@@ -24,7 +24,7 @@ class GridFilterable extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to row the user would be able to filter via extra row added below the headers. By default filtering is using the menu mode.Can also be set to the following string values:
+    * If set to row the user would be able to filter via extra row added below the headers. By default filtering is using the menu mode.Can also be set to the following string values: "row" - the user can filter via extra row within the header.; "menu" - the user can filter via the menu after clicking the filter icon. or "menu, row" - the user can filter with both modes above enabled..
     * @param string $value
     * @return \Kendo\UI\GridFilterable
     */

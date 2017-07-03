@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
-		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV. Can be set to a JavaScript object which represents the allowCopy configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the allowcopy setting.</param>
         public GridBuilder<T> AllowCopy(Action<GridAllowCopySettingsBuilder<T>> configurator)
@@ -25,8 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
-		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV. Can be set to a JavaScript object which represents the allowCopy configuration.
         /// </summary>
         public GridBuilder<T> AllowCopy()
         {
@@ -35,8 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
-		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV. Can be set to a JavaScript object which represents the allowCopy configuration.
         /// </summary>
         /// <param name="enabled">Enables or disables the allowcopy option.</param>
         public GridBuilder<T> AllowCopy(bool enabled)
@@ -46,8 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the
-		/// dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.
+        /// If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public GridBuilder<T> AutoBind(bool value)
@@ -67,8 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the columnmenu setting.</param>
         public GridBuilder<T> ColumnMenu(Action<GridColumnMenuSettingsBuilder<T>> configurator)
@@ -82,8 +77,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         public GridBuilder<T> ColumnMenu()
         {
@@ -92,8 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         /// <param name="enabled">Enables or disables the columnmenu option.</param>
         public GridBuilder<T> ColumnMenu(bool enabled)

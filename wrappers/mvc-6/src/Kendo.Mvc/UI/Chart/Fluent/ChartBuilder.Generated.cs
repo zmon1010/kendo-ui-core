@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public ChartBuilder<T> AutoBind(bool value)
@@ -60,8 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The chart panes configuration.Panes are used to split the chart in two or more parts. The panes are ordered from top to bottom.Each axis can be associated with a pane by setting its pane option to the name of the desired pane.
-		/// Axis that don't have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.
+        /// The chart panes configuration.Panes are used to split the chart in two or more parts. The panes are ordered from top to bottom.Each axis can be associated with a pane by setting its pane option to the name of the desired pane. Axis that don't have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.
         /// </summary>
         /// <param name="configurator">The configurator for the panes setting.</param>
         public ChartBuilder<T> Panes(Action<ChartPaneFactory<T>> configurator)
@@ -135,8 +133,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the chart series.The series type is determined by the value of the type field.
-		/// If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
+        /// The configuration of the chart series.The series type is determined by the value of the type field. If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
         /// </summary>
         /// <param name="configurator">The configurator for the series setting.</param>
         public ChartBuilder<T> Series(Action<ChartSeriesFactory<T>> configurator)
@@ -161,8 +158,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The chart theme. This can be either a built-in theme or "sass".
-		/// When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:
+        /// The chart theme. This can be either a built-in theme or "sass". When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are: "sass" - special value, see notes; "black"; "blueopal"; "bootstrap"; "default"; "highcontrast"; "metro"; "metroblack"; "moonlight"; "silver" or "uniform".
         /// </summary>
         /// <param name="value">The value for Theme</param>
         public ChartBuilder<T> Theme(string value)

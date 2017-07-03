@@ -39,8 +39,7 @@ class Calendar extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the navigation depth. The following
-settings are available for the depth value:
+    * Specifies the navigation depth. The following settings are available for the depth value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\Calendar
     */
@@ -112,8 +111,7 @@ settings are available for the depth value:
     }
 
     /**
-    * Specifies the start view.
-The following settings are available for the start value:
+    * Specifies the start view. The following settings are available for the start value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\Calendar
     */

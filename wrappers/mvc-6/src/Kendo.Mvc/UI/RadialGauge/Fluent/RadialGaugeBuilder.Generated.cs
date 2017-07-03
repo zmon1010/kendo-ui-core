@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The gauge area configuration options.
-		/// This is the entire visible area of the gauge.
+        /// The gauge area configuration options. This is the entire visible area of the gauge.
         /// </summary>
         /// <param name="configurator">The configurator for the gaugearea setting.</param>
         public RadialGaugeBuilder GaugeArea(Action<RadialGaugeGaugeAreaSettingsBuilder> configurator)

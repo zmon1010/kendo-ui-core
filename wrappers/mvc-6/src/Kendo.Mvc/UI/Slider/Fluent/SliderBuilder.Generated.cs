@@ -40,8 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
-		/// handle must be focused). Note: largeStep will also set a large tick for every large step.Must be a positive number, larger than smallStep.
+        /// The delta with which the value will change when the user presses the Page Up or Page Down key (the drag handle must be focused). Note: largeStep will also set a large tick for every large step.Must be a positive number, larger than smallStep.
         /// </summary>
         /// <param name="value">The value for LargeStep</param>
         public SliderBuilder<T> LargeStep(T? value)
@@ -71,8 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Can be used to show (true) or hide (false) the
-		/// increase and decrease buttons of a Slider.
+        /// Can be used to show (true) or hide (false) the increase and decrease buttons of a Slider.
         /// </summary>
         /// <param name="value">The value for ShowButtons</param>
         public SliderBuilder<T> ShowButtons(bool value)
@@ -82,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The small step value of the Slider. Must be a positive number, otherwise an Javascript exception will be thrown.The small step value determines the amount of Slider value change when the end user
+        /// The small step value of the Slider. Must be a positive number, otherwise an Javascript exception will be thrown.The small step value determines the amount of Slider value change when the end user clicks on the increase or decrease buttons of the Slider;; presses the arrow keys (the drag handle must be focused); or drags the drag handle..
         /// </summary>
         /// <param name="value">The value for SmallStep</param>
         public SliderBuilder<T> SmallStep(T? value)

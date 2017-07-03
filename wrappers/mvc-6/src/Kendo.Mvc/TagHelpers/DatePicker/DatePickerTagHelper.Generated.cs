@@ -58,8 +58,7 @@ namespace Kendo.Mvc.TagHelpers
         public bool? WeekNumber { get; set; }
 
         /// <summary>
-        /// Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
-		///  Note that the format option is always used during parsing.
+        /// Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.  Note that the format option is always used during parsing.
         /// </summary>
         public string[] ParseFormats { get; set; }
 

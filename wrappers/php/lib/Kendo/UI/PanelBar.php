@@ -38,8 +38,7 @@ class PanelBar extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * A collection of visual animations used when PanelBar items are expand or collapsed through
-user interactions. Setting this option to false will disable all animations. is not a valid configuration.
+    * A collection of visual animations used when PanelBar items are expand or collapsed through user interactions. Setting this option to false will disable all animations. is not a valid configuration.
     * @param boolean|\Kendo\UI\PanelBarAnimation|array $value
     * @return \Kendo\UI\PanelBar
     */
@@ -48,8 +47,7 @@ user interactions. Setting this option to false will disable all animations. is 
     }
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\PanelBar
     */
@@ -85,8 +83,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * Sets the field of the data item that provides the sprite CSS class of the nodes.
-If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+    * Sets the field of the data item that provides the sprite CSS class of the nodes. If an array, each level uses the field that is at the same index in the array, or the last item in the array.
     * @param string $value
     * @return \Kendo\UI\PanelBar
     */
@@ -95,8 +92,7 @@ If an array, each level uses the field that is at the same index in the array, o
     }
 
     /**
-    * Sets the field of the data item that provides the text content of the nodes.
-If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+    * Sets the field of the data item that provides the text content of the nodes. If an array, each level uses the field that is at the same index in the array, or the last item in the array.
     * @param string|array $value
     * @return \Kendo\UI\PanelBar
     */
@@ -114,8 +110,7 @@ If an array, each level uses the field that is at the same index in the array, o
     }
 
     /**
-    * Specifies how the PanelBar items are displayed when opened and closed. The following values
-are available:
+    * Specifies how the PanelBar items are displayed when opened and closed. The following values are available:
     * @param string $value
     * @return \Kendo\UI\PanelBar
     */
@@ -124,8 +119,7 @@ are available:
     }
 
     /**
-    * Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
-Setting this to false causes all child DataSources to be loaded at initialization time.
+    * Indicates whether the child DataSources should be fetched lazily when parent groups get expanded. Setting this to false causes all child DataSources to be loaded at initialization time.
     * @param boolean $value
     * @return \Kendo\UI\PanelBar
     */

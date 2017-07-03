@@ -63,8 +63,7 @@ class Map extends \Kendo\UI\Widget {
     }
 
     /**
-    * The minimum zoom level.
-Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
+    * The minimum zoom level. Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
     * @param float $value
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -73,8 +72,7 @@ Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features)
     }
 
     /**
-    * The maximum zoom level.
-Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
+    * The maximum zoom level. Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
     * @param float $value
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -129,8 +127,7 @@ Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features)
 
     /**
     * Sets the beforeReset event of the Map.
-    * Fired immediately before the map is reset.
-This event is typically used for cleanup by layer implementers.
+    * Fired immediately before the map is reset. This event is typically used for cleanup by layer implementers.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -172,8 +169,7 @@ This event is typically used for cleanup by layer implementers.
 
     /**
     * Sets the markerCreated event of the Map.
-    * Fired when a marker has been created and is about to be displayed.
-Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
+    * Fired when a marker has been created and is about to be displayed. Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -229,8 +225,7 @@ Cancelling the event will prevent the marker from being shown.Use markerActivate
 
     /**
     * Sets the reset event of the Map.
-    * Fired when the map is reset.
-This typically occurs on initial load and after a zoom/center change.
+    * Fired when the map is reset. This typically occurs on initial load and after a zoom/center change.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -314,8 +309,7 @@ This typically occurs on initial load and after a zoom/center change.
 
     /**
     * Sets the zoomStart event of the Map.
-    * Fired when the map zoom level is about to change.
-Cancelling the event will prevent the user action.
+    * Fired when the map zoom level is about to change. Cancelling the event will prevent the user action.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */

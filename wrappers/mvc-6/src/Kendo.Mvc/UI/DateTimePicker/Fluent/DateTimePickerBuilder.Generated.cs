@@ -59,8 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies a list of dates, which will be passed to the month template of the DateView.
-		/// All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
+        /// Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
         /// </summary>
         /// <param name="value">The value for Dates</param>
         public DateTimePickerBuilder Dates(params DateTime[] value)
@@ -139,8 +138,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
-		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
+        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
         /// <param name="value">The value for ParseFormats</param>
         public DateTimePickerBuilder ParseFormats(params string[] value)

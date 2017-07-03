@@ -6,7 +6,7 @@ class DataSourceSortItem extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The sort order (direction).The supported values are:
+    * The sort order (direction).The supported values are: "asc" (ascending order) or "desc" (descending order).
     * @param string $value
     * @return \Kendo\Data\DataSourceSortItem
     */

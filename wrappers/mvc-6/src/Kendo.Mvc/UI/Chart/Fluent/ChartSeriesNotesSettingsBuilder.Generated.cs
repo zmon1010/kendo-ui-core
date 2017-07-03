@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the notes. The available argument fields are:
+        /// A function that can be used to create a custom visual for the notes. The available argument fields are: rect - the kendo.geometry.Rect that defines the note target rect.; options - the note options.; createVisual - a function that can be used to get the default visual.; category - the category of the note point.; dataItem - the dataItem of the note point.; value - the value of the note point.; sender - the chart instance.; series - the series of the note point. or text - the note text..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesNotesSettingsBuilder<T> Visual(string handler)
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the notes. The available argument fields are:
+        /// A function that can be used to create a custom visual for the notes. The available argument fields are: rect - the kendo.geometry.Rect that defines the note target rect.; options - the note options.; createVisual - a function that can be used to get the default visual.; category - the category of the note point.; dataItem - the dataItem of the note point.; value - the value of the note point.; sender - the chart instance.; series - the series of the note point. or text - the note text..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesNotesSettingsBuilder<T> Visual(Func<object, object> handler)

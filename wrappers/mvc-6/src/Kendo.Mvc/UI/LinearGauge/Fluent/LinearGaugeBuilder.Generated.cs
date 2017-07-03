@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The gauge area configuration options.
-		/// This is the entire visible area of the gauge.
+        /// The gauge area configuration options. This is the entire visible area of the gauge.
         /// </summary>
         /// <param name="configurator">The configurator for the gaugearea setting.</param>
         public LinearGaugeBuilder GaugeArea(Action<LinearGaugeGaugeAreaSettingsBuilder> configurator)
@@ -24,8 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the preferred rendering engine.
-		/// If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
+        /// Sets the preferred rendering engine. If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are: "svg" - renders the widget as inline SVG document, if available or "canvas" - renders the widget as a Canvas element, if available..
         /// </summary>
         /// <param name="value">The value for RenderAs</param>
         public LinearGaugeBuilder RenderAs(RenderingMode value)

@@ -24,8 +24,7 @@ class StockChartNavigator extends \Kendo\SerializableObject {
     }
 
     /**
-    * Indicates whether the navigator will call read on the data source initially.
-Applicable only when using a dedicated navigator data source.
+    * Indicates whether the navigator will call read on the data source initially. Applicable only when using a dedicated navigator data source.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\StockChartNavigator
     */
@@ -34,8 +33,7 @@ Applicable only when using a dedicated navigator data source.
     }
 
     /**
-    * The field containing the point date.
-It is used as a default field for the navigator axis.The data item field value must be either:
+    * The field containing the point date. It is used as a default field for the navigator axis.The data item field value must be either:
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChartNavigator
     */

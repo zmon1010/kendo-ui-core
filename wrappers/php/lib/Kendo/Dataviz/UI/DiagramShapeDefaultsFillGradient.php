@@ -6,7 +6,7 @@ class DiagramShapeDefaultsFillGradient extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The type of the gradient. The supported values are:
+    * The type of the gradient. The supported values are: linear or radial.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradient
     */
@@ -15,8 +15,7 @@ class DiagramShapeDefaultsFillGradient extends \Kendo\SerializableObject {
     }
 
     /**
-    * The center of the radial gradient.The coordinates are relative to the shape-bounding box.
-For example, [0, 0] is top left and [1, 1] is bottom right.
+    * The center of the radial gradient.The coordinates are relative to the shape-bounding box. For example, [0, 0] is top left and [1, 1] is bottom right.
     * @param array $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradient
     */
@@ -34,8 +33,7 @@ For example, [0, 0] is top left and [1, 1] is bottom right.
     }
 
     /**
-    * The start point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example, [0, 0] is top left and [1, 1] is bottom right.
+    * The start point of the linear gradient.Coordinates are relative to the shape bounding box. For example, [0, 0] is top left and [1, 1] is bottom right.
     * @param array $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradient
     */
@@ -44,8 +42,7 @@ For example, [0, 0] is top left and [1, 1] is bottom right.
     }
 
     /**
-    * The end point of the linear gradient.Coordinates are relative to the shape bounding box.
-For example, [0, 0] is top left and [1, 1] is bottom right.
+    * The end point of the linear gradient.Coordinates are relative to the shape bounding box. For example, [0, 0] is top left and [1, 1] is bottom right.
     * @param array $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradient
     */

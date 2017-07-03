@@ -79,8 +79,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the event or events on which ContextMenu should open. By default ContextMenu will show on contextmenu event on desktop and hold event on touch devices.
-		/// Could be any pointer/mouse/touch event, also several, separated by spaces.
+        /// Specifies the event or events on which ContextMenu should open. By default ContextMenu will show on contextmenu event on desktop and hold event on touch devices. Could be any pointer/mouse/touch event, also several, separated by spaces.
         /// </summary>
         /// <param name="value">The value for ShowOn</param>
         public ContextMenuBuilder ShowOn(string value)

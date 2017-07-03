@@ -6,9 +6,7 @@ class StockChartNavigatorCategoryAxis extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The discrete navigator.categoryAxis.baseUnitStep values when
-either navigator.categoryAxis.baseUnit is set to "fit" or
-navigator.categoryAxis.baseUnitStep is set to "auto".
+    * The discrete navigator.categoryAxis.baseUnitStep values when either navigator.categoryAxis.baseUnit is set to "fit" ornavigator.categoryAxis.baseUnitStep is set to "auto".
     * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisAutoBaseUnitSteps|array $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -35,9 +33,7 @@ navigator.categoryAxis.baseUnitStep is set to "auto".
     }
 
     /**
-    * The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
-between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
-that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.
+    * The base time interval for the date axis. The default base unit is determined automatically from the minimum difference between subsequent categories.The supported values are: "fit"; "seconds"; "minutes"; "hours"; "days"; "weeks"; "months" or "years". Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -46,8 +42,7 @@ that the total number of categories does not exceed categoryAxis.maxDateGroups.S
     }
 
     /**
-    * The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
-that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
+    * The step (interval) between categories in base units. Setting it to "auto" will set the step to such value that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
     * @param  $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -65,8 +60,7 @@ that the total number of categories does not exceed categoryAxis.maxDateGroups.T
     }
 
     /**
-    * The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color and
-categoryAxis.line.color.
+    * The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color andcategoryAxis.line.color.
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -120,8 +114,7 @@ categoryAxis.line.color.
     }
 
     /**
-    * The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
-body of the chart.
+    * The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the body of the chart.
     * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisMajorGridLines|array $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -139,9 +132,7 @@ body of the chart.
     }
 
     /**
-    * The last date displayed on the category date axis. By default, the minimum date is the same as the last category.
-This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-set up a fixed date range.
+    * The last date displayed on the category date axis. By default, the minimum date is the same as the last category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
     * @param  $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -150,9 +141,7 @@ set up a fixed date range.
     }
 
     /**
-    * The maximum number of groups (categories) to display when
-categoryAxis.baseUnit is set to "fit" or
-categoryAxis.baseUnitStep is set to "auto".
+    * The maximum number of groups (categories) to display whencategoryAxis.baseUnit is set to "fit" orcategoryAxis.baseUnitStep is set to "auto".
     * @param float $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -161,9 +150,7 @@ categoryAxis.baseUnitStep is set to "auto".
     }
 
     /**
-    * The first date displayed on the category date axis. By default, the minimum date is the same as the first category.
-This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-set up a fixed date range.
+    * The first date displayed on the category date axis. By default, the minimum date is the same as the first category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
     * @param  $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -172,8 +159,7 @@ set up a fixed date range.
     }
 
     /**
-    * The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
-body of the chart.
+    * The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the body of the chart.
     * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisMinorGridLines|array $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */
@@ -236,7 +222,7 @@ body of the chart.
     }
 
     /**
-    * The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:
+    * The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are: kendo.days.Sunday - equal to 0; kendo.days.Monday - equal to 1; kendo.days.Tuesday - equal to 2; kendo.days.Wednesday - equal to 3; kendo.days.Thursday - equal to 4; kendo.days.Friday - equal to 5 or kendo.days.Saturday - equal to 6.
     * @param float $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis
     */

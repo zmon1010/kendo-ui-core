@@ -7,7 +7,7 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the allDayEventTemplate option of the SchedulerView.
-    * The template used to render the "all day" scheduler events.The fields which can be used in the template are:
+    * The template used to render the "all day" scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -19,7 +19,7 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the allDayEventTemplate option of the SchedulerView.
-    * The template used to render the "all day" scheduler events.The fields which can be used in the template are:
+    * The template used to render the "all day" scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -38,7 +38,7 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the allDaySlotTemplate option of the SchedulerView.
-    * The template used to render the all day slot cell.The fields which can be used in the template are:
+    * The template used to render the all day slot cell.The fields which can be used in the template are: date - represents the slot date. or resources() - returns the relevant resources for the current slot..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -50,7 +50,7 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the allDaySlotTemplate option of the SchedulerView.
-    * The template used to render the all day slot cell.The fields which can be used in the template are:
+    * The template used to render the all day slot cell.The fields which can be used in the template are: date - represents the slot date. or resources() - returns the relevant resources for the current slot..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -69,9 +69,7 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the dateHeaderTemplate option of the SchedulerView.
-    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
-If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
+    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd". The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture. If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -83,9 +81,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the dateHeaderTemplate option of the SchedulerView.
-    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
-If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
+    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd". The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture. If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -95,7 +91,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the dayTemplate option of the SchedulerView.
-    * The template used to render the day slots in month view.The fields which can be used in the template are:
+    * The template used to render the day slots in month view.The fields which can be used in the template are: date Date - represents the current day or resources() - returns the relevant resources for the current slot..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -107,7 +103,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the dayTemplate option of the SchedulerView.
-    * The template used to render the day slots in month view.The fields which can be used in the template are:
+    * The template used to render the day slots in month view.The fields which can be used in the template are: date Date - represents the current day or resources() - returns the relevant resources for the current slot..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -144,7 +140,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the eventTemplate option of the SchedulerView.
-    * The template used by the view to render the scheduler events.The fields which can be used in the template are:
+    * The template used by the view to render the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -156,7 +152,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the eventTemplate option of the SchedulerView.
-    * The template used by the view to render the scheduler events.The fields which can be used in the template are:
+    * The template used by the view to render the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -166,7 +162,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the eventTimeTemplate option of the SchedulerView.
-    * The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are:
+    * The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; isAllDay Boolean - if true the event is "all day"; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -178,7 +174,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the eventTimeTemplate option of the SchedulerView.
-    * The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are:
+    * The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are: description String - the event description; end Date - the event end date; isAllDay Boolean - if true the event is "all day"; resources Array - the event resources; start Date - the event start date or title String - the event title.
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -206,7 +202,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the majorTimeHeaderTemplate option of the SchedulerView.
-    * The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
+    * The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -218,7 +214,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the majorTimeHeaderTemplate option of the SchedulerView.
-    * The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
+    * The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -237,7 +233,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the minorTimeHeaderTemplate option of the SchedulerView.
-    * The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are:
+    * The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -249,7 +245,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the minorTimeHeaderTemplate option of the SchedulerView.
-    * The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are:
+    * The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are: date - represents the major tick date..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -295,7 +291,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the slotTemplate option of the SchedulerView.
-    * The template used to render the time slot cells.The fields which can be used in the template are:
+    * The template used to render the time slot cells.The fields which can be used in the template are: date - represents the slot date and time. or resources() - returns the relevant resources for the current slot..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -307,7 +303,7 @@ If the developer wants to control the day and month order then one needs to defi
 
     /**
     * Sets the slotTemplate option of the SchedulerView.
-    * The template used to render the time slot cells.The fields which can be used in the template are:
+    * The template used to render the time slot cells.The fields which can be used in the template are: date - represents the slot date and time. or resources() - returns the relevant resources for the current slot..
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */

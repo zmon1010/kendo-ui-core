@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The series base color. The supported values are:
+        /// The series base color. The supported values are: CSS color string, including hex and rgb or function(point) - user-defined function that will be evaluated for each point. Returning undefined will assume the default series color..
         /// </summary>
         /// <param name="value">The value for Color</param>
         public ChartSeriesBuilder<T> Color(string value)
@@ -74,7 +74,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// The series base color. The supported values are:
+        /// The series base color. The supported values are: CSS color string, including hex and rgb or function(point) - user-defined function that will be evaluated for each point. Returning undefined will assume the default series color..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesBuilder<T> ColorHandler(string handler)
@@ -85,7 +85,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The series base color. The supported values are:
+        /// The series base color. The supported values are: CSS color string, including hex and rgb or function(point) - user-defined function that will be evaluated for each point. Returning undefined will assume the default series color..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesBuilder<T> ColorHandler(Func<object, object> handler)
@@ -129,7 +129,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The dash type of line chart.The following dash types are supported:
+        /// The dash type of line chart.The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="value">The value for DashType</param>
         public ChartSeriesBuilder<T> DashType(ChartDashType value)
@@ -191,8 +191,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The data item field which contains the summary type for waterfall series.
-		/// Summary columns are optional and can be one of two types:
+        /// The data item field which contains the summary type for waterfall series. Summary columns are optional and can be one of two types: "runningTotal" - Displays the sum of all items since the last "runningTotal" point. or "total" - Displays the sum of all previous items..
         /// </summary>
         /// <param name="value">The value for SummaryField</param>
         public ChartSeriesBuilder<T> SummaryField(string value)
@@ -212,8 +211,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
-		/// The last element is always created like a rectangle since there is no following element.
+        /// When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value The last element is always created like a rectangle since there is no following element.
         /// </summary>
         /// <param name="value">The value for DynamicSlope</param>
         public ChartSeriesBuilder<T> DynamicSlope(bool value)
@@ -223,8 +221,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
-		/// The last element is always created like a rectangle since there is no following element.
+        /// When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value The last element is always created like a rectangle since there is no following element.
         /// </summary>
         public ChartSeriesBuilder<T> DynamicSlope()
         {
@@ -693,8 +690,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A boolean value indicating if the series should be stacked.
-		/// A string value is interpreted as series.stack.group.
+        /// A boolean value indicating if the series should be stacked. A string value is interpreted as series.stack.group.
         /// </summary>
         /// <param name="configurator">The configurator for the stack setting.</param>
         public ChartSeriesBuilder<T> Stack(Action<ChartSeriesStackSettingsBuilder<T>> configurator)
@@ -708,8 +704,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A boolean value indicating if the series should be stacked.
-		/// A string value is interpreted as series.stack.group.
+        /// A boolean value indicating if the series should be stacked. A string value is interpreted as series.stack.group.
         /// </summary>
         public ChartSeriesBuilder<T> Stack()
         {
@@ -718,8 +713,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A boolean value indicating if the series should be stacked.
-		/// A string value is interpreted as series.stack.group.
+        /// A boolean value indicating if the series should be stacked. A string value is interpreted as series.stack.group.
         /// </summary>
         /// <param name="enabled">Enables or disables the stack option.</param>
         public ChartSeriesBuilder<T> Stack(bool enabled)
@@ -775,7 +769,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The type of the series.The supported values are:
+        /// The type of the series.The supported values are: area; bar; bubble; bullet; candlestick; column; donut; funnel; horizontalWaterfall; line; ohlc; pie; polarArea; polarLine; polarScatter; radarArea; radarColumn; radarLine; rangeBar; rangeColumn; scatter; scatterLine; verticalArea; verticalBoxPlot; verticalBullet; verticalLine or waterfall.
         /// </summary>
         /// <param name="value">The value for Type</param>
         public ChartSeriesBuilder<T> Type(string value)
@@ -795,8 +789,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A value indicating whether to show the point category name (for funnel, donut and pie series)
-		/// or series name (for other available series types) in the legend.
+        /// A value indicating whether to show the point category name (for funnel, donut and pie series) or series name (for other available series types) in the legend.
         /// </summary>
         /// <param name="value">The value for VisibleInLegend</param>
         public ChartSeriesBuilder<T> VisibleInLegend(bool value)
@@ -816,7 +809,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
+        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the point options.; createVisual - a function that can be used to get the default visual.; category - the point category.; dataItem - the point dataItem.; value - the point value.; stackValue - the cumulative point value on the stack. Available only for stackable series.; sender - the chart instance.; series - the point series.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series.; total - the sum of all previous series values. Available for waterfall series.; radius - the segment radius. Available for donut and pie series.; innerRadius - the segment inner radius. Available for donut series.; startAngle - the segment start angle. Available for donut and pie series.; endAngle - the segment end angle. Available for donut and pie series.; center - the segment center point. Available for donut and pie series. or points - the segment points. Available for funnel series..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesBuilder<T> Visual(string handler)
@@ -826,7 +819,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
+        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the point options.; createVisual - a function that can be used to get the default visual.; category - the point category.; dataItem - the point dataItem.; value - the point value.; stackValue - the cumulative point value on the stack. Available only for stackable series.; sender - the chart instance.; series - the point series.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series.; total - the sum of all previous series values. Available for waterfall series.; radius - the segment radius. Available for donut and pie series.; innerRadius - the segment inner radius. Available for donut series.; startAngle - the segment start angle. Available for donut and pie series.; endAngle - the segment end angle. Available for donut and pie series.; center - the segment center point. Available for donut and pie series. or points - the segment points. Available for funnel series..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesBuilder<T> Visual(Func<object, object> handler)
@@ -898,8 +891,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// An optional Z-index that can be used to change the default stacking order of series.The series with the highest Z-index will be placed on top.Series with no Z-index will use the default stacking order based on series type.
-		/// For example line series will be on top with bar and area following below.
+        /// An optional Z-index that can be used to change the default stacking order of series.The series with the highest Z-index will be placed on top.Series with no Z-index will use the default stacking order based on series type. For example line series will be on top with bar and area following below.
         /// </summary>
         /// <param name="value">The value for ZIndex</param>
         public ChartSeriesBuilder<T> ZIndex(double value)

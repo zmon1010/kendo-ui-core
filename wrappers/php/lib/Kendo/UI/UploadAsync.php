@@ -15,9 +15,7 @@ class UploadAsync extends \Kendo\SerializableObject {
     }
 
     /**
-    * The selected files will be uploaded in separate requests, if this is supported by the browser.
-You can change this behavior by setting batch to true, in which case all selected files will be uploaded in one request.The batch mode applies to multiple files, which are selected at the same time.
-Files selected one after the other will be uploaded in separate requests.
+    * The selected files will be uploaded in separate requests, if this is supported by the browser. You can change this behavior by setting batch to true, in which case all selected files will be uploaded in one request.The batch mode applies to multiple files, which are selected at the same time. Files selected one after the other will be uploaded in separate requests.
     * @param boolean $value
     * @return \Kendo\UI\UploadAsync
     */
@@ -71,8 +69,7 @@ Files selected one after the other will be uploaded in separate requests.
     }
 
     /**
-    * The URL of the handler responsible for removing uploaded files (if any). The handler must accept POST
-requests containing one or more "fileNames" fields specifying the files to be deleted.
+    * The URL of the handler responsible for removing uploaded files (if any). The handler must accept POST requests containing one or more "fileNames" fields specifying the files to be deleted.
     * @param string $value
     * @return \Kendo\UI\UploadAsync
     */
@@ -99,8 +96,7 @@ requests containing one or more "fileNames" fields specifying the files to be de
     }
 
     /**
-    * The URL of the handler that will receive the submitted files. The handler must accept POST requests
-containing one or more fields with the same name as the original input name.
+    * The URL of the handler that will receive the submitted files. The handler must accept POST requests containing one or more fields with the same name as the original input name.
     * @param string $value
     * @return \Kendo\UI\UploadAsync
     */
@@ -118,8 +114,7 @@ containing one or more fields with the same name as the original input name.
     }
 
     /**
-    * Controls whether to send credentials (cookies, headers) for cross-site requests.
-This option will be ignored if the browser doesn't support File API.
+    * Controls whether to send credentials (cookies, headers) for cross-site requests. This option will be ignored if the browser doesn't support File API.
     * @param boolean $value
     * @return \Kendo\UI\UploadAsync
     */

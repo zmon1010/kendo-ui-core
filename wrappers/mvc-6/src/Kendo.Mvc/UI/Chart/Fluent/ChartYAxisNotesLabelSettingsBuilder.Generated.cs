@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the axis value.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartYAxisNotesLabelSettingsBuilder<T> Template(string value)
@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the axis value.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartYAxisNotesLabelSettingsBuilder<T> TemplateId(string templateId)
@@ -104,7 +104,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the labels.
+        /// The position of the labels. "inside" - the label is positioned inside of the icon. or "outside" - the label is positioned outside of the icon..
         /// </summary>
         /// <param name="value">The value for Position</param>
         public ChartYAxisNotesLabelSettingsBuilder<T> Position(ChartNoteLabelPosition value)

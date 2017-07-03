@@ -27,7 +27,7 @@ class Dialog extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+    * Specifies the possible layout of the action buttons in the Dialog.Possible values are: normal or stretched.
     * @param string $value
     * @return \Kendo\UI\Dialog
     */

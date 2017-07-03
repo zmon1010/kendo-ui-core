@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The dash type of the line.The following dash types are supported:
+        /// The dash type of the line.The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="value">The value for DashType</param>
         public ChartYAxisMajorGridLinesSettingsBuilder<T> DashType(ChartDashType value)
@@ -41,8 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The width of the line in pixels. Also affects the major and minor ticks, but not the grid lines.
-		/// #### Example - set the scatter chart x major grid lines width
+        /// The width of the line in pixels. Also affects the major and minor ticks, but not the grid lines. #### Example - set the scatter chart x major grid lines width
         /// </summary>
         /// <param name="value">The value for Width</param>
         public ChartYAxisMajorGridLinesSettingsBuilder<T> Width(double value)

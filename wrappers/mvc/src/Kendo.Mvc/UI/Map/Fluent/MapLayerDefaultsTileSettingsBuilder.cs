@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The URL template for tile layers. Template variables:
+        /// The URL template for tile layers. Template variables: x - X coordinate of the tile; y - Y coordinate of the tile; zoom - zoom level or subdomain - Subdomain for this tile. See subdomains.
         /// </summary>
         /// <param name="value">The value that configures the urltemplate.</param>
         public MapLayerDefaultsTileSettingsBuilder UrlTemplate(string value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL template for tile layers. Template variables:
+        /// The URL template for tile layers. Template variables: x - X coordinate of the tile; y - Y coordinate of the tile; zoom - zoom level or subdomain - Subdomain for this tile. See subdomains.
         /// </summary>
         /// <param name="value">The value that configures the urltemplate.</param>
         public MapLayerDefaultsTileSettingsBuilder UrlTemplateId(string value)

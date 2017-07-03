@@ -78,7 +78,7 @@ class DiagramPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the paper size of the PDF document. The default setting is auto and determines the paper size by content.The supported values are:
+    * Specifies the paper size of the PDF document. The default setting is auto and determines the paper size by content.The supported values are: A predefined size: A4, A3, and so on.; An array of two numbers specifying the width and height in points (1pt = 1/72in) or An array of two strings specifying the width and height in units. The supported units are mm, cm, in, and pt..
     * @param string|array $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */
@@ -87,7 +87,7 @@ class DiagramPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * The URL of the server side proxy which will stream the file to the end user.When the browser is not capable of saving files locally, a proxy will be used. Such browsers are Internet Explorer version 9 (and older) and Safari. You are responsible for implementing the server-side proxy. The proxy receives a POST request with the following parameters in the request body:The proxy is expected to return the decoded file with a set Content-Disposition header.
+    * The URL of the server side proxy which will stream the file to the end user.When the browser is not capable of saving files locally, a proxy will be used. Such browsers are Internet Explorer version 9 (and older) and Safari. You are responsible for implementing the server-side proxy. The proxy receives a POST request with the following parameters in the request body: contentType - The MIME type of the file; base64 - The base-64 encoded file content or fileName - The file name, as requested by the caller.. The proxy is expected to return the decoded file with a set Content-Disposition header.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramPdf
     */

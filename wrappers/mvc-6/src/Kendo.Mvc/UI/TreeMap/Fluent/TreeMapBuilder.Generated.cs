@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public TreeMapBuilder AutoBind(bool value)
@@ -61,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the treeMap tile content.The fields which can be used in the template are:
+        /// The template which renders the treeMap tile content.The fields which can be used in the template are: dataItem - the original data item used to construct the point. or text - the original tile text..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public TreeMapBuilder Template(string value)
@@ -71,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the treeMap tile content.The fields which can be used in the template are:
+        /// The template which renders the treeMap tile content.The fields which can be used in the template are: dataItem - the original data item used to construct the point. or text - the original tile text..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public TreeMapBuilder TemplateId(string templateId)

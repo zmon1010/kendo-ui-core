@@ -24,7 +24,7 @@ class DataSourceFilterItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The logical operation to use when the filter.filters option is set.The supported values are:
+    * The logical operation to use when the filter.filters option is set.The supported values are: "and" or "or".
     * @param string $value
     * @return \Kendo\Data\DataSourceFilterItem
     */
@@ -33,7 +33,7 @@ class DataSourceFilterItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The filter operator (comparison).The supported operators are:The last five are supported only for string fields.
+    * The filter operator (comparison).The supported operators are: "eq" (equal to); "neq" (not equal to); "isnull" (is equal to null); "isnotnull" (is not equal to null); "lt" (less than); "lte" (less than or equal to); "gt" (greater than); "gte" (greater than or equal to); "startswith"; "endswith"; "contains"; "doesnotcontain"; "isempty" or "isnotempty". The last five are supported only for string fields.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Data\DataSourceFilterItem
     */

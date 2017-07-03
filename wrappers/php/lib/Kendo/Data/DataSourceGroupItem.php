@@ -15,7 +15,7 @@ class DataSourceGroupItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The sort order of the group.The supported values are:The default sort order is ascending.
+    * The sort order of the group.The supported values are: "asc" (ascending order) or "desc" (descending order). The default sort order is ascending.
     * @param string $value
     * @return \Kendo\Data\DataSourceGroupItem
     */

@@ -42,9 +42,7 @@ class ChartCategoryAxisItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
-    * The format used to display labels for date category axis.
-The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit.
-Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.
+    * The format used to display labels for date category axis. The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit. Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.
     * @param \Kendo\Dataviz\UI\ChartCategoryAxisItemLabelsDateFormats|array $value
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels
     */
@@ -126,7 +124,7 @@ Setting the categoryAxis.labels.format option will override the date formats.See
 
     /**
     * Sets the template option of the ChartCategoryAxisItemLabels.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: value - the category value; dataItem - the data item, in case a field has been specified. If the category does not have a corresponding item in the data then an empty object will be passed.; format - the default format of the label or culture - the default culture (if set) on the label.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels
     */
@@ -138,7 +136,7 @@ Setting the categoryAxis.labels.format option will override the date formats.See
 
     /**
     * Sets the template option of the ChartCategoryAxisItemLabels.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: value - the category value; dataItem - the data item, in case a field has been specified. If the category does not have a corresponding item in the data then an empty object will be passed.; format - the default format of the label or culture - the default culture (if set) on the label.
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels
     */
@@ -157,7 +155,7 @@ Setting the categoryAxis.labels.format option will override the date formats.See
 
     /**
     * Sets the visual option of the ChartCategoryAxisItemLabels.
-    * A function that can be used to create a custom visual for the labels. The available argument fields are:
+    * A function that can be used to create a custom visual for the labels. The available argument fields are: createVisual - a function that can be used to get the default visual.; culture - the default culture (if set) on the label; dataItem - the data item, in case a field has been specified; format - the default format of the label; options - the label options.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; text - the label text. or value - the category value.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels
     */

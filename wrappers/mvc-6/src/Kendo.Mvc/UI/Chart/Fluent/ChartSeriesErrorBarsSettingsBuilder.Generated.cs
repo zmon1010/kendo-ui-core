@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The error bars value.The following value types are supported:
+        /// The error bars value.The following value types are supported: "stderr" - the standard error of the series values will be used to calculate the point low and high value; "stddev(n)" - the standard deviation of the series values will be used to calculate the point low and high value. A number can be specified between the parentheses, that will be multiplied by the calculated standard deviation.; "percentage(n)" - a percentage of the point value; A number that will be subtracted/added to the point value; An array that holds the low and high difference from the point value or A function that returns the errorBars point value.
         /// </summary>
         /// <param name="value">The value for Value</param>
         public ChartSeriesErrorBarsSettingsBuilder<T> Value(string value)
@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the error bars. The available argument fields are:
+        /// A function that can be used to create a custom visual for the error bars. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the error bar options.; createVisual - a function that can be used to get the default visual.; low - the error bar low value.; high - the error bar high value. or sender - the chart instance..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesErrorBarsSettingsBuilder<T> Visual(string handler)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the error bars. The available argument fields are:
+        /// A function that can be used to create a custom visual for the error bars. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the error bar options.; createVisual - a function that can be used to get the default visual.; low - the error bar low value.; high - the error bar high value. or sender - the chart instance..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesErrorBarsSettingsBuilder<T> Visual(Func<object, object> handler)

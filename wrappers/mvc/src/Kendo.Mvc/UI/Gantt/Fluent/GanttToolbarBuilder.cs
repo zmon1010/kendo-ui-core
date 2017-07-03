@@ -20,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The name of the toolbar command. Either a built-in ("append" and "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-gantt-name.
-		/// This class can be used to obtain reference to the button after Gantt initialization and attach click handlers.
+        /// The name of the toolbar command. Either a built-in ("append" and "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-gantt-name. This class can be used to obtain reference to the button after Gantt initialization and attach click handlers.
         /// </summary>
         /// <param name="value">The value that configures the name.</param>
         public GanttToolbarBuilder Name(string value)

@@ -112,8 +112,7 @@ class MultiSelect extends \Kendo\UI\Widget {
     }
 
     /**
-    * The filtering method used to determine the suggestions for the current value. Filtration is turned of by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option).
-The supported filter values are startswith, endswith and contains.
+    * The filtering method used to determine the suggestions for the current value. Filtration is turned of by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option). The supported filter values are startswith, endswith and contains.
     * @param string $value
     * @return \Kendo\UI\MultiSelect
     */
@@ -215,8 +214,7 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
-    * The minimum number of characters the user must type before a search is performed. Set to a higher value if the search could match a lot of items.
-A zero value means that a request will be made as soon as the user focuses the widget.
+    * The minimum number of characters the user must type before a search is performed. Set to a higher value if the search could match a lot of items. A zero value means that a request will be made as soon as the user focuses the widget.
     * @param float $value
     * @return \Kendo\UI\MultiSelect
     */
@@ -235,8 +233,7 @@ A zero value means that a request will be made as soon as the user focuses the w
 
     /**
     * Sets the noDataTemplate option of the MultiSelect.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\MultiSelect
     */
@@ -248,8 +245,7 @@ The noData template receives the widget itself as a part of the data argument. T
 
     /**
     * Sets the noDataTemplate option of the MultiSelect.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The template content.
     * @return \Kendo\UI\MultiSelect
     */
@@ -267,8 +263,7 @@ The noData template receives the widget itself as a part of the data argument. T
     }
 
     /**
-    * The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.
+    * The options that will be used for the popup initialization. For more details about the available options refer to Popup documentation.
     * @param \Kendo\UI\MultiSelectPopup|array $value
     * @return \Kendo\UI\MultiSelect
     */
@@ -343,9 +338,7 @@ refer to Popup documentation.
     }
 
     /**
-    * The mode used to render the selected tags. The available modes are:
-- multiple - renders a tag for every selected value
-- single - renders only one tag that shows the number of the selected values
+    * The mode used to render the selected tags. The available modes are: - multiple - renders a tag for every selected value - single - renders only one tag that shows the number of the selected values
     * @param string $value
     * @return \Kendo\UI\MultiSelect
     */

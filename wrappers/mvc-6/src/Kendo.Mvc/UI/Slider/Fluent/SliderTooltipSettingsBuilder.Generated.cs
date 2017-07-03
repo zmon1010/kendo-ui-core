@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : struct, IComparable 
     {
         /// <summary>
-        /// Disables (false) or enables (true) the tooltip of
-		/// the Slider.
+        /// Disables (false) or enables (true) the tooltip of the Slider.
         /// </summary>
         /// <param name="value">The value for Enabled</param>
         public SliderTooltipSettingsBuilder<T> Enabled(bool value)
@@ -22,9 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Format string for the text of the tooltip. Note: The applied
-		/// format will also influence the appearance of the Slider
-		/// tick labels.The slider widget supports precision of up-to 10 digits after the decimals point.
+        /// Format string for the text of the tooltip. Note: The applied format will also influence the appearance of the Slider tick labels.The slider widget supports precision of up-to 10 digits after the decimals point.
         /// </summary>
         /// <param name="value">The value for Format</param>
         public SliderTooltipSettingsBuilder<T> Format(string value)
@@ -34,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Template of the tooltip. The following variables are passed by the Slider and are ready to be used inside the template:
+        /// Template of the tooltip. The following variables are passed by the Slider and are ready to be used inside the template: value - the current value when using a regular slider or selectionStart and selectionEnd - the current values when using a range slider.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public SliderTooltipSettingsBuilder<T> Template(string value)
@@ -44,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Template of the tooltip. The following variables are passed by the Slider and are ready to be used inside the template:
+        /// Template of the tooltip. The following variables are passed by the Slider and are ready to be used inside the template: value - the current value when using a regular slider or selectionStart and selectionEnd - the current values when using a range slider.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public SliderTooltipSettingsBuilder<T> TemplateId(string templateId)

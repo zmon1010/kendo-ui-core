@@ -6,7 +6,7 @@ class ChartZoomableSelection extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Specifies a keyboard key that should be pressed to activate the selection. The supported values are:
+    * Specifies a keyboard key that should be pressed to activate the selection. The supported values are: "none" - No key is required.; "ctrl" - The "ctrl" key should be pressed.; "shift" - The "shift" key should be pressed. or "alt" - The "alt" key should be pressed..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartZoomableSelection
     */

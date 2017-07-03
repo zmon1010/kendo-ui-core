@@ -9,8 +9,7 @@ class Grid extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
-Can be set to a JavaScript object which represents the allowCopy configuration.
+    * If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV. Can be set to a JavaScript object which represents the allowCopy configuration.
     * @param boolean|\Kendo\UI\GridAllowCopy|array $value
     * @return \Kendo\UI\Grid
     */
@@ -19,8 +18,7 @@ Can be set to a JavaScript object which represents the allowCopy configuration.
     }
 
     /**
-    * If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the
-dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.
+    * If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */
@@ -47,8 +45,7 @@ dataSource instance is fired. By default, autoBind is set to true and the widget
     }
 
     /**
-    * If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+    * If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
     * @param boolean|\Kendo\UI\GridColumnMenu|array $value
     * @return \Kendo\UI\Grid
     */
@@ -120,8 +117,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
     }
 
     /**
-    * If set to true and the grid is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
-The grid uses same layout for both phone and tablet.
+    * If set to true and the grid is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type. The grid uses same layout for both phone and tablet.
     * @param boolean|string $value
     * @return \Kendo\UI\Grid
     */
@@ -175,8 +171,7 @@ The grid uses same layout for both phone and tablet.
     }
 
     /**
-    * If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
-Multi-level headers allow reordering only in same level.
+    * If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled. Multi-level headers allow reordering only in same level.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */
@@ -185,8 +180,7 @@ Multi-level headers allow reordering only in same level.
     }
 
     /**
-    * If set to true, users can resize columns by dragging the edges (resize handles) of their header cells. As of Kendo UI Q1 2015, users can also auto-fit a column by double-clicking
-its resize handle. In this case the column will assume the smallest possible width, which allows the column content to fit without wrapping.By default, column resizing is disabled.
+    * If set to true, users can resize columns by dragging the edges (resize handles) of their header cells. As of Kendo UI Q1 2015, users can also auto-fit a column by double-clicking its resize handle. In this case the column will assume the smallest possible width, which allows the column content to fit without wrapping.By default, column resizing is disabled.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */
@@ -204,7 +198,7 @@ its resize handle. In this case the column will assume the smallest possible wid
     }
 
     /**
-    * If set to true the user would be able to select grid rows. By default selection is disabled.Can also be set to the following string values:
+    * If set to true the user would be able to select grid rows. By default selection is disabled.Can also be set to the following string values: "row" - the user can select a single row.; "cell" - the user can select a single cell.; "multiple, row" - the user can select multiple rows. or "multiple, cell" - the user can select multiple cells..
     * @param boolean|string $value
     * @return \Kendo\UI\Grid
     */
@@ -704,8 +698,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the navigate event of the Grid.
-    * Fired when navigatable is enabled and the user change current item with either
-mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when navigatable is enabled and the user change current item with either mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */

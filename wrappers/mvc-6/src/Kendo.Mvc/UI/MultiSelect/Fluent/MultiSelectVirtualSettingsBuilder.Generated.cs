@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Specifies the height of the virtual item. All items in the virtualized list must have the same height.
-		/// If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
+        /// Specifies the height of the virtual item. All items in the virtualized list must have the same height. If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
         /// </summary>
         /// <param name="value">The value for ItemHeight</param>
         public MultiSelectVirtualSettingsBuilder ItemHeight(double value)
@@ -32,11 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-		/// The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
-		/// &gt; Important
-		/// &gt;
-		/// &gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
+        /// The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet. The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices. &gt; Important &gt; &gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public MultiSelectVirtualSettingsBuilder ValueMapper(string handler)
@@ -46,11 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-		/// The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
-		/// &gt; Important
-		/// &gt;
-		/// &gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
+        /// The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet. The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices. &gt; Important &gt; &gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MultiSelectVirtualSettingsBuilder ValueMapper(Func<object, object> handler)

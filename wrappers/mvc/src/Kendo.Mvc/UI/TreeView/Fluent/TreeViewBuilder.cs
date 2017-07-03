@@ -594,8 +594,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Sets the field of the data item that provides the sprite CSS class of the nodes.
-		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// Sets the field of the data item that provides the sprite CSS class of the nodes. If an array, each level uses the field that is at the same index in the array, or the last item in the array.
         /// </summary>
         /// <param name="value">The value that configures the dataspritecssclassfield.</param>
         public TreeViewBuilder DataSpriteCssClassField(string value)

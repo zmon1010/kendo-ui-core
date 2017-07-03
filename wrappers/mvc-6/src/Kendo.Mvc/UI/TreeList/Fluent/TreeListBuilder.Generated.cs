@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public TreeListBuilder<T> AutoBind(bool value)
@@ -21,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the treelist columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
-		/// field to which the column is bound. The treelist will create a column for every item of the array.
+        /// The configuration of the treelist columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as thefield to which the column is bound. The treelist will create a column for every item of the array.
         /// </summary>
         /// <param name="configurator">The configurator for the columns setting.</param>
         public TreeListBuilder<T> Columns(Action<TreeListColumnFactory<T>> configurator)
@@ -75,8 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the columnmenu setting.</param>
         public TreeListBuilder<T> ColumnMenu(Action<TreeListColumnMenuSettingsBuilder<T>> configurator)
@@ -90,8 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         public TreeListBuilder<T> ColumnMenu()
         {
@@ -100,8 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         /// <param name="enabled">Enables or disables the columnmenu option.</param>
         public TreeListBuilder<T> ColumnMenu(bool enabled)
@@ -269,8 +264,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar,
-		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf").
+        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar, and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf"). The "create" command adds an empty data item to the treelist.; The "excel" command exports the treelist data in MS Excel format. or The "pdf" command exports the treelist data in PDF format..
         /// </summary>
         /// <param name="configurator">The configurator for the toolbar setting.</param>
         public TreeListBuilder<T> Toolbar(Action<TreeListToolbarFactory<T>> configurator)

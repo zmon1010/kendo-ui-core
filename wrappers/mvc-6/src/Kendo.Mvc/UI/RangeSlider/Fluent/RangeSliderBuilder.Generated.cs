@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : struct, IComparable 
     {
         /// <summary>
-        /// The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
-		/// handle must be focused). Note: The allied largeStep will also set large tick for every large step.
+        /// The delta with which the value will change when the user presses the Page Up or Page Down key (the drag handle must be focused). Note: The allied largeStep will also set large tick for every large step.
         /// </summary>
         /// <param name="value">The value for LargeStep</param>
         public RangeSliderBuilder<T> LargeStep(T? value)
@@ -91,9 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The small step value of the RangeSlider. The underlying value will be changed when the end
-		/// user (1) clicks on the increase or decrease buttons of the RangeSlider, (2) presses the
-		/// arrow keys (the drag handle must be focused), or (3) drags the drag handle.
+        /// The small step value of the RangeSlider. The underlying value will be changed when the end user (1) clicks on the increase or decrease buttons of the RangeSlider, (2) presses the arrow keys (the drag handle must be focused), or (3) drags the drag handle.
         /// </summary>
         /// <param name="value">The value for SmallStep</param>
         public RangeSliderBuilder<T> SmallStep(T? value)

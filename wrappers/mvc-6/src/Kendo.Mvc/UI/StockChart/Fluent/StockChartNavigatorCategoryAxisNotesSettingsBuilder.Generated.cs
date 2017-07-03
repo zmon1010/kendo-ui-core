@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The position of the category axis note.
+        /// The position of the category axis note. "top" - The note is positioned on the top.; "bottom" - The note is positioned on the bottom.; "left" - The note is positioned on the left. or "right" - The note is positioned on the right..
         /// </summary>
         /// <param name="value">The value for Position</param>
         public StockChartNavigatorCategoryAxisNotesSettingsBuilder<T> Position(string value)

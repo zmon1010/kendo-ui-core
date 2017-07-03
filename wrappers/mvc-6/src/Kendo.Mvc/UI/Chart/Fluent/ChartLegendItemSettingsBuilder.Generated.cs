@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the legend items. The available argument fields are:
+        /// A function that can be used to create a custom visual for the legend items. The available argument fields are: options - the item options.; createVisual - a function that can be used to get the default visual.; series - the item series. or pointIndex - the index of the point in the series. Available for pie, donut and funnel series..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartLegendItemSettingsBuilder<T> Visual(string handler)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the legend items. The available argument fields are:
+        /// A function that can be used to create a custom visual for the legend items. The available argument fields are: options - the item options.; createVisual - a function that can be used to get the default visual.; series - the item series. or pointIndex - the index of the point in the series. Available for pie, donut and funnel series..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartLegendItemSettingsBuilder<T> Visual(Func<object, object> handler)

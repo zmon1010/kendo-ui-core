@@ -33,8 +33,7 @@ class SparklineCategoryAxisItemLine extends \Kendo\SerializableObject {
     }
 
     /**
-    * The width of the line. This will also effect the major and minor ticks, but
-not the grid lines.
+    * The width of the line. This will also effect the major and minor ticks, but not the grid lines.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineCategoryAxisItemLine
     */

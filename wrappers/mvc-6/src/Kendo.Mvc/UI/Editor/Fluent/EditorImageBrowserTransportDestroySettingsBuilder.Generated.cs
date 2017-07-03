@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-		/// Refer to the jQuery.ajax documentation for further info.
+        /// The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON. Refer to the jQuery.ajax documentation for further info.
         /// </summary>
         /// <param name="value">The value for ContentType</param>
         public EditorImageBrowserTransportDestroySettingsBuilder ContentType(string value)
@@ -22,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The type of data that you're expecting back from the server. Commonly used values are "json" and "jsonp".
-		/// Refer to the jQuery.ajax documentation for further info.
+        /// The type of data that you're expecting back from the server. Commonly used values are "json" and "jsonp". Refer to the jQuery.ajax documentation for further info.
         /// </summary>
         /// <param name="value">The value for DataType</param>
         public EditorImageBrowserTransportDestroySettingsBuilder DataType(string value)
@@ -33,8 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
-		/// Refer to the jQuery.ajax documentation for further info.
+        /// The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST". Refer to the jQuery.ajax documentation for further info.
         /// </summary>
         /// <param name="value">The value for Type</param>
         public EditorImageBrowserTransportDestroySettingsBuilder Type(string value)

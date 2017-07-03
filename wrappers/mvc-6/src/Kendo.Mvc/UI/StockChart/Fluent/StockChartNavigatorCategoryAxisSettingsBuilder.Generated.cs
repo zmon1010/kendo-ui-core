@@ -11,9 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The discrete navigator.categoryAxis.baseUnitStep values when
-		/// either navigator.categoryAxis.baseUnit is set to "fit" or
-		/// navigator.categoryAxis.baseUnitStep is set to "auto".
+        /// The discrete navigator.categoryAxis.baseUnitStep values when either navigator.categoryAxis.baseUnit is set to "fit" ornavigator.categoryAxis.baseUnitStep is set to "auto".
         /// </summary>
         /// <param name="configurator">The configurator for the autobaseunitsteps setting.</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> AutoBaseUnitSteps(Action<StockChartNavigatorCategoryAxisAutoBaseUnitStepsSettingsBuilder<T>> configurator)
@@ -46,8 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
-		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
+        /// The step (interval) between categories in base units. Setting it to "auto" will set the step to such value that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
         /// </summary>
         /// <param name="value">The value for BaseUnitStep</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> BaseUnitStep(int value)
@@ -67,8 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color and
-		/// categoryAxis.line.color.
+        /// The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color andcategoryAxis.line.color.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> Color(string value)
@@ -146,8 +142,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
-		/// body of the chart.
+        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the majorgridlines setting.</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> MajorGridLines(Action<StockChartNavigatorCategoryAxisMajorGridLinesSettingsBuilder<T>> configurator)
@@ -173,9 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The last date displayed on the category date axis. By default, the minimum date is the same as the last category.
-		/// This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-		/// set up a fixed date range.
+        /// The last date displayed on the category date axis. By default, the minimum date is the same as the last category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Max</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> Max(object value)
@@ -185,9 +178,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The maximum number of groups (categories) to display when
-		/// categoryAxis.baseUnit is set to "fit" or
-		/// categoryAxis.baseUnitStep is set to "auto".
+        /// The maximum number of groups (categories) to display whencategoryAxis.baseUnit is set to "fit" orcategoryAxis.baseUnitStep is set to "auto".
         /// </summary>
         /// <param name="value">The value for MaxDateGroups</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> MaxDateGroups(double value)
@@ -197,9 +188,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The first date displayed on the category date axis. By default, the minimum date is the same as the first category.
-		/// This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-		/// set up a fixed date range.
+        /// The first date displayed on the category date axis. By default, the minimum date is the same as the first category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Min</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> Min(object value)
@@ -209,8 +198,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
-		/// body of the chart.
+        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the minorgridlines setting.</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> MinorGridLines(Action<StockChartNavigatorCategoryAxisMinorGridLinesSettingsBuilder<T>> configurator)
@@ -303,7 +291,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:
+        /// The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are: kendo.days.Sunday - equal to 0; kendo.days.Monday - equal to 1; kendo.days.Tuesday - equal to 2; kendo.days.Wednesday - equal to 3; kendo.days.Thursday - equal to 4; kendo.days.Friday - equal to 5 or kendo.days.Saturday - equal to 6.
         /// </summary>
         /// <param name="value">The value for WeekStartDay</param>
         public StockChartNavigatorCategoryAxisSettingsBuilder<T> WeekStartDay(double value)

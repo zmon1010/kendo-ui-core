@@ -79,8 +79,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
-		/// all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
+        /// The filtering method used to determine the suggestions for the current value. The default filter is "startswith" - all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
         /// </summary>
         /// <param name="value">The value for Filter</param>
         public AutoCompleteBuilder Filter(string value)
@@ -190,8 +189,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The value for NoDataTemplate</param>
         public AutoCompleteBuilder NoDataTemplate(string value)
@@ -201,8 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The ID of the template element for NoDataTemplate</param>
         public AutoCompleteBuilder NoDataTemplateId(string templateId)

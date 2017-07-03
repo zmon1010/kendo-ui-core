@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: task - the gantt task, for which the template is shown.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public GanttTooltipSettingsBuilder Template(string value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: task - the gantt task, for which the template is shown.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public GanttTooltipSettingsBuilder TemplateId(string value)

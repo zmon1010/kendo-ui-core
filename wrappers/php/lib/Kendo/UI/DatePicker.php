@@ -83,8 +83,7 @@ class DatePicker extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the navigation depth. The following
-settings are available for the depth value:
+    * Specifies the navigation depth. The following settings are available for the depth value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\DatePicker
     */
@@ -147,8 +146,7 @@ settings are available for the depth value:
     }
 
     /**
-    * Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
- Note that the format option is always used during parsing.
+    * Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.  Note that the format option is always used during parsing.
     * @param array $value
     * @return \Kendo\UI\DatePicker
     */
@@ -157,8 +155,7 @@ settings are available for the depth value:
     }
 
     /**
-    * Specifies the start view.
-The following settings are available for the start value:
+    * Specifies the start view. The following settings are available for the start value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\DatePicker
     */

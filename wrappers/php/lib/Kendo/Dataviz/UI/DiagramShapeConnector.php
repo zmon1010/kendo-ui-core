@@ -15,7 +15,7 @@ class DiagramShapeConnector extends \Kendo\SerializableObject {
     }
 
     /**
-    * The connector name. The predefined names are:
+    * The connector name. The predefined names are: "top" - top connector; "right" - right connector; "bottom" - bottom connector; "bottomRight" - bottom right connector; "left" - left connector or "auto" - auto connector.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeConnector
     */

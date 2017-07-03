@@ -137,9 +137,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
-		/// * pageNum
-		/// * totalPages
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include: * pageNum * totalPages
         /// </summary>
         /// <param name="value">The value for Template</param>
         public GridPdfSettingsBuilder<T> Template(string value)
@@ -149,9 +147,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
-		/// * pageNum
-		/// * totalPages
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include: * pageNum * totalPages
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public GridPdfSettingsBuilder<T> TemplateId(string templateId)
@@ -190,8 +186,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
-		/// attachment; filename="&lt;fileName.pdf&gt;".
+        /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body: contentType: The MIME type of the file; base64: The base-64 encoded file content or fileName: The file name, as requested by the caller.. The proxy should return the decoded file with the "Content-Disposition" header set toattachment; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
         public GridPdfSettingsBuilder<T> ProxyURL(string value)
@@ -201,8 +196,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
-		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
+        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe, the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyTarget</param>
         public GridPdfSettingsBuilder<T> ProxyTarget(string value)

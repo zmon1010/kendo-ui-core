@@ -79,9 +79,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// This setting applies to popup notifications only, i.e. in cases when appendTo is not set.
-		/// It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.
-		/// top takes precedence over bottom and left takes precedence over right.
+        /// This setting applies to popup notifications only, i.e. in cases when appendTo is not set. It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.top takes precedence over bottom and left takes precedence over right.
         /// </summary>
         /// <param name="configurator">The configurator for the position setting.</param>
         public NotificationBuilder Position(Action<NotificationPositionSettingsBuilder> configurator)

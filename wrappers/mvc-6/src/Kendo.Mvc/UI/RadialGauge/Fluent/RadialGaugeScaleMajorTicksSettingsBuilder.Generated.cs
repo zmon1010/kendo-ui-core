@@ -21,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The major tick size.
-		/// This is the length of the line in pixels that is drawn to indicate the tick on the scale.
+        /// The major tick size. This is the length of the line in pixels that is drawn to indicate the tick on the scale.
         /// </summary>
         /// <param name="value">The value for Size</param>
         public RadialGaugeScaleMajorTicksSettingsBuilder Size(double value)
@@ -32,8 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The visibility of the major ticks.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The visibility of the major ticks. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public RadialGaugeScaleMajorTicksSettingsBuilder Visible(bool value)

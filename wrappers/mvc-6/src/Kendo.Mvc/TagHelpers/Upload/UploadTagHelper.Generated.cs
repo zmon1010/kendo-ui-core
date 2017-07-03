@@ -26,8 +26,7 @@ namespace Kendo.Mvc.TagHelpers
         public string DropZone { get; set; }
 
         /// <summary>
-        /// Enables (true) or disables (false) an Upload. A disabled
-		/// Upload may be re-enabled via enable().
+        /// Enables (true) or disables (false) an Upload. A disabledUpload may be re-enabled via enable().
         /// </summary>
         public bool? Enabled { get; set; }
 
@@ -35,16 +34,12 @@ namespace Kendo.Mvc.TagHelpers
 
         public UploadLocalizationSettingsTagHelper Localization { get; set; }
         /// <summary>
-        /// Enables (true) or disables (false) the ability to select multiple files.
-		/// If false, users will be able to select only one file at a time. Note: This option does not
-		/// limit the total number of uploaded files in an asynchronous configuration.
+        /// Enables (true) or disables (false) the ability to select multiple files. If false, users will be able to select only one file at a time. Note: This option does not limit the total number of uploaded files in an asynchronous configuration.
         /// </summary>
         public bool? Multiple { get; set; }
 
         /// <summary>
-        /// Enables (true) or disables (false) the ability to display a file listing
-		/// for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
-		/// client-side events to build your own UI.
+        /// Enables (true) or disables (false) the ability to display a file listing for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the client-side events to build your own UI.
         /// </summary>
         public bool? ShowFileList { get; set; }
 

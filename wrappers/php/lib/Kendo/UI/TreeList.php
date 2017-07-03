@@ -9,8 +9,7 @@ class TreeList extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\TreeList
     */
@@ -46,8 +45,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
-By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+    * If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled). By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
     * @param boolean|\Kendo\UI\TreeListColumnMenu|array $value
     * @return \Kendo\UI\TreeList
     */
@@ -128,7 +126,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
     }
 
     /**
-    * If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
+    * If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values: "row" - the user can select a single row.; "cell" - the user can select a single cell.; "multiple, row" - the user can select multiple rows. or "multiple, cell" - the user can select multiple cells..
     * @param boolean|string $value
     * @return \Kendo\UI\TreeList
     */

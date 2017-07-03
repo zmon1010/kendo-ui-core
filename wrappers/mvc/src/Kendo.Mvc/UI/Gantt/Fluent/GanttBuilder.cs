@@ -146,8 +146,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value that configures the autobind.</param>
         public GanttBuilder<TTaskModel,TDependenciesModel> AutoBind(bool value)
@@ -399,8 +398,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
-		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Gantt Toolbar. Commands can be custom or built-in ("append", "pdf").The "append" command adds a new task to the gantt.The "pdf" command exports the gantt in PDF format.
+        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar, and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Gantt Toolbar. Commands can be custom or built-in ("append", "pdf").The "append" command adds a new task to the gantt.The "pdf" command exports the gantt in PDF format.
         /// </summary>
         /// <param name="configurator">The action that configures the toolbar.</param>
         public GanttBuilder<TTaskModel,TDependenciesModel> Toolbar(Action<GanttToolbarFactory> configurator)
@@ -420,8 +418,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The views displayed by the Gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
-		/// By default the Kendo UI Gantt widget displays "day", "week", and "month" views.
+        /// The views displayed by the Gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration). By default the Kendo UI Gantt widget displays "day", "week", and "month" views.
         /// </summary>
         /// <param name="configurator">The action that configures the views.</param>
         public GanttBuilder<TTaskModel,TDependenciesModel> Views(Action<GanttViewFactory> configurator)

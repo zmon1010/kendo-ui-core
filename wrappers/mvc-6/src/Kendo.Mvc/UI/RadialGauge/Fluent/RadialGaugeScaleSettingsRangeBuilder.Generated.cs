@@ -41,8 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The color of the range.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The color of the range. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public RadialGaugeScaleSettingsRangeBuilder Color(string value)

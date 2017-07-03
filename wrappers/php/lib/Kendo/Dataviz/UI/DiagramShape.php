@@ -132,7 +132,7 @@ class DiagramShape extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the type of the Shape using any of the built-in shape type.
+    * Specifies the type of the Shape using any of the built-in shape type. "rectangle" - The default option; "circle" - A circle/ellipse or "image" - An image.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShape
     */

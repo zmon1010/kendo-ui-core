@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The following dash types are supported:
+        /// The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="value">The value for DashType</param>
         public ChartSeriesTargetBorderSettingsBuilder<T> DashType(ChartDashType value)
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// The following dash types are supported:
+        /// The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesTargetBorderSettingsBuilder<T> DashTypeHandler(string handler)
@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The following dash types are supported:
+        /// The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesTargetBorderSettingsBuilder<T> DashTypeHandler(Func<object, object> handler)

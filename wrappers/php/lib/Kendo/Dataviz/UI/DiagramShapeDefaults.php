@@ -132,7 +132,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the type of the Shape using any of the built-in shape type.
+    * Specifies the type of the Shape using any of the built-in shape type. "rectangle": this is the default option; "circle": a circle/ellipse; "image": an image or "text": some text.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */
@@ -142,7 +142,7 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the DiagramShapeDefaults.
-    * A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual:
+    * A function that returns a visual element to render for a given shape. The following primitives can be used to construct a composite visual: Circle; Rectangle; Path; Line; Polyline; TextBlock; Image or Layout.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
     */

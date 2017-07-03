@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the chart has received data from the data source\n\t\t/// and is about to render it.
+        /// Fires when the chart has received data from the data source and is about to render it.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
         public StockChartEventBuilder DataBound(string handler)
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the chart has received data from the data source\n\t\t/// and is about to render it.
+        /// Fires when the chart has received data from the data source and is about to render it.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public StockChartEventBuilder DataBound(Func<object, object> handler)
@@ -124,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
         public StockChartEventBuilder LegendItemClick(string handler)
@@ -135,7 +135,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public StockChartEventBuilder LegendItemClick(Func<object, object> handler)

@@ -76,7 +76,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the markers. The available argument fields are:
+        /// A function that can be used to create a custom visual for the markers. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the marker options.; createVisual - a function that can be used to get the default visual.; category - the category of the marker point.; dataItem - the dataItem of the marker point.; value - the value of the marker point.; sender - the chart instance. or series - the series of the marker point..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesMarkersSettingsBuilder<T> Visual(string handler)
@@ -86,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the markers. The available argument fields are:
+        /// A function that can be used to create a custom visual for the markers. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the marker options.; createVisual - a function that can be used to get the default visual.; category - the category of the marker point.; dataItem - the dataItem of the marker point.; value - the value of the marker point.; sender - the chart instance. or series - the series of the marker point..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesMarkersSettingsBuilder<T> Visual(Func<object, object> handler)

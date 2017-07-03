@@ -60,7 +60,7 @@ namespace Kendo.Mvc.TagHelpers
         public string OnOpen { get; set; }
 
         /// <summary>
-        /// Triggered when the content of a Window has finished loading via AJAX,\n\t\t/// when the window iframe has finished loading, or when the refresh button\n\t\t/// has been clicked on a window with static content.
+        /// Triggered when the content of a Window has finished loading via AJAX, when the window iframe has finished loading, or when the refresh button has been clicked on a window with static content.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the refresh event.</param>
         public string OnRefresh { get; set; }

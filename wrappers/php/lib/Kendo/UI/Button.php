@@ -39,9 +39,7 @@ class Button extends \Kendo\UI\Widget {
     }
 
     /**
-    * Defines a name of an existing icon in the Kendo UI theme sprite. The icon will be applied as background image of a span element inside the Button.
-The span element can be added automatically by the widget, or an existing element can be used, if it has a k-icon CSS class applied.
-For a list of available icon names, please refer to the Icons demo.
+    * Defines a name of an existing icon in the Kendo UI theme sprite. The icon will be applied as background image of a span element inside the Button. The span element can be added automatically by the widget, or an existing element can be used, if it has a k-icon CSS class applied. For a list of available icon names, please refer to the Icons demo.
     * @param string $value
     * @return \Kendo\UI\Button
     */
@@ -59,8 +57,7 @@ For a list of available icon names, please refer to the Icons demo.
     }
 
     /**
-    * Defines a CSS class (or multiple classes separated by spaces), which will be used for applying a background image to a span element inside the Button.
-In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the icon property.The span element can be added automatically by the widget, or an existing element can be used, if it has a k-sprite CSS class applied.
+    * Defines a CSS class (or multiple classes separated by spaces), which will be used for applying a background image to a span element inside the Button. In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the icon property.The span element can be added automatically by the widget, or an existing element can be used, if it has a k-sprite CSS class applied.
     * @param string $value
     * @return \Kendo\UI\Button
     */

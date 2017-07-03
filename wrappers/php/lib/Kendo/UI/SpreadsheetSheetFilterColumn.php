@@ -15,11 +15,7 @@ class SpreadsheetSheetFilterColumn extends \Kendo\SerializableObject {
     }
 
     /**
-    * The filter to apply to this column.The supported filters are:
-  * value - filters based on unique values
-  * custom - applies custom filtering criteria
-  * top - filters the top or bottom records
-  * dynamic - filters based on dynamic criteria
+    * The filter to apply to this column.The supported filters are:   * value - filters based on unique values   * custom - applies custom filtering criteria   * top - filters the top or bottom records   * dynamic - filters based on dynamic criteria
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetFilterColumn
     */
@@ -46,31 +42,7 @@ class SpreadsheetSheetFilterColumn extends \Kendo\SerializableObject {
     }
 
     /**
-    * The filter sub-type, if any.Applicable types according to the main filter.
-* top
-    * topNumber
-    * topPercent
-    * bottomNumber
-    * bottomPercent
-* dynamic
-    * aboveAverage
-    * belowAverage
-    * tomorrow
-    * today
-    * yesterday
-    * nextWeek
-    * thisWeek
-    * lastWeek
-    * nextMonth
-    * thisMonth
-    * lastMonth
-    * nextQuarter
-    * thisQuarter
-    * lastQuarter
-    * nextYear
-    * thisYear
-    * lastYear
-    * yearToDate
+    * The filter sub-type, if any.Applicable types according to the main filter. * top     * topNumber     * topPercent     * bottomNumber     * bottomPercent * dynamic     * aboveAverage     * belowAverage     * tomorrow     * today     * yesterday     * nextWeek     * thisWeek     * lastWeek     * nextMonth     * thisMonth     * lastMonth     * nextQuarter     * thisQuarter     * lastQuarter     * nextYear     * thisYear     * lastYear     * yearToDate
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetFilterColumn
     */

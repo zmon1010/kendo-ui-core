@@ -69,7 +69,7 @@ class DataSourceSchema extends \Kendo\SerializableObject {
     }
 
     /**
-    * The type of the response.The supported values are:By default, the schema interprets the server response as JSON.
+    * The type of the response.The supported values are: "xml"  or "json". By default, the schema interprets the server response as JSON.
     * @param string $value
     * @return \Kendo\Data\DataSourceSchema
     */

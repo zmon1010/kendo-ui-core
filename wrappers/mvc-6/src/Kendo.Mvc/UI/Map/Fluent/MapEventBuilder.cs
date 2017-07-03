@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired immediately before the map is reset.\n\t\t/// This event is typically used for cleanup by layer implementers.
+        /// Fired immediately before the map is reset. This event is typically used for cleanup by layer implementers.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the beforeReset event.</param>
         public MapEventBuilder BeforeReset(string handler)
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired immediately before the map is reset.\n\t\t/// This event is typically used for cleanup by layer implementers.
+        /// Fired immediately before the map is reset. This event is typically used for cleanup by layer implementers.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MapEventBuilder BeforeReset(Func<object, object> handler)
@@ -80,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when a marker has been created and is about to be displayed.\n\t\t/// Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
+        /// Fired when a marker has been created and is about to be displayed. Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the markerCreated event.</param>
         public MapEventBuilder MarkerCreated(string handler)
@@ -91,7 +91,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when a marker has been created and is about to be displayed.\n\t\t/// Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
+        /// Fired when a marker has been created and is about to be displayed. Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MapEventBuilder MarkerCreated(Func<object, object> handler)
@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the map is reset.\n\t\t/// This typically occurs on initial load and after a zoom/center change.
+        /// Fired when the map is reset. This typically occurs on initial load and after a zoom/center change.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the reset event.</param>
         public MapEventBuilder Reset(string handler)
@@ -179,7 +179,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the map is reset.\n\t\t/// This typically occurs on initial load and after a zoom/center change.
+        /// Fired when the map is reset. This typically occurs on initial load and after a zoom/center change.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MapEventBuilder Reset(Func<object, object> handler)
@@ -300,7 +300,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the map zoom level is about to change.\n\t\t/// Cancelling the event will prevent the user action.
+        /// Fired when the map zoom level is about to change. Cancelling the event will prevent the user action.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the zoomStart event.</param>
         public MapEventBuilder ZoomStart(string handler)
@@ -311,7 +311,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the map zoom level is about to change.\n\t\t/// Cancelling the event will prevent the user action.
+        /// Fired when the map zoom level is about to change. Cancelling the event will prevent the user action.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MapEventBuilder ZoomStart(Func<object, object> handler)

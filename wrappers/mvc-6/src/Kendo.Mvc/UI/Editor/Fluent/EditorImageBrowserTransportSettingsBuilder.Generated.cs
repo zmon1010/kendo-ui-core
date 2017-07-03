@@ -24,8 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
-		/// If function is assigned, the current path and image name will be provided.
+        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown. If function is assigned, the current path and image name will be provided.
         /// </summary>
         /// <param name="value">The value for ThumbnailUrl</param>
         public EditorImageBrowserTransportSettingsBuilder ThumbnailUrl(string value)
@@ -35,8 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
-		/// If function is assigned, the current path and image name will be provided.
+        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown. If function is assigned, the current path and image name will be provided.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public EditorImageBrowserTransportSettingsBuilder ThumbnailUrlHandler(string handler)
@@ -47,8 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
-		/// If function is assigned, the current path and image name will be provided.
+        /// The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown. If function is assigned, the current path and image name will be provided.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public EditorImageBrowserTransportSettingsBuilder ThumbnailUrlHandler(Func<object, object> handler)

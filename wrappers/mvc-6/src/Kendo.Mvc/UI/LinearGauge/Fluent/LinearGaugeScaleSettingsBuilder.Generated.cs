@@ -103,8 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Mirrors the scale labels and ticks.
-		/// If the labels are normally on the left side of the scale, mirroring the scale will render them to the right.
+        /// Mirrors the scale labels and ticks. If the labels are normally on the left side of the scale, mirroring the scale will render them to the right.
         /// </summary>
         /// <param name="value">The value for Mirror</param>
         public LinearGaugeScaleSettingsBuilder Mirror(bool value)

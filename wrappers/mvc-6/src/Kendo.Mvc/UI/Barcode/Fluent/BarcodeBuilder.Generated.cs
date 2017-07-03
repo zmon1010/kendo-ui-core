@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Sets the preferred rendering engine.
-		/// If it is not supported by the browser, the Barcode will switch to the first available mode.The supported values are:
+        /// Sets the preferred rendering engine. If it is not supported by the browser, the Barcode will switch to the first available mode.The supported values are: "canvas" - renders the widget as a Canvas element, if available. or "svg" - renders the widget as inline SVG document, if available.
         /// </summary>
         /// <param name="value">The value for RenderAs</param>
         public BarcodeBuilder RenderAs(RenderingMode value)
@@ -21,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The background of the barcode area.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The background of the barcode area. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
         public BarcodeBuilder Background(string value)
@@ -64,8 +62,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The color of the bar elements.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The color of the bar elements. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public BarcodeBuilder Color(string value)

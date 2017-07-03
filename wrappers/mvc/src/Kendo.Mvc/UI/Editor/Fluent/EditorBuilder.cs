@@ -282,10 +282,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Relaxes the same-origin policy when using the iframe-based editor.
-		/// This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
-		/// In that case, this property must be used to allow the editor to function properly across browsers.
-		/// This property has been introduced in internal builds after 2014.1.319.
+        /// Relaxes the same-origin policy when using the iframe-based editor. This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain. In that case, this property must be used to allow the editor to function properly across browsers. This property has been introduced in internal builds after 2014.1.319.
         /// </summary>
         /// <param name="value">The value that configures the domain.</param>
         public EditorBuilder Domain(string value)

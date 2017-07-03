@@ -168,8 +168,7 @@ class TabStrip extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the position of the widget tabs. Valid values are "top" (default), "left", "right" and "bottom".
-A fade animation is highly recommended with any of the non-default tab position settings.
+    * Specifies the position of the widget tabs. Valid values are "top" (default), "left", "right" and "bottom". A fade animation is highly recommended with any of the non-default tab position settings.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */

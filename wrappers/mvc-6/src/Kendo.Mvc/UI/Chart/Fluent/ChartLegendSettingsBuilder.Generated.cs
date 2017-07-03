@@ -96,9 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The X offset of the chart legend. The offset is relative to the default position of the legend.
-		/// For instance, a value of 20 will move the legend 20 pixels to the right of its initial position.
-		/// A negative value will move the legend to the left of its current position.
+        /// The X offset of the chart legend. The offset is relative to the default position of the legend. For instance, a value of 20 will move the legend 20 pixels to the right of its initial position. A negative value will move the legend to the left of its current position.
         /// </summary>
         /// <param name="value">The value for OffsetX</param>
         public ChartLegendSettingsBuilder<T> OffsetX(double value)
@@ -108,9 +106,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The Y offset of the chart legend.  The offset is relative to the current position of the legend.
-		/// For instance, a value of 20 will move the legend 20 pixels down from its initial position.
-		/// A negative value will move the legend upwards from its current position.
+        /// The Y offset of the chart legend.  The offset is relative to the current position of the legend. For instance, a value of 20 will move the legend 20 pixels down from its initial position. A negative value will move the legend upwards from its current position.
         /// </summary>
         /// <param name="value">The value for OffsetY</param>
         public ChartLegendSettingsBuilder<T> OffsetY(double value)

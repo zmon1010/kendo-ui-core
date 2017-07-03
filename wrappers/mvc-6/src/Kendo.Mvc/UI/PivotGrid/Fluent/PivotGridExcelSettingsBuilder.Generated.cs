@@ -59,8 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL of the server side proxy which will stream the file to the end user.Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
-		/// attachment; filename="&lt;fileName.xslx&gt;".
+        /// The URL of the server side proxy which will stream the file to the end user.Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body: contentType: The MIME type of the file; base64: The base-64 encoded file content or fileName: The file name, as requested by the caller.. The proxy should return the decoded file with the "Content-Disposition" header set toattachment; filename="&lt;fileName.xslx&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
         public PivotGridExcelSettingsBuilder<T> ProxyURL(string value)

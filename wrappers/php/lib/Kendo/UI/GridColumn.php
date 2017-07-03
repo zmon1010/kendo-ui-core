@@ -6,8 +6,7 @@ class GridColumn extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The aggregate(s) which are calculated when the grid is grouped by the columns field.
-The supported aggregates are "average", "count", "max", "min" and "sum".
+    * The aggregate(s) which are calculated when the grid is grouped by the columns field. The supported aggregates are "average", "count", "max", "min" and "sum".
     * @param array $value
     * @return \Kendo\UI\GridColumn
     */
@@ -71,9 +70,7 @@ The supported aggregates are "average", "count", "max", "min" and "sum".
     }
 
     /**
-    * The field to which the column is bound. The value of this field is displayed in the column's cells during data binding.
-Only columns that are bound to a field can be sortable or filterable.
-The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
+    * The field to which the column is bound. The value of this field is displayed in the column's cells during data binding. Only columns that are bound to a field can be sortable or filterable.The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
     * @param string $value
     * @return \Kendo\UI\GridColumn
     */
@@ -82,8 +79,7 @@ The field name should be a valid Javascript identifier and should contain no spa
     }
 
     /**
-    * If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+    * If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
     * @param boolean|\Kendo\UI\GridColumnFilterable|array $value
     * @return \Kendo\UI\GridColumn
     */
@@ -102,7 +98,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
 
     /**
     * Sets the footerTemplate option of the GridColumn.
-    * The template which renders the footer table cell for the column.The fields which can be used in the template are:
+    * The template which renders the footer table cell for the column.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified) or data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumn
     */
@@ -114,7 +110,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
 
     /**
     * Sets the footerTemplate option of the GridColumn.
-    * The template which renders the footer table cell for the column.The fields which can be used in the template are:
+    * The template which renders the footer table cell for the column.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified) or data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average.
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumn
     */
@@ -123,8 +119,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
     }
 
     /**
-    * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,
-custom number format, standard date format or a custom date format.
+    * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,custom number format, standard date format or a custom date format.
     * @param string $value
     * @return \Kendo\UI\GridColumn
     */
@@ -143,8 +138,7 @@ custom number format, standard date format or a custom date format.
 
     /**
     * Sets the groupHeaderTemplate option of the GridColumn.
-    * The template which renders the group header when the grid is grouped by the column field. By default the name of the field
-and the current group value is displayed.The fields which can be used in the template are:
+    * The template which renders the group header when the grid is grouped by the column field. By default the name of the field and the current group value is displayed.The fields which can be used in the template are: value - the current group value; field - the current group field; average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified); aggregates - provides access to all available aggregates, e.g. aggregates.fieldName1.sum or aggregates.fieldName2.average or items - the data items for current group. Returns groups if the data items are grouped (in case there are child groups).
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumn
     */
@@ -156,8 +150,7 @@ and the current group value is displayed.The fields which can be used in the tem
 
     /**
     * Sets the groupHeaderTemplate option of the GridColumn.
-    * The template which renders the group header when the grid is grouped by the column field. By default the name of the field
-and the current group value is displayed.The fields which can be used in the template are:
+    * The template which renders the group header when the grid is grouped by the column field. By default the name of the field and the current group value is displayed.The fields which can be used in the template are: value - the current group value; field - the current group field; average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified); aggregates - provides access to all available aggregates, e.g. aggregates.fieldName1.sum or aggregates.fieldName2.average or items - the data items for current group. Returns groups if the data items are grouped (in case there are child groups).
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumn
     */
@@ -167,7 +160,7 @@ and the current group value is displayed.The fields which can be used in the tem
 
     /**
     * Sets the groupFooterTemplate option of the GridColumn.
-    * The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:
+    * The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified); data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average or group - provides information for the current group. An object with three fields - field, value and items. items field contains the data items for current group. Returns groups if the data items are grouped (in case there are child groups).
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumn
     */
@@ -179,7 +172,7 @@ and the current group value is displayed.The fields which can be used in the tem
 
     /**
     * Sets the groupFooterTemplate option of the GridColumn.
-    * The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:
+    * The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified); data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average or group - provides information for the current group. An object with three fields - field, value and items. items field contains the data items for current group. Returns groups if the data items are grouped (in case there are child groups).
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumn
     */
@@ -198,8 +191,7 @@ and the current group value is displayed.The fields which can be used in the tem
 
     /**
     * Sets the headerTemplate option of the GridColumn.
-    * The template which renders the column header content. By default the value of the title column option
-is displayed in the column header cell.
+    * The template which renders the column header content. By default the value of the title column option is displayed in the column header cell.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumn
     */
@@ -211,8 +203,7 @@ is displayed in the column header cell.
 
     /**
     * Sets the headerTemplate option of the GridColumn.
-    * The template which renders the column header content. By default the value of the title column option
-is displayed in the column header cell.
+    * The template which renders the column header content. By default the value of the title column option is displayed in the column header cell.
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumn
     */
@@ -257,8 +248,7 @@ is displayed in the column header cell.
     }
 
     /**
-    * The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
-so the two should not be used at the same time.
+    * The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting, so the two should not be used at the same time.
     * @param float $value
     * @return \Kendo\UI\GridColumn
     */
@@ -276,8 +266,7 @@ so the two should not be used at the same time.
     }
 
     /**
-    * If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
-be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
+    * If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
     * @param boolean|\Kendo\UI\GridColumnSortable|array $value
     * @return \Kendo\UI\GridColumn
     */
@@ -287,8 +276,7 @@ be disabled for this column. By default all columns are sortable if sorting is e
 
     /**
     * Sets the template option of the GridColumn.
-    * The template which renders the column content. The grid renders table rows (<tr>) which represent the data source items.
-Each table row consists of table cells (<td>) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.
+    * The template which renders the column content. The grid renders table rows (<tr>) which represent the data source items. Each table row consists of table cells (<td>) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumn
     */
@@ -300,8 +288,7 @@ Each table row consists of table cells (<td>) which represent the grid columns. 
 
     /**
     * Sets the template option of the GridColumn.
-    * The template which renders the column content. The grid renders table rows (<tr>) which represent the data source items.
-Each table row consists of table cells (<td>) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.
+    * The template which renders the column content. The grid renders table rows (<tr>) which represent the data source items. Each table row consists of table cells (<td>) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumn
     */

@@ -88,8 +88,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the GridColumnFilterableCell.
-    * JavaScript function which will customize how the input for the filter value is rendered.
-The function receives an object argument with two fields:
+    * JavaScript function which will customize how the input for the filter value is rendered. The function receives an object argument with two fields: element - the default input inside the filter cell; or dataSource - a Kendo UI DataSource instance, which has the same settings as the Grid dataSource, but will only contain data items with unique values for the current column. This instance is also used by the default AutoComplete widget, which is used inside the filter cell if no template is set. Keep in mind that the passed dataSource instance may still not be populated at the time the template function is called, if the Grid uses remote binding..
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\GridColumnFilterableCell
     */

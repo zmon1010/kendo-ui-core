@@ -54,9 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The format used to display labels for date category axis.
-		/// The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit.
-		/// Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.
+        /// The format used to display labels for date category axis. The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit. Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.
         /// </summary>
         /// <param name="configurator">The configurator for the dateformats setting.</param>
         public ChartCategoryAxisLabelsSettingsBuilder<T> DateFormats(Action<ChartCategoryAxisLabelsDateFormatsSettingsBuilder<T>> configurator)
@@ -167,7 +165,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value; dataItem - the data item, in case a field has been specified. If the category does not have a corresponding item in the data then an empty object will be passed.; format - the default format of the label or culture - the default culture (if set) on the label.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartCategoryAxisLabelsSettingsBuilder<T> Template(string value)
@@ -177,7 +175,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value; dataItem - the data item, in case a field has been specified. If the category does not have a corresponding item in the data then an empty object will be passed.; format - the default format of the label or culture - the default culture (if set) on the label.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartCategoryAxisLabelsSettingsBuilder<T> TemplateId(string templateId)
@@ -197,7 +195,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: createVisual - a function that can be used to get the default visual.; culture - the default culture (if set) on the label; dataItem - the data item, in case a field has been specified; format - the default format of the label; options - the label options.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; text - the label text. or value - the category value.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartCategoryAxisLabelsSettingsBuilder<T> Visual(string handler)
@@ -207,7 +205,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: createVisual - a function that can be used to get the default visual.; culture - the default culture (if set) on the label; dataItem - the data item, in case a field has been specified; format - the default format of the label; options - the label options.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; text - the label text. or value - the category value.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartCategoryAxisLabelsSettingsBuilder<T> Visual(Func<object, object> handler)

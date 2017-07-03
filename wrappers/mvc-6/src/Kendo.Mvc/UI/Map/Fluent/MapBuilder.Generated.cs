@@ -46,8 +46,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the map layers.
-		/// The layer type is determined by the value of the type field.
+        /// The configuration of the map layers. The layer type is determined by the value of the type field.
         /// </summary>
         /// <param name="configurator">The configurator for the layers setting.</param>
         public MapBuilder Layers(Action<MapLayerFactory> configurator)
@@ -90,8 +89,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The minimum zoom level.
-		/// Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
+        /// The minimum zoom level. Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
         /// </summary>
         /// <param name="value">The value for MinZoom</param>
         public MapBuilder MinZoom(double value)
@@ -101,8 +99,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The maximum zoom level.
-		/// Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
+        /// The maximum zoom level. Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
         /// </summary>
         /// <param name="value">The value for MaxZoom</param>
         public MapBuilder MaxZoom(double value)

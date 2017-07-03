@@ -118,8 +118,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-		/// Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
+        /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally. Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body: contentType: The MIME type of the file; base64: The base-64 encoded file content or fileName: The file name, as requested by the caller.. The proxy should return the decoded file with set "Content-Disposition" header.
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
         public SchedulerPdfSettingsBuilder<T> ProxyURL(string value)
@@ -129,8 +128,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
-		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
+        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe, the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyTarget</param>
         public SchedulerPdfSettingsBuilder<T> ProxyTarget(string value)

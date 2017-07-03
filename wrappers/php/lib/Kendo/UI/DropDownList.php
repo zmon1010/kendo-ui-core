@@ -40,8 +40,7 @@ class DropDownList extends \Kendo\UI\Widget {
     }
 
     /**
-    * Use it to set the Id of the parent DropDownList widget.
-Help topic showing how cascading functionality works
+    * Use it to set the Id of the parent DropDownList widget.Help topic showing how cascading functionality works
     * @param string $value
     * @return \Kendo\UI\DropDownList
     */
@@ -50,8 +49,7 @@ Help topic showing how cascading functionality works
     }
 
     /**
-    * Defines the field to be used to filter the data source. If not defined the parent's dataValueField option will be used.
-Help topic showing how cascading functionality works
+    * Defines the field to be used to filter the data source. If not defined the parent's dataValueField option will be used.Help topic showing how cascading functionality works
     * @param string $value
     * @return \Kendo\UI\DropDownList
     */
@@ -114,8 +112,7 @@ Help topic showing how cascading functionality works
     }
 
     /**
-    * The filtering method used to determine the suggestions for the current value. Filtration is turned off by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option).
-The supported filter values are startswith, endswith and contains.
+    * The filtering method used to determine the suggestions for the current value. Filtration is turned off by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option). The supported filter values are startswith, endswith and contains.
     * @param string $value
     * @return \Kendo\UI\DropDownList
     */
@@ -227,8 +224,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the noDataTemplate option of the DropDownList.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\DropDownList
     */
@@ -240,8 +236,7 @@ The noData template receives the widget itself as a part of the data argument. T
 
     /**
     * Sets the noDataTemplate option of the DropDownList.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The template content.
     * @return \Kendo\UI\DropDownList
     */
@@ -250,8 +245,7 @@ The noData template receives the widget itself as a part of the data argument. T
     }
 
     /**
-    * The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.
+    * The options that will be used for the popup initialization. For more details about the available options refer to Popup documentation.
     * @param \Kendo\UI\DropDownListPopup|array $value
     * @return \Kendo\UI\DropDownList
     */
@@ -260,8 +254,7 @@ refer to Popup documentation.
     }
 
     /**
-    * Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.
- Note that the optionLabel will not be available if the widget is empty.
+    * Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.  Note that the optionLabel will not be available if the widget is empty.
     * @param string| $value
     * @return \Kendo\UI\DropDownList
     */

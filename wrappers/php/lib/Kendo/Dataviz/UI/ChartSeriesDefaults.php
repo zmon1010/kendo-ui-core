@@ -159,7 +159,7 @@ class ChartSeriesDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * The default type of the series.The supported values are:
+    * The default type of the series.The supported values are: area; bar; bubble; bullet; candlestick; column; donut; funnel; line; ohlc; pie; polarArea; polarLine; polarScatter; radarArea; radarColumn; radarLine; scatter; scatterLine; waterfall; verticalArea; verticalBullet or verticalLine.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaults
     */
@@ -196,7 +196,7 @@ class ChartSeriesDefaults extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the ChartSeriesDefaults.
-    * A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:
+    * A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the point options.; createVisual - a function that can be used to get the default visual.; category - the point category.; dataItem - the point dataItem.; value - the point value.; sender - the chart instance. or series - the point series..
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaults
     */

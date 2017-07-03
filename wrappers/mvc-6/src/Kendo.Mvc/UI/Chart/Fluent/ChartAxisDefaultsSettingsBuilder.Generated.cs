@@ -70,8 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
-		/// body of the chart.
+        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the majorgridlines setting.</param>
         public ChartAxisDefaultsSettingsBuilder<T> MajorGridLines(Action<ChartAxisDefaultsMajorGridLinesSettingsBuilder<T>> configurator)
@@ -97,8 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
-		/// body of the chart.
+        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the minorgridlines setting.</param>
         public ChartAxisDefaultsSettingsBuilder<T> MinorGridLines(Action<ChartAxisDefaultsMinorGridLinesSettingsBuilder<T>> configurator)
@@ -124,8 +122,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will prevent the axis range from snapping to 0.
-		/// Setting it to false will force the axis range to snap to 0.
+        /// If set to true the chart will prevent the axis range from snapping to 0. Setting it to false will force the axis range to snap to 0.
         /// </summary>
         /// <param name="value">The value for NarrowRange</param>
         public ChartAxisDefaultsSettingsBuilder<T> NarrowRange(bool value)
@@ -135,8 +132,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will prevent the axis range from snapping to 0.
-		/// Setting it to false will force the axis range to snap to 0.
+        /// If set to true the chart will prevent the axis range from snapping to 0. Setting it to false will force the axis range to snap to 0.
         /// </summary>
         public ChartAxisDefaultsSettingsBuilder<T> NarrowRange()
         {
@@ -145,8 +141,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The name of the pane that the axis should be rendered in.
-		/// The axis will be rendered in the first (default) pane if not set.
+        /// The name of the pane that the axis should be rendered in. The axis will be rendered in the first (default) pane if not set.
         /// </summary>
         /// <param name="value">The value for Pane</param>
         public ChartAxisDefaultsSettingsBuilder<T> Pane(string value)

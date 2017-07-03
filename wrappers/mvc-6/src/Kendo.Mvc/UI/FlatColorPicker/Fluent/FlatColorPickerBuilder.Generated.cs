@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Specifies whether we should display the opacity slider to allow
-		/// selection of transparency.
+        /// Specifies whether we should display the opacity slider to allow selection of transparency.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
         public FlatColorPickerBuilder Opacity(bool value)
@@ -21,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies whether we should display the opacity slider to allow
-		/// selection of transparency.
+        /// Specifies whether we should display the opacity slider to allow selection of transparency.
         /// </summary>
         public FlatColorPickerBuilder Opacity()
         {
@@ -60,8 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies whether we should display the preview bar which displays the
-		/// current color and the input field.
+        /// Specifies whether we should display the preview bar which displays the current color and the input field.
         /// </summary>
         /// <param name="value">The value for Preview</param>
         public FlatColorPickerBuilder Preview(bool value)
@@ -71,9 +68,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies whether the UI should be updated while the user is typing in
-		/// the input field, whenever a valid color can be parsed.  If you pass
-		/// false for this, the widget will update only when ENTER is pressed.
+        /// Specifies whether the UI should be updated while the user is typing in the input field, whenever a valid color can be parsed.  If you passfalse for this, the widget will update only when ENTER is pressed.
         /// </summary>
         /// <param name="value">The value for Autoupdate</param>
         public FlatColorPickerBuilder Autoupdate(bool value)

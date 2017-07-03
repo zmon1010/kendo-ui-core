@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The base time interval for the axis labels. The default baseUnit is determined automatically from the value range. Available options:
+        /// The base time interval for the axis labels. The default baseUnit is determined automatically from the value range. Available options: milliseconds; seconds; minutes; hours; days; weeks; months or years.
         /// </summary>
         /// <param name="value">The value for BaseUnit</param>
         public ChartYAxisBuilder<T> BaseUnit(string value)
@@ -90,8 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
-		/// body of the chart.
+        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the majorgridlines setting.</param>
         public ChartYAxisBuilder<T> MajorGridLines(Action<ChartYAxisMajorGridLinesSettingsBuilder<T>> configurator)
@@ -104,8 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
-		/// body of the chart.
+        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the minorgridlines setting.</param>
         public ChartYAxisBuilder<T> MinorGridLines(Action<ChartYAxisMinorGridLinesSettingsBuilder<T>> configurator)
@@ -144,9 +142,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The interval between major divisions.
-		/// If this is a date axis the value represents the number of xAxis.baseUnits between major divisions.
-		/// If the yAxis.type is set to "log", the majorUnit value will be used for the base of the logarithm.
+        /// The interval between major divisions. If this is a date axis the value represents the number of xAxis.baseUnits between major divisions. If the yAxis.type is set to "log", the majorUnit value will be used for the base of the logarithm.
         /// </summary>
         /// <param name="value">The value for MajorUnit</param>
         public ChartYAxisBuilder<T> MajorUnit(double value)
@@ -176,8 +172,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The interval between minor divisions. It defaults to 1/5 of the yAxis.majorUnit.
-		/// If the yAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.
+        /// The interval between minor divisions. It defaults to 1/5 of the yAxis.majorUnit. If the yAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.
         /// </summary>
         /// <param name="value">The value for MinorUnit</param>
         public ChartYAxisBuilder<T> MinorUnit(double value)
@@ -197,8 +192,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will prevent the automatic axis range from snapping to 0.
-		/// Setting it to false will force the automatic axis range to snap to 0.
+        /// If set to true the chart will prevent the automatic axis range from snapping to 0. Setting it to false will force the automatic axis range to snap to 0.
         /// </summary>
         /// <param name="value">The value for NarrowRange</param>
         public ChartYAxisBuilder<T> NarrowRange(bool value)
@@ -208,8 +202,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will prevent the automatic axis range from snapping to 0.
-		/// Setting it to false will force the automatic axis range to snap to 0.
+        /// If set to true the chart will prevent the automatic axis range from snapping to 0. Setting it to false will force the automatic axis range to snap to 0.
         /// </summary>
         public ChartYAxisBuilder<T> NarrowRange()
         {
@@ -218,8 +211,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The name of the pane that the axis should be rendered in.
-		/// The axis will be rendered in the first (default) pane if not set.
+        /// The name of the pane that the axis should be rendered in. The axis will be rendered in the first (default) pane if not set.
         /// </summary>
         /// <param name="value">The value for Pane</param>
         public ChartYAxisBuilder<T> Pane(string value)
@@ -276,7 +268,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The axis type.The supported values are:
+        /// The axis type.The supported values are: "numeric" - numeric axis.; "date" - specialized axis for displaying chronological data. or "log" - logarithmic axis..
         /// </summary>
         /// <param name="value">The value for Type</param>
         public ChartYAxisBuilder<T> Type(string value)

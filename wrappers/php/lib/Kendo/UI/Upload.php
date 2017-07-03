@@ -27,9 +27,7 @@ class Upload extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Configures the ability to upload a files in an asynchronous manner. Please refer to the
-async mode help topic
-for more details.
+    * Configures the ability to upload a files in an asynchronous manner. Please refer to theasync mode help topic for more details.
     * @param \Kendo\UI\UploadAsync|array $value
     * @return \Kendo\UI\Upload
     */
@@ -65,8 +63,7 @@ for more details.
     }
 
     /**
-    * Enables (true) or disables (false) an Upload. A disabled
-Upload may be re-enabled via enable().
+    * Enables (true) or disables (false) an Upload. A disabledUpload may be re-enabled via enable().
     * @param boolean $value
     * @return \Kendo\UI\Upload
     */
@@ -93,9 +90,7 @@ Upload may be re-enabled via enable().
     }
 
     /**
-    * Enables (true) or disables (false) the ability to select multiple files.
-If false, users will be able to select only one file at a time. Note: This option does not
-limit the total number of uploaded files in an asynchronous configuration.
+    * Enables (true) or disables (false) the ability to select multiple files. If false, users will be able to select only one file at a time. Note: This option does not limit the total number of uploaded files in an asynchronous configuration.
     * @param boolean $value
     * @return \Kendo\UI\Upload
     */
@@ -104,9 +99,7 @@ limit the total number of uploaded files in an asynchronous configuration.
     }
 
     /**
-    * Enables (true) or disables (false) the ability to display a file listing
-for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
-client-side events to build your own UI.
+    * Enables (true) or disables (false) the ability to display a file listing for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the client-side events to build your own UI.
     * @param boolean $value
     * @return \Kendo\UI\Upload
     */
@@ -175,8 +168,7 @@ client-side events to build your own UI.
 
     /**
     * Sets the complete event of the Upload.
-    * Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
-async mode.
+    * Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is inasync mode.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -190,8 +182,7 @@ async mode.
 
     /**
     * Sets the error event of the Upload.
-    * Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is in
-async mode.
+    * Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is inasync mode.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -261,8 +252,7 @@ async mode.
 
     /**
     * Sets the select event of the Upload.
-    * Triggered when a files is selected. Note: Cancelling this event will prevent the selection from
-occurring.
+    * Triggered when a files is selected. Note: Cancelling this event will prevent the selection from occurring.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
@@ -290,8 +280,7 @@ occurring.
 
     /**
     * Sets the upload event of the Upload.
-    * Fires when one or more files are about to be uploaded.
-Canceling the event will prevent the upload.
+    * Fires when one or more files are about to be uploaded. Canceling the event will prevent the upload.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */

@@ -9,8 +9,7 @@ class Diagram extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\Diagram
     */
@@ -64,7 +63,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * The layout of a diagram consists in arranging the shapes (sometimes also the connections) in some fashion in order to achieve an aesthetically pleasing experience to the user. It aims at giving a more direct insight in the information contained within the diagram and its relational structure.On a technical level, layout consists of a multitude of algorithms and optimizations:and various ad-hoc calculations which depend on the type of layout. The criteria on which an algorithm is based vary but the common denominator is:Kendo diagram includes three of the most used layout algorithms which should cover most of your layout needs - tree layout, force-directed layout and layered layout. Please, check the type property for more details regarding each type.The generic way to apply a layout is by calling the layout() method on the diagram. The method has a single parameter options. It is an object, which can contain parameters which are specific to the layout as well as parameters customizing the global grid layout. Parameters which apply to other layout algorithms can be included but are overlooked if not applicable to the chose layout type. This means that you can define a set of parameters which cover all possible layout types and simply pass it in the method whatever the layout define in the first parameter.
+    * The layout of a diagram consists in arranging the shapes (sometimes also the connections) in some fashion in order to achieve an aesthetically pleasing experience to the user. It aims at giving a more direct insight in the information contained within the diagram and its relational structure.On a technical level, layout consists of a multitude of algorithms and optimizations: analysis of the relational structure (loops, multi-edge occurrence...); connectedness of the diagram and the splitting into disconnected components; crossings of connections or bends and length of links. and various ad-hoc calculations which depend on the type of layout. The criteria on which an algorithm is based vary but the common denominator is: a clean separation of connected components (subgraphs); an orderly organization of the shapes in such a way that siblings are close to another, i.e. a tight packing of shapes which belong together (parent of child relationship) or a minimum of connection crossings. Kendo diagram includes three of the most used layout algorithms which should cover most of your layout needs - tree layout, force-directed layout and layered layout. Please, check the type property for more details regarding each type.The generic way to apply a layout is by calling the layout() method on the diagram. The method has a single parameter options. It is an object, which can contain parameters which are specific to the layout as well as parameters customizing the global grid layout. Parameters which apply to other layout algorithms can be included but are overlooked if not applicable to the chose layout type. This means that you can define a set of parameters which cover all possible layout types and simply pass it in the method whatever the layout define in the first parameter.
     * @param \Kendo\Dataviz\UI\DiagramLayout|array $value
     * @return \Kendo\Dataviz\UI\Diagram
     */
@@ -140,18 +139,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are:
-* "sass" - special value, see notes
-* "black"
-* "blueopal"
-* "bootstrap"
-* "default"
-* "highcontrast"
-* "metro"
-* "metroblack"
-* "moonlight"
-* "silver"
-* "uniform"
+    * The diagram theme. This can be either a built-in theme or "sass". When set to "sass" the diagram will read the variables from the Sass-based themes.The supported values are: * "sass" - special value, see notes * "black" * "blueopal" * "bootstrap" * "default" * "highcontrast" * "metro" * "metroblack" * "moonlight" * "silver" * "uniform"
     * @param string $value
     * @return \Kendo\Dataviz\UI\Diagram
     */

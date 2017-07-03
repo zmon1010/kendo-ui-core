@@ -45,8 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// A list of the view ids on which the drawer will appear when the view is swiped. If omitted, the swipe gesture will work on all views.
-		/// The option has effect only if swipeToOpen is set to true.
+        /// A list of the view ids on which the drawer will appear when the view is swiped. If omitted, the swipe gesture will work on all views. The option has effect only if swipeToOpen is set to true.
         /// </summary>
         /// <param name="value">The value that configures the swipetoopenviews.</param>
         public MobileDrawerBuilder SwipeToOpenViews(params string[] value)

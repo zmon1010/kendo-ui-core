@@ -15,8 +15,7 @@ class DataSourceTransportUpdate extends \Kendo\SerializableObject {
     }
 
     /**
-    * The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-Refer to the jQuery.ajax documentation for further information.
+    * The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON. Refer to the jQuery.ajax documentation for further information.
     * @param string $value
     * @return \Kendo\Data\DataSourceTransportUpdate
     */
@@ -25,8 +24,7 @@ Refer to the jQuery.ajax documentation for further information.
     }
 
     /**
-    * Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.
+    * Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource forsorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.
     * @param |\Kendo\JavaScriptFunction $value
     * @return \Kendo\Data\DataSourceTransportUpdate
     */

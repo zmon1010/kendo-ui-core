@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The position of the category axis note.
+        /// The position of the category axis note. "top" - The note is positioned on the top.; "bottom" - The note is positioned on the bottom.; "left" - The note is positioned on the left. or "right" - The note is positioned on the right..
         /// </summary>
         /// <param name="value">The value for Position</param>
         public ChartCategoryAxisNotesSettingsBuilder<T> Position(ChartNotePosition value)
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the notes. The available argument fields are:
+        /// A function that can be used to create a custom visual for the notes. The available argument fields are: rect - the kendo.geometry.Rect that defines the note target rect.; options - the note options.; createVisual - a function that can be used to get the default visual. or value - the note value..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartCategoryAxisNotesSettingsBuilder<T> Visual(string handler)
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the notes. The available argument fields are:
+        /// A function that can be used to create a custom visual for the notes. The available argument fields are: rect - the kendo.geometry.Rect that defines the note target rect.; options - the note options.; createVisual - a function that can be used to get the default visual. or value - the note value..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartCategoryAxisNotesSettingsBuilder<T> Visual(Func<object, object> handler)

@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The color of the minor ticks.
-		/// Any valid CSS color string will work here, including hex and rgb.
+        /// The color of the minor ticks. Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public RadialGaugeScaleMinorTicksSettingsBuilder Color(string value)
@@ -22,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The minor tick size.
-		/// This is the length of the line in pixels that is drawn to indicate the tick on the scale.
+        /// The minor tick size. This is the length of the line in pixels that is drawn to indicate the tick on the scale.
         /// </summary>
         /// <param name="value">The value for Size</param>
         public RadialGaugeScaleMinorTicksSettingsBuilder Size(double value)

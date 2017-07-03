@@ -77,7 +77,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: value - the value value.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartXAxisCrosshairTooltipSettingsBuilder<T> Template(string value)
@@ -87,7 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: value - the value value.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartXAxisCrosshairTooltipSettingsBuilder<T> TemplateId(string templateId)

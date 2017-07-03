@@ -6,8 +6,7 @@ class DropDownListVirtual extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Specifies the height of the virtual item. All items in the virtualized list must have the same height.
-If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
+    * Specifies the height of the virtual item. All items in the virtualized list must have the same height. If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
     * @param float $value
     * @return \Kendo\UI\DropDownListVirtual
     */
@@ -26,11 +25,7 @@ If the developer does not specify one, the framework will automatically set item
 
     /**
     * Sets the valueMapper option of the DropDownListVirtual.
-    * The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
-> Important
->
-> As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
+    * The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet. The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices. > Important > > As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\DropDownListVirtual
     */

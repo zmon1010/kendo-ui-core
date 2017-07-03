@@ -69,7 +69,7 @@ class ChartSeriesItemLabelsFrom extends \Kendo\SerializableObject {
     }
 
     /**
-    * The position of the from labels.
+    * The position of the from labels. "center" - the label is positioned at the point center.; "insideBase" - the label is positioned inside, near the base of the bar.; "insideEnd" - the label is positioned inside, near the end of the point. or "outsideEnd" - the label is positioned outside, near the end of the point..
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemLabelsFrom
     */
@@ -79,7 +79,7 @@ class ChartSeriesItemLabelsFrom extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the ChartSeriesItemLabelsFrom.
-    * The template which renders the chart series from label.The fields which can be used in the template are:
+    * The template which renders the chart series from label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\ChartSeriesItemLabelsFrom
     */
@@ -91,7 +91,7 @@ class ChartSeriesItemLabelsFrom extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the ChartSeriesItemLabelsFrom.
-    * The template which renders the chart series from label.The fields which can be used in the template are:
+    * The template which renders the chart series from label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\ChartSeriesItemLabelsFrom
     */

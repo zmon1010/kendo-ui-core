@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "createChild" or "destroy"):Custom commands are supported by specifying the click option.
+        /// The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "createChild" or "destroy"): The "edit" built-in command switches the current table row to edit mode.; The "createChild" built-in command adds a new child item to the current table row and switches to edit mode. or The "destroy" built-in command removes the data item to which the current table row is bound.. Custom commands are supported by specifying the click option.
         /// </summary>
         /// <param name="configurator">The action that configures the command.</param>
         public TreeListColumnBuilder<T> Command(Action<TreeListColumnCommandFactory<T>> configurator)
@@ -75,8 +75,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.
-		/// The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
+        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
         /// </summary>
         /// <param name="expression">The expression that specifies the field, based on the bound model.</param>
         public TreeListColumnBuilder<T> Field<TValue>(Expression<Func<T, TValue>> expression)
@@ -107,8 +106,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.
-		/// The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
+        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
         /// </summary>
         /// <param name="value">The value that configures the field.</param>
         public TreeListColumnBuilder<T> Field(string value)
@@ -120,8 +118,7 @@ namespace Kendo.Mvc.UI.Fluent
         
 
         /// <summary>
-        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
         /// </summary>
         /// <param name="enabled">Enables or disables the filterable option.</param>
         public TreeListColumnBuilder<T> Filterable(bool enabled)
@@ -132,8 +129,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         
         /// <summary>
-        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
         /// </summary>
         /// <param name="configurator">The action that configures the filterable.</param>
         public TreeListColumnBuilder<T> Filterable(Action<TreeListColumnFilterableSettingsBuilder<T>> configurator)
@@ -145,7 +141,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The template which renders the footer table cell for the column.The fields which can be used in the template are:
+        /// The template which renders the footer table cell for the column.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified) or data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average.
         /// </summary>
         /// <param name="value">The value that configures the footertemplate.</param>
         public TreeListColumnBuilder<T> FooterTemplate(string value)
@@ -156,7 +152,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the footer table cell for the column.The fields which can be used in the template are:
+        /// The template which renders the footer table cell for the column.The fields which can be used in the template are: average - the value of the "average" aggregate (if specified); count - the value of the "count" aggregate (if specified); max - the value of the "max" aggregate (if specified); min - the value of the "min" aggregate (if specified); sum - the value of the "sum" aggregate (if specified) or data - provides access to all available aggregates, e.g. data.fieldName1.sum or data.fieldName2.average.
         /// </summary>
         /// <param name="value">The value that configures the footertemplate.</param>
         public TreeListColumnBuilder<T> FooterTemplateId(string value)
@@ -167,8 +163,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,
-		/// custom number format, standard date format or a custom date format.
+        /// The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,custom number format, standard date format or a custom date format.
         /// </summary>
         /// <param name="value">The value that configures the format.</param>
         public TreeListColumnBuilder<T> Format(string value)
@@ -199,8 +194,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The template which renders the column header content. By default the value of the title column option
-		/// is displayed in the column header cell.
+        /// The template which renders the column header content. By default the value of the title column option is displayed in the column header cell.
         /// </summary>
         /// <param name="value">The value that configures the headertemplate.</param>
         public TreeListColumnBuilder<T> HeaderTemplate(string value)
@@ -211,8 +205,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the column header content. By default the value of the title column option
-		/// is displayed in the column header cell.
+        /// The template which renders the column header content. By default the value of the title column option is displayed in the column header cell.
         /// </summary>
         /// <param name="value">The value that configures the headertemplate.</param>
         public TreeListColumnBuilder<T> HeaderTemplateId(string value)
@@ -223,8 +216,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
-		/// so the two should not be used at the same time.
+        /// The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting, so the two should not be used at the same time.
         /// </summary>
         /// <param name="value">The value that configures the minscreenwidth.</param>
         public TreeListColumnBuilder<T> MinScreenWidth(double value)
@@ -236,8 +228,7 @@ namespace Kendo.Mvc.UI.Fluent
         
 
         /// <summary>
-        /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will
-		/// be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
+        /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
         /// </summary>
         /// <param name="enabled">Enables or disables the sortable option.</param>
         public TreeListColumnBuilder<T> Sortable(bool enabled)
@@ -248,8 +239,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         
         /// <summary>
-        /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will
-		/// be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
+        /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
         /// </summary>
         /// <param name="configurator">The action that configures the sortable.</param>
         public TreeListColumnBuilder<T> Sortable(Action<TreeListColumnSortableSettingsBuilder<T>> configurator)
@@ -261,8 +251,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The template which renders the column content. The treelist renders table rows (&lt;tr&gt;) which represent the data source items.
-		/// Each table row consists of table cells (&lt;td&gt;) which represent the treelist columns. By default the HTML-encoded value of the field is displayed in the column.
+        /// The template which renders the column content. The treelist renders table rows (&lt;tr&gt;) which represent the data source items. Each table row consists of table cells (&lt;td&gt;) which represent the treelist columns. By default the HTML-encoded value of the field is displayed in the column.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public TreeListColumnBuilder<T> Template(string value)
@@ -273,8 +262,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the column content. The treelist renders table rows (&lt;tr&gt;) which represent the data source items.
-		/// Each table row consists of table cells (&lt;td&gt;) which represent the treelist columns. By default the HTML-encoded value of the field is displayed in the column.
+        /// The template which renders the column content. The treelist renders table rows (&lt;tr&gt;) which represent the data source items. Each table row consists of table cells (&lt;td&gt;) which represent the treelist columns. By default the HTML-encoded value of the field is displayed in the column.
         /// </summary>
         /// <param name="value">The value that configures the template.</param>
         public TreeListColumnBuilder<T> TemplateId(string value)

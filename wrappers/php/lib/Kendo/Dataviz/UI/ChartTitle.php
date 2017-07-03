@@ -6,7 +6,7 @@ class ChartTitle extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The alignment of the title.
+    * The alignment of the title. "center" - the text is aligned to the middle.; "left" - the text is aligned to the left. or "right" - the text is aligned to the right..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartTitle
     */
@@ -69,7 +69,7 @@ class ChartTitle extends \Kendo\SerializableObject {
     }
 
     /**
-    * The position of the title.
+    * The position of the title. "bottom" - the title is positioned on the bottom. or "top" - the title is positioned on the top..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartTitle
     */

@@ -15,14 +15,7 @@ class ListBoxToolbar extends \Kendo\SerializableObject {
     }
 
     /**
-    * A collection of tools that are used to interact with the ListBox.The built-in tools are:
-- "moveUp" - Moves up the selected ListBox items.
-- "moveDown" - Moves down the selected ListBox items.
-- "remove" - Removes the selected ListBox items.
-- "transferTo" - Moves the selected items from the current ListBox to the target that is defined in the connectWith option.
-- "transferFrom" - Moves the selected items from the ListBox that is defined in the connectWith option to the current ListBox.
-- "transferAllTo" - Moves all items from the current ListBox to the target that is defined in the connectWith option.
-- "transferAllFrom" - Moves all items from the ListBox that is defined in the connectWith option to the current ListBox.
+    * A collection of tools that are used to interact with the ListBox.The built-in tools are: - "moveUp" - Moves up the selected ListBox items. - "moveDown" - Moves down the selected ListBox items. - "remove" - Removes the selected ListBox items. - "transferTo" - Moves the selected items from the current ListBox to the target that is defined in the connectWith option. - "transferFrom" - Moves the selected items from the ListBox that is defined in the connectWith option to the current ListBox. - "transferAllTo" - Moves all items from the current ListBox to the target that is defined in the connectWith option. - "transferAllFrom" - Moves all items from the ListBox that is defined in the connectWith option to the current ListBox.
     * @param array $value
     * @return \Kendo\UI\ListBoxToolbar
     */

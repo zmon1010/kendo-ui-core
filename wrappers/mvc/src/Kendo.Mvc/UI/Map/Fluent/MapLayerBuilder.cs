@@ -55,8 +55,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to false the layer will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the layer will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value that configures the autobind.</param>
         public MapLayerBuilder AutoBind(bool value)
@@ -67,9 +66,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies the extent of the region covered by this layer.
-		/// The layer will be hidden when the specified area is out of view.Accepts a four-element array that specifies the extent covered by this layer:
-		/// North-West lat, longitude, South-East latitude, longitude.If not specified, the layer is always visible.
+        /// Specifies the extent of the region covered by this layer. The layer will be hidden when the specified area is out of view.Accepts a four-element array that specifies the extent covered by this layer: North-West lat, longitude, South-East latitude, longitude.If not specified, the layer is always visible.
         /// </summary>
         /// <param name="value">The value that configures the extent.</param>
         public MapLayerBuilder Extent(params double[] value)
@@ -102,8 +99,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The data item field which contains the marker (symbol) location.
-		/// The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.
+        /// The data item field which contains the marker (symbol) location. The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.
         /// </summary>
         /// <param name="value">The value that configures the locationfield.</param>
         public MapLayerBuilder LocationField(string value)
@@ -125,8 +121,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The data item field which contains the marker title.
-		/// Requires the dataSource option to be set.
+        /// The data item field which contains the marker title. Requires the dataSource option to be set.
         /// </summary>
         /// <param name="value">The value that configures the titlefield.</param>
         public MapLayerBuilder TitleField(string value)
@@ -180,7 +175,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The URL template for tile layers. Template variables:
+        /// The URL template for tile layers. Template variables: x - X coordinate of the tile; y - Y coordinate of the tile; zoom - zoom level or subdomain - Subdomain for this tile. See subdomains.
         /// </summary>
         /// <param name="value">The value that configures the urltemplate.</param>
         public MapLayerBuilder UrlTemplate(string value)
@@ -191,7 +186,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The URL template for tile layers. Template variables:
+        /// The URL template for tile layers. Template variables: x - X coordinate of the tile; y - Y coordinate of the tile; zoom - zoom level or subdomain - Subdomain for this tile. See subdomains.
         /// </summary>
         /// <param name="value">The value that configures the urltemplate.</param>
         public MapLayerBuilder UrlTemplateId(string value)
@@ -202,8 +197,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The value field for bubble layer symbols.
-		/// The data item field should be a number.
+        /// The value field for bubble layer symbols. The data item field should be a number.
         /// </summary>
         /// <param name="value">The value that configures the valuefield.</param>
         public MapLayerBuilder ValueField(string value)

@@ -38,8 +38,7 @@ class EditorSerialization extends \Kendo\SerializableObject {
     }
 
     /**
-    * Indicates whether the font styles will be saved as semantic (strong / em / span) tags,
-or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.
+    * Indicates whether the font styles will be saved as semantic (strong / em / span) tags, or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.
     * @param boolean $value
     * @return \Kendo\UI\EditorSerialization
     */

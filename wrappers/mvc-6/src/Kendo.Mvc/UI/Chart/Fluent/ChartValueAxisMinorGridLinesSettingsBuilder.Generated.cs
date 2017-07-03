@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The dash type of the minor grid lines.The following dash types are supported:
+        /// The dash type of the minor grid lines.The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="value">The value for DashType</param>
         public ChartValueAxisMinorGridLinesSettingsBuilder<T> DashType(ChartDashType value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The type of grid lines to draw for radar charts:The default type is "line" except for "radarColumn" charts.
+        /// The type of grid lines to draw for radar charts: "line" - draws straight lines. or "arc" - draws arcs.. The default type is "line" except for "radarColumn" charts.
         /// </summary>
         /// <param name="value">The value for Type</param>
         public ChartValueAxisMinorGridLinesSettingsBuilder<T> Type(string value)

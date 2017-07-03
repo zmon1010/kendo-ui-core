@@ -53,8 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the preferred rendering engine.
-		/// If it is not supported by the browser, the QRCode will switch to the first available mode.The supported values are:
+        /// Sets the preferred rendering engine. If it is not supported by the browser, the QRCode will switch to the first available mode.The supported values are: "canvas" - renders the widget as a Canvas element, if available. or "svg" - renders the widget as inline SVG document, if available.
         /// </summary>
         /// <param name="value">The value for RenderAs</param>
         public QRCodeBuilder RenderAs(RenderingMode value)
@@ -64,9 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the size of a QR code in pixels (i.e. "200px"). Numeric values are treated as pixels.
-		/// If no size is specified, it will be determined from the element width and height.
-		/// In case the element has width or height of zero, a default value of 200 pixels will be used.
+        /// Specifies the size of a QR code in pixels (i.e. "200px"). Numeric values are treated as pixels. If no size is specified, it will be determined from the element width and height. In case the element has width or height of zero, a default value of 200 pixels will be used.
         /// </summary>
         /// <param name="value">The value for Size</param>
         public QRCodeBuilder Size(double value)

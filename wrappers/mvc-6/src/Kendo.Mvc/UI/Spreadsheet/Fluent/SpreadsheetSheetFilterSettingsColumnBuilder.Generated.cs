@@ -26,11 +26,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The filter to apply to this column.The supported filters are:
-		///   * value - filters based on unique values
-		///   * custom - applies custom filtering criteria
-		///   * top - filters the top or bottom records
-		///   * dynamic - filters based on dynamic criteria
+        /// The filter to apply to this column.The supported filters are:   * value - filters based on unique values   * custom - applies custom filtering criteria   * top - filters the top or bottom records   * dynamic - filters based on dynamic criteria
         /// </summary>
         /// <param name="value">The value for Filter</param>
         public SpreadsheetSheetFilterSettingsColumnBuilder Filter(string value)
@@ -60,31 +56,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The filter sub-type, if any.Applicable types according to the main filter.
-		/// * top
-		///     * topNumber
-		///     * topPercent
-		///     * bottomNumber
-		///     * bottomPercent
-		/// * dynamic
-		///     * aboveAverage
-		///     * belowAverage
-		///     * tomorrow
-		///     * today
-		///     * yesterday
-		///     * nextWeek
-		///     * thisWeek
-		///     * lastWeek
-		///     * nextMonth
-		///     * thisMonth
-		///     * lastMonth
-		///     * nextQuarter
-		///     * thisQuarter
-		///     * lastQuarter
-		///     * nextYear
-		///     * thisYear
-		///     * lastYear
-		///     * yearToDate
+        /// The filter sub-type, if any.Applicable types according to the main filter. * top     * topNumber     * topPercent     * bottomNumber     * bottomPercent * dynamic     * aboveAverage     * belowAverage     * tomorrow     * today     * yesterday     * nextWeek     * thisWeek     * lastWeek     * nextMonth     * thisMonth     * lastMonth     * nextQuarter     * thisQuarter     * lastQuarter     * nextYear     * thisYear     * lastYear     * yearToDate
         /// </summary>
         /// <param name="value">The value for Type</param>
         public SpreadsheetSheetFilterSettingsColumnBuilder Type(string value)

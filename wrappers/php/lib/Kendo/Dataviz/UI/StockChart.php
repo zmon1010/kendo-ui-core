@@ -9,8 +9,7 @@ class StockChart extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * The field containing the point date.
-It is used as a default categoryField for all series.The data item field value must be either:
+    * The field containing the point date. It is used as a default categoryField for all series.The data item field value must be either: Date instance; String parsable by new Date([field value]) or String in ASP.NET JSON format, i.e. "\/Date(1320825600000-0800)\/".
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChart
     */
@@ -46,8 +45,7 @@ It is used as a default categoryField for all series.The data item field value m
     }
 
     /**
-    * The chart area configuration options.
-This is the entire visible area of the chart.
+    * The chart area configuration options. This is the entire visible area of the chart.
     * @param \Kendo\Dataviz\UI\StockChartChartArea|array $value
     * @return \Kendo\Dataviz\UI\StockChart
     */
@@ -110,8 +108,7 @@ This is the entire visible area of the chart.
     }
 
     /**
-    * Sets the preferred rendering engine.
-If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
+    * Sets the preferred rendering engine. If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are: "svg" - renders the widget as inline SVG document, if available or "canvas" - renders the widget as a Canvas element, if available..
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChart
     */
@@ -147,8 +144,7 @@ If it is not supported by the browser, the Chart will switch to the first availa
     }
 
     /**
-    * The chart theme. This can be either a built-in theme or "sass".
-When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:
+    * The chart theme. This can be either a built-in theme or "sass". When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are: "sass" - special value, see notes; "black"; "blueopal"; "bootstrap"; "default"; "highcontrast"; "metro"; "metroblack"; "moonlight"; "silver" or "uniform".
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChart
     */
@@ -208,8 +204,7 @@ When set to "sass" the chart will read the variables from the Sass-based themes.
 
     /**
     * Sets the dataBound event of the StockChart.
-    * Fires when the chart has received data from the data source
-and is about to render it.
+    * Fires when the chart has received data from the data source and is about to render it.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\StockChart
     */
@@ -265,8 +260,7 @@ and is about to render it.
 
     /**
     * Sets the legendItemClick event of the StockChart.
-    * Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.
+    * Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\StockChart
     */

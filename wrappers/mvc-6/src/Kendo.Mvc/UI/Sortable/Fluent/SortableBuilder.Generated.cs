@@ -49,8 +49,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set, specifies the offset of the hint relative to the mouse cursor/finger.
-		/// By default, the hint is initially positioned on top of the draggable source offset. The option accepts an object with two keys: top and left.
+        /// If set, specifies the offset of the hint relative to the mouse cursor/finger. By default, the hint is initially positioned on top of the draggable source offset. The option accepts an object with two keys: top and left.
         /// </summary>
         /// <param name="configurator">The configurator for the cursoroffset setting.</param>
         public SortableBuilder CursorOffset(Action<SortableCursorOffsetSettingsBuilder> configurator)
@@ -93,8 +92,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time.
-		/// The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.
+        /// Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time. The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.
         /// </summary>
         /// <param name="value">The value for HoldToDrag</param>
         public SortableBuilder HoldToDrag(bool value)
@@ -104,8 +102,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time.
-		/// The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.
+        /// Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time. The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.
         /// </summary>
         public SortableBuilder HoldToDrag()
         {

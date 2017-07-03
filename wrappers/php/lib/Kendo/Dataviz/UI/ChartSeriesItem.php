@@ -6,8 +6,7 @@ class ChartSeriesItem extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
-The function return value is displayed instead of the individual points.The supported values are:
+    * The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points. The function return value is displayed instead of the individual points.The supported values are: "avg" - the average of all values for the date period.; "count" - the number of values for the date period.; "max" - the highest value for the date period.; "min" - the lowest value for the date period.; "sum" - the sum of all values for the date period. Defaults to 0 if no data points are defined.; "sumOrNull" - the sum of all values for the date period. Defaults to null if no data points are defined.; "first" - the first value; function(values, series, dataItems, category) - user-defined aggregate function. Returns single value or data item. or object  - (compound aggregate) Applicable to "candlestick", "boxPlot"  and ohlc "series". Specifies the aggregate for each data item field..
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -61,7 +60,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The series base color. The supported values are:
+    * The series base color. The supported values are: CSS color string, including hex and rgb or function(point) - user-defined function that will be evaluated for each point. Returning undefined will assume the default series color..
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -97,7 +96,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The dash type of line chart.The following dash types are supported:
+    * The dash type of line chart.The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -106,7 +105,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The array of data items which represent the series data.Can be set to :
+    * The array of data items which represent the series data.Can be set to : Array of objects. Each point is bound to the field specified via the series.field option.; Array of numbers. Supported when the series.type option is set to "area", "bar", "column", "donut", "pie", "line" or "waterfall". or Array of arrays of numbers. Supported when the series.type option is set to "bubble", "scatter", "scatterLine", "ohlc" or polar series.Bubble series need arrays of three values - X value, Y value and Size value e.g. [1, 1, 10]Scatter and scatter line series need arrays of two values - X value and Y valueOHLC and candlestick series need arrays of four values - open, high, low and close.
     * @param array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -142,8 +141,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The data item field which contains the summary type for waterfall series.
-Summary columns are optional and can be one of two types:
+    * The data item field which contains the summary type for waterfall series. Summary columns are optional and can be one of two types: "runningTotal" - Displays the sum of all items since the last "runningTotal" point. or "total" - Displays the sum of all previous items..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -161,8 +159,7 @@ Summary columns are optional and can be one of two types:
     }
 
     /**
-    * When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
-The last element is always created like a rectangle since there is no following element.
+    * When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value The last element is always created like a rectangle since there is no following element.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -468,7 +465,7 @@ The last element is always created like a rectangle since there is no following 
     }
 
     /**
-    * The behavior for handling missing values. The supported values are:
+    * The behavior for handling missing values. The supported values are: "gap" - the plot stops before the missing point and continues after it.; "interpolate" - the value is interpolated from neighboring points. or "zero" - the value is assumed to be zero..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -477,7 +474,7 @@ The last element is always created like a rectangle since there is no following 
     }
 
     /**
-    * The supported values are:
+    * The supported values are: "normal" - The values will be connected with straight line.; "step" - The values will be connected with a line with right angle. or "smooth" - The values will be connected with a smooth line..
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -576,8 +573,7 @@ The last element is always created like a rectangle since there is no following 
     }
 
     /**
-    * A boolean value indicating if the series should be stacked.
-A string value is interpreted as series.stack.group.
+    * A boolean value indicating if the series should be stacked. A string value is interpreted as series.stack.group.
     * @param boolean|string|\Kendo\Dataviz\UI\ChartSeriesItemStack|array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -622,7 +618,7 @@ A string value is interpreted as series.stack.group.
     }
 
     /**
-    * The type of the series.The supported values are:
+    * The type of the series.The supported values are: area; bar; bubble; bullet; candlestick; column; donut; funnel; horizontalWaterfall; line; ohlc; pie; polarArea; polarLine; polarScatter; radarArea; radarColumn; radarLine; rangeBar; rangeColumn; scatter; scatterLine; verticalArea; verticalBoxPlot; verticalBullet; verticalLine or waterfall.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -640,8 +636,7 @@ A string value is interpreted as series.stack.group.
     }
 
     /**
-    * A value indicating whether to show the point category name (for funnel, donut and pie series)
-or series name (for other available series types) in the legend.
+    * A value indicating whether to show the point category name (for funnel, donut and pie series) or series name (for other available series types) in the legend.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -660,7 +655,7 @@ or series name (for other available series types) in the legend.
 
     /**
     * Sets the visual option of the ChartSeriesItem.
-    * A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
+    * A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the point options.; createVisual - a function that can be used to get the default visual.; category - the point category.; dataItem - the point dataItem.; value - the point value.; stackValue - the cumulative point value on the stack. Available only for stackable series.; sender - the chart instance.; series - the point series.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series.; total - the sum of all previous series values. Available for waterfall series.; radius - the segment radius. Available for donut and pie series.; innerRadius - the segment inner radius. Available for donut series.; startAngle - the segment start angle. Available for donut and pie series.; endAngle - the segment end angle. Available for donut and pie series.; center - the segment center point. Available for donut and pie series. or points - the segment points. Available for funnel series..
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -727,8 +722,7 @@ or series name (for other available series types) in the legend.
     }
 
     /**
-    * An optional Z-index that can be used to change the default stacking order of series.The series with the highest Z-index will be placed on top.Series with no Z-index will use the default stacking order based on series type.
-For example line series will be on top with bar and area following below.
+    * An optional Z-index that can be used to change the default stacking order of series.The series with the highest Z-index will be placed on top.Series with no Z-index will use the default stacking order based on series type. For example line series will be on top with bar and area following below.
     * @param float $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */

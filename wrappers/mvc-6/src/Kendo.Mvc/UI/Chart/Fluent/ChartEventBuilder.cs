@@ -124,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
         public ChartEventBuilder LegendItemClick(string handler)
@@ -135,7 +135,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartEventBuilder LegendItemClick(Func<object, object> handler)
@@ -278,7 +278,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user modifies the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
         public ChartEventBuilder Select(string handler)
@@ -289,7 +289,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user modifies the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartEventBuilder Select(Func<object, object> handler)
@@ -300,7 +300,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user completes modifying the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the selectEnd event.</param>
         public ChartEventBuilder SelectEnd(string handler)
@@ -311,7 +311,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user completes modifying the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartEventBuilder SelectEnd(Func<object, object> handler)
@@ -322,7 +322,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user starts modifying the axis selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the selectStart event.</param>
         public ChartEventBuilder SelectStart(string handler)
@@ -333,7 +333,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user starts modifying the axis selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartEventBuilder SelectStart(Func<object, object> handler)

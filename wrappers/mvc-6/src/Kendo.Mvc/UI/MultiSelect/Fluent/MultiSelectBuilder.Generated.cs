@@ -199,8 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The minimum number of characters the user must type before a search is performed. Set to a higher value if the search could match a lot of items.
-		/// A zero value means that a request will be made as soon as the user focuses the widget.
+        /// The minimum number of characters the user must type before a search is performed. Set to a higher value if the search could match a lot of items. A zero value means that a request will be made as soon as the user focuses the widget.
         /// </summary>
         /// <param name="value">The value for MinLength</param>
         public MultiSelectBuilder MinLength(double value)
@@ -220,8 +219,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The value for NoDataTemplate</param>
         public MultiSelectBuilder NoDataTemplate(string value)
@@ -231,8 +229,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The ID of the template element for NoDataTemplate</param>
         public MultiSelectBuilder NoDataTemplateId(string templateId)
@@ -252,8 +249,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The options that will be used for the popup initialization. For more details about the available options
-		/// refer to Popup documentation.
+        /// The options that will be used for the popup initialization. For more details about the available options refer to Popup documentation.
         /// </summary>
         /// <param name="configurator">The configurator for the popup setting.</param>
         public MultiSelectBuilder Popup(Action<MultiSelectPopupSettingsBuilder> configurator)

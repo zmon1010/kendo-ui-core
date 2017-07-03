@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when a color was selected, either by clicking on it (in the\n\t\t/// simple picker), by clicking ENTER or by pressing "Apply" in the HSV\n\t\t/// picker.
+        /// Fires when a color was selected, either by clicking on it (in the simple picker), by clicking ENTER or by pressing "Apply" in the HSV picker.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
         public ColorPickerEventBuilder Change(string handler)
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when a color was selected, either by clicking on it (in the\n\t\t/// simple picker), by clicking ENTER or by pressing "Apply" in the HSV\n\t\t/// picker.
+        /// Fires when a color was selected, either by clicking on it (in the simple picker), by clicking ENTER or by pressing "Apply" in the HSV picker.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ColorPickerEventBuilder Change(Func<object, object> handler)
@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires as a new color is displayed in the drop-down picker.  This is\n\t\t/// not necessarily the "final" value; for example this event triggers\n\t\t/// when the sliders in the HSV selector are dragged, but then pressing\n\t\t/// ESC would cancel the selection and the color will revert to the\n\t\t/// original value.
+        /// Fires as a new color is displayed in the drop-down picker.  This is not necessarily the "final" value; for example this event triggers when the sliders in the HSV selector are dragged, but then pressing ESC would cancel the selection and the color will revert to the original value.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
         public ColorPickerEventBuilder Select(string handler)
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires as a new color is displayed in the drop-down picker.  This is\n\t\t/// not necessarily the "final" value; for example this event triggers\n\t\t/// when the sliders in the HSV selector are dragged, but then pressing\n\t\t/// ESC would cancel the selection and the color will revert to the\n\t\t/// original value.
+        /// Fires as a new color is displayed in the drop-down picker.  This is not necessarily the "final" value; for example this event triggers when the sliders in the HSV selector are dragged, but then pressing ESC would cancel the selection and the color will revert to the original value.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ColorPickerEventBuilder Select(Func<object, object> handler)

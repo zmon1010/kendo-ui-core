@@ -24,8 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether the navigator will call read on the data source initially.
-		/// Applicable only when using a dedicated navigator data source.
+        /// Indicates whether the navigator will call read on the data source initially. Applicable only when using a dedicated navigator data source.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public StockChartNavigatorSettingsBuilder<T> AutoBind(bool value)
@@ -35,8 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The field containing the point date.
-		/// It is used as a default field for the navigator axis.The data item field value must be either:
+        /// The field containing the point date. It is used as a default field for the navigator axis.The data item field value must be either:
         /// </summary>
         /// <param name="value">The value for DateField</param>
         public StockChartNavigatorSettingsBuilder<T> DateField(string value)

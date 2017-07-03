@@ -72,9 +72,7 @@ class Notification extends \Kendo\UI\Widget {
     }
 
     /**
-    * This setting applies to popup notifications only, i.e. in cases when appendTo is not set.
-It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.
-top takes precedence over bottom and left takes precedence over right.
+    * This setting applies to popup notifications only, i.e. in cases when appendTo is not set. It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.top takes precedence over bottom and left takes precedence over right.
     * @param \Kendo\UI\NotificationPosition|array $value
     * @return \Kendo\UI\Notification
     */
@@ -83,8 +81,7 @@ top takes precedence over bottom and left takes precedence over right.
     }
 
     /**
-    * Determines the direction in which multiple notification will stack (arrange) with regard to the first one. Possible values are "up", "right", "down", "left" and "default".
-The "default" setting takes into consideration the applied position settings and is evaluated to "up" or "down".
+    * Determines the direction in which multiple notification will stack (arrange) with regard to the first one. Possible values are "up", "right", "down", "left" and "default". The "default" setting takes into consideration the applied position settings and is evaluated to "up" or "down".
     * @param string $value
     * @return \Kendo\UI\Notification
     */

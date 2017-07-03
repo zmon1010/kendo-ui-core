@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Specifies the height of the virtual item. All items in the virtualized list must have the same height.
-		/// If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
+        /// Specifies the height of the virtual item. All items in the virtualized list must have the same height. If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
         /// </summary>
         /// <param name="value">The value for ItemHeight</param>
         public AutoCompleteVirtualSettingsBuilder ItemHeight(double value)

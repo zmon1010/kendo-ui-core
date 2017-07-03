@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: task - the gantt task, for which the template is shown.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public GanttTooltipSettingsBuilder<TTaskModel, TDependenciesModel> Template(string value)
@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: task - the gantt task, for which the template is shown.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public GanttTooltipSettingsBuilder<TTaskModel, TDependenciesModel> TemplateId(string templateId)

@@ -6,8 +6,7 @@ class AutoCompleteVirtual extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Specifies the height of the virtual item. All items in the virtualized list must have the same height.
-If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
+    * Specifies the height of the virtual item. All items in the virtualized list must have the same height. If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.
     * @param float $value
     * @return \Kendo\UI\AutoCompleteVirtual
     */

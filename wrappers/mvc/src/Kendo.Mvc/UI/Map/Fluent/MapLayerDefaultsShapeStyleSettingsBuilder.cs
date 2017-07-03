@@ -20,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The default fill for layer shapes.
-		/// Accepts a valid CSS color string or object with detailed configuration.
+        /// The default fill for layer shapes. Accepts a valid CSS color string or object with detailed configuration.
         /// </summary>
         /// <param name="configurator">The action that configures the fill.</param>
         public MapLayerDefaultsShapeStyleSettingsBuilder Fill(Action<MapLayerDefaultsShapeStyleFillSettingsBuilder> configurator)
@@ -31,8 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The default stroke for layer shapes.
-		/// Accepts a valid CSS color string or object with detailed configuration.
+        /// The default stroke for layer shapes. Accepts a valid CSS color string or object with detailed configuration.
         /// </summary>
         /// <param name="configurator">The action that configures the stroke.</param>
         public MapLayerDefaultsShapeStyleSettingsBuilder Stroke(Action<MapLayerDefaultsShapeStyleStrokeSettingsBuilder> configurator)

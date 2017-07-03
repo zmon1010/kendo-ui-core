@@ -20,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The default fill color for layer shapes.
-		/// Accepts a valid CSS color string, including hex and rgb.
+        /// The default fill color for layer shapes. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value that configures the color.</param>
         public MapLayerDefaultsShapeStyleFillSettingsBuilder Color(string value)

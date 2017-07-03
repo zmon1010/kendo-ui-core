@@ -124,7 +124,7 @@ class StockChartNavigatorCategoryAxisLabels extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the StockChartNavigatorCategoryAxisLabels.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: value - the category value.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisLabels
     */
@@ -136,7 +136,7 @@ class StockChartNavigatorCategoryAxisLabels extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the StockChartNavigatorCategoryAxisLabels.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: value - the category value.
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisLabels
     */

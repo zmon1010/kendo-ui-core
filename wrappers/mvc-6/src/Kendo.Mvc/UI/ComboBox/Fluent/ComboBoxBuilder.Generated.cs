@@ -30,8 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Use it to set the Id of the parent ComboBox widget.
-		/// Help topic showing how cascading functionality works
+        /// Use it to set the Id of the parent ComboBox widget.Help topic showing how cascading functionality works
         /// </summary>
         /// <param name="value">The value for CascadeFrom</param>
         public ComboBoxBuilder CascadeFrom(string value)
@@ -41,8 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the field to be used to filter the data source. If not defined the parent's dataValueField option will be used.
-		/// Help topic showing how cascading functionality works
+        /// Defines the field to be used to filter the data source. If not defined the parent's dataValueField option will be used.Help topic showing how cascading functionality works
         /// </summary>
         /// <param name="value">The value for CascadeFromField</param>
         public ComboBoxBuilder CascadeFromField(string value)
@@ -221,8 +219,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The value for NoDataTemplate</param>
         public ComboBoxBuilder NoDataTemplate(string value)
@@ -232,8 +229,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
         /// </summary>
         /// <param name="value">The ID of the template element for NoDataTemplate</param>
         public ComboBoxBuilder NoDataTemplateId(string templateId)
@@ -253,8 +249,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The options that will be used for the popup initialization. For more details about the available options
-		/// refer to Popup documentation.
+        /// The options that will be used for the popup initialization. For more details about the available options refer to Popup documentation.
         /// </summary>
         /// <param name="configurator">The configurator for the popup setting.</param>
         public ComboBoxBuilder Popup(Action<ComboBoxPopupSettingsBuilder> configurator)
@@ -286,8 +281,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// When set to true the widget will automatically set selected value to the typed custom text. Set the option to false to
-		/// clear the selected value but keep the custom text.
+        /// When set to true the widget will automatically set selected value to the typed custom text. Set the option to false to clear the selected value but keep the custom text.
         /// </summary>
         /// <param name="value">The value for SyncValueAndText</param>
         public ComboBoxBuilder SyncValueAndText(bool value)

@@ -23,10 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Relaxes the same-origin policy when using the iframe-based editor.
-		/// This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
-		/// In that case, this property must be used to allow the editor to function properly across browsers.
-		/// This property has been introduced in internal builds after 2014.1.319.
+        /// Relaxes the same-origin policy when using the iframe-based editor. This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain. In that case, this property must be used to allow the editor to function properly across browsers. This property has been introduced in internal builds after 2014.1.319.
         /// </summary>
         /// <param name="value">The value for Domain</param>
         public EditorBuilder Domain(string value)
@@ -164,9 +161,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A collection of tools that are used to interact with the Editor.
-		/// Tools may be switched on by specifying their name.
-		/// Custom tools and tools that require configuration are defined as objects.The available editor commands are:
+        /// A collection of tools that are used to interact with the Editor. Tools may be switched on by specifying their name. Custom tools and tools that require configuration are defined as objects.The available editor commands are: Basic text formatting     - bold, italic, underline, strikethrough, subscript, superscript; Font and color     - fontName, fontSize, foreColor, backColor; Alignment     - justifyLeft, justifyCenter, justifyRight, justifyFull; Lists     - insertUnorderedList, insertOrderedList, indent, outdent; Links, images and files     - createLink, unlink, insertImage, insertFile; Table editing     - createTable, addColumnLeft, addColumnRight, addRowAbove, addRowBelow, deleteRow, deleteColumn; Structural markup and styles     - formatting, cleanFormatting; Snippets     - insertHtml; HTML code view     - viewHtml; Print edited page     - print or Export to PDF     - pdf.
         /// </summary>
         /// <param name="configurator">The configurator for the tools setting.</param>
         public EditorBuilder Tools(Action<EditorToolFactory> configurator)

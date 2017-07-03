@@ -178,7 +178,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the from labels.
+        /// The position of the from labels. "center" - the label is positioned at the point center.; "insideBase" - the label is positioned inside, near the base of the bar.; "insideEnd" - the label is positioned inside, near the end of the point. or "outsideEnd" - the label is positioned outside, near the end of the point..
         /// </summary>
         /// <param name="value">The value for Position</param>
         public ChartSeriesLabelsFromSettingsBuilder<T> Position(string value)
@@ -188,7 +188,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// The position of the from labels.
+        /// The position of the from labels. "center" - the label is positioned at the point center.; "insideBase" - the label is positioned inside, near the base of the bar.; "insideEnd" - the label is positioned inside, near the end of the point. or "outsideEnd" - the label is positioned outside, near the end of the point..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesLabelsFromSettingsBuilder<T> PositionHandler(string handler)
@@ -199,7 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the from labels.
+        /// The position of the from labels. "center" - the label is positioned at the point center.; "insideBase" - the label is positioned inside, near the base of the bar.; "insideEnd" - the label is positioned inside, near the end of the point. or "outsideEnd" - the label is positioned outside, near the end of the point..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesLabelsFromSettingsBuilder<T> PositionHandler(Func<object, object> handler)
@@ -210,7 +210,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the chart series from label.The fields which can be used in the template are:
+        /// The template which renders the chart series from label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartSeriesLabelsFromSettingsBuilder<T> Template(string value)
@@ -220,7 +220,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the chart series from label.The fields which can be used in the template are:
+        /// The template which renders the chart series from label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartSeriesLabelsFromSettingsBuilder<T> TemplateId(string templateId)

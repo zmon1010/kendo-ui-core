@@ -44,9 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The number of columns to show in the color dropdown when a pallete is specified.
-		/// This is automatically initialized for the "basic" and "websafe" palettes.
-		/// If you use a custom palette then you can set this to some value that makes sense for your colors.
+        /// The number of columns to show in the color dropdown when a pallete is specified. This is automatically initialized for the "basic" and "websafe" palettes. If you use a custom palette then you can set this to some value that makes sense for your colors.
         /// </summary>
         /// <param name="value">The value that configures the columns.</param>
         public ColorPickerBuilder Columns(double value)
@@ -67,8 +65,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Only for the HSV selector.  If true, the widget will display the opacity slider.
-		/// Note that currently in HTML5 the &lt;input type="color"&gt; does not support opacity.
+        /// Only for the HSV selector.  If true, the widget will display the opacity slider. Note that currently in HTML5 the &lt;input type="color"&gt; does not support opacity.
         /// </summary>
         /// <param name="value">The value that configures the opacity.</param>
         public ColorPickerBuilder Opacity(bool value)
@@ -90,8 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// A CSS class name to display an icon in the color picker button.  If
-		/// specified, the HTML for the element will look like this:
+        /// A CSS class name to display an icon in the color picker button.  If specified, the HTML for the element will look like this:
         /// </summary>
         /// <param name="value">The value that configures the toolicon.</param>
         public ColorPickerBuilder ToolIcon(string value)
@@ -102,8 +98,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The initially selected color.
-		/// Note that when initializing the widget from an &lt;input&gt; element, the initial color will be decided by the field instead.
+        /// The initially selected color. Note that when initializing the widget from an &lt;input&gt; element, the initial color will be decided by the field instead.
         /// </summary>
         /// <param name="value">The value that configures the value.</param>
         public ColorPickerBuilder Value(string value)

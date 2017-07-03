@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The field containing the point date.
-		/// It is used as a default categoryField for all series.The data item field value must be either:
+        /// The field containing the point date. It is used as a default categoryField for all series.The data item field value must be either: Date instance; String parsable by new Date([field value]) or String in ASP.NET JSON format, i.e. "\/Date(1320825600000-0800)\/".
         /// </summary>
         /// <param name="value">The value for DateField</param>
         public StockChartBuilder<T> DateField(string value)

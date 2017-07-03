@@ -85,8 +85,7 @@ class AutoComplete extends \Kendo\UI\Widget {
     }
 
     /**
-    * The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
-all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
+    * The filtering method used to determine the suggestions for the current value. The default filter is "startswith" - all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
     * @param string $value
     * @return \Kendo\UI\AutoComplete
     */
@@ -198,8 +197,7 @@ all data items which begin with the current widget value are displayed in the su
 
     /**
     * Sets the noDataTemplate option of the AutoComplete.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\AutoComplete
     */
@@ -211,8 +209,7 @@ The noData template receives the widget itself as a part of the data argument. T
 
     /**
     * Sets the noDataTemplate option of the AutoComplete.
-    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
-The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty. The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The template content.
     * @return \Kendo\UI\AutoComplete
     */
@@ -230,8 +227,7 @@ The noData template receives the widget itself as a part of the data argument. T
     }
 
     /**
-    * The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.
+    * The options that will be used for the popup initialization. For more details about the available options refer to Popup documentation.
     * @param  $value
     * @return \Kendo\UI\AutoComplete
     */

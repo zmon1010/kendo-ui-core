@@ -27,8 +27,7 @@ class Menu extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the Menu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
-by setting the close animation.  Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).
+    * A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the Menu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden by setting the close animation.  Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).
     * @param boolean|\Kendo\UI\MenuAnimation|array $value
     * @return \Kendo\UI\Menu
     */
@@ -46,8 +45,7 @@ by setting the close animation.  Each animation also has a direction which can b
     }
 
     /**
-    * The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
-Refer to the example below for a list of the supported properties.
+    * The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered. Refer to the example below for a list of the supported properties.
     * @param |array $value
     * @return \Kendo\UI\Menu
     */
@@ -56,9 +54,7 @@ Refer to the example below for a list of the supported properties.
     }
 
     /**
-    * Specifies Menu opening direction. Can be "top", "bottom", "left", "right".
-You can also specify different direction for root and sub menu items, separating them with space. The example below will initialize the root menu to open upwards and
-its sub menus to the left.
+    * Specifies Menu opening direction. Can be "top", "bottom", "left", "right". You can also specify different direction for root and sub menu items, separating them with space. The example below will initialize the root menu to open upwards and its sub menus to the left.
     * @param string $value
     * @return \Kendo\UI\Menu
     */
@@ -94,9 +90,7 @@ its sub menus to the left.
     }
 
     /**
-    * Specifies how Menu should adjust to screen boundaries. By default the strategy is "fit" for a sub menu with a horizontal parent,
-meaning it will move to fit in screen boundaries in all directions, and "fit flip" for a sub menu with vertical parent, meaning it will fit vertically and flip over
-its parent horizontally. You can also switch off the screen boundary detection completely if you set the popupCollision to false.
+    * Specifies how Menu should adjust to screen boundaries. By default the strategy is "fit" for a sub menu with a horizontal parent, meaning it will move to fit in screen boundaries in all directions, and "fit flip" for a sub menu with vertical parent, meaning it will fit vertically and flip over its parent horizontally. You can also switch off the screen boundary detection completely if you set the popupCollision to false.
     * @param string $value
     * @return \Kendo\UI\Menu
     */

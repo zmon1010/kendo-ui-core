@@ -101,8 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know
-		/// which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
+        /// The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public GanttEditableSettingsBuilder<TTaskModel, TDependenciesModel> Template(string value)
@@ -112,8 +111,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know
-		/// which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
+        /// The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public GanttEditableSettingsBuilder<TTaskModel, TDependenciesModel> TemplateId(string templateId)

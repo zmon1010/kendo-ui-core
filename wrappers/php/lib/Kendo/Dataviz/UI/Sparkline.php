@@ -37,8 +37,7 @@ class Sparkline extends \Kendo\UI\Widget {
     }
 
     /**
-    * The chart area configuration options.
-This is the entire visible area of the chart.
+    * The chart area configuration options. This is the entire visible area of the chart.
     * @param \Kendo\Dataviz\UI\SparklineChartArea|array $value
     * @return \Kendo\Dataviz\UI\Sparkline
     */
@@ -92,8 +91,7 @@ This is the entire visible area of the chart.
     }
 
     /**
-    * Sets the preferred rendering engine.
-If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are:
+    * Sets the preferred rendering engine. If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are: "svg" - renders the widget as inline SVG document, if available or "canvas" - renders the widget as a Canvas element, if available..
     * @param string $value
     * @return \Kendo\Dataviz\UI\Sparkline
     */
@@ -129,8 +127,7 @@ If it is not supported by the browser, the Sparkline will switch to the first av
     }
 
     /**
-    * The sparkline theme. This can be either a built-in theme or "sass".
-When set to "sass" the sparkline will read the variables from the Sass-based themes.The supported values are:
+    * The sparkline theme. This can be either a built-in theme or "sass". When set to "sass" the sparkline will read the variables from the Sass-based themes.The supported values are: "sass" - special value, see notes; "black"; "blueopal"; "bootstrap"; "default"; "highcontrast"; "metro"; "metroblack"; "moonlight"; "silver" or "uniform".
     * @param string $value
     * @return \Kendo\Dataviz\UI\Sparkline
     */
@@ -190,8 +187,7 @@ When set to "sass" the sparkline will read the variables from the Sass-based the
 
     /**
     * Sets the dataBound event of the Sparkline.
-    * Fires when the sparkline has received data from the data source
-and is about to render it.
+    * Fires when the sparkline has received data from the data source and is about to render it.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Sparkline
     */

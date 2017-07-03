@@ -20,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The default fill for bubble layer symbols.
-		/// Accepts a valid CSS color string or object with detailed configuration.
+        /// The default fill for bubble layer symbols. Accepts a valid CSS color string or object with detailed configuration.
         /// </summary>
         /// <param name="configurator">The action that configures the fill.</param>
         public MapLayerDefaultsBubbleStyleSettingsBuilder Fill(Action<MapLayerDefaultsBubbleStyleFillSettingsBuilder> configurator)
@@ -31,8 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The default stroke for bubble layer symbols.
-		/// Accepts a valid CSS color string or object with detailed configuration.
+        /// The default stroke for bubble layer symbols. Accepts a valid CSS color string or object with detailed configuration.
         /// </summary>
         /// <param name="configurator">The action that configures the stroke.</param>
         public MapLayerDefaultsBubbleStyleSettingsBuilder Stroke(Action<MapLayerDefaultsBubbleStyleStrokeSettingsBuilder> configurator)

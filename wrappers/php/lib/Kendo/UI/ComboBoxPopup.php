@@ -15,14 +15,7 @@ class ComboBoxPopup extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies how to position the popup element based on anchor point. The value is
-space separated "y" plus "x" position.The available "y" positions are:
-- "bottom"
-- "center"
-- "top"The available "x" positions are:
-- "left"
-- "center"
-- "right"
+    * Specifies how to position the popup element based on anchor point. The value is space separated "y" plus "x" position.The available "y" positions are: - "bottom" - "center" - "top"The available "x" positions are: - "left" - "center" - "right"
     * @param string $value
     * @return \Kendo\UI\ComboBoxPopup
     */
@@ -31,14 +24,7 @@ space separated "y" plus "x" position.The available "y" positions are:
     }
 
     /**
-    * Specifies which point of the popup element to attach to the anchor's origin point. The value is
-space separated "y" plus "x" position.The available "y" positions are:
-- "bottom"
-- "center"
-- "top"The available "x" positions are:
-- "left"
-- "center"
-- "right"
+    * Specifies which point of the popup element to attach to the anchor's origin point. The value is space separated "y" plus "x" position.The available "y" positions are: - "bottom" - "center" - "top"The available "x" positions are: - "left" - "center" - "right"
     * @param string $value
     * @return \Kendo\UI\ComboBoxPopup
     */

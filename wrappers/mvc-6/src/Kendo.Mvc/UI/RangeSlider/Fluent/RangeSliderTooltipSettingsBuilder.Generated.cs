@@ -21,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Format string for the text of the tooltip. Note: The applied format will also influence the appearance of
-		/// the RangeSlider tick labels.
+        /// Format string for the text of the tooltip. Note: The applied format will also influence the appearance of the RangeSlider tick labels.
         /// </summary>
         /// <param name="value">The value for Format</param>
         public RangeSliderTooltipSettingsBuilder<T> Format(string value)
@@ -32,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Template of the tooltip.
+        /// Template of the tooltip. selectionStart - the current selectionStart. or selectionEnd - the current selectionEnd..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public RangeSliderTooltipSettingsBuilder<T> Template(string value)
@@ -42,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Template of the tooltip.
+        /// Template of the tooltip. selectionStart - the current selectionStart. or selectionEnd - the current selectionEnd..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public RangeSliderTooltipSettingsBuilder<T> TemplateId(string templateId)

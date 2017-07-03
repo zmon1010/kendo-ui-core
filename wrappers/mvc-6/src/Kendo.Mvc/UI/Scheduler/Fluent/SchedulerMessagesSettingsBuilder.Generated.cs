@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the format string used to populate the aria-label attribute value of the selected event element.The arguments which can be used in the format string are:
+        /// Specifies the format string used to populate the aria-label attribute value of the selected event element.The arguments which can be used in the format string are: {0} - represents the title of the selected event.; {1} - represents the start date of the event. or {2} - represents the start time of the event..
         /// </summary>
         /// <param name="value">The value for AriaEventLabel</param>
         public SchedulerMessagesSettingsBuilder<T> AriaEventLabel(string value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the format string used to populate the aria-label attribute value of the selected slot element.The arguments which can be used in the format string are:
+        /// Specifies the format string used to populate the aria-label attribute value of the selected slot element.The arguments which can be used in the format string are: {0} - represents the start date of the slot. or {1} - represents the end date of the slot..
         /// </summary>
         /// <param name="value">The value for AriaSlotLabel</param>
         public SchedulerMessagesSettingsBuilder<T> AriaSlotLabel(string value)

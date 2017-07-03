@@ -9,8 +9,7 @@ class Chart extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -100,8 +99,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * Sets the preferred rendering engine.
-If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
+    * Sets the preferred rendering engine. If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are: "svg" - renders the widget as inline SVG document, if available or "canvas" - renders the widget as a Canvas element, if available..
     * @param string $value
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -137,8 +135,7 @@ If it is not supported by the browser, the Chart will switch to the first availa
     }
 
     /**
-    * The chart theme. This can be either a built-in theme or "sass".
-When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are:
+    * The chart theme. This can be either a built-in theme or "sass". When set to "sass" the chart will read the variables from the Sass-based themes.The supported values are: "sass" - special value, see notes; "black"; "blueopal"; "bootstrap"; "default"; "highcontrast"; "metro"; "metroblack"; "moonlight"; "silver" or "uniform".
     * @param string $value
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -281,8 +278,7 @@ When set to "sass" the chart will read the variables from the Sass-based themes.
 
     /**
     * Sets the legendItemClick event of the Chart.
-    * Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.
+    * Fires when an legend item is clicked, before the selected series visibility is toggled. Can be cancelled.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -380,7 +376,7 @@ Can be cancelled.
 
     /**
     * Sets the select event of the Chart.
-    * Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user modifies the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -394,7 +390,7 @@ Can be cancelled.
 
     /**
     * Sets the selectEnd event of the Chart.
-    * Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user completes modifying the selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Chart
     */
@@ -408,7 +404,7 @@ Can be cancelled.
 
     /**
     * Sets the selectStart event of the Chart.
-    * Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user starts modifying the axis selection.The range units are: Generic axis - Category index (0-based) or Date axis - Date instance. The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Chart
     */

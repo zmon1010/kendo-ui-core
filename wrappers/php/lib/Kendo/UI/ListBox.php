@@ -94,9 +94,7 @@ class ListBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Indicates whether the selection is single or multiple. The possible values are:
-- "single" - A single-item selection.
-- "multiple" - A multiple-item selection.
+    * Indicates whether the selection is single or multiple. The possible values are: - "single" - A single-item selection. - "multiple" - A multiple-item selection.
     * @param string $value
     * @return \Kendo\UI\ListBox
     */

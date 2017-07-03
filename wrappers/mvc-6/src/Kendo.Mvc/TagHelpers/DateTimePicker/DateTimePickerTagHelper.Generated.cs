@@ -63,8 +63,7 @@ namespace Kendo.Mvc.TagHelpers
         public bool? WeekNumber { get; set; }
 
         /// <summary>
-        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
-		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
+        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
         public string[] ParseFormats { get; set; }
 

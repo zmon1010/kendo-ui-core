@@ -24,8 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The height of the gauge area.  By default, the vertical gauge is 200px and
-		/// the horizontal one is 60px.
+        /// The height of the gauge area.  By default, the vertical gauge is 200px and the horizontal one is 60px.
         /// </summary>
         /// <param name="value">The value for Height</param>
         public LinearGaugeGaugeAreaSettingsBuilder Height(double value)
@@ -48,8 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The width of the gauge area.  By default the vertical gauge is 60px and
-		/// horizontal gauge is 200px.
+        /// The width of the gauge area.  By default the vertical gauge is 60px and horizontal gauge is 200px.
         /// </summary>
         /// <param name="value">The value for Width</param>
         public LinearGaugeGaugeAreaSettingsBuilder Width(double value)

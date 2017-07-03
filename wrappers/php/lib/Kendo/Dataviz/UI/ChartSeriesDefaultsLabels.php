@@ -79,7 +79,7 @@ class ChartSeriesDefaultsLabels extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the ChartSeriesDefaultsLabels.
-    * The template which renders the chart series label.The fields which can be used in the template are:
+    * The template which renders the chart series label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, funnel, line and pie series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available for donut, funnel and pie series.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaultsLabels
     */
@@ -91,7 +91,7 @@ class ChartSeriesDefaultsLabels extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the ChartSeriesDefaultsLabels.
-    * The template which renders the chart series label.The fields which can be used in the template are:
+    * The template which renders the chart series label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, funnel, line and pie series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available for donut, funnel and pie series.; series - the data series; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaultsLabels
     */
@@ -110,7 +110,7 @@ class ChartSeriesDefaultsLabels extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the ChartSeriesDefaultsLabels.
-    * A function that can be used to create a custom visual for the labels. The available argument fields are:
+    * A function that can be used to create a custom visual for the labels. The available argument fields are: text - the label text.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; options - the label options. or createVisual - a function that can be used to get the default visual..
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaultsLabels
     */

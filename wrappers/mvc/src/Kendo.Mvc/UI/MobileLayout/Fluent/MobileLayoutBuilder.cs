@@ -24,8 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The specific platform this layout targets. By default, layouts are displayed
-		/// on all platforms.
+        /// The specific platform this layout targets. By default, layouts are displayed on all platforms.
         /// </summary>
         /// <param name="value">The value that configures the platform.</param>
         public MobileLayoutBuilder Platform(string value)

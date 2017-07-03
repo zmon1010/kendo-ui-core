@@ -21,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The hint template.
-		/// Template variables:
+        /// The hint template. Template variables: from - The lower boundary of the selected range or to - Theupper boundary of the selected range.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public StockChartNavigatorHintSettingsBuilder<T> Template(string value)
@@ -32,8 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The hint template.
-		/// Template variables:
+        /// The hint template. Template variables: from - The lower boundary of the selected range or to - Theupper boundary of the selected range.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public StockChartNavigatorHintSettingsBuilder<T> TemplateId(string templateId)

@@ -156,7 +156,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartYAxisLabelsSettingsBuilder<T> Template(string value)
@@ -166,7 +166,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: value - the category value.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartYAxisLabelsSettingsBuilder<T> TemplateId(string templateId)
@@ -186,7 +186,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: createVisual - a function that can be used to get the default visual.; culture - the default culture (if set) on the label; format - the default format of the label; options - the label options.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; text - the label text. or value - the category value.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartYAxisLabelsSettingsBuilder<T> Visual(string handler)
@@ -196,7 +196,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: createVisual - a function that can be used to get the default visual.; culture - the default culture (if set) on the label; format - the default format of the label; options - the label options.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; text - the label text. or value - the category value.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartYAxisLabelsSettingsBuilder<T> Visual(Func<object, object> handler)

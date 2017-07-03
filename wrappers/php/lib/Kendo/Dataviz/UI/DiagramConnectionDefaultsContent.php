@@ -52,7 +52,7 @@ class DiagramConnectionDefaultsContent extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the DiagramConnectionDefaultsContent.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: dataItem - the data item, in case a field has been specified.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsContent
     */
@@ -64,7 +64,7 @@ class DiagramConnectionDefaultsContent extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the DiagramConnectionDefaultsContent.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: dataItem - the data item, in case a field has been specified.
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsContent
     */

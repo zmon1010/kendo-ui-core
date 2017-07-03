@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The end angle of the gauge.
-		/// The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)
+        /// The end angle of the gauge. The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)
         /// </summary>
         /// <param name="value">The value for EndAngle</param>
         public RadialGaugeScaleSettingsBuilder EndAngle(double value)
@@ -165,8 +164,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The start angle of the gauge.
-		/// The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)
+        /// The start angle of the gauge. The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)
         /// </summary>
         /// <param name="value">The value for StartAngle</param>
         public RadialGaugeScaleSettingsBuilder StartAngle(double value)

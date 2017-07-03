@@ -43,8 +43,7 @@ class RangeSlider extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
-handle must be focused). Note: The allied largeStep will also set large tick for every large step.
+    * The delta with which the value will change when the user presses the Page Up or Page Down key (the drag handle must be focused). Note: The allied largeStep will also set large tick for every large step.
     * @param float $value
     * @return \Kendo\UI\RangeSlider
     */
@@ -116,9 +115,7 @@ handle must be focused). Note: The allied largeStep will also set large tick for
     }
 
     /**
-    * The small step value of the RangeSlider. The underlying value will be changed when the end
-user (1) clicks on the increase or decrease buttons of the RangeSlider, (2) presses the
-arrow keys (the drag handle must be focused), or (3) drags the drag handle.
+    * The small step value of the RangeSlider. The underlying value will be changed when the end user (1) clicks on the increase or decrease buttons of the RangeSlider, (2) presses the arrow keys (the drag handle must be focused), or (3) drags the drag handle.
     * @param float $value
     * @return \Kendo\UI\RangeSlider
     */

@@ -10,7 +10,7 @@ namespace Kendo.Mvc.TagHelpers
     public partial class DialogTagHelper
     {
         /// <summary>
-        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are: normal or stretched.
         /// </summary>
         public string ButtonLayout { get; set; }
 

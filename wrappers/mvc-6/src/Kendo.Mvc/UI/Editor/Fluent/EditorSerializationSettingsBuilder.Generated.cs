@@ -59,8 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether the font styles will be saved as semantic (strong / em / span) tags,
-		/// or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.
+        /// Indicates whether the font styles will be saved as semantic (strong / em / span) tags, or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.
         /// </summary>
         /// <param name="value">The value for Semantic</param>
         public EditorSerializationSettingsBuilder Semantic(bool value)

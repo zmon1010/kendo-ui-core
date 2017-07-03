@@ -18,13 +18,13 @@ namespace Kendo.Mvc.TagHelpers
         public string OnClear { get; set; }
 
         /// <summary>
-        /// Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is inasync mode.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the complete event.</param>
         public string OnComplete { get; set; }
 
         /// <summary>
-        /// Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is inasync mode.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the error event.</param>
         public string OnError { get; set; }
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.TagHelpers
         public string OnRemove { get; set; }
 
         /// <summary>
-        /// Triggered when a files is selected. Note: Cancelling this event will prevent the selection from\n\t\t/// occurring.
+        /// Triggered when a files is selected. Note: Cancelling this event will prevent the selection from occurring.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
         public string OnSelect { get; set; }
@@ -66,7 +66,7 @@ namespace Kendo.Mvc.TagHelpers
         public string OnSuccess { get; set; }
 
         /// <summary>
-        /// Fires when one or more files are about to be uploaded.\n\t\t/// Canceling the event will prevent the upload.
+        /// Fires when one or more files are about to be uploaded. Canceling the event will prevent the upload.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the upload event.</param>
         public string OnUpload { get; set; }

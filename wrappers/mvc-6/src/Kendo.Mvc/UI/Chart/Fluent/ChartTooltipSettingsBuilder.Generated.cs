@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The format of the labels. Uses kendo.format.Format placeholders:
+        /// The format of the labels. Uses kendo.format.Format placeholders: Area, bar, column, funnel, line and pie{0} - value; Bubble{0} - x value{1} - y value{2} - size value{3} - category name; Scatter and scatterLine{0} - x value{1} - y value or Candlestick and OHLC{0} - open value{1} - high value{2} - low value{3} - close value{4} - category name.
         /// </summary>
         /// <param name="value">The value for Format</param>
         public ChartTooltipSettingsBuilder<T> Format(string value)
@@ -106,7 +106,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the shared tooltip.The fields which can be used in the template are:
+        /// The template which renders the shared tooltip.The fields which can be used in the template are: points - the category points or category - the category name.
         /// </summary>
         /// <param name="value">The value for SharedTemplate</param>
         public ChartTooltipSettingsBuilder<T> SharedTemplate(string value)
@@ -116,7 +116,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the shared tooltip.The fields which can be used in the template are:
+        /// The template which renders the shared tooltip.The fields which can be used in the template are: points - the category points or category - the category name.
         /// </summary>
         /// <param name="value">The ID of the template element for SharedTemplate</param>
         public ChartTooltipSettingsBuilder<T> SharedTemplateId(string templateId)
@@ -126,7 +126,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: category - the category name; dataItem - the original data item used to construct the point. Will be null if binding to array.; series - the data series; value - the point value (either a number or an object); runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartTooltipSettingsBuilder<T> Template(string value)
@@ -136,7 +136,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the tooltip.The fields which can be used in the template are:
+        /// The template which renders the tooltip.The fields which can be used in the template are: category - the category name; dataItem - the original data item used to construct the point. Will be null if binding to array.; series - the data series; value - the point value (either a number or an object); runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartTooltipSettingsBuilder<T> TemplateId(string templateId)

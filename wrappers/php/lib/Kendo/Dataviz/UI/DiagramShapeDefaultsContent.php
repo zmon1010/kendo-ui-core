@@ -61,7 +61,7 @@ class DiagramShapeDefaultsContent extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the DiagramShapeDefaultsContent.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: dataItem - The data item if a field has been specified.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsContent
     */
@@ -73,7 +73,7 @@ class DiagramShapeDefaultsContent extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the DiagramShapeDefaultsContent.
-    * The template which renders the labels.The fields which can be used in the template are:
+    * The template which renders the labels.The fields which can be used in the template are: dataItem - The data item if a field has been specified.
     * @param string $value The template content.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsContent
     */

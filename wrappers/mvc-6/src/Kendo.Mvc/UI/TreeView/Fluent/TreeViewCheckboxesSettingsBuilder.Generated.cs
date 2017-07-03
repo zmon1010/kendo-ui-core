@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Indicates whether checkboxes of child items should get checked when the checkbox of a parent item is checked. This
-		/// also enables tri-state checkboxes with an indeterminate state.
+        /// Indicates whether checkboxes of child items should get checked when the checkbox of a parent item is checked. This also enables tri-state checkboxes with an indeterminate state.
         /// </summary>
         /// <param name="value">The value for CheckChildren</param>
         public TreeViewCheckboxesSettingsBuilder CheckChildren(bool value)
@@ -22,8 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether checkboxes of child items should get checked when the checkbox of a parent item is checked. This
-		/// also enables tri-state checkboxes with an indeterminate state.
+        /// Indicates whether checkboxes of child items should get checked when the checkbox of a parent item is checked. This also enables tri-state checkboxes with an indeterminate state.
         /// </summary>
         public TreeViewCheckboxesSettingsBuilder CheckChildren()
         {
@@ -42,8 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the checkboxes. Can be used to allow posting of
-		/// additional information along the TreeView checkboxes.The fields which can be used in the template are:
+        /// The template which renders the checkboxes. Can be used to allow posting of additional information along the TreeView checkboxes.The fields which can be used in the template are: item - the data item of the given node or treeview - the TreeView options.
         /// </summary>
         /// <param name="value">The value for Template</param>
         public TreeViewCheckboxesSettingsBuilder Template(string value)
@@ -53,8 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the checkboxes. Can be used to allow posting of
-		/// additional information along the TreeView checkboxes.The fields which can be used in the template are:
+        /// The template which renders the checkboxes. Can be used to allow posting of additional information along the TreeView checkboxes.The fields which can be used in the template are: item - the data item of the given node or treeview - the TreeView options.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public TreeViewCheckboxesSettingsBuilder TemplateId(string templateId)

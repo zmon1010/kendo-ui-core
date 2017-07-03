@@ -11,8 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
         /// <summary>
-        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.
-		/// The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
+        /// The field to which the column is bound. The value of this field is displayed by the column during data binding.The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
         /// </summary>
         /// <param name="value">The value for Field</param>
         public GanttColumnBuilder<TTaskModel, TDependenciesModel> Field(string value)

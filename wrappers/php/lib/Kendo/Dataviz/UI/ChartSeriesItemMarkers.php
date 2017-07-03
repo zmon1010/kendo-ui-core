@@ -33,11 +33,7 @@ class ChartSeriesItemMarkers extends \Kendo\SerializableObject {
     }
 
     /**
-    * The markers shape.The supported values are:
-* "circle" - the marker shape is circle.
-* "square" - the marker shape is square.
-* "triangle" - the marker shape is triangle.
-* "cross" - the marker shape is cross.
+    * The markers shape.The supported values are: * "circle" - the marker shape is circle. * "square" - the marker shape is square. * "triangle" - the marker shape is triangle. * "cross" - the marker shape is cross.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemMarkers
     */
@@ -56,7 +52,7 @@ class ChartSeriesItemMarkers extends \Kendo\SerializableObject {
 
     /**
     * Sets the visual option of the ChartSeriesItemMarkers.
-    * A function that can be used to create a custom visual for the markers. The available argument fields are:
+    * A function that can be used to create a custom visual for the markers. The available argument fields are: rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the marker options.; createVisual - a function that can be used to get the default visual.; category - the category of the marker point.; dataItem - the dataItem of the marker point.; value - the value of the marker point.; sender - the chart instance. or series - the series of the marker point..
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartSeriesItemMarkers
     */

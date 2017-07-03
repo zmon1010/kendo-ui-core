@@ -198,7 +198,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the chart series label.The fields which can be used in the template are:
+        /// The template which renders the chart series label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; stackValue - the cumulative point value on the stack. Available only for stackable series.; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartSeriesLabelsSettingsBuilder<T> Template(string value)
@@ -208,7 +208,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the chart series label.The fields which can be used in the template are:
+        /// The template which renders the chart series label.The fields which can be used in the template are: category - the category name. Available for area, bar, column, bubble, donut, line, pie and waterfall series.; dataItem - the original data item used to construct the point. Will be null if binding to array.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; series - the data series; stackValue - the cumulative point value on the stack. Available only for stackable series.; value - the point value. Can be a number or object containing each bound field.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartSeriesLabelsSettingsBuilder<T> TemplateId(string templateId)
@@ -237,7 +237,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: text - the label text.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the label options.; createVisual - a function that can be used to get the default visual. or sender - the chart instance (may be undefined)..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesLabelsSettingsBuilder<T> Visual(string handler)
@@ -247,7 +247,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the labels. The available argument fields are:
+        /// A function that can be used to create a custom visual for the labels. The available argument fields are: text - the label text.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; options - the label options.; createVisual - a function that can be used to get the default visual. or sender - the chart instance (may be undefined)..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesLabelsSettingsBuilder<T> Visual(Func<object, object> handler)

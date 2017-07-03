@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
         public TreeViewBuilder AutoBind(bool value)
@@ -74,8 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the field of the data item that provides the sprite CSS class of the nodes.
-		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// Sets the field of the data item that provides the sprite CSS class of the nodes. If an array, each level uses the field that is at the same index in the array, or the last item in the array.
         /// </summary>
         /// <param name="value">The value for DataSpriteCssClassField</param>
         public TreeViewBuilder DataSpriteCssClassField(string value)
@@ -85,8 +83,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the field of the data item that provides the text content of the nodes.
-		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// Sets the field of the data item that provides the text content of the nodes. If an array, each level uses the field that is at the same index in the array, or the last item in the array.
         /// </summary>
         /// <param name="value">The value for DataTextField</param>
         public TreeViewBuilder DataTextField(params string[] value)
@@ -125,8 +122,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
-		/// Setting this to false causes all child DataSources to be loaded at initialization time.
+        /// Indicates whether the child DataSources should be fetched lazily when parent groups get expanded. Setting this to false causes all child DataSources to be loaded at initialization time.
         /// </summary>
         /// <param name="value">The value for LoadOnDemand</param>
         public TreeViewBuilder LoadOnDemand(bool value)

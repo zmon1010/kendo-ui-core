@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the sparkline has received data from the data source\n\t\t/// and is about to render it.
+        /// Fires when the sparkline has received data from the data source and is about to render it.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
         public SparklineEventBuilder DataBound(string handler)
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the sparkline has received data from the data source\n\t\t/// and is about to render it.
+        /// Fires when the sparkline has received data from the data source and is about to render it.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public SparklineEventBuilder DataBound(Func<object, object> handler)

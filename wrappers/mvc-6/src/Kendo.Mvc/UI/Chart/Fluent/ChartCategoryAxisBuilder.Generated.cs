@@ -11,13 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The discrete categoryAxis.baseUnitStep values when
-		/// either categoryAxis.baseUnit is set to "fit" or
-		/// categoryAxis.baseUnitStep is set to "auto".The axis will try to divide the active period into successively larger intervals.
-		/// It will start from x-second intervals, where x is picked from the autoBaseUnitSteps.seconds array.
-		/// Then it will move to minutes, seconds and so on.
-		/// This will continue until the number of intervals is less than
-		/// maxDateGroups.
+        /// The discrete categoryAxis.baseUnitStep values when either categoryAxis.baseUnit is set to "fit" orcategoryAxis.baseUnitStep is set to "auto".The axis will try to divide the active period into successively larger intervals. It will start from x-second intervals, where x is picked from the autoBaseUnitSteps.seconds array. Then it will move to minutes, seconds and so on. This will continue until the number of intervals is less thanmaxDateGroups.
         /// </summary>
         /// <param name="configurator">The configurator for the autobaseunitsteps setting.</param>
         public ChartCategoryAxisBuilder<T> AutoBaseUnitSteps(Action<ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<T>> configurator)
@@ -50,8 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
-		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
+        /// The step (interval) between categories in base units. Setting it to "auto" will set the step to such value that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
         /// </summary>
         /// <param name="value">The value for BaseUnitStep</param>
         public ChartCategoryAxisBuilder<T> BaseUnitStep(int value)
@@ -71,8 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color and
-		/// categoryAxis.line.color.
+        /// The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color andcategoryAxis.line.color.
         /// </summary>
         /// <param name="value">The value for Color</param>
         public ChartCategoryAxisBuilder<T> Color(string value)
@@ -150,8 +142,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
-		/// body of the chart.
+        /// The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the majorgridlines setting.</param>
         public ChartCategoryAxisBuilder<T> MajorGridLines(Action<ChartCategoryAxisMajorGridLinesSettingsBuilder<T>> configurator)
@@ -177,9 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The last date displayed on the category date axis. By default, the minimum date is the same as the last category.
-		/// This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-		/// set up a fixed date range.
+        /// The last date displayed on the category date axis. By default, the minimum date is the same as the last category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Max</param>
         public ChartCategoryAxisBuilder<T> Max(object value)
@@ -189,9 +178,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The maximum number of groups (categories) to display when
-		/// categoryAxis.baseUnit is set to "fit" or
-		/// categoryAxis.baseUnitStep is set to "auto".
+        /// The maximum number of groups (categories) to display whencategoryAxis.baseUnit is set to "fit" orcategoryAxis.baseUnitStep is set to "auto".
         /// </summary>
         /// <param name="value">The value for MaxDateGroups</param>
         public ChartCategoryAxisBuilder<T> MaxDateGroups(double value)
@@ -201,9 +188,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The first date displayed on the category date axis. By default, the minimum date is the same as the first category.
-		/// This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
-		/// set up a fixed date range.
+        /// The first date displayed on the category date axis. By default, the minimum date is the same as the first category. This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Min</param>
         public ChartCategoryAxisBuilder<T> Min(object value)
@@ -213,8 +198,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
-		/// body of the chart.
+        /// The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the minorgridlines setting.</param>
         public ChartCategoryAxisBuilder<T> MinorGridLines(Action<ChartCategoryAxisMinorGridLinesSettingsBuilder<T>> configurator)
@@ -250,8 +234,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The name of the pane that the category axis should be rendered in.
-		/// The axis will be rendered in the first (default) pane if not set.
+        /// The name of the pane that the category axis should be rendered in. The axis will be rendered in the first (default) pane if not set.
         /// </summary>
         /// <param name="value">The value for Pane</param>
         public ChartCategoryAxisBuilder<T> Pane(string value)
@@ -305,9 +288,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The selected axis range. If set, axis selection will be enabled.The range is index based, starting from 0.
-		/// Categories with indexes in the range [select.from, select.to) will be selected.
-		/// That is, the last category in the range will not be included in the selection.If the categories are dates, the range must also be specified with date values.
+        /// The selected axis range. If set, axis selection will be enabled.The range is index based, starting from 0. Categories with indexes in the range [select.from, select.to) will be selected. That is, the last category in the range will not be included in the selection.If the categories are dates, the range must also be specified with date values.
         /// </summary>
         /// <param name="configurator">The configurator for the select setting.</param>
         public ChartCategoryAxisBuilder<T> Select(Action<ChartCategoryAxisSelectSettingsBuilder<T>> configurator)
@@ -353,7 +334,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:
+        /// The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are: kendo.days.Sunday - equal to 0; kendo.days.Monday - equal to 1; kendo.days.Tuesday - equal to 2; kendo.days.Wednesday - equal to 3; kendo.days.Thursday - equal to 4; kendo.days.Friday - equal to 5 or kendo.days.Saturday - equal to 6.
         /// </summary>
         /// <param name="value">The value for WeekStartDay</param>
         public ChartCategoryAxisBuilder<T> WeekStartDay(double value)

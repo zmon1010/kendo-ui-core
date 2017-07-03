@@ -21,14 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies how to position the popup element based on anchor point. The value is
-		/// space separated "y" plus "x" position.The available "y" positions are:
-		/// - "bottom"
-		/// - "center"
-		/// - "top"The available "x" positions are:
-		/// - "left"
-		/// - "center"
-		/// - "right"
+        /// Specifies how to position the popup element based on anchor point. The value is space separated "y" plus "x" position.The available "y" positions are: - "bottom" - "center" - "top"The available "x" positions are: - "left" - "center" - "right"
         /// </summary>
         /// <param name="value">The value for Origin</param>
         public DropDownListPopupSettingsBuilder Origin(string value)
@@ -38,14 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies which point of the popup element to attach to the anchor's origin point. The value is
-		/// space separated "y" plus "x" position.The available "y" positions are:
-		/// - "bottom"
-		/// - "center"
-		/// - "top"The available "x" positions are:
-		/// - "left"
-		/// - "center"
-		/// - "right"
+        /// Specifies which point of the popup element to attach to the anchor's origin point. The value is space separated "y" plus "x" position.The available "y" positions are: - "bottom" - "center" - "top"The available "x" positions are: - "left" - "center" - "right"
         /// </summary>
         /// <param name="value">The value for Position</param>
         public DropDownListPopupSettingsBuilder Position(string value)

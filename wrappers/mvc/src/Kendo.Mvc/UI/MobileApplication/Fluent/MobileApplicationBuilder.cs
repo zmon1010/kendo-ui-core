@@ -34,8 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Introduced in the 2014 Q1 Service Pack 1 release. If set to true, the navigation will parse and prefix the url fragment value with !,
-		/// which should be SEO friendly.
+        /// Introduced in the 2014 Q1 Service Pack 1 release. If set to true, the navigation will parse and prefix the url fragment value with !, which should be SEO friendly.
         /// </summary>
         /// <param name="value">The value that configures the hashbang.</param>
         public MobileApplicationBuilder HashBang(bool value)
@@ -101,8 +100,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Which platform look to force on the application. Supported values are "ios" (meaning iOS 6 look), "ios7","android", "blackberry" and "wp".
-		/// You can also set platform variants with it ("android-light" or "android-dark"), but keep in mind that it will still override the platform. If this is not desired, use the skin option.
+        /// Which platform look to force on the application. Supported values are "ios" (meaning iOS 6 look), "ios7","android", "blackberry" and "wp". You can also set platform variants with it ("android-light" or "android-dark"), but keep in mind that it will still override the platform. If this is not desired, use the skin option.
         /// </summary>
         /// <param name="value">The value that configures the platform.</param>
         public MobileApplicationBuilder Platform(string value)
@@ -124,9 +122,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to true, the application will set the meta viewport tag scale value according to the device pixel ratio, and re-scale the app by setting root element font size to the respective value.
-		/// This will result in the widget borders/separators being real 1px  wide.
-		/// For example, in iPhone 4/5, the device pixel ratio is 2, which means that the scale will be set to 0.5, while the app root will receive a font-size: 2 * 0.92 inline style set.
+        /// If set to true, the application will set the meta viewport tag scale value according to the device pixel ratio, and re-scale the app by setting root element font size to the respective value. This will result in the widget borders/separators being real 1px  wide. For example, in iPhone 4/5, the device pixel ratio is 2, which means that the scale will be set to 0.5, while the app root will receive a font-size: 2 * 0.92 inline style set.
         /// </summary>
         /// <param name="value">The value that configures the retina.</param>
         public MobileApplicationBuilder Retina(bool value)
@@ -148,9 +144,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The skin to apply to the application. Currently, Kendo UI Mobile ships with nova, flat, material-light and material-dark skins in addition to the native looking ones.
-		/// You can also set platform variants with it ("android-light" or "android-dark").Note: The Material themes were renamed to material-light and material-dark in 2014 Q3 SP1. With 2014 Q3 (v2014.3.1119) and older Kendo UI versions,
-		/// material and materialblack skin names should be used.
+        /// The skin to apply to the application. Currently, Kendo UI Mobile ships with nova, flat, material-light and material-dark skins in addition to the native looking ones. You can also set platform variants with it ("android-light" or "android-dark").Note: The Material themes were renamed to material-light and material-dark in 2014 Q3 SP1. With 2014 Q3 (v2014.3.1119) and older Kendo UI versions,material and materialblack skin names should be used.
         /// </summary>
         /// <param name="value">The value that configures the skin.</param>
         public MobileApplicationBuilder Skin(string value)
@@ -194,8 +188,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// By default, the mobile application uses flexbox for the mobile views layout. The content element is made scrollable, either by initializing a mobile scroller or with the browser supported overflow: auto and -webkit-overflow-scrolling: touch CSS declarations.
-		/// When the useNativeScrolling configuration option is set to true, the view header and footer are positioned using position: fixed CSS declaration. The view content vertical padding is adjusted to match the header and footer height; The default browser scroller is utilized for the content scrolling.For more information regarding native scrolling check this article.
+        /// By default, the mobile application uses flexbox for the mobile views layout. The content element is made scrollable, either by initializing a mobile scroller or with the browser supported overflow: auto and -webkit-overflow-scrolling: touch CSS declarations. When the useNativeScrolling configuration option is set to true, the view header and footer are positioned using position: fixed CSS declaration. The view content vertical padding is adjusted to match the header and footer height; The default browser scroller is utilized for the content scrolling.For more information regarding native scrolling check this article.
         /// </summary>
         /// <param name="value">The value that configures the usenativescrolling.</param>
         public MobileApplicationBuilder UseNativeScrolling(bool value)

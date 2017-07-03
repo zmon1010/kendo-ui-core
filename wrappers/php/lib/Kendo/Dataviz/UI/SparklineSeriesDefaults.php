@@ -6,8 +6,7 @@ class SparklineSeriesDefaults extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The area configuration options.
-The default options for all area series. For more details see the series options.
+    * The area configuration options. The default options for all area series. For more details see the series options.
     * @param  $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */
@@ -34,8 +33,7 @@ The default options for all area series. For more details see the series options
     }
 
     /**
-    * The column configuration options.
-The default options for all column series. For more details see the series options.
+    * The column configuration options. The default options for all column series. For more details see the series options.
     * @param  $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */
@@ -62,8 +60,7 @@ The default options for all column series. For more details see the series optio
     }
 
     /**
-    * The line configuration options.
-The default options for all line series. For more details see the series options.
+    * The line configuration options. The default options for all line series. For more details see the series options.
     * @param  $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */
@@ -81,8 +78,7 @@ The default options for all line series. For more details see the series options
     }
 
     /**
-    * The pie configuration options.
-The default options for all pie series. For more details see the series options.
+    * The pie configuration options. The default options for all pie series. For more details see the series options.
     * @param  $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */
@@ -109,7 +105,7 @@ The default options for all pie series. For more details see the series options.
     }
 
     /**
-    * The type of the series. Available types:
+    * The type of the series. Available types: area; column (synonym: bar); line; pie or bullet.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */

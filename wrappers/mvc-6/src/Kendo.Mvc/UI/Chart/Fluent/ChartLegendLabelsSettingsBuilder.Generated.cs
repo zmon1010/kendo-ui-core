@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: text - the text the legend item.; series - the data series.; value - the point value. (only for donut and pie charts) or percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts..
         /// </summary>
         /// <param name="value">The value for Template</param>
         public ChartLegendLabelsSettingsBuilder<T> Template(string value)
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the labels.The fields which can be used in the template are:
+        /// The template which renders the labels.The fields which can be used in the template are: text - the text the legend item.; series - the data series.; value - the point value. (only for donut and pie charts) or percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts..
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public ChartLegendLabelsSettingsBuilder<T> TemplateId(string templateId)

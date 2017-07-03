@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to handle toggling the points highlight. The available argument fields are:
+        /// A function that can be used to handle toggling the points highlight. The available argument fields are: preventDefault - a function that can be used to prevent showing the default highlight overlay.; show - a boolean value indicating whether the highlight should be shown.; visual - the visual element that should be highlighted.; category - the point category.; dataItem - the point dataItem.; value - the point value. or series - the point series..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesHighlightSettingsBuilder<T> Toggle(string handler)
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to handle toggling the points highlight. The available argument fields are:
+        /// A function that can be used to handle toggling the points highlight. The available argument fields are: preventDefault - a function that can be used to prevent showing the default highlight overlay.; show - a boolean value indicating whether the highlight should be shown.; visual - the visual element that should be highlighted.; category - the point category.; dataItem - the point dataItem.; value - the point value. or series - the point series..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesHighlightSettingsBuilder<T> Toggle(Func<object, object> handler)
@@ -76,8 +76,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// If set to true the chart will highlight the series when the user hovers it with the mouse.
-		/// By default chart series highlighting is enabled.
+        /// If set to true the chart will highlight the series when the user hovers it with the mouse. By default chart series highlighting is enabled.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public ChartSeriesHighlightSettingsBuilder<T> Visible(bool value)
@@ -87,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to set custom visual for the point highlight.The available argument fields are:
+        /// A function that can be used to set custom visual for the point highlight.The available argument fields are: createVisual - a function that can be used to get the default highlight visual.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; visual - the visual element that should be highlighted.; options - the point options.; category - the point category.; dataItem - the point dataItem.; value - the point value.; sender - the chart instance.; series - the point series.; stackValue - the cumulative point value on the stack. Available only for stackable series.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesHighlightSettingsBuilder<T> Visual(string handler)
@@ -97,7 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to set custom visual for the point highlight.The available argument fields are:
+        /// A function that can be used to set custom visual for the point highlight.The available argument fields are: createVisual - a function that can be used to get the default highlight visual.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; visual - the visual element that should be highlighted.; options - the point options.; category - the point category.; dataItem - the point dataItem.; value - the point value.; sender - the chart instance.; series - the point series.; stackValue - the cumulative point value on the stack. Available only for stackable series.; percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.; runningTotal - the sum of point values since the last "runningTotal" summary point. Available for waterfall series. or total - the sum of all previous series values. Available for waterfall series..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesHighlightSettingsBuilder<T> Visual(Func<object, object> handler)

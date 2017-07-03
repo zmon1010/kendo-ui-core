@@ -66,11 +66,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The outliers shape.The supported values are:
-		/// * "circle" - the marker shape is circle.
-		/// * "square" - the marker shape is square.
-		/// * "triangle" - the marker shape is triangle.
-		/// * "cross" - the marker shape is cross.
+        /// The outliers shape.The supported values are: * "circle" - the marker shape is circle. * "square" - the marker shape is square. * "triangle" - the marker shape is triangle. * "cross" - the marker shape is cross.
         /// </summary>
         /// <param name="value">The value for Type</param>
         public ChartSeriesOutliersSettingsBuilder<T> Type(string value)
@@ -80,11 +76,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// The outliers shape.The supported values are:
-		/// * "circle" - the marker shape is circle.
-		/// * "square" - the marker shape is square.
-		/// * "triangle" - the marker shape is triangle.
-		/// * "cross" - the marker shape is cross.
+        /// The outliers shape.The supported values are: * "circle" - the marker shape is circle. * "square" - the marker shape is square. * "triangle" - the marker shape is triangle. * "cross" - the marker shape is cross.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesOutliersSettingsBuilder<T> TypeHandler(string handler)
@@ -95,11 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The outliers shape.The supported values are:
-		/// * "circle" - the marker shape is circle.
-		/// * "square" - the marker shape is square.
-		/// * "triangle" - the marker shape is triangle.
-		/// * "cross" - the marker shape is cross.
+        /// The outliers shape.The supported values are: * "circle" - the marker shape is circle. * "square" - the marker shape is square. * "triangle" - the marker shape is triangle. * "cross" - the marker shape is cross.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesOutliersSettingsBuilder<T> TypeHandler(Func<object, object> handler)

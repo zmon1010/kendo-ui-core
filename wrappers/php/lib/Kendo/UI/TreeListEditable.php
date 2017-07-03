@@ -25,8 +25,7 @@ class TreeListEditable extends \Kendo\SerializableObject {
 
     /**
     * Sets the template option of the TreeListEditable.
-    * The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
-which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
+    * The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\TreeListEditable
     */
@@ -38,8 +37,7 @@ which field to update. The other option is to use MVVM bindings in order to bind
 
     /**
     * Sets the template option of the TreeListEditable.
-    * The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
-which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
+    * The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
     * @param string $value The template content.
     * @return \Kendo\UI\TreeListEditable
     */

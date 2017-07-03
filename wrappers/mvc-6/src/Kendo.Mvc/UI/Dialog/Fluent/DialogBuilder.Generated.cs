@@ -10,8 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// A collection of objects containing text, action and primary attributes used to specify the dialog buttons.
-		/// #### Example
+        /// A collection of objects containing text, action and primary attributes used to specify the dialog buttons. #### Example
         /// </summary>
         /// <param name="configurator">The configurator for the actions setting.</param>
         public DialogBuilder Actions(Action<DialogActionFactory> configurator)
@@ -26,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are: normal or stretched.
         /// </summary>
         /// <param name="value">The value for ButtonLayout</param>
         public DialogBuilder ButtonLayout(string value)

@@ -26,8 +26,7 @@ class Window extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * The buttons for interacting with the window. Predefined array values are "Close", "Refresh", "Minimize",
-and "Maximize".
+    * The buttons for interacting with the window. Predefined array values are "Close", "Refresh", "Minimize", and "Maximize".
     * @param array $value
     * @return \Kendo\UI\Window
     */
@@ -45,8 +44,7 @@ and "Maximize".
     }
 
     /**
-    * The element that the Window will be appended to. Beneficial if the Window is used together with a form.
-Note that this does not constrain the window dragging within the given element.
+    * The element that the Window will be appended to. Beneficial if the Window is used together with a form. Note that this does not constrain the window dragging within the given element.
     * @param |string $value
     * @return \Kendo\UI\Window
     */
@@ -326,9 +324,7 @@ Note that this does not constrain the window dragging within the given element.
 
     /**
     * Sets the refresh event of the Window.
-    * Triggered when the content of a Window has finished loading via AJAX,
-when the window iframe has finished loading, or when the refresh button
-has been clicked on a window with static content.
+    * Triggered when the content of a Window has finished loading via AJAX, when the window iframe has finished loading, or when the refresh button has been clicked on a window with static content.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Window
     */

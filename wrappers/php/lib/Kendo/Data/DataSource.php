@@ -24,8 +24,7 @@ class DataSource extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true, the data source will batch CRUD operation requests. For example, updating two data items would cause one HTTP request instead of two. By default, the data source
-makes a HTTP request for every CRUD operation.
+    * If set to true, the data source will batch CRUD operation requests. For example, updating two data items would cause one HTTP request instead of two. By default, the data source makes a HTTP request for every CRUD operation.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -106,7 +105,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.By default, the filter is sent to the server following jQuery's conventions.For example, the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
+    * If set to true, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.By default, the filter is sent to the server following jQuery's conventions.For example, the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as: filter[logic]: and; filter[filters][0][field]: name; filter[filters][0][operator]: startswith or filter[filters][0][value]: Jane. Use the parameterMap option to send the filter option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -115,7 +114,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.By default, the group is sent to the server following jQuery's conventions.For example, the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
+    * If set to true, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.By default, the group is sent to the server following jQuery's conventions.For example, the group { field: "category", dir: "desc" } is sent as: group[0][field]: category or group[0][dir]: desc. Use the parameterMap option to send the group option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -124,7 +123,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
+    * If set to true, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.The following options are sent to the server when server paging is enabled: page - the page of data item to return (1 means the first page).; pageSize - the number of items to return.; skip - how many data items to skip. or take - the number of data items to return (the same as pageSize).. Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -133,7 +132,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.By default, the sort is sent to the server following jQuery's conventions.For example, the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
+    * If set to true, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.By default, the sort is sent to the server following jQuery's conventions.For example, the sort { field: "age", dir: "desc" } is sent as: sort[0][field]: age or sort[0][dir]: desc. Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -160,7 +159,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set, the data source will use a predefined transport and/or schema.The supported values are:
+    * If set, the data source will use a predefined transport and/or schema.The supported values are: "odata" which supports the OData v.2 protocol; "odata-v4" which partially supports odata version 4 or "signalr".
     * @param string $value
     * @return \Kendo\Data\DataSource
     */

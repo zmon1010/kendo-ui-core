@@ -73,8 +73,7 @@ class DateTimePicker extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies a list of dates, which will be passed to the month template of the DateView.
-All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
+    * Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
     * @param array $value
     * @return \Kendo\UI\DateTimePicker
     */
@@ -83,8 +82,7 @@ All dates, which match the date portion of the selected date will be used to re-
     }
 
     /**
-    * Specifies the navigation depth of the calendar. The following
-settings are available for the depth value:
+    * Specifies the navigation depth of the calendar. The following settings are available for the depth value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\DateTimePicker
     */
@@ -156,8 +154,7 @@ settings are available for the depth value:
     }
 
     /**
-    * Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
- Note that value of the format option is always used. The timeFormat value also will be used if defined.
+    * Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.  Note that value of the format option is always used. The timeFormat value also will be used if defined.
     * @param array $value
     * @return \Kendo\UI\DateTimePicker
     */
@@ -166,8 +163,7 @@ settings are available for the depth value:
     }
 
     /**
-    * Specifies the start view of the calendar.
- The following settings are available for the start value:
+    * Specifies the start view of the calendar.  The following settings are available for the start value: "month" - Shows the days of the month.; "year" - Shows the months of the year.; "decade" - Shows the years of the decade. or "century" - Shows the decades from the century..
     * @param string $value
     * @return \Kendo\UI\DateTimePicker
     */

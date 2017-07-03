@@ -10,9 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Configures the ability to upload a files in an asynchronous manner. Please refer to the
-		/// async mode help topic
-		/// for more details.
+        /// Configures the ability to upload a files in an asynchronous manner. Please refer to theasync mode help topic for more details.
         /// </summary>
         /// <param name="configurator">The configurator for the async setting.</param>
         public UploadBuilder Async(Action<UploadAsyncSettingsBuilder> configurator)
@@ -88,9 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables (true) or disables (false) the ability to select multiple files.
-		/// If false, users will be able to select only one file at a time. Note: This option does not
-		/// limit the total number of uploaded files in an asynchronous configuration.
+        /// Enables (true) or disables (false) the ability to select multiple files. If false, users will be able to select only one file at a time. Note: This option does not limit the total number of uploaded files in an asynchronous configuration.
         /// </summary>
         /// <param name="value">The value for Multiple</param>
         public UploadBuilder Multiple(bool value)
@@ -100,9 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables (true) or disables (false) the ability to display a file listing
-		/// for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the
-		/// client-side events to build your own UI.
+        /// Enables (true) or disables (false) the ability to display a file listing for uploading a files. Disabling a file listing may be useful you wish to customize the UI; use the client-side events to build your own UI.
         /// </summary>
         /// <param name="value">The value for ShowFileList</param>
         public UploadBuilder ShowFileList(bool value)

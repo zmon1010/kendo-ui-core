@@ -45,8 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to true, the view will stretch its child contents to occupy the entire view, while disabling kinetic scrolling.
-		/// Useful if the view contains an image or a map.
+        /// If set to true, the view will stretch its child contents to occupy the entire view, while disabling kinetic scrolling. Useful if the view contains an image or a map.
         /// </summary>
         /// <param name="value">The value that configures the stretch.</param>
         public MobileViewBuilder Stretch(bool value)
@@ -68,8 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
-		/// Native scrolling is only enabled on platforms that support it: iOS &gt; 5+, Android &gt; 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.
+        /// If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8). Native scrolling is only enabled on platforms that support it: iOS &gt; 5+, Android &gt; 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.
         /// </summary>
         /// <param name="value">The value that configures the usenativescrolling.</param>
         public MobileViewBuilder UseNativeScrolling(bool value)

@@ -18,8 +18,7 @@ class Gantt extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\Gantt
     */
@@ -73,8 +72,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource
-instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.
+    * The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.
     * @param |array| $value
     * @return \Kendo\UI\Gantt
     */
@@ -285,8 +283,7 @@ instance.If the dependencies option is set to a JavaScript object or array the w
     }
 
     /**
-    * The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
-with a gantt task.
+    * The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated with a gantt task.
     * @param \Kendo\UI\GanttResources|array $value
     * @return \Kendo\UI\Gantt
     */

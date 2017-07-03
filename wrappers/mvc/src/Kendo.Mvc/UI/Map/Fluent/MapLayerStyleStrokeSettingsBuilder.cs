@@ -20,8 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The default stroke color for layer shapes.
-		/// Accepts a valid CSS color string, including hex and rgb.
+        /// The default stroke color for layer shapes. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value that configures the color.</param>
         public MapLayerStyleStrokeSettingsBuilder Color(string value)
@@ -32,8 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The default dash type for layer shapes.
-		/// The following dash types are supported:
+        /// The default dash type for layer shapes. The following dash types are supported: "dash" - a line consisting of dashes; "dashDot" - a line consisting of a repeating pattern of dash-dot; "dot" - a line consisting of dots; "longDash" - a line consisting of a repeating pattern of long-dash; "longDashDot" - a line consisting of a repeating pattern of long-dash-dot; "longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot or "solid" - a solid line.
         /// </summary>
         /// <param name="value">The value that configures the dashtype.</param>
         public MapLayerStyleStrokeSettingsBuilder DashType(double value)

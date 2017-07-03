@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the title.The supported values are:
+        /// The position of the title.The supported values are: "left" - the axis title is positioned on the left (applicable to horizontal axis); "right" - the axis title is positioned on the right (applicable to horizontal axis) or "center" - the axis title is positioned in the center.
         /// </summary>
         /// <param name="value">The value for Position</param>
         public ChartPaneTitleSettingsBuilder<T> Position(string value)
@@ -97,7 +97,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the title. The available argument fields are:
+        /// A function that can be used to create a custom visual for the title. The available argument fields are: text - the label text.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; options - the label options. or createVisual - a function that can be used to get the default visual..
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartPaneTitleSettingsBuilder<T> Visual(string handler)
@@ -107,7 +107,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the title. The available argument fields are:
+        /// A function that can be used to create a custom visual for the title. The available argument fields are: text - the label text.; rect - the kendo.geometry.Rect that defines where the visual should be rendered.; sender - the chart instance (may be undefined).; options - the label options. or createVisual - a function that can be used to get the default visual..
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartPaneTitleSettingsBuilder<T> Visual(Func<object, object> handler)
