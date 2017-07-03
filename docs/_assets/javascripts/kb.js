@@ -7,15 +7,13 @@ $(document).ready(function () {
 })
 
 function searchInternal() {
-    viewModel.docs = false;
-    viewModel.kb = true;
-    viewModel.updateLabel();
-
-    var element = google.search.cse.element.getElement('google-search');
-    var orderByOptions = [{ key: 'date', label: 'Date' }];
-    element['uiOptions']['orderByOptions'] = orderByOptions;
-
-    element.execute(KB_DEFAULT_QUERY);
+    search();
 
     $("#page-search .gsc-input-box .gsc-input").val("");
+    $("#page-search table.gsc-above-wrapper-area-container > tbody > tr > td.gsc-result-info-container").append("<h2 id='latest-articles'>Last Updated Articles</h2>");
+}
+
+function onSearchInternal() {
+    $("#latest-articles").hide();
+    $("#page-search .gsc-result-info").show();
 }

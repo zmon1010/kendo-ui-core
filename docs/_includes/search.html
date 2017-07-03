@@ -13,20 +13,29 @@
 
 <div id="page-search">
     <script src="http://www.google.com/jsapi"></script>
-  
 {% javascript search %}
+
+<script>
+$(document).ready(function(){
+  // var propertyName = {% if page.res_type == 'kb' %}'kb' {% elsif page.res_type == 'api' %} 'api' {% else %} 'docs' {% endif %}
+  var propertyName = {% case page.res_type %} {% when 'kb' %}'kb' {% when 'api' %} 'api' {% else %} 'docs' {% endcase %}
+  viewModel.set(propertyName, true);
+  viewModel.updateLabel();
+})
+</script>
+
 <div id="refine-search-popup" style="display: none">
   <ul>
     <li>
-      <label class="custom-checkbox unselectable"><input type="checkbox" data-bind="checked: docs" /><span class="k-icon k-i-check"></span>Search in Documentation</label>
+      <label class="custom-checkbox unselectable"><input type="checkbox" {% if page.res_type != 'kb' and page.res_type != 'api' %} disabled="true" {% endif %} data-bind="checked: docs" /><span class="k-icon k-i-check"></span>Search in Documentation</label>
     </li>
     <li>
-      <label class="custom-checkbox unselectable"><input type="checkbox" data-bind="checked: kb" /><span class="k-icon k-i-check"></span>Search in Knowledge Base</label>
+      <label class="custom-checkbox unselectable"><input type="checkbox" {% if page.res_type == 'kb' %} disabled="true" {% endif %} data-bind="checked: kb" /><span class="k-icon k-i-check"></span>Search in Knowledge Base</label>
     </li>
     <li>
-      <label class="custom-checkbox unselectable"><input type="checkbox" data-bind="checked: api" /><span class="k-icon k-i-check"></span>Search in API Reference</label>
+      <label class="custom-checkbox unselectable"><input type="checkbox" {% if page.res_type == 'api' %} disabled="true" {% endif %} data-bind="checked: api" /><span class="k-icon k-i-check"></span>Search in API Reference</label>
     </li>
   </ul>
 </div>
-<div class="gcse-search" data-gname="google-search" data-webSearchQueryAddition="more:pagemap:metatags-restype:documentation"></div>
+<div class="gcse-search" data-gname="google-search"></div>
 </div>

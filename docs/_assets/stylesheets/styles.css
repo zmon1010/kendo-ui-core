@@ -1258,15 +1258,12 @@ html, body {
     color: #FFFFFF;
 }
 
-.k-animation-container {
-    transform: translateY(17px);
-}
-
 #refine-search-popup {
     font-size: 12px !important;
     color: black;
     border: 1px solid #D9D9D9;
-    
+    margin-top: -1px;
+    margin-right: -1px;    
 }
 
 .custom-checkbox {
@@ -1301,6 +1298,7 @@ html, body {
     color: black;
     cursor: pointer;    
     padding: 7px;
+    line-height: normal;
 }
 
 #refine-search-button .k-icon {
@@ -1342,10 +1340,11 @@ html, body {
     padding-right: 0;
 }
 
-.gsc-results-wrapper-nooverlay .gsc-result div.gs-snippet {
+.gsc-results-wrapper-nooverlay .gsc-result .gs-no-results-result div {
     padding-left: 5px;
     padding-right: 5px;
-    margin: 5px 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 #page-article .gsc-results-wrapper-nooverlay table th, #page-article .gsc-results-wrapper-nooverlay table td {
@@ -1374,4 +1373,16 @@ html, body {
 
 #page-search .gsc-results {
     width: 100%;
+}
+
+#page-search .gsc-above-wrapper-area {
+    border-bottom: none;
+}
+
+#page-search .gsc-result-info {
+    display: none;
+}
+
+#page-search #latest-articles {
+    margin: 0;
 }
