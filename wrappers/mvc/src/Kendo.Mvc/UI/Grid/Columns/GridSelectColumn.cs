@@ -1,6 +1,5 @@
 namespace Kendo.Mvc.UI
 {
-    using Grid.Html;
     using Html;
     using System.Collections.Generic;
 

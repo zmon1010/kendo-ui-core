@@ -1,8 +1,7 @@
-﻿using Kendo.Mvc.UI.Html;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web;
 
-namespace Kendo.Mvc.UI.Grid.Html
+namespace Kendo.Mvc.UI.Html
 {
     public class GridSelectHeaderCellBuilder : IGridCellBuilder
     {
