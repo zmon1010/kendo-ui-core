@@ -1,3 +1,7 @@
+{% if page.slug != 'knowledge_base' %}
+{% include search.html %}
+{% endif %}
+
 <div id="logo-bar">
     <a href="{{site.baseurl}}/introduction">
         <img alt="Kendo UI logo" class="logo" src="{{site.baseurl}}/images/{{page.product}}.png">
@@ -5,8 +9,6 @@
 </div>
 
 {% if page.slug != 'knowledge_base' %}
-{% include search.html %}
-
 <span class="show-search">
 	<span class="k-icon k-i-search"></span>
 </span>
