@@ -1,0 +1,112 @@
+﻿@using (Html.BeginForm("Merge_Split_Add_Append_Prepend", "PdfProcessing"))
+{
+    <div class="demo-section">
+        <div class="options-field">
+            <div class="upload-container">
+                <h2 align="center">Select files: </h2>
+                @(Html.Kendo().Upload()
+                        .Name("firstDocument")
+                        .Multiple(false)
+                        .ShowFileList(true)
+                        .Events(events => events
+                        .Select("onSelect")
+                         )
+                        .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
+
+                )
+
+                @(Html.Kendo().Upload()
+                        .Name("secondDocument")
+                        .Multiple(false)
+                        .ShowFileList(false)
+                        .Events(events => events
+                        .Select("onSelect")
+                         )
+                        .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
+                )
+            </div>
+            <hr class="clear">
+            <h2 align="center">Select action: </h2>
+            <div id="radioButton">
+                <div>
+                @(Html.Kendo().RadioButton().Name("marge").Value("1").Checked(true).HtmlAttributes(new { @name = "rb" }).Label("Merge Pages"))  <span class="action-image"><img src="~/Content/web/pdfprocessing/merge.png" /></span>
+                </div>
+
+                <div>
+                    @(Html.Kendo().RadioButton().Name("split").Value("2").HtmlAttributes(new { @name = "rb" }).Label("Split pages"))<span class="action-image"><img src="~/Content/web/pdfprocessing/split.png" /></span>
+                </div>
+                <div>
+                    @(Html.Kendo().RadioButton().Name("append").Value("3").HtmlAttributes(new { @name = "rb" }).Label("Append Content To Pages"))<span class="action-image"><img src="~/Content/web/pdfprocessing/append.png" /></span>
+                </div>
+                <div>
+                    @(Html.Kendo().RadioButton().Name("append").Value("4").HtmlAttributes(new { @name = "rb" }).Label("Prepend Content To Pages"))<span class="action-image"><img src="~/Content/web/pdfprocessing/prepend.png" /></span>
+                </div>
+
+                </div>
+        </div>
+
+        <input type="submit" value="Download Document" class="k-button downloadBtn" />
+    </div>
+}
+
+<script>
+
+    $(document).ready(function () {
+        $('.downloadBtn').hide();
+
+        $('input[type=radio][name=rb]').change(function () {
+            if (this.value == '1') {
+                $('body').find('#secondDocument').parent().parent().show();
+            }
+            else {
+                $('body').find('#secondDocument').parent().parent().hide();
+            }
+        });
+    });
+
+    function onSelect() {
+        $('.downloadBtn').show();
+    }
+</script>
+
+<style>
+    .upload-container {
+        display: inline;
+    }
+
+        .upload-container > .k-widget {
+            margin: 10px;
+        }
+
+    #radioButton>div {
+    margin:10px;
+    height:90px;
+    width:100%;
+    vertical-align:middle;
+    }
+
+    .downloadBtn {
+        margin: 0 auto;
+        display: block;
+        margin-top: 15px;
+    }
+
+    h2 {
+        color: #29b344;
+        margin-bottom:15px;
+    }
+
+    span>img{
+        width:80px;
+        height:80px;
+    }
+
+    .action-image{
+        float:right;
+    }
+
+    .k-radio-label{
+        margin-top:30px;
+        margin-bottom:45px;
+    }
+</style>

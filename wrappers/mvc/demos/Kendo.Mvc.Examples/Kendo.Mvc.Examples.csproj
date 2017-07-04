@@ -284,6 +284,7 @@
     <Compile Include="Controllers\PanelBar\Remote_Data_BindingController.cs" />
     <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
     <Compile Include="Controllers\PdfProcessing\CheckSignature.cs" />
+    <Compile Include="Controllers\PdfProcessing\MergeSplitAddContent.cs" />
     <Compile Include="Controllers\PdfProcessing\PdfProcessingBarChart.cs" />
     <Compile Include="Controllers\PdfProcessing\ReadWriteFormFields.cs" />
     <Compile Include="Controllers\PdfProcessing\SignDocument.cs" />
@@ -3061,6 +3062,7 @@
     <Content Include="Views\spreadprocessing\grid_integration.cshtml" />
     <Content Include="Views\pdfprocessing\sign_pdf_document.cshtml" />
     <Content Include="Views\pdfprocessing\check_pdf_signature.cshtml" />
+    <Content Include="Views\pdfprocessing\merge_split_add_content.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

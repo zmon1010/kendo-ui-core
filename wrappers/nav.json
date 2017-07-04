@@ -5095,6 +5095,28 @@
             }
           ]
         }
+      },
+      {
+        "text": "Merge, Split or Add Content",
+        "url": "pdfprocessing/merge-split-add-content",
+        "new": "true",
+        "title": {
+          "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
+        },
+        "meta": {
+          "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
+        },
+        "description": {
+          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to merge, split or add content to PDF document."
+        },
+        "sources": {
+          "aspnet-mvc": [
+            {
+              "name": "MergeSplitAddContent.cs",
+              "url": "~/Controllers/PdfProcessing/MergeSplitAddContent.cs"
+            }
+          ]
+        }
       }
     ],
     "documentation": {
