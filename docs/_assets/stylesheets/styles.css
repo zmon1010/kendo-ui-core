@@ -710,7 +710,7 @@ footer p {
     border: none;
 }
 
-#page-search form>table {
+#page-search form {
     box-shadow: 3px 3px 19px rgba(0, 0, 0, 0.1);
 }
 
