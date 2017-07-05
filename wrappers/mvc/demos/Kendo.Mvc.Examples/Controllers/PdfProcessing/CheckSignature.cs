@@ -45,21 +45,21 @@ namespace Kendo.Mvc.Examples.Controllers
                 {
                     fileName = Server.MapPath("~/Content/web/pdfprocessing/Unknown.pdf");
                     verificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-                    model.ImgUrl = "/Content/web/pdfprocessing/Valid.png";
+                    model.ImgUrl = "~/Content/web/pdfprocessing/Valid.png";
                 }
 
                 if (selectedOption == "Unknown")
                 {
                     fileName = Server.MapPath("~/Content/web/pdfprocessing/Unknown.pdf");
                     verificationFlags = X509VerificationFlags.NoFlag;
-                    model.ImgUrl = "/Content/web/pdfprocessing/Unknown.png";
+                    model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
                 }
 
                 if (selectedOption == "Invalid")
                 {
                     fileName = Server.MapPath("~/Content/web/pdfprocessing/Invalid.pdf");
                     verificationFlags = X509VerificationFlags.NoFlag;
-                    model.ImgUrl = "/Content/web/pdfprocessing/Invalid.png";
+                    model.ImgUrl = "~/Content/web/pdfprocessing/Invalid.png";
                 }
 
 
@@ -137,11 +137,11 @@ namespace Kendo.Mvc.Examples.Controllers
                     model.HashAlgorithm = validationResult.HashAlgorithm.FriendlyName;
                     if (validationResult.IsCertificateValid)
                     {
-                        model.ImgUrl = "/Content/web/pdfprocessing/Valid.png";
+                        model.ImgUrl = "~/Content/web/pdfprocessing/Valid.png";
                     }
                     else
                     {
-                        model.ImgUrl = "/Content/web/pdfprocessing/Invalid.png";
+                        model.ImgUrl = "~/Content/web/pdfprocessing/Invalid.png";
 
                     }
                     
@@ -153,7 +153,7 @@ namespace Kendo.Mvc.Examples.Controllers
                     model.IsCertificateValid = false;
                     model.SignerInformation = "Corrupted signature.";
                     model.HashAlgorithm = string.Empty;
-                    model.ImgUrl = "/Content/web/pdfprocessing/Unknown.png";
+                    model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
                 }
             }
             else
@@ -163,7 +163,7 @@ namespace Kendo.Mvc.Examples.Controllers
                 model.IsCertificateValid = false;
                 model.SignerInformation = "No signature.";
                 model.HashAlgorithm = string.Empty;
-                model.ImgUrl = "/Content/web/pdfprocessing/Unknown.png";
+                model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
             }
 
             return View(model);

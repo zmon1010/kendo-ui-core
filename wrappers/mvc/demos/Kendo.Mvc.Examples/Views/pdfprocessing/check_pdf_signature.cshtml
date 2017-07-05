@@ -12,7 +12,7 @@
             {
 
                 <input type="text" id="selectedItem" name="selectedItem" />
-                <p><span class="bold"> Signature status: </span><img src="@Model.ImgUrl"></p>
+                <p><span class="bold"> Signature status: </span><img src='@Url.Content(Model.ImgUrl)'></p>
                 <p><span class="bold"> Is document modified: </span><span>@Model.IsDocumentModified</span> </p>
                 <p><span class="bold"> Is certificate valid: </span><span>@Model.IsCertificateValid</span> </p>
                 <p><span class="bold"> Signer information: </span><span>@Model.SignerInformation</span> </p>
@@ -59,7 +59,7 @@
 </div>
 
 <script id="item-template" type="text/x-kendo-template">
-    <span> <img src="/Content/web/pdfprocessing/#:data#.png" /></span>
+    <span> <img src='@Url.Content("~/content/web/pdfprocessing/#:data#.png")' /></span>
     <span>#:data# signature</span>
 </script>
 
