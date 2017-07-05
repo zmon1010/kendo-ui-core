@@ -956,7 +956,7 @@ var __meta__ = { // jshint ignore:line
                 element, match;
 
             for (var i = 0; i < dataView.length; i++) {
-                match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : valueGetter(dataView[i].item).toString() === valueGetter(dataItem).toString();
+                match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : valueGetter(dataView[i].item) == valueGetter(dataItem);
                 if (match) {
                     element = dataView[i];
                     break;
