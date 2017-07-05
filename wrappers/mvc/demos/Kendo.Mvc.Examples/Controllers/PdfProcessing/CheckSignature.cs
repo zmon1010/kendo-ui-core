@@ -34,7 +34,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             if(customDocument == null && selectedOption == "")
             {
-                return View(new SignatureFieldsModel { IsDocumentModified = false, IsCertificateValid = false, SignerInformation="", HashAlgorithm="", ImgUrl= "/Content/web/pdfprocessing/Unknown.png" });
+                return View(new SignatureFieldsModel { IsDocumentModified = false, IsCertificateValid = false, SignerInformation="", HashAlgorithm="", ImgUrl= "~/Content/web/pdfprocessing/Unknown.png" });
             }
 
             else if(selectedOption != null && selectedOption != "")
