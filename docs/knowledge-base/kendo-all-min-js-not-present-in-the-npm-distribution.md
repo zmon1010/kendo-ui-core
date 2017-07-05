@@ -1,10 +1,9 @@
 ---
-title: Install Kendo UI Pro With NPM and Webpack
-description: kendo.all.min.js is missing when using NPM packages
+title: The kendo.all.min.js File Is Missing When Using Kendo UI NPM Packages
+description: A solution when the kendo.all.min.js file is missing when using the Kendo UI NPM packages.
 type: troubleshooting
-page_title: Kendo.all.min.js Not Present in the NPM Distribution.
+page_title: The kendo.all.min.js File Is Not Present in the NPM Distribution
 slug: kendo-all-min-js-not-present-in-the-npm-distribution
-position: 0
 tags: npm, webpack
 teampulseid:
 ticketid: 1110344
@@ -12,6 +11,7 @@ pitsid:
 ---
 
 ## Environment
+
 <table>
  <tr>
   <td>Product</td>
@@ -34,22 +34,15 @@ pitsid:
  
 ## Description
 
-I want to use Kendo UI Pro with npm package (and not manually as at present)
+I want to use Kendo UI Professional with an NPM package&mdash;and not manually as I currently do.
 
-Installation NPM OK:
-npm login --registry=https://registry.npm.telerik.com/ --scope=@progress
-npm install --save @progress/kendo-ui
-All folders and files in @progress folder (include in node_modules folder).
-I have a problem, the kendo.all.js file is here but not the kendo.all.min.js.
-Why the kendo.all.min.js isn't in the folder ?
-It isn't possible to have the minified version, how to integrate kendo.all.js file with webpack 2 ?
+I did the NPM installation by using the `npm login --registry=https://registry.npm.telerik.com/ --scope=@progress` and `npm install --save @progress/kendo-ui` commands. All folders and files that need to be in the `@progress` folder, including the `node_modules` folder, are present. However, while the `kendo.all.js` file is also present, the `kendo.all.min.js` file is missing.
 
-## Solution
+1. Why is the `kendo.all.min.js` file not available in the folder?
+1. How can I integrate the `kendo.all.js` file with Webpack 2 as I cannot have the minified version?
 
-Having the only kendo.all.js in the NPM package is expected because that Kendo UI file is specially made to work with module loaders like webpack, and a min version is not available due to the specific when using module loaders. For example, kendo.all.js(module loaders) from the distribution is only 3KB compared to over 1 MB for the regular version:
+## Possible Solution
 
-http://docs.telerik.com/kendo-ui/third-party/webpack
+It is expected that the `kendo.all.min.js` file is missing from the NPM package. The reason is that `kendo.all.min.js` is specifically designed to work with module loaders such as Webpack. A minified version is not available due to the special approach when working and using module loaders. For example, `kendo.all.js` (module loaders) from the distribution is only 3KB as compared to over 1 MB for the regular version. For more details, refer to the article on [third-parties frameworks and utilities](http://docs.telerik.com/kendo-ui/third-party/webpack).
 
-As for the integration with Webpack, we have a working example in one of ours GitHub repositories. The example is using Webpack 1, but a similar approach can be used in Webpack 2:
-
-https://github.com/telerik/kendo-ui-npm-example
+For more information on Webpack integration, refer to [this GitHub demo](https://github.com/telerik/kendo-ui-npm-example). Even though the example uses Webpack version 1, you can use a similar approach in Webpack version 2.

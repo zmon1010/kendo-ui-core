@@ -1,10 +1,9 @@
 ---
-title: Place Pagers at Top and Bottom of ListView
-description: How to display pagers at the top and bottom of a Kendo UI ListView.
+title: Place Pagers at Top and Bottom of the ListView
+description: An example on how to display pagers at the top and bottom of a Kendo UI ListView.
 type: how-to
-page_title: Use Two Pagers for Progress® Kendo UI® ListView for ASP.NET MVC
+page_title: Use Two Pagers for the Kendo UI ListView for ASP.NET MVC
 slug: listview-two-pagers
-position: 0
 tags: listview, paging, pager, mvc, kendo ui, two pagers
 teampulseid:
 ticketid: 1111995
@@ -39,7 +38,7 @@ res_type: kb
 
 ## Description
 
-I have a ListView with a pager that works great. The pager is at the bottom of the ListView, but we want it at both the top AND bottom.
+I have a ListView with a pager that works as expected. The pager is at the bottom of the ListView but I want to have it both at the top and bottom of the widget.
 
 ## Possible Solution
 

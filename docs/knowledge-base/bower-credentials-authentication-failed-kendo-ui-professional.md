@@ -1,17 +1,17 @@
 ---
-title: Cannot install Kendo UI Professional from Bower
-description: Kendo UI professional fails to authenticate and install
+title: Cannot Install Kendo UI Professional from Bower
+description: A solution when Kendo UI Professional fails to authenticate and install.
 type: troubleshooting
-page_title: Problem with Bower Installation 
-slug:bower-credentials-authentication-failed-kendo-ui-professional
-position: 0
-tags:bower,git,credentials,kendo,professional
+page_title: Problem with Bower Installation
+slug: bower-credentials-authentication-failed-kendo-ui-professional
+tags: bower,git,credentials,kendo,professional
 teampulseid:
 ticketid: 1116013
 pitsid:
 ---
 
 ## Environment
+
 <table>
  <tr>
   <td>Product</td>
@@ -33,9 +33,9 @@ pitsid:
 
 ## Description
 
-Bower always fails authentication. I am using Git credential manager, after it prompts for my user name and password, Authentication Failed.  
+I am using Git Credential Manager. After it prompts for my username and password, Bower authentication fails.  
 
-## Solution
+## Possible Solution
 
 ```
 /*
@@ -47,7 +47,7 @@ encoded: %24password%21
 */ 
 ```
 
-Resulting bower.json:
+As a result, the `bower.json` file reads:
 
 ```
 "dependencies": {

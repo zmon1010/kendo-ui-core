@@ -1,10 +1,9 @@
 ---
 title: Visual Studio Online Continuous Integration Asks for Login
-description: A solution for preventing the Login dialog from being randomly displayed during builds in VS Online builds.
+description: A solution when the Login dialog is randomly displayed during builds in VS Online builds.
 type: troubleshooting
 page_title: VS Online Continuous Integration has an Authentication Issue
 slug: vs-online-continuous-integration-login-problem
-position: 0
 tags: vs2017
 ticketid: 1106905
 pitsid:

@@ -1,10 +1,9 @@
 ---
-title: Show Confirm Dialog before Uploading File
-description: How to pop-up dialog asking for confirmation to save uploaded file
+title: Show the Confirm Dialog before Uploading Files
+description: An example on how to display a pop-up confirmation dialog for saving an uploaded file.
 type: how to
-page_title: Prompt User before Uploading with Kendo Upload
+page_title: Prompt Users before Uploading Files in Kendo UI Upload
 slug: confirm-dialog-before-uploading-file
-position: 0
 tags: kendo, upload, dialog, confirm
 teampulseid:
 ticketid: 1113102

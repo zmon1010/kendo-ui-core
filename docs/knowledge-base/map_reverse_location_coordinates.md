@@ -1,10 +1,9 @@
 ---
 title: Reversed Coordinates for Bubble Type Layer with GeoJson Are Displayed in Map
-description: A solution for displaying a bubble-type layer with reversed coordinates in a Kendo UI Map
+description: A solution when the received GeoJSON data is handled in a reversed longitude-latitude order when displaying a bubble-type layer in a Kendo UI Map.
 type: troubleshooting
 page_title: Show Data for Bubble-Type Layer Received as [Longitude, Latitude]
 slug: map-reverse-location-coordinates
-position: 0
 tags: kendo ui map, location, coordinates, longitude, latitude
 teampulseid:
 ticketid: 1111871
@@ -28,7 +27,7 @@ res_type: kb
 ## Description
 
 I need to draw a bubble on Kendo Map from from GeoJSON response.
- 
+
 I am receiving the data in _\[Longitude, Latitude\]_ format, but when the data is bound to Kendo Map it is handled as _\[latitude, longitude\]_.
 
 ## Possible Solution

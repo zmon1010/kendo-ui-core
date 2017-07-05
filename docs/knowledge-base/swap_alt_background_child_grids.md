@@ -1,10 +1,9 @@
 ---
 title: Swap Alternate and Background Colors on Every Second Child Grid
-description: How to change the the background color and the alt color for some of the child grids.
+description: An example on how to change the background and the alt color for some of the child grids in Kendo UI.
 type: how-to
-page_title: Change Alt and Background Colors in Hierarchy Grid
-slug: swap-alt-bacground-child-grids
-position: 0
+page_title: Change the Alt and Background Colors in Hierarchy Grids
+slug: swap-alt-background-child-grids
 tags: kendo ui, mvc, grid, hierarchy, child grids, alt color
 teampulseid:
 ticketid: 1114254
@@ -26,7 +25,7 @@ pitsid:
 
 ## Description
 
-I have multi-level hierarchy grid. The headers of the child grids are hidden. When I expand a row, all grids display same color in a sequence.
+I have a multi-level, hierarchy Grid. The headers of the child grids are hidden. When I expand a row, all grids display the same color in a sequence.
 
 ## Possible Solution
 
@@ -34,7 +33,7 @@ To swap the background color of every second child Grid:
 
 1. In the `dataBound` event of the master Kendo UI Grid, get the background and the alternate color of the widget and save them in global variables.
 
-1. In the dataBound event handler of every child grid, conditionally swap the background and the alternate colors.
+1. In the `dataBound` event handler of every child grid, conditionally swap the background and the alternate colors.
 
 ```html
 <div id="grid"></div>
