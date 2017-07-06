@@ -18,12 +18,12 @@ The following example demonstrates the basic configuration for the NumericTextBo
 ###### Example
 
 ```tab-Razor
-	@(Html.Kendo().NumericTextBox()
-		.Name("numerictextbox") //The name of the NumericTextBox is mandatory. It specifies the "id" attribute of the widget.
-		.Min(-100) //Set the min value of the NumericTextBox.
-		.Max(100) //Set the min value of the NumericTextBox.
-		.Value(10) //Set the value of the NumericTextBox.
-	)
+      @(Html.Kendo().NumericTextBox()
+            .Name("numerictextbox") //The name of the NumericTextBox is mandatory. It specifies the "id" attribute of the widget.
+            .Min(-100) //Set the min value of the NumericTextBox.
+            .Max(100) //Set the min value of the NumericTextBox.
+            .Value(10) //Set the value of the NumericTextBox.
+      )
 ```
 
 ## Event Handling
