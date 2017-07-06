@@ -6220,6 +6220,10 @@ var __meta__ = { // jshint ignore:line
                         rowTemplate += " aria-describedby='" + column.headerAttributes.id + "'";
                     }
 
+                    if (column.command) {
+                        rowTemplate += ' class="k-command-cell"';
+                    }
+
                     rowTemplate += " role='gridcell'>";
                     rowTemplate += that._cellTmpl(column, state);
 
