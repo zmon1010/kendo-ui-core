@@ -8,13 +8,13 @@
                 <h3 align="center">Select Chart options</h3>
                 <div class="left-container">
                     <span class="options" style="margin-right:20px;">Quarters: </span>
-                    @(Html.Kendo().CheckBox().Name("cb1").Checked(true).Label("CheckBox 1"))
+                    @(Html.Kendo().CheckBox().Name("cb1").Checked(true).Label("First quater"))
 
-                    @(Html.Kendo().CheckBox().Name("cb2").Checked(true).Label("CheckBox 2"))
+                    @(Html.Kendo().CheckBox().Name("cb2").Checked(true).Label("Second quater"))
 
-                    @(Html.Kendo().CheckBox().Name("cb3").Checked(true).Label("CheckBox 3"))
+                    @(Html.Kendo().CheckBox().Name("cb3").Checked(true).Label("Third quater"))
 
-                    @(Html.Kendo().CheckBox().Name("cb4").Checked(true).Label("CheckBox 3"))
+                    @(Html.Kendo().CheckBox().Name("cb4").Checked(true).Label("Forth quater"))
                 </div>
                 <div class="right-container">
                     <span class="options">Number of products: </span>
@@ -43,13 +43,13 @@
               }
           })
           .Value("6")
-          .HtmlAttributes(new { style = "width: 95%; margin-bottom:45px;margin-top:10px" })
+          .HtmlAttributes(new { style = "width: 95%; margin-bottom:35px; margin-top:15px" })
                     )
                     <span class="options">Chart Value Step: </span>
                     @(Html.Kendo().NumericTextBox<decimal>()
             .Name("currency")
             .Format("c")
-            .Min(1000)
+            .Min(5000)
             .Max(10000)
             .Value(5000)
             .HtmlAttributes(new { style = "width: 95%;", title = "currency" })
@@ -72,7 +72,7 @@
     }
 
     .options{
-        margin-bottom:10px;
+        margin-bottom:20px;
         font-weight:bold;
         color:black;
     }
@@ -94,7 +94,7 @@
 
     .left-container {
         float: left;
-        width: 45%;
+        width: 40%;
     }
 
     .right-container {
@@ -116,5 +116,9 @@
 
     .demo-section{
         background-color:white;
+    }
+
+    .k-numeric-wrap{
+        margin-top:15px;
     }
 </style>
