@@ -5041,7 +5041,7 @@
           "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
         },
         "description": {
-          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to use a PDF from the server, modify its fields based on user input and exported to PDF on the client."
+          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to use a PDF from the server, modify its fields based on user input and export it to PDF on the client."
         },
         "sources": {
           "aspnet-mvc": [
