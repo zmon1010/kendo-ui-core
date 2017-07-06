@@ -1,39 +1,37 @@
 ---
-title: How To Get the Data of the Last Selected Row
-description: An example on how to get the dataItem for the last selected row by using the jQuery click event.
+title: Get the Data of the Last Selected Grid Row
+description: An example on how to get the dataItem for the last selected row in the Kendo UI Grid by using the jQuery click event.
 type: how-to
-page_title: Getting the DataItem of the Last Selected Row Only
+page_title: Get the DataItem of the Last Selected Row Only | Kendo UI Grid
 slug: checkbox-selection-dataitem-last-selected-row
 tags: checkbox selection, grid, kendo ui
-teampulseid:
 ticketid: 1116716, 1117204
-pitsid:
 ---
 
 ## Environment
+
 <table>
  <tr>
   <td>Product</td>
-  <td>Grid for Progress® Kendo UI®</td>
+  <td>Grid for Progress Kendo UI</td>
  </tr>
  <tr>
-  <td>Progress® Kendo UI® version</td>
+  <td>Progress Kendo UI version</td>
   <td>Tested up to version 2017.2 621</td>
  </tr>
 </table>
-
 
 ## Description
 
 How can I get the data item of the last selected row by using the checkbox selectable column in the Kendo UI Grid?
 
-## Possible Solution
+## Solution
 
-To get the dataItem for the last selected row:
+To get the `dataItem` for the last selected row:
 
-1. Use a jQuery selector to subscribe for the [`click`](https://api.jquery.com/click/) event of the checkboxes.
+1. Subscribe for the [`click`](https://api.jquery.com/click/) event of the checkboxes by using a jQuery selector.
 1. In the `click` event handler, get the row by using the [`closest`](https://api.jquery.com/closest/) jQuery method.
-1. Use the [`dataItem`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-dataItem) method of the Grid to get the row data.
+1. Get the row data by using the [`dataItem`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-dataItem) method of the Grid.
 
 ```html
 <div id="example">
@@ -108,10 +106,10 @@ To get the dataItem for the last selected row:
 
 ## Notes
 
-The checkbox selectable column is introduced in the Kendo UI R2 2017 SP1 release.
+The checkbox selectable column is available as of the Kendo UI R2 2017 SP1 release.
 
 ## See Also
 
-* [FAQs: Checkbox Selectable Column]({% slug checkbox-selection-faqs %})
-* [Grid Checkbox selection demo](http://demos.telerik.com/kendo-ui/grid/checkbox-selection)
-* [API Reference for the **columns.selectable** configuration](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.selectable)
+* [Frequently Asked Questions on Checkbox Selection]({% slug frequently_asked_questions_grid %})
+* [Grid Checkbox Selection Demo](http://demos.telerik.com/kendo-ui/grid/checkbox-selection)
+* [API Reference for the columns.selectable Configuration](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.selectable)
