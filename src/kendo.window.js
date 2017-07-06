@@ -977,6 +977,12 @@
                     .find(MINIMIZE_MAXIMIZE).parent().show().end().end()
                     .find(PIN_UNPIN).parent().show();
 
+                if (options.isMaximized) {
+                    that.wrapper.find(".k-i-window-maximize").parent().focus();
+                } else if (options.isMinimized) {
+                    that.wrapper.find(".k-i-window-minimize").parent().focus();
+                }
+
                 that.options.width = restoreOptions.width;
                 that.options.height = restoreOptions.height;
 
@@ -1024,6 +1030,8 @@
                 that.wrapper.children(KWINDOWTITLEBAR).find(PIN_UNPIN).parent().toggle(actionId !== "maximize");
 
                 that.trigger(actionId);
+
+                wrapper.find(".k-i-window-restore").parent().focus();
 
                 return that;
             },
@@ -1118,7 +1126,6 @@
 
                 this.wrapper.attr("tabindex", 0);
                 this.wrapper.attr("aria-labelled-by", this.element.attr("aria-labelled-by"));
-                this.wrapper.focus();
 
                 return this;
             },
