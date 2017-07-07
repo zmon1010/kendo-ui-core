@@ -5104,8 +5104,14 @@ function totalAxisOptions(autoOptions, options) {
 
 function axisOptions(autoOptions, userOptions) {
     var options = userOptions;
+    var userSetMin, userSetMax;
+
     if (userOptions) {
-        var userSetLimits = defined(userOptions.min) || defined(userOptions.max);
+        userSetMin = defined(userOptions.min);
+        userSetMax = defined(userOptions.max);
+
+        var userSetLimits = userSetMin || userSetMax;
+
         if (userSetLimits) {
             if (userOptions.min === userOptions.max) {
                 if (userOptions.min > 0) {
@@ -5129,7 +5135,16 @@ function axisOptions(autoOptions, userOptions) {
 
     autoOptions.minorUnit = (options.majorUnit || autoOptions.majorUnit) / 5;
 
-    return deepExtend(autoOptions, options);
+    var result = deepExtend(autoOptions, options);
+    if (result.min >= result.max) {
+        if (userSetMin && !userSetMax) {
+            result.max = result.min + result.majorUnit;
+        } else if (!userSetMin && userSetMax) {
+            result.min = result.max - result.majorUnit;
+        }
+    }
+
+    return result;
 }
 
 function remainderClose(value, divisor, ratio) {
