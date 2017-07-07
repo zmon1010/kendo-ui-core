@@ -5085,7 +5085,7 @@
           "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
         },
         "description": {
-          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to check a signature of a PDF document."
+          "aspnet-mvc": "Telerik <strong>RadPdfProcessing</strong> provides easy to use API which allows code-only generation of PDF documents. This example demonstrates how to check a signature of a PDF document. We set the certificate validation check for demonstration purposes only. This flag ignores a warning regarding certificate authority which is missing in the Windows trusted root certificates. The result of this setting is a valid or unknown validation status. In real scenario this flag should most probably not be used. The validation process should be based only on Windows trusted root certificates."
         },
         "sources": {
           "aspnet-mvc": [
