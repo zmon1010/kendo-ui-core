@@ -1002,10 +1002,18 @@ var Sector = Ring.extend({
     }
 });
 
+var DIRECTION_ANGLE = 0.001; //any value that will make the endAngle bigger than the start angle will work here.
+
 var ShapeBuilder = Class.extend({
     createRing: function(sector, options) {
         var startAngle = sector.startAngle + 180;
         var endAngle = sector.angle + startAngle;
+
+        //required in order to avoid reversing the arc direction in cases like 0.000000000000001 + 100 === 100
+        if (sector.angle > 0 && startAngle === endAngle) {
+            endAngle += DIRECTION_ANGLE;
+        }
+
         var center = new geometry.Point(sector.center.x, sector.center.y);
         var radius = Math.max(sector.radius, 0);
         var innerRadius = Math.max(sector.innerRadius, 0);
