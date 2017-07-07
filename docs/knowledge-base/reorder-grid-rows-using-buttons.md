@@ -2,12 +2,10 @@
 title: Enable Reordering in Grid by Adding Buttons to Each Row
 description: An example on how to reorder Kendo UI Grid rows by adding buttons to each row to move items up and down.
 type: how-to
-page_title: Reorder Kendo UI Grid Rows by Adding Row Buttons
+page_title: Reorder Rows by Adding Row Buttons | Kendo UI Grid
 slug: reorder-grid-rows-using-buttons
 tags: grid, reordering, items
-teampulseid:
 ticketid: 1112024
-pitsid:
 res_type: kb
 ---
 
@@ -16,10 +14,10 @@ res_type: kb
 <table>
  <tr>
   <td>Product</td>
-  <td>Grid for Progress® Kendo UI®</td>
+  <td>Grid for Progress Kendo UI</td>
  </tr>
  <tr>
-  <td>Progress® Kendo UI® version</td>
+  <td>Progress Kendo UI version</td>
   <td>Tested up to version 2017.2 504</td>
  </tr>
 </table>
