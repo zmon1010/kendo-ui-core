@@ -636,6 +636,11 @@ var Box = Class.extend({
         this.y2 = y2 || 0;
     },
 
+    equals: function(box) {
+        return this.x1 === box.x1 && this.x2 === box.x2 &&
+            this.y1 === box.y1 && this.y2 === box.y2;
+    },
+
     width: function() {
         return this.x2 - this.x1;
     },
@@ -3880,13 +3885,12 @@ var CategoryAxis = Axis.extend({
     },
 
     getSlot: function(from, to, limit) {
-        var ref = this;
-        var options = ref.options;
+        var options = this.options;
         var reverse = options.reverse;
         var justified = options.justified;
         var vertical = options.vertical;
-        var ref$1 = this.rangeIndices();
-        var min = ref$1.min;
+        var ref = this.rangeIndices();
+        var min = ref.min;
         var valueAxis = vertical ? Y : X;
         var lineBox = this.lineBox();
         var scale = this.getScale();
