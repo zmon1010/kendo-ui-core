@@ -1238,8 +1238,28 @@ var CategoricalChart = ChartElement.extend({
         });
 
         this.reflowCategories(categorySlots);
+        if (!this.options.clip && this.options.limitPoints && this.points.length) {
+            this.limitPoints();
+        }
 
         this.box = targetBox;
+    },
+
+    limitPoints: function() {
+        var this$1 = this;
+
+        var categoryPoints = this.categoryPoints;
+        var points = categoryPoints[0].concat(last(categoryPoints));
+        for (var idx = 0; idx < points.length; idx++) {
+            this$1.limitPoint(points[idx]);
+        }
+    },
+
+    limitPoint: function(point) {
+        var limittedSlot = this.categoryAxis.limitSlot(point.box);
+        if (!limittedSlot.equals(point.box)) {
+            point.reflow(limittedSlot);
+        }
     },
 
     aboveAxis: function(point, valueAxis) {
@@ -1362,7 +1382,8 @@ setDefaultOptions(CategoricalChart, {
     series: [],
     invertAxes: false,
     isStacked: false,
-    clip: true
+    clip: true,
+    limitPoints: true
 });
 
 var PointEventsMixin = {
@@ -10953,6 +10974,7 @@ RadarBarChart.prototype.reflow = CategoricalChart.prototype.reflow;
 
 setDefaultOptions(RadarBarChart, {
     clip: false,
+    limitPoints: false,
     animation: {
         type: "pie"
     }

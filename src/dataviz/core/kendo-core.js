@@ -3920,6 +3920,18 @@ var CategoryAxis = Axis.extend({
         return slotBox;
     },
 
+    limitSlot: function(slot) {
+        var vertical = this.options.vertical;
+        var valueAxis = vertical ? Y : X;
+        var lineBox = this.lineBox();
+        var limittedSlot = slot.clone();
+
+        limittedSlot[valueAxis + 1] = limitValue(slot[valueAxis + 1], lineBox[valueAxis + 1], lineBox[valueAxis + 2]);
+        limittedSlot[valueAxis + 2] = limitValue(slot[valueAxis + 2], lineBox[valueAxis + 1], lineBox[valueAxis + 2]);
+
+        return limittedSlot;
+    },
+
     slot: function(from, to, limit) {
         var start = from;
         var end = to;
