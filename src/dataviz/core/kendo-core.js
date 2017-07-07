@@ -3162,7 +3162,7 @@ var Axis = ChartElement.extend({
             var angle;
 
             for (var idx = 0; idx < labels.length; idx++) {
-                var width = tickPositions[idx + 1] - tickPositions[idx];
+                var width = Math.abs(tickPositions[idx + 1] - tickPositions[idx]);
                 var labelBox = labels[idx].box;
 
                 if (labelBox.width() > width) {
