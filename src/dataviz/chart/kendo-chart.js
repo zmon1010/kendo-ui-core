@@ -1734,17 +1734,19 @@ var LineSegment = ChartElement.extend({
         this.seriesIx = seriesIx;
     },
 
-    points: function(visualPoints) {
-        var linePoints = this.linePoints.concat(visualPoints || []);
-        var points = [];
+    points: function() {
+        return this.toGeometryPoints(this.linePoints);
+    },
 
-        for (var i = 0, length = linePoints.length; i < length; i++) {
-            if (linePoints[i].visible !== false) {
-                points.push(linePoints[i]._childBox.toRect().center());
+    toGeometryPoints: function(points) {
+        var result = [];
+        for (var i = 0, length = points.length; i < length; i++) {
+            if (points[i].visible !== false) {
+                result.push(points[i]._childBox.toRect().center());
             }
         }
 
-        return points;
+        return result;
     },
 
     createVisual: function() {
@@ -1784,66 +1786,64 @@ setDefaultOptions(LineSegment, {
     closed: false
 });
 
-var StepLineSegment = LineSegment.extend({
-    points: function(visualPoints) {
-        var points = this.calculateStepPoints(this.linePoints);
-
-        if (visualPoints && visualPoints.length) {
-            points = points.concat(this.calculateStepPoints(visualPoints).reverse());
-        }
-
-        return points;
-    },
-
+var StepLineMixin = {
     calculateStepPoints: function(points) {
-        var chart = this.parent;
-        var plotArea = chart.plotArea;
-        var categoryAxis = plotArea.seriesCategoryAxis(this.series);
-        var isInterpolate = chart.seriesMissingValues(this.series) === INTERPOLATE;
-        var reverse = categoryAxis.options.reverse;
-        var vertical = categoryAxis.options.vertical;
-        var dir = reverse ? 2 : 1;
-        var revDir = reverse ? 1 : 2;
-        var length = points.length;
-        var result = [];
+        var categoryAxis = this.parent.plotArea.seriesCategoryAxis(this.series);
+        var ref = categoryAxis.options;
+        var justified = ref.justified;
+        var vertical = ref.vertical;
+        var reverse = ref.reverse;
 
-        for (var i = 1; i < length; i++) {
-            var prevPoint = points[i - 1];
-            var point = points[i];
-            var prevMarkerBoxCenter = prevPoint.markerBox().center();
-            var markerBoxCenter = point.markerBox().center();
-            if (categoryAxis.options.justified) {
-                result.push(new GeometryPoint(prevMarkerBoxCenter.x, prevMarkerBoxCenter.y));
-                if (vertical) {
-                    result.push(new GeometryPoint(prevMarkerBoxCenter.x, markerBoxCenter.y));
-                } else {
-                    result.push(new GeometryPoint(markerBoxCenter.x, prevMarkerBoxCenter.y));
-                }
-                result.push(new GeometryPoint(markerBoxCenter.x, markerBoxCenter.y));
-            } else {
-                if (vertical) {
-                    result.push(new GeometryPoint(prevMarkerBoxCenter.x, prevPoint.box[Y + dir]));
-                    result.push(new GeometryPoint(prevMarkerBoxCenter.x, prevPoint.box[Y + revDir]));
-                    if (isInterpolate) {
-                        result.push(new GeometryPoint(prevMarkerBoxCenter.x, point.box[Y + dir]));
-                    }
-                    result.push(new GeometryPoint(markerBoxCenter.x, point.box[Y + dir]));
-                    result.push(new GeometryPoint(markerBoxCenter.x, point.box[Y + revDir]));
-                } else {
-                    result.push(new GeometryPoint(prevPoint.box[X + dir], prevMarkerBoxCenter.y));
-                    result.push(new GeometryPoint(prevPoint.box[X + revDir], prevMarkerBoxCenter.y));
-                    if (isInterpolate) {
-                        result.push(new GeometryPoint(point.box[X + dir], prevMarkerBoxCenter.y));
-                    }
-                    result.push(new GeometryPoint(point.box[X + dir], markerBoxCenter.y));
-                    result.push(new GeometryPoint(point.box[X + revDir], markerBoxCenter.y));
-                }
+        var stepAxis = vertical ? X : Y;
+        var axis = vertical ? Y : X;
+        var stepDir = reverse ? 2 : 1;
+        var dir = stepDir;
+
+        var previousPoint = toGeometryPoint(points[0], stepAxis, stepDir, axis, dir);
+        var result = [ previousPoint ];
+
+        for (var idx = 1; idx < points.length; idx++) {
+            var point = toGeometryPoint(points[idx], stepAxis, stepDir, axis, dir);
+
+            if (previousPoint[stepAxis] !== point[stepAxis]) {
+                var stepPoint = new GeometryPoint();
+                stepPoint[stepAxis] = previousPoint[stepAxis];
+                stepPoint[axis] = point[axis];
+
+                result.push(stepPoint, point);
             }
+
+            previousPoint = point;
         }
 
-        return result || [];
+        if (!justified) {
+            result.push(toGeometryPoint(last(points), stepAxis, stepDir, axis, reverse ? 1 : 2));
+        } else if (previousPoint !== last(result)) {
+            result.push(previousPoint);
+        }
+
+        return result;
+
+    }
+};
+
+function toGeometryPoint(lintPoint, stepAxis, stepDir, axis, dir) {
+    var box = lintPoint.box;
+    var result = new GeometryPoint();
+
+    result[stepAxis] = box[stepAxis + stepDir];
+    result[axis] = box[axis + dir];
+
+    return result;
+}
+
+var StepLineSegment = LineSegment.extend({
+    points: function() {
+        return this.calculateStepPoints(this.linePoints);
     }
 });
+
+deepExtend(StepLineSegment.prototype, StepLineMixin);
 
 var SplineSegment = LineSegment.extend({
     createVisual: function() {
@@ -2125,138 +2125,18 @@ var LineChart = CategoricalChart.extend({
 
 deepExtend(LineChart.prototype, LineChartMixin, ClipAnimationMixin);
 
-var AreaSegmentMixin = {
-    points: function() {
-        var chart = this.parent;
-        var plotArea = chart.plotArea;
-        var invertAxes = chart.options.invertAxes;
-        var valueAxis = chart.seriesValueAxis(this.series);
-        var valueAxisLineBox = valueAxis.lineBox();
-        var categoryAxis = plotArea.seriesCategoryAxis(this.series);
-        var categoryAxisLineBox = categoryAxis.lineBox();
-        var stackPoints = this.stackPoints;
-        var points = this._linePoints(stackPoints);
-        var pos = invertAxes ? X : Y;
-        var end = invertAxes ? categoryAxisLineBox.x1 : categoryAxisLineBox.y1;
-
-        end = limitValue(end, valueAxisLineBox[pos + 1], valueAxisLineBox[pos + 2]);
-        if (!this.stackPoints && points.length > 1) {
-            var firstPoint = points[0];
-            var lastPoint = last(points);
-
-            if (invertAxes) {
-                points.unshift(new GeometryPoint(end, firstPoint.y));
-                points.push(new GeometryPoint(end, lastPoint.y));
-            } else {
-                points.unshift(new GeometryPoint(firstPoint.x, end));
-                points.push(new GeometryPoint(lastPoint.x, end));
-            }
-        }
-
-        return points;
-    },
-
-    createVisual: function() {
-        var series = this.series;
-        var defaults = series._defaults;
-        var color = series.color;
-
-        if (isFunction(color) && defaults) {
-            color = defaults.color;
-        }
-
-        this.visual = new Group({
-            zIndex: series.zIndex
-        });
-
-        this.createArea(color);
-        this.createLine(color);
-    },
-
-    createLine: function(color) {
-        var series = this.series;
-        var lineOptions = deepExtend({
-            color: color,
-            opacity: series.opacity
-        }, series.line);
-
-        if (lineOptions.visible !== false && lineOptions.width > 0) {
-            var line = Path.fromPoints(this._linePoints(), {
-                stroke: {
-                    color: lineOptions.color,
-                    width: lineOptions.width,
-                    opacity: lineOptions.opacity,
-                    dashType: lineOptions.dashType,
-                    lineCap: "butt"
-                }
-            });
-
-            this.visual.append(line);
-        }
-    },
-
-    createArea: function(color) {
-        var series = this.series;
-
-        var area = Path.fromPoints(this.points(), {
-            fill: {
-                color: color,
-                opacity: series.opacity
-            },
-            stroke: null
-        });
-
-        this.visual.append(area);
-    }
-};
-
 var AreaSegment = LineSegment.extend({
-    init: function(linePoints, stackPoints, currentSeries, seriesIx) {
+    init: function(linePoints, currentSeries, seriesIx, prevSegment, stackPoints) {
         LineSegment.fn.init.call(this, linePoints, currentSeries, seriesIx);
 
-        this.stackPoints = stackPoints;
-    }
-});
-
-deepExtend(AreaSegment.prototype, AreaSegmentMixin, {
-    _linePoints: LineSegment.prototype.points
-});
-
-var StepAreaSegment = StepLineSegment.extend({
-    init: function(linePoints, stackPoints, currentSeries, seriesIx) {
-        StepLineSegment.fn.init.call(this, linePoints, currentSeries, seriesIx);
-
-        this.stackPoints = stackPoints;
-    }
-});
-
-deepExtend(StepAreaSegment.prototype, AreaSegmentMixin, {
-    _linePoints: StepLineSegment.prototype.points
-});
-
-var SplineAreaSegment = AreaSegment.extend({
-    init: function(linePoints, prevSegment, isStacked, currentSeries, seriesIx) {
-        AreaSegment.fn.init.call(this, linePoints, [], currentSeries, seriesIx);
-
         this.prevSegment = prevSegment;
-        this.isStacked = isStacked;
-    },
-
-    strokeSegments: function() {
-        var segments = this._strokeSegments;
-
-        if (!segments) {
-            var curveProcessor = new dataviz.CurveProcessor(this.options.closed);
-            var linePoints = LineSegment.prototype.points.call(this);
-            segments = this._strokeSegments = curveProcessor.process(linePoints);
-        }
-
-        return segments;
+        this.stackPoints = stackPoints;
     },
 
     createVisual: function() {
         var series = this.series;
         var defaults = series._defaults;
+        var lineOptions = series.line || {};
         var color = series.color;
 
         if (isFunction(color) && defaults) {
@@ -2275,91 +2155,133 @@ var SplineAreaSegment = AreaSegment.extend({
             stroke: null
         });
 
-        this.createStroke({
-            stroke: deepExtend({
-                color: color,
-                opacity: series.opacity,
-                lineCap: "butt"
-            }, series.line)
-        });
+        if (lineOptions.width > 0 && lineOptions.visible !== false) {
+            this.createStroke({
+                stroke: deepExtend({
+                    color: color,
+                    opacity: series.opacity,
+                    lineCap: "butt"
+                }, lineOptions)
+            });
+        }
+    },
+
+    strokeSegments: function() {
+        var segments = this._strokeSegments;
+
+        if (!segments) {
+            segments = this._strokeSegments = this.createStrokeSegments();
+        }
+
+        return segments;
+    },
+
+    createStrokeSegments: function() {
+        return this.segmentsFromPoints(this.points());
+    },
+
+    stackSegments: function() {
+        if (this.prevSegment) {
+            return this.prevSegment.createStackSegments(this.stackPoints);
+        }
+
+        return this.createStackSegments(this.stackPoints);
+    },
+
+    createStackSegments: function(stackPoints) {
+        return this.segmentsFromPoints(this.toGeometryPoints(stackPoints)).reverse();
+    },
+
+    segmentsFromPoints: function(points) {
+        return points.map(function (point) { return new geometry.Segment(point); });
+    },
+
+    createStroke: function(style) {
+        var stroke = new Path(style);
+        stroke.segments.push.apply(stroke.segments, this.strokeSegments());
+
+        this.visual.append(stroke);
+    },
+
+    hasStackSegment: function() {
+        return this.prevSegment || (this.stackPoints && this.stackPoints.length);
     },
 
     createFill: function(style) {
         var strokeSegments = this.strokeSegments();
         var fillSegments = strokeSegments.slice(0);
-        var prevSegment = this.prevSegment;
+        var hasStackSegments = this.hasStackSegment();
 
-        if (this.isStacked && prevSegment) {
-            var prevStrokeSegments = prevSegment.strokeSegments();
-            var prevAnchor = last(prevStrokeSegments).anchor();
-
-            fillSegments.push(new geometry.Segment(
-                prevAnchor,
-                prevAnchor,
-                last(strokeSegments).anchor()
-            ));
-
-            var stackSegments = [];
-            for (var idx = prevStrokeSegments.length - 1; idx >= 0; idx--) {
-                var segment = prevStrokeSegments[idx];
-                stackSegments.push(new geometry.Segment(
-                    segment.anchor(),
-                    segment.controlOut(),
-                    segment.controlIn()
-                ));
-            }
+        if (hasStackSegments) {
+            var stackSegments = this.stackSegments();
 
             append(fillSegments, stackSegments);
-
-            var firstAnchor = fillSegments[0].anchor();
-            fillSegments.push(new geometry.Segment(
-                firstAnchor,
-                firstAnchor,
-                last(stackSegments).anchor()
-            ));
         }
 
         var fill = new Path(style);
         fill.segments.push.apply(fill.segments, fillSegments);
-        this.closeFill(fill);
+
+        if (!hasStackSegments && strokeSegments.length > 1) {
+            this.fillToAxes(fill);
+        }
 
         this.visual.append(fill);
     },
 
-    closeFill: function(fillPath) {
+    fillToAxes: function(fillPath) {
         var chart = this.parent;
-        var prevSegment = this.prevSegment;
-        var plotArea = chart.plotArea;
         var invertAxes = chart.options.invertAxes;
         var valueAxis = chart.seriesValueAxis(this.series);
-        var valueAxisLineBox = valueAxis.lineBox();
-        var categoryAxis = plotArea.seriesCategoryAxis(this.series);
-        var categoryAxisLineBox = categoryAxis.lineBox();
-        var pos = invertAxes ? X : Y;
+        var crossingValue = chart.categoryAxisCrossingValue(valueAxis);
+        var endSlot = valueAxis.getSlot(crossingValue, crossingValue, true);
         var segments = this.strokeSegments();
         var firstPoint = segments[0].anchor();
         var lastPoint = last(segments).anchor();
-        var end = invertAxes ? categoryAxisLineBox.x1 : categoryAxisLineBox.y1;
+        var end = invertAxes ? endSlot.x1 : endSlot.y1;
 
-        end = limitValue(end, valueAxisLineBox[pos + 1], valueAxisLineBox[pos + 2]);
-        if (!(chart.options.isStacked && prevSegment) && segments.length > 1) {
-            if (invertAxes) {
-                fillPath.lineTo(end, lastPoint.y)
-                        .lineTo(end, firstPoint.y);
-            } else {
-                fillPath.lineTo(lastPoint.x, end)
-                        .lineTo(firstPoint.x, end);
-            }
+        if (invertAxes) {
+            fillPath.lineTo(end, lastPoint.y)
+                    .lineTo(end, firstPoint.y);
+        } else {
+            fillPath.lineTo(lastPoint.x, end)
+                    .lineTo(firstPoint.x, end);
         }
+    }
+});
+
+var StepAreaSegment = AreaSegment.extend({
+    createStrokeSegments: function() {
+        return this.segmentsFromPoints(this.calculateStepPoints(this.linePoints));
     },
 
-    createStroke: function(style) {
-        if (style.stroke.width > 0) {
-            var stroke = new Path(style);
-            stroke.segments.push.apply(stroke.segments, this.strokeSegments());
+    createStackSegments: function(stackPoints) {
+        return this.segmentsFromPoints(this.calculateStepPoints(stackPoints)).reverse();
+    }
+});
 
-            this.visual.append(stroke);
+deepExtend(StepAreaSegment.prototype, StepLineMixin);
+
+var SplineAreaSegment = AreaSegment.extend({
+    createStrokeSegments: function() {
+        var curveProcessor = new dataviz.CurveProcessor(this.options.closed);
+        var linePoints = this.points();
+
+        return curveProcessor.process(linePoints);
+    },
+
+    createStackSegments: function() {
+        var strokeSegments = this.strokeSegments();
+        var stackSegments = [];
+        for (var idx = strokeSegments.length - 1; idx >= 0; idx--) {
+            var segment = strokeSegments[idx];
+            stackSegments.push(new geometry.Segment(
+                segment.anchor(),
+                segment.controlOut(),
+                segment.controlIn()
+            ));
         }
+
+        return stackSegments;
     }
 });
 
@@ -2367,33 +2289,29 @@ var AreaChart = LineChart.extend({
     createSegment: function(linePoints, currentSeries, seriesIx, prevSegment) {
         var isStacked = this.options.isStacked;
         var style = (currentSeries.line || {}).style;
+        var previousSegment;
 
         var stackPoints;
         if (isStacked && seriesIx > 0 && prevSegment) {
             var missingValues = this.seriesMissingValues(currentSeries);
             if (missingValues !== "gap") {
                 stackPoints = prevSegment.linePoints;
+                previousSegment = prevSegment;
             } else {
                 stackPoints = this._gapStackPoints(linePoints, seriesIx, style);
             }
-
-            if (style !== STEP) {
-                stackPoints = stackPoints.slice(0).reverse();
-            }
-        }
-
-        if (style === SMOOTH) {
-            return new SplineAreaSegment(linePoints, prevSegment, isStacked, currentSeries, seriesIx);
         }
 
         var pointType;
         if (style === STEP) {
             pointType = StepAreaSegment;
+        } else if (style === SMOOTH) {
+            pointType = SplineAreaSegment;
         } else {
             pointType = AreaSegment;
         }
 
-        return new pointType(linePoints, stackPoints, currentSeries, seriesIx);
+        return new pointType(linePoints, currentSeries, seriesIx, previousSegment, stackPoints);
     },
 
     reflow: function(targetBox) {
@@ -10638,7 +10556,7 @@ setDefaultOptions(PolarLineChart, {
 });
 
 var SplinePolarAreaSegment = SplineAreaSegment.extend({
-    closeFill: function(fillPath) {
+    fillToAxes: function(fillPath) {
         var center = this._polarAxisCenter();
         fillPath.lineTo(center.x, center.y);
     },
@@ -10655,7 +10573,7 @@ var SplinePolarAreaSegment = SplineAreaSegment.extend({
         if (!segments) {
             var center = this._polarAxisCenter();
             var curveProcessor = new dataviz.CurveProcessor(false);
-            var linePoints = LineSegment.prototype.points.call(this);
+            var linePoints = this.points();
 
             linePoints.push(center);
             segments = this._strokeSegments = curveProcessor.process(linePoints);
@@ -10667,17 +10585,13 @@ var SplinePolarAreaSegment = SplineAreaSegment.extend({
 });
 
 var PolarAreaSegment = AreaSegment.extend({
-    points: function() {
-        var ref = this;
-        var polarAxis = ref.parent.plotArea.polarAxis;
-        var stackPoints = ref.stackPoints;
+    fillToAxes: function(fillPath) {
+        var polarAxis = this.parent.plotArea.polarAxis;
         var center = polarAxis.box.center();
-        var points = LineSegment.prototype.points.call(this, stackPoints);
+        var centerSegment = new geometry.Segment([ center.x, center.y ]);
 
-        points.unshift([ center.x, center.y ]);
-        points.push([ center.x, center.y ]);
-
-        return points;
+        fillPath.segments.unshift(centerSegment);
+        fillPath.segments.push(centerSegment);
     }
 });
 
@@ -10687,9 +10601,9 @@ var PolarAreaChart = PolarLineChart.extend({
         var segment;
 
         if (style === SMOOTH) {
-            segment = new SplinePolarAreaSegment(linePoints, null, false, currentSeries, seriesIx);
+            segment = new SplinePolarAreaSegment(linePoints, currentSeries, seriesIx);
         } else {
-            segment = new PolarAreaSegment(linePoints, [], currentSeries, seriesIx);
+            segment = new PolarAreaSegment(linePoints, currentSeries, seriesIx);
         }
         return segment;
     },
@@ -10882,36 +10796,37 @@ var RadarLineChart = LineChart.extend({
 });
 
 setDefaultOptions(RadarLineChart, {
-    clip: false
+    clip: false,
+    limitPoints: false
 });
 
 var SplineRadarAreaSegment = SplineAreaSegment.extend({
-    closeFill: function() {}
+    fillToAxes: function() {}
 });
 
 var RadarAreaSegment = AreaSegment.extend({
-    points: function() {
-        return LineSegment.prototype.points.call(this, this.stackPoints);
-    }
+    fillToAxes: function() {}
 });
 
 var RadarAreaChart = RadarLineChart.extend({
     createSegment: function(linePoints, currentSeries, seriesIx, prevSegment) {
         var isStacked = this.options.isStacked;
         var style = (currentSeries.line || {}).style;
+        var previousSegment;
+        var stackPoints;
         var segment;
 
+        if (isStacked && seriesIx > 0 && prevSegment) {
+            stackPoints = prevSegment.linePoints.slice(0);
+            previousSegment = prevSegment;
+        }
+
         if (style === SMOOTH) {
-            segment = new SplineRadarAreaSegment(linePoints, prevSegment, isStacked, currentSeries, seriesIx);
+            segment = new SplineRadarAreaSegment(linePoints, currentSeries, seriesIx, previousSegment, stackPoints);
             segment.options.closed = true;
         } else {
-            var stackPoints;
-            if (isStacked && seriesIx > 0 && prevSegment) {
-                stackPoints = prevSegment.linePoints.slice(0).reverse();
-            }
-
             linePoints.push(linePoints[0]);
-            segment = new RadarAreaSegment(linePoints, stackPoints, currentSeries, seriesIx);
+            segment = new RadarAreaSegment(linePoints, currentSeries, seriesIx, previousSegment, stackPoints);
         }
 
         return segment;
