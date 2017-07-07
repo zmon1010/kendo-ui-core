@@ -1042,4 +1042,24 @@
 
         equal(cellRange.enable(), true);
     });
+
+    (function() {
+        var getTextHeight = kendo.spreadsheet.util.getTextHeight;
+        var TextMetrics = kendo.util.TextMetrics;
+        var currentTextMetrics = TextMetrics.current;
+
+        module("util", {
+            setup: function() {
+                TextMetrics.current = new TextMetrics();
+            },
+            teardown: function() {
+                TextMetrics.current = currentTextMetrics;
+            }
+        });
+
+        test('getTextHeight preserves new lines', function() {
+            ok(getTextHeight('Foo Bar \n Baz Qux') > getTextHeight('Foo Bar  Baz Qux'));
+        });
+    })();
+
 })();

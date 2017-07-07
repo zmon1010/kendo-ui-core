@@ -5473,7 +5473,7 @@ var TextNode = PathNode.extend({
             font = kendo.htmlEncode(font);
         }
 
-        style.push([ "font", font ]);
+        style.push([ "font", font ], [ "white-space", "pre" ]);
 
         return style;
     },
@@ -5489,7 +5489,7 @@ var TextNode = PathNode.extend({
         content = decodeEntities(content);
         content = kendo.htmlEncode(content);
 
-        return content;
+        return kendoUtil.normalizeText(content);
     },
 
     renderTextAnchor: function() {

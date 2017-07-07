@@ -56,8 +56,8 @@
                      )[0];
 
     test("height varies with element styles (width, text-wrap, word-break)", function() {
-        ok(measure("FooBarBazFooBarBaz", { width: "20px" }, measureBox).height>
-           measure("FooBarBazFooBarBaz", { width: "80px" }, measureBox).height);
+        ok(measure("FooBarBazFooBarBaz", { width: "20px" }, { box: measureBox }).height >
+           measure("FooBarBazFooBarBaz", { width: "80px" }, { box: measureBox }).height);
     });
 
     // ------------------------------------------------------------

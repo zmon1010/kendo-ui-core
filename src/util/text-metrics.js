@@ -66,6 +66,13 @@ var LRUCache = kendo.Class.extend({
     }
 });
 
+var REPLACE_REGEX = /\r?\n|\r|\t/g;
+var SPACE = ' ';
+
+function normalizeText(text) {
+    return String(text).replace(REPLACE_REGEX, SPACE);
+}
+
 function objectKey(object) {
     var parts = [];
     for (var key in object) {
@@ -104,7 +111,7 @@ if (typeof document !== "undefined") {
     defaultMeasureBox = document.createElement("div");
     defaultMeasureBox.style.cssText = "position: absolute !important; top: -4000px !important; width: auto !important; height: auto !important;" +
               "padding: 0 !important; margin: 0 !important; border: 0 !important;" +
-              "line-height: normal !important; visibility: hidden !important; white-space: nowrap!important;";
+              "line-height: normal !important; visibility: hidden !important; white-space: pre!important;";
 }
 
 var TextMetrics = kendo.Class.extend({
@@ -114,7 +121,9 @@ var TextMetrics = kendo.Class.extend({
         this.options = $.extend({}, DEFAULT_OPTIONS, options);
     },
 
-    measure: function(text, style, box) {
+    measure: function(text, style, options) {
+        if (options === void 0) { options = {}; }
+
         if (!text) {
             return zeroSize();
         }
@@ -128,7 +137,7 @@ var TextMetrics = kendo.Class.extend({
         }
 
         var size = zeroSize();
-        var measureBox = box || defaultMeasureBox;
+        var measureBox = options.box || defaultMeasureBox;
         var baselineMarker = this._baselineMarker().cloneNode(false);
 
         for (var key in style) {
@@ -138,11 +147,13 @@ var TextMetrics = kendo.Class.extend({
             }
         }
 
-        measureBox.textContent = text;
+        var textStr = options.normalizeText !== false ? normalizeText(text) : String(text);
+
+        measureBox.textContent = textStr;
         measureBox.appendChild(baselineMarker);
         document.body.appendChild(measureBox);
 
-        if (String(text).length) {
+        if (textStr.length) {
             size.width = measureBox.offsetWidth - this.options.baselineMarkerSize;
             size.height = measureBox.offsetHeight;
             size.baseline = baselineMarker.offsetTop + this.options.baselineMarkerSize;
@@ -177,7 +188,8 @@ kendo.deepExtend(kendo.util, {
     TextMetrics: TextMetrics,
     measureText: measureText,
     objectKey: objectKey,
-    hashKey: hashKey
+    hashKey: hashKey,
+    normalizeText: normalizeText
 });
 
 })(window.kendo.jQuery);

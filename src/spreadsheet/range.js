@@ -910,7 +910,7 @@
             "white-space" : (wrap === true) ? "pre-wrap" : "pre"
         };
 
-        return kendo.util.measureText(text, styles, measureBox).height;
+        return kendo.util.measureText(text, styles, { box: measureBox, normalizeText: false }).height;
     }
 
     kendo.spreadsheet.util = { getTextHeight: getTextHeight };
