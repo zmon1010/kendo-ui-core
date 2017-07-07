@@ -1299,7 +1299,7 @@ var ChartElement = Class.extend({
             }
 
             if (!defined(highlight.options.zIndex)) {
-                highlight.options.zIndex = valueOrDefault(options.zIndex, HIGHLIGHT_ZINDEX);
+                highlight.options.zIndex = valueOrDefault(options.zIndex, this.options.zIndex);
             }
 
             this.appendVisual(highlight);

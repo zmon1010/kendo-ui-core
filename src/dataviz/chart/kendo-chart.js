@@ -1734,7 +1734,8 @@ LinePoint.prototype.defaults = {
                 color: "#fff",
                 width: 2
             }
-        }
+        },
+        zIndex: datavizConstants.HIGHLIGHT_ZINDEX
     },
     errorBars: {
         line: {
