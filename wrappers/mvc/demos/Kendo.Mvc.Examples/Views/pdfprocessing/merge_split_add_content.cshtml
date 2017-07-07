@@ -9,7 +9,7 @@
                         .Multiple(false)
                         .ShowFileList(true)
                         .Events(events => events
-                        .Select("onSelect")
+                        .Select("onSelectFirst")
                          )
                         .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
 
@@ -18,9 +18,9 @@
                 @(Html.Kendo().Upload()
                         .Name("secondDocument")
                         .Multiple(false)
-                        .ShowFileList(false)
+                        .ShowFileList(true)
                         .Events(events => events
-                        .Select("onSelect")
+                        .Select("onSelectSecond")
                          )
                         .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
                 )
@@ -50,6 +50,17 @@
 }
 
 <script>
+    var firstFileSelected = false;
+    var secondFileSelected = false;
+
+    $("input[name='rb']").change(function () {
+        if (!$('#marge_1')[0].checked && firstFileSelected) {
+            $('.downloadBtn').show();
+        }
+        else if ($('#marge_1')[0].checked && firstFileSelected && !secondFileSelected) {
+            $('.downloadBtn').hide();
+        }
+    });
 
     $(document).ready(function () {
         $('.downloadBtn').hide();
@@ -64,8 +75,24 @@
         });
     });
 
-    function onSelect() {
-        $('.downloadBtn').show();
+    function onSelectFirst() {
+        if (!$('#marge_1')[0].checked) {
+            $('.downloadBtn').show();
+        }
+
+        firstFileSelected = true;
+        if (firstFileSelected && secondFileSelected) {
+            $('.downloadBtn').show();
+        }
+        
+    }
+
+    function onSelectSecond() {
+        secondFileSelected = true;
+        if (firstFileSelected && secondFileSelected) {
+            $('.downloadBtn').show();
+        }
+
     }
 </script>
 
