@@ -2,12 +2,11 @@
 title: Simulate Modal Behavior of the Tooltip
 description: An example on how to make the Kendo UI Tooltip display a modal overlay over the page.
 type: how to
-page_title: Make the Kendo UI Tooltip Modal
-slug: simulate-modal-behaviour-of-kendo-ui-tooltip
+page_title: Make the Tooltip Modal | Kendo UI Tooltip
+slug: tooltip-modal
 tags: kendo, tooltip, modal
-teampulseid:
 ticketid: 1112824
-pitsid:
+res_type: kb
 ---
 
 ## Environment
@@ -21,11 +20,11 @@ pitsid:
 
 ## Description
 
-Your project might require you to mimic modality in a Kendo UI Tooltip.
+Can I simulate modal behavior on the Tooltip?
 
-## Possible Solution
+## Solution
 
-To simulate modality in a Kendo UI Tooltip, place a semi-transparent &lth;div&gth; element as an overlay over the entire HTML page. Make sure that the Tooltip is the only element to remain above the overlay.
+To implement this scenario, place a semi-transparent &lth;div&gth; element as an overlay over the entire HTML page. Make sure that the Tooltip is the only element to remain above the overlay.
 
 ````html
 	<span id="target" title="Tooltip content">
