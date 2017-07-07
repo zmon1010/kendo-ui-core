@@ -973,7 +973,7 @@ var CategoricalChart = ChartElement.extend({
         var valueAxis = this.seriesValueAxis(series);
         var axisCrossingValue = this.categoryAxisCrossingValue(valueAxis);
 
-        return [ axisCrossingValue, point.value || axisCrossingValue ];
+        return [ axisCrossingValue, isNumber(point.value) ? point.value : axisCrossingValue ];
     },
 
     stackLimits: function(axisName, stackName) {
