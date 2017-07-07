@@ -23,8 +23,8 @@ var BOTTOM = datavizConstants.BOTTOM;
 var LEFT = datavizConstants.LEFT;
 var WHITE = datavizConstants.WHITE;
 var CIRCLE = datavizConstants.CIRCLE;
-var Y = datavizConstants.Y;
 var X = datavizConstants.X;
+var Y = datavizConstants.Y;
 var RIGHT = datavizConstants.RIGHT;
 var BLACK = datavizConstants.BLACK;
 var DATE = datavizConstants.DATE;
@@ -43,13 +43,12 @@ var isFunction = dataviz.isFunction;
 var valueOrDefault = dataviz.valueOrDefault;
 var isObject = dataviz.isObject;
 var deepExtend = dataviz.deepExtend;
+var last = dataviz.last;
 var eventElement = dataviz.eventElement;
 var getTemplate = dataviz.getTemplate;
 var TextBox = dataviz.TextBox;
 var ShapeElement = dataviz.ShapeElement;
 var getSpacing = dataviz.getSpacing;
-var limitValue = dataviz.limitValue;
-var last = dataviz.last;
 var append = dataviz.append;
 var isString = dataviz.isString;
 var parseDate = dataviz.parseDate;
@@ -64,6 +63,7 @@ var hasClasses = dataviz.hasClasses;
 var bindEvents = dataviz.bindEvents;
 var services = dataviz.services;
 var unbindEvents = dataviz.unbindEvents;
+var limitValue = dataviz.limitValue;
 var support = kendo.support;
 var drawing = kendo.drawing;
 var Path = drawing.Path;
@@ -11923,22 +11923,28 @@ var Chart = Class.extend({
         }
     },
 
-    exportVisual: function(options) {
+    exportVisual: function(exportOptions) {
         var visual;
-        if (options && (options.width || options.height)) {
-            var chartArea = this.options.chartArea;
-            var originalChartArea = this._originalOptions.chartArea;
+        if (exportOptions && (exportOptions.width || exportOptions.height || exportOptions.options)) {
+            var currentOptions = this.options;
+            var options = deepExtend({}, exportOptions.options, {
+                chartArea: {
+                    width: exportOptions.width,
+                    height: exportOptions.height
+                }
+            });
 
-            deepExtend(chartArea, options);
+            clearMissingValues(this._originalOptions, options);
+            this.options = deepExtend({}, this._originalOptions, options);
+            this._initTheme(this.options, this._theme);
+            this.bindCategories();
 
             var model = this._getModel();
 
-            chartArea.width = originalChartArea.width;
-            chartArea.height = originalChartArea.height;
-
             model.renderVisual();
-
             visual = model.visual;
+
+            this.options = currentOptions;
         } else {
             visual = this.surface.exportVisual();
         }
