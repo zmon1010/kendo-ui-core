@@ -14,6 +14,7 @@ var kendoDrawingUtil = kendoDrawing.util;
 var Class = kendo.Class;
 var kendoUtil = kendo.util;
 var support = kendo.support;
+var supportBrowser = support.browser;
 
 var createPromise = kendoDrawingUtil.createPromise;
 var promiseAll = kendoDrawingUtil.promiseAll;
@@ -4398,7 +4399,7 @@ function baseUrl() {
     var hashIndex = href.indexOf("#");
     var url = "";
 
-    if (base && !support.browser.msie) {
+    if (base && !supportBrowser.msie) {
         if (hashIndex !== -1) {
             href = href.substring(0, hashIndex);
         }
@@ -5495,7 +5496,7 @@ var TextNode = PathNode.extend({
     renderTextAnchor: function() {
         var anchor;
 
-        if ((this.options || {}).rtl) {
+        if ((this.options || {}).rtl && !(supportBrowser.msie || supportBrowser.edge)) {
             anchor = 'end';
         }
 
@@ -6737,7 +6738,7 @@ function exportSVG(group, options) {
 /* eslint-disable no-nested-ternary, max-params, default-case, no-else-return, no-empty, yoda */
 /* eslint-disable no-param-reassign, no-var, block-scoped-var */
 
-var browser = support.browser;
+var browser = supportBrowser;
 /*
 
   XXX: to test:
