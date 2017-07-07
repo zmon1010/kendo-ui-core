@@ -2617,7 +2617,9 @@
           "kendo-ui": "<p>There are cases when you may need to operate with large amount of data in the grid, and fetching and processing this data at once would impose a performance penalty due to limited browser resources. </p> <p>Luckily, the Kendo UI grid has a solution called data virtualization that alleviates any slowdowns when operating with huge volumes of data. When enabled via the <strong>scrollable-&gt;virtual</strong> configuration option, it displays a vertical scrollbar for the grid content and renders only the number of items set via the<strong> pageSize</strong> property of the grid data source. After you drag the scrollbar and the pageSize is exceeded, it makes automatic requests to retrieve and render the next set of grid rows. </p> <p>Both local and remote data are supported with the grid virtualization feature, whereas in this demo the records are obtained locally.</p> <p>&nbsp;</p>"
         },
         "packages": [
-          "!mvc"
+          "!mvc",
+		      "!php",
+		      "!jsp"
         ]
       },
       {
