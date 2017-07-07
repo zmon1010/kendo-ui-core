@@ -1262,4 +1262,13 @@
         equal(status.type, "rangeDisabled");
     });
 
+    test("ClearContentCommand does not affect hidden cells", function(){
+        sheet.range("A1:A3").value(1);
+        sheet.hideRow(1);
+        var c = new kendo.spreadsheet.ClearContentCommand({});
+        c.range(sheet.range("A1:A3"));
+        c.exec();
+        equal(sheet.range("A2").value(), 1);
+    });
+
 })();

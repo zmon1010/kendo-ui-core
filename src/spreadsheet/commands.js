@@ -145,7 +145,7 @@
     kendo.spreadsheet.ClearContentCommand = Command.extend({
         exec: function() {
             this.getState();
-            this.range().clearContent();
+            this.range().skipHiddenCells().clearContent();
         }
     });
 
