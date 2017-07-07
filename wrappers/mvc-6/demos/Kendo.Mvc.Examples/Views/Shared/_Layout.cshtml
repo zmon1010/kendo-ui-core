@@ -34,7 +34,7 @@
 
     <script>
         function resizeContainers() {
-            var headerHeight = $("#header").height(),
+            var headerHeight = $("#header").outerHeight() + $("aside.TK-Hat").outerHeight(),
                 searchWrapper = $("#example-search-wrapper").outerHeight(),
                 navbarWrapper = $("#example-nav-bar").height(),
                 htmlHeight = (kendo.support.mobileOS) ? parseFloat(window.innerHeight) : $('html').height();

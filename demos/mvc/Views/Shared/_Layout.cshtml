@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="k-@ViewBag.Theme">
 <head>
     <meta charset="utf-8">
@@ -60,7 +60,7 @@
     <!--<![endif]-->
     <script>
         function resizeContainers() {
-            var headerHeight = $("#header").height(),
+            var headerHeight = $("#header").outerHeight() + $("aside.TK-Hat").outerHeight(),
                 searchWrapper = $("#example-search-wrapper").outerHeight(),
                 navbarWrapper = $("#example-nav-bar").height(),
                 htmlHeight = (kendo.support.mobileOS) ? parseFloat(window.innerHeight) : $('html').height();
