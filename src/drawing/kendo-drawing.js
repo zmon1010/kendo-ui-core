@@ -4078,9 +4078,7 @@ var events = [
     "mouseenter",
     "mouseleave",
     "mousemove",
-    "resize",
-    "tooltipOpen",
-    "tooltipClose"
+    "resize"
 ];
 
 var Surface = kendo.Observable.extend({
@@ -4089,6 +4087,7 @@ var Surface = kendo.Observable.extend({
 
         this.options = $.extend({}, options);
         this.element = element;
+        this.element._kendoExportVisual = this.exportVisual.bind(this);
 
         this._click = this._handler("click");
         this._mouseenter = this._handler("mouseenter");
@@ -4114,6 +4113,7 @@ var Surface = kendo.Observable.extend({
 
     destroy: function() {
         this._visual = null;
+        this.element._kendoExportVisual = null;
         this.unbind();
     },
 
