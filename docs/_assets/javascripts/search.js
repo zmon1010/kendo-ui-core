@@ -17,7 +17,6 @@ var viewModel = kendo.observable({
             filterExpression += this.filterValues[i];
         }
 
-        console.log('Filter:' + filterExpression);
         return filterExpression;
     },
     updateLabel: function () {
@@ -46,7 +45,6 @@ var viewModel = kendo.observable({
             label = "Search in " + label;
         }
 
-        console.log(label);
         this.set("label", label)
     }
 });
@@ -91,7 +89,7 @@ function search() {
     if (element) {
         var q = element.getInputQuery();
         var filterExpression = viewModel.getFilter();
-
+        sendInfo(filterExpression, q);
         filterExpression = filterExpression !== '' ? PAGE_FILTER + filterExpression : '';
         element.execute(q + filterExpression);
 
@@ -119,6 +117,15 @@ function attachToEvents() {
     $('.gsc-search-button').click(function (e) {
         closePopup();
         search();
+    });
+}
+
+function sendInfo(filter, query) {
+    dataLayer.push({
+        'event': 'virtualEvent',
+        'eventCategory': 'docs-search-terms',
+        'eventAction': filter,
+        'eventLabel': query,
     });
 }
 
