@@ -273,6 +273,16 @@ test("moving twice down when there the current item is first makes the last item
     equal(autocomplete.current()[0], autocomplete.ul.children().first()[0]);
 });
 
+test("down opens the dropdown", function() {
+    var autocomplete = new AutoComplete(input, {
+        dataSource: ["baz", "bar"]
+    });
+
+    input.focus().val("b");
+    input.press(keys.DOWN);
+    ok(autocomplete.ul.is(":visible"));
+});
+
 test("esc closes the dropdown", function() {
     var autocomplete = new AutoComplete(input, {
         dataSource: ["baz", "bar"]

@@ -587,6 +587,8 @@ var __meta__ = { // jshint ignore:line
             if (key === keys.DOWN) {
                 if (visible) {
                     this._move(current ? "focusNext" : "focusFirst");
+                } else if (that.value()) {
+                    that.popup.open();
                 }
                 e.preventDefault();
             } else if (key === keys.UP) {
