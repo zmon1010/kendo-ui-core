@@ -4,7 +4,6 @@ $(document).ready(function () {
     var footer = $("#feedback-section").height() + $("footer").height() + 40
     var windowHeight = $(window).height();
     $("#page-article").css("min-height", windowHeight - 121 - footer);
-    $("#logo-bar").css("margin-right", "15px");
 })
 
 function searchInternal() {
