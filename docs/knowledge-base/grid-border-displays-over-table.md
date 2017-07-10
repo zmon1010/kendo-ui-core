@@ -9,7 +9,7 @@ tags: grid,table,border,styling
 teampulseid:
 ticketid:
 pitsid:
-
+res_type: kb
 ---
 
 ## Environment

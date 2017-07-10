@@ -9,7 +9,7 @@ tags: grid,data,core,asp.net,not,showing,binding,loading
 teampulseid:
 ticketid: 1112718
 pitsid:
-
+res_type: kb
 ---
 
 ## Environment
