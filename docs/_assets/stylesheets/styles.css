@@ -60,7 +60,12 @@ em {
     width: 100%;
     font-size: 12px;
     z-index: 100;
-    height: 77px
+    height: 77px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    align-items: center;
 }
 
 
@@ -115,19 +120,18 @@ em {
 }
 
 #logo-bar {
-    float: left;
-    margin-top: 1.617em;
-    margin-bottom: 1.717em;
-    margin-left: 1.833em;
+    -webkit-flex: 1;
+    flex: 1;
+    margin-left: 20px;
 }
 
 .logo {
     width: 262px;
+    max-width: 100%;
 }
 
 .nav-buttons {
     float: right;
-    margin-top: .92em;
 }
 
 #page-header a.btn {
@@ -759,12 +763,11 @@ footer p {
     padding: 8px 7px 7px;
 }
 
-.toggle-nav {
-    padding: 10px;
-    margin-top: 20px;
+.toggle-nav,
+.show-search {
+    padding: 15px;
     display: none;
     cursor: pointer;
-    float: left;
 }
 
 #page-nav.nav-visibility {
@@ -776,9 +779,6 @@ footer p {
 }
 
 .show-search {
-    display: inline-block;
-    min-width: 24px;
-    min-height: 24px;
     display: none;
 }
 
@@ -860,13 +860,13 @@ footer p {
     }
     #logo-bar {
         display: inline-block;
-        margin-left: 1em;
+        margin-left: 0;
     }
     #page-header #page-search {
         display: none;
-        left: 40px;
+        left: 50px;
         max-width: initial;
-        right: 30px;
+        right: 15px;
         margin: 0;
     }
     #page-search>div {
@@ -874,17 +874,7 @@ footer p {
     }
     .show-search {
         display: inline-block;
-        margin: 0;
-        position: absolute;
-        top: 26px;
-        padding: 0;
-        right: 1.833em;
-        text-align: right;
-        left: auto;
         cursor: pointer;
-    }
-    .show-search .k-icon {
-        font-size: 24px;
     }
     #page-header #page-search.search-visibility~#logo-bar,
     #page-header #page-search.search-visibility~.show-search {
@@ -896,6 +886,9 @@ footer p {
         top: 0 !important;
         left: 0 !important;
         box-sizing: border-box;
+    }
+    .k-animation-container {
+        padding-right: 15px !important;
     }
 }
 
@@ -1425,4 +1418,8 @@ body {
     padding-bottom: 30px;
     margin-left: 30px;
     overflow: hidden !important;
+}
+
+#page-header .k-icon {
+    font-size: 18px;
 }
