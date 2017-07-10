@@ -3,13 +3,9 @@ title: Share Legend Between Charts
 description: How to create a shared legend to show and hide series in two or more charts
 type: how-to
 page_title: How to Create a Common Legend for Two Progress® Kendo UI® Charts
-slug: share_legend_between_charts
-position: 0
+slug: share-legend-between-charts
 tags: chart, legend, series, kendo-ui
-teampulseid:
 ticketid: 1114263
-pitsid:
-
 res_type: kb
 ---
 

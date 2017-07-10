@@ -1,14 +1,11 @@
 ---
-title: Dynamic Markers Color from Field in Kendo UI Map
-description: Example for changing the marker color dynamically based on a field value
+title: Set Different Colors Dynamically for Markers Based on Field in Map
+description: An example on how to dynamically change the colors of the markers based on the field value of the Kendo UI Map.
 type: how-to
-page_title: Setting different color for the markers based on a field value
+page_title: Set Different Colors for Markers Based on Field Value | Kendo UI Map
 slug: map-marker-color-from-field
-position: 0
 tags: map, markers, marker color
-teampulseid:
 ticketid: 1115002
-pitsid:
 res_type: kb
 ---
 
@@ -16,14 +13,13 @@ res_type: kb
 <table>
  <tr>
   <td>Product</td>
-  <td>Map for Progress® Kendo UI®</td>
+  <td>Map for Progress Kendo UI</td>
  </tr>
  <tr>
-  <td>Progress® Kendo UI®</td>  
+  <td>Progress Kendo UI</td>  
   <td>version 2017.2.621</td>
  </tr>
 </table>
-
 
 ## Description
 
@@ -33,7 +29,7 @@ What we need is to use this color to the marker on the Map, based on the field v
 
 
 ## Solution  
-  
+
 There is no built-in solution. Check the [suggested workarounds](#suggested-workarounds) instead.
 
 ## Suggested Workarounds
@@ -73,4 +69,3 @@ Following is an example with this approach:
     });
 </script>
 ````
-

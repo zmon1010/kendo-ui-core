@@ -3,13 +3,9 @@ title: Multi-select filter not sorting
 description: how to sort multicheck filter data source
 type: how-to
 page_title: How to Sort MultiCheck Filter DataSource in UI for ASP.NET for MVC Grid
-slug:sort-multi-check-filter-mvc-grid
-position: 0
-tags:grid,ASP.NET MVC,filter, multi, multi-filter, multi-checkbox, checkbox, not sorted
-teampulseid:
+slug: sort-multi-check-filter-mvc-grid
+tags: grid, ASP.NET MVC, filter, multi, multi-filter, multi-checkbox, checkbox, not sorted
 ticketid: 1116585
-pitsid:
-
 res_type: kb
 ---
 
@@ -27,7 +23,7 @@ I need to sort the values in a multiple select filter for MVC Grid. 
 
 ## Solution  
 The built-in behaviour uses the Kendo UI Grid data source as is if one is not provided. There is an option to provide a separate [custom data source](http://docs.telerik.com/aspnet-mvc/getting-started/custom-datasource#initial-setup) which can be sorted in the desired sort order. The custom multi-check filter for Grid for UI for ASP.NET MVC should resemble the below configuration:  
-  
+
 
 ```
 columns.Bound(p => p.Details).Filterable(ftb =>

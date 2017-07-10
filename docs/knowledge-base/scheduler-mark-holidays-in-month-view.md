@@ -4,12 +4,8 @@ description: Apply different styling on national holidays
 type: how-to
 page_title: Custom styling on holiday time-slots
 slug: scheduler-mark-holidays-in-month-view
-position: 0
 tags: kendo, scheduler, month-view, holidays, slots
-teampulseid:
 ticketid: 1116454
-pitsid:
-
 res_type: kb
 ---
 
@@ -46,7 +42,7 @@ You could achieve the desired by implementing a [dataBound](http://docs.telerik.
 				}
 			}
 		}
-	  
+
 		$("#scheduler").kendoScheduler({
 			date: new Date("2013/6/6"),
 			views: [ "month" ],

@@ -30,7 +30,6 @@ res_type: kb
  </tr>
 </table>
 
- 
 ## Description
 
 I am using a Grid with a remote Datasource with the `batch:true` setup. The Grid is in the incell editing mode. The toolbar of the Grid has the `create`, `save,` and `cancel` commands. The problem is that the `cancel` command discards all made changes.
