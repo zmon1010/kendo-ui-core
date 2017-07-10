@@ -2,7 +2,7 @@
 title: Select Grid Rows Programmatically Based on the DataItem
 description: An example on how to select rows in a Kendo UI Grid based on the values of the data items.
 type: how-to
-page_title: Automatically Check Checkboxes on Load | Kendo UI Grid 
+page_title: Automatically Check Checkboxes on Load | Kendo UI Grid
 slug: checkbox-selection-select-rows-on-load
 tags: checkbox selection, grid, kendo ui
 ticketid: 1117204
@@ -27,8 +27,6 @@ res_type: kb
 I want to have a Grid with some of its checkboxes checked by default when it loads. How can I check checkboxes programmatically by using the selectable column in the Kendo UI Grid?
 
 ## Solution
-
-To select rows programmatically on load:
 
 1. In the [`dataBound`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#events-dataBound) event handler, get and save all the rows.
 1. Loop through the rows by using the jQuery [`each`](https://api.jquery.com/each/) method.

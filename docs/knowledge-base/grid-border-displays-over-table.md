@@ -39,7 +39,7 @@ The Grid is a `<table>` inside a `<div>` element. While tables are able to expan
 
 ## Solution
 
-You can fix this issue by applying the following approaches for:
+To fix this issue, apply the following approaches for:
 
 * [Vertical overflowing](#vertical-overflowing)
 * [Horizontal overflowing](#horizontal-overflowing)

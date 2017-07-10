@@ -37,7 +37,7 @@ How can I implement the drag-to-select and draggable functionalities in a Kendo 
 
 ## Solution
 
-To achieve this behavior, prevent the `start` and `move` events of the selectable elements in the `dataBound` even of the ListView or Grid you use.
+Prevent the `start` and `move` events of the selectable elements in the `dataBound` even of the ListView or Grid you use.
 
 ``html
  dataBound: function() {

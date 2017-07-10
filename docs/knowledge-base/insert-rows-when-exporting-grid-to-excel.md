@@ -28,7 +28,7 @@ How can I intercept the Excel export of the Kendo UI Grid and add data to the ex
 
 ## Solution
 
-To achieve this behavior, when the [`excelExport`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#events-excelExport) event is fired, access the configuration object of the Excel workbook and add rows to its sheets in the `e.workbook` property.
+When the [`excelExport`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#events-excelExport) event is fired, access the configuration object of the Excel workbook and add rows to its sheets in the `e.workbook` property.
 
 ```       
        function excelExport(e) {

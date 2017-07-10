@@ -28,7 +28,7 @@ How can I use an **All** page size in the Kendo UI Grid in ASP.NET Core projects
 
 ## Solution
 
-To achieve this behavior, after the document is ready, dynamically add the option for the **All** page size through the dataSource of the DropdownList to allow for selecting the page size.
+After the document is ready, dynamically add the option for the **All** page size through the dataSource of the DropdownList to allow for selecting the page size.
 
 ```       
         $(function () {

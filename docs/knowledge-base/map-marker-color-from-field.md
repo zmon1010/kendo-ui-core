@@ -10,6 +10,7 @@ res_type: kb
 ---
 
 ## Environment
+
 <table>
  <tr>
   <td>Product</td>
@@ -23,28 +24,23 @@ res_type: kb
 
 ## Description
 
-I have a Kendo UI Map where markers are added dynamically, the data is retrieved from database. The locations are grouped by category for which we added a color to the datasource.
+I have a Kendo UI Map in which the data is retrieved from the database and the markers are added dynamically. The locations are grouped by category and for each category I have added a color to the dataSource.
 
-What we need is to use this color to the marker on the Map, based on the field value.
-
-
-## Solution  
-
-There is no built-in solution. Check the [suggested workarounds](#suggested-workarounds) instead.
+How can I use this color to the marker on the Map based on the field value?
 
 ## Suggested Workarounds
 
-Although that the markers styles are coming from the selected themes styles, you could try to handle the [markerActivate ](http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/map#events-markerActivate)event (_which will fire after the marker is created_) get reference to the rendered element and manually change its color with jQuery:  
+The Kendo UI Map does not provide a built-in solution for achieving this behavior. However, you can still work around this issue.
 
-````
+After the marker is created, the [`markerActivate`](http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/map#events-markerActivate) event is fired. Although the styles of the markers come from the selected themes styles, handle the `markerActivate` event, get reference to the rendered element, and manually change its color by using jQuery.
+
+```
 markerActivate: function(e) {
    $(e.marker.element.context).css("color", "THE NEW COLOR")
 }
-````
+```
 
-Following is an example with this approach:
-
-#### Example
+The following example demonstrates the full implementation of the approach.
 
 ```html
 <div id="map"></div>
@@ -68,4 +64,4 @@ Following is an example with this approach:
         }
     });
 </script>
-````
+```
