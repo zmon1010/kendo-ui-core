@@ -594,6 +594,10 @@ var __meta__ = { // jshint ignore:line
                     this._move(current ? "focusPrev" : "focusLast");
                 }
                 e.preventDefault();
+            } else if (key === keys.HOME) {
+                this._move("focusFirst");
+            } else if (key === keys.END) {
+                this._move("focusLast");
             } else if (key === keys.ENTER || key === keys.TAB) {
 
                 if (key === keys.ENTER && visible) {
