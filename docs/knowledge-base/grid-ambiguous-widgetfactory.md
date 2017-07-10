@@ -1,5 +1,5 @@
 ---
-title: Error: 'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist
+title: "Error: 'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist"
 description: 'Grid' is ambiguous because multiple kinds of members with this name exist in class 'Kendo.Mvc.UI.Fluent.WidgetFactory' after upgrade to 2017.2.621
 type: troubleshooting
 page_title: 'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist in Class 'Kendo.Mvc.UI.Fluent.WidgetFactory'
@@ -42,8 +42,12 @@ I'm getting the following error after upgrading to version 2017.2 621:
 'Grid' is ambiguous because multiple kinds of members with this name exist in class 'Kendo.Mvc.UI.Fluent.WidgetFactory'.
 ````
 
-## Solution
-  
+## Solutions
+
+### Option 1
+Upgrading to a newer version (_R3 2017 or internal builds after version 2017.2 621_).
+
+### Option 2
 The error in question will be thrown if the following __NuGet__ package is missing from the project:
 
 * [Microsoft.CodeDom.Providers.DotNetCompilerPlatform](https://www.nuget.org/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform) ([https://www.nuget.org/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform](https://www.nuget.org/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform))
@@ -59,5 +63,5 @@ Installing the package in your project from the __NuGet Package Manager__ in __V
 </system.codedom>
 ````
   
-Once you install the NuGet package and rebuild the project, the issue should be resolved.    
+Once you install the NuGet package and rebuild the project, the issue should be resolved locally, but when the project is deployed you need to ensure that the _'..\bin\roslyn\vbc.exe'_ file is available after the deploying.     
   
