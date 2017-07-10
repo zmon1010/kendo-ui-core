@@ -8,9 +8,6 @@
                         .Name("firstDocument")
                         .Multiple(false)
                         .ShowFileList(true)
-                        .Events(events => events
-                        .Select("onSelectFirst")
-                         )
                         .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
 
                 )
@@ -19,9 +16,6 @@
                         .Name("secondDocument")
                         .Multiple(false)
                         .ShowFileList(true)
-                        .Events(events => events
-                        .Select("onSelectSecond")
-                         )
                         .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
                 )
             </div>
@@ -50,20 +44,7 @@
 }
 
 <script>
-    var firstFileSelected = false;
-    var secondFileSelected = false;
-
-    $("input[name='rb']").change(function () {
-        if (!$('#marge_1')[0].checked && firstFileSelected) {
-            $('.downloadBtn').show();
-        }
-        else if ($('#marge_1')[0].checked && firstFileSelected && !secondFileSelected) {
-            $('.downloadBtn').hide();
-        }
-    });
-
     $(document).ready(function () {
-        $('.downloadBtn').hide();
 
         $('input[type=radio][name=rb]').change(function () {
             if (this.value == '1') {
@@ -73,27 +54,25 @@
                 $('body').find('#secondDocument').parent().parent().hide();
             }
         });
+
+        $('form').submit(function (event) {
+            var firstUploadSelectedFiles = $('#firstDocument').data('kendoUpload').getFiles().length;
+            var secondUploadSelectedFiles = $('#secondDocument').data('kendoUpload').getFiles().length;
+
+            if (($('#marge_1')[0].checked) && (firstUploadSelectedFiles < 1 || secondUploadSelectedFiles < 1))
+            {
+                event.preventDefault();
+                alert("Please select two files for merge.")
+            }
+
+            else if (!$('#marge_1')[0].checked && firstUploadSelectedFiles < 1)
+            {
+                event.preventDefault();
+                alert("Please select a file.")
+            }
+            
+        });
     });
-
-    function onSelectFirst() {
-        if (!$('#marge_1')[0].checked) {
-            $('.downloadBtn').show();
-        }
-
-        firstFileSelected = true;
-        if (firstFileSelected && secondFileSelected) {
-            $('.downloadBtn').show();
-        }
-        
-    }
-
-    function onSelectSecond() {
-        secondFileSelected = true;
-        if (firstFileSelected && secondFileSelected) {
-            $('.downloadBtn').show();
-        }
-
-    }
 </script>
 
 <style>
