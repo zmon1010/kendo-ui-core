@@ -24,19 +24,19 @@
         .Transport(transport =>
         {
             transport.Read(read =>
-               read.Url("http://demos.telerik.com/kendo-ui/service/products")
+               read.Url("https://demos.telerik.com/kendo-ui/service/products")
                    .DataType("jsonp")
             );
             transport.Create(create =>
-               create.Url("http://demos.telerik.com/kendo-ui/service/products/create")
+               create.Url("https://demos.telerik.com/kendo-ui/service/products/create")
                      .DataType("jsonp")
             );
             transport.Update(update =>
-               update.Url("http://demos.telerik.com/kendo-ui/service/products/update")
+               update.Url("https://demos.telerik.com/kendo-ui/service/products/update")
                      .DataType("jsonp")
             );
             transport.Destroy(destroy =>
-               destroy.Url("http://demos.telerik.com/kendo-ui/service/products/destroy")
+               destroy.Url("https://demos.telerik.com/kendo-ui/service/products/destroy")
                       .DataType("jsonp")
             );
             transport.ParameterMap("parameterMap");

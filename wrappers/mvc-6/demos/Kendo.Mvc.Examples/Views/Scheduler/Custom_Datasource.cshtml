@@ -53,13 +53,13 @@
                     m.Field("endTimezone", typeof(string)).From("EndTimezone");
                 }))
             .Transport(transport => transport
-                .Read(read => read.Url("http://demos.telerik.com/kendo-ui/service/meetings")
+                .Read(read => read.Url("https://demos.telerik.com/kendo-ui/service/meetings")
                       .DataType("jsonp"))
-                .Create(create => create.Url("http://demos.telerik.com/kendo-ui/service/meetings/create")
+                .Create(create => create.Url("https://demos.telerik.com/kendo-ui/service/meetings/create")
                       .DataType("jsonp"))
-                .Destroy(destroy => destroy.Url("http://demos.telerik.com/kendo-ui/service/meetings/destroy")
+                .Destroy(destroy => destroy.Url("https://demos.telerik.com/kendo-ui/service/meetings/destroy")
                       .DataType("jsonp"))
-                .Update(update => update.Url("http://demos.telerik.com/kendo-ui/service/meetings/update")
+                .Update(update => update.Url("https://demos.telerik.com/kendo-ui/service/meetings/update")
                       .DataType("jsonp"))
                 .ParameterMap("parameterMap"))
     )
