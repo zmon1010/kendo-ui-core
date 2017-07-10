@@ -12,5 +12,6 @@ namespace Kendo.Mvc.Examples.Models
         public string SignerInformation { get; set; }
         public string HashAlgorithm { get; set; }
         public string ImgUrl { get; set; }
+        public string ExceptionMessage { get; set; }
     }
 }

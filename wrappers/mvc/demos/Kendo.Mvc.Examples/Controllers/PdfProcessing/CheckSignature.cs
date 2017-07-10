@@ -34,7 +34,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             if(customDocument == null && selectedOption == "")
             {
-                return View(new SignatureFieldsModel { IsDocumentModified = false, IsCertificateValid = false, SignerInformation="", HashAlgorithm="", ImgUrl= "~/Content/web/pdfprocessing/Unknown.png" });
+                return View(new SignatureFieldsModel { IsDocumentModified = false, IsCertificateValid = false, SignerInformation="", HashAlgorithm="", ImgUrl= "~/Content/web/pdfprocessing/Unknown.png", ExceptionMessage = "" });
             }
 
             else if(selectedOption != null && selectedOption != "")
@@ -66,6 +66,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
                 using (FileStream input = new FileStream(fileName, FileMode.Open))
                 {
+
                     RadFixedDocument DownLoadedDocument = new PdfFormatProvider().Import(input);
 
                     PdfFormatProvider formatProvider = new PdfFormatProvider();
@@ -108,7 +109,7 @@ namespace Kendo.Mvc.Examples.Controllers
                     }
 
                 }
-
+                model.ExceptionMessage = "";
                 return View(model);
             }
 
@@ -116,56 +117,86 @@ namespace Kendo.Mvc.Examples.Controllers
             string mimeType = "application/pdf";
 
 
-
-            RadFixedDocument document = new PdfFormatProvider().Import(customDocument.InputStream);
-            fileDownloadName = String.Format(fileDownloadName, Path.GetFileNameWithoutExtension(customDocument.FileName));
-
-            var firstSignatureField = document.AcroForm.FormFields.FirstOrDefault(field => field.FieldType == FormFieldType.Signature) as SignatureField;
-
-            if (firstSignatureField != null && firstSignatureField.Signature != null)
+            try
             {
-                SignatureValidationProperties properties = new SignatureValidationProperties();
-                properties.Chain.ChainPolicy.VerificationFlags = verificationFlags;
+                RadFixedDocument document = new PdfFormatProvider().Import(customDocument.InputStream);
+                fileDownloadName = String.Format(fileDownloadName, Path.GetFileNameWithoutExtension(customDocument.FileName));
 
-                SignatureValidationResult validationResult;
-                if (firstSignatureField.Signature.TryValidate(properties, out validationResult))
+                var firstSignatureField = document.AcroForm.FormFields.FirstOrDefault(field => field.FieldType == FormFieldType.Signature) as SignatureField;
+
+                if (firstSignatureField != null && firstSignatureField.Signature != null)
                 {
+                    SignatureValidationProperties properties = new SignatureValidationProperties();
+                    properties.Chain.ChainPolicy.VerificationFlags = verificationFlags;
 
-                    model.IsDocumentModified = validationResult.IsDocumentModified;
-                    model.IsCertificateValid = validationResult.IsCertificateValid;
-                    model.SignerInformation = validationResult.SignerInformation;
-                    model.HashAlgorithm = validationResult.HashAlgorithm.FriendlyName;
-                    if (validationResult.IsCertificateValid)
+                    SignatureValidationResult validationResult;
+                    if (firstSignatureField.Signature.TryValidate(properties, out validationResult))
                     {
-                        model.ImgUrl = "~/Content/web/pdfprocessing/Valid.png";
+
+                        model.IsDocumentModified = validationResult.IsDocumentModified;
+                        model.IsCertificateValid = validationResult.IsCertificateValid;
+                        model.SignerInformation = validationResult.SignerInformation;
+                        model.HashAlgorithm = validationResult.HashAlgorithm.FriendlyName;
+                        if (validationResult.IsCertificateValid)
+                        {
+                            model.ImgUrl = "~/Content/web/pdfprocessing/Valid.png";
+                        }
+                        else
+                        {
+                            model.ImgUrl = "~/Content/web/pdfprocessing/Invalid.png";
+
+                        }
+
                     }
                     else
                     {
-                        model.ImgUrl = "~/Content/web/pdfprocessing/Invalid.png";
 
+                        model.IsDocumentModified = false;
+                        model.IsCertificateValid = false;
+                        model.SignerInformation = "Corrupted signature.";
+                        model.HashAlgorithm = string.Empty;
+                        model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
                     }
-                    
                 }
                 else
                 {
 
                     model.IsDocumentModified = false;
                     model.IsCertificateValid = false;
-                    model.SignerInformation = "Corrupted signature.";
+                    model.SignerInformation = "No signature.";
                     model.HashAlgorithm = string.Empty;
                     model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
                 }
             }
-            else
-            {
 
-                model.IsDocumentModified = false;
+            catch (Exception ex)
+            {
+                string exception = "";
+                if (ex is InvalidCastException)
+                {
+                    exception = "PDF documents with Named Destinations are currently not supported.";
+                }
+                else if (ex is NullReferenceException)
+                {
+                    exception = "An error occured because an Widget without parent FormField or with parent FormField node without field type is imported.";
+                }
+                else
+                {
+                    exception = "An error occured. Please try with another file.";
+                }
+
+
+                model.ExceptionMessage = exception;
+                model.HashAlgorithm = "";
+                model.ImgUrl= "~/Content/web/pdfprocessing/Unknown.png";
                 model.IsCertificateValid = false;
-                model.SignerInformation = "No signature.";
-                model.HashAlgorithm = string.Empty;
-                model.ImgUrl = "~/Content/web/pdfprocessing/Unknown.png";
+                model.IsDocumentModified = false;
+                model.SignerInformation = "";
+            
+                return View(model);
             }
 
+            model.ExceptionMessage = "";
             return View(model);
         }
     }

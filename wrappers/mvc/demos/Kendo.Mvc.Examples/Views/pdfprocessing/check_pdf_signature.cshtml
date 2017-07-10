@@ -26,6 +26,7 @@
                         .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf" }))
                         .Events(events => events.Select("onSelect"))
                 )
+                <span class="error-message">@Model.ExceptionMessage</span>
                 <input type="submit" class="k-button wide-btn" value="Check signature" id="submit" />
             }
 
@@ -80,6 +81,15 @@
 </script>
 
 <style>
+
+    .k-upload{
+        margin-bottom:15px;
+    }
+    .error-message{
+        font-size:16px;
+        color:red;
+        font-weight:bold;
+    }
     .clear {
         clear: both;
     }
