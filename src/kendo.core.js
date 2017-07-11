@@ -1019,7 +1019,9 @@ function pad(number, digits, end) {
                 groupSize = newGroupSize !== undefined ? newGroupSize : groupSize;
 
                 if (groupSize === 0) {
-                    parts.push(integer.substring(0, idx));
+                    if (idx > 0) {
+                        parts.push(integer.substring(0, idx));
+                    }
                     break;
                 }
             }
