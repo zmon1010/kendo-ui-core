@@ -6,6 +6,7 @@ page_title: Limit the Selection to a Single Row | Kendo UI Grid
 slug: checkbox-selection-select-single-row
 tags: checkbox selection, grid, kendo ui
 ticketid: 1116716
+res_type: kb
 ---
 
 ## Environment

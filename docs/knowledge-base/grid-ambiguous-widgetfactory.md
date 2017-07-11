@@ -1,15 +1,15 @@
 ---
 title: "Error: 'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist"
-description: 'Grid' is ambiguous because multiple kinds of members with this name exist in class 'Kendo.Mvc.UI.Fluent.WidgetFactory' after upgrade to 2017.2.621
+description: "'Grid' is ambiguous because multiple kinds of members with this name exist in class 'Kendo.Mvc.UI.Fluent.WidgetFactory' after upgrade to 2017.2.621"
 type: troubleshooting
-page_title: 'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist in Class 'Kendo.Mvc.UI.Fluent.WidgetFactory'
+page_title: "'Grid' is Ambiguous Because Multiple Kinds of Members with this Name Exist in Class 'Kendo.Mvc.UI.Fluent.WidgetFactory'"
 slug: grid-ambiguous-widgetfactory
 position: 0
 tags: ambiguous, grid, upgrade, WidgetFactory
 teampulseid:
 ticketid: 1117665
 pitsid:
-
+res_type: kb
 ---
 
 ## Environment

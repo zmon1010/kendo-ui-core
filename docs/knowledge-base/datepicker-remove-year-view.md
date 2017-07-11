@@ -9,6 +9,7 @@ tags: kendo ui, datepicker, datetimepicker, year view
 teampulseid:
 ticketid: 1115942, 1116792
 pitsid:
+res_type: kb
 ---
 
 ## Environment

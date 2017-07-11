@@ -3,13 +3,14 @@ title: Get Index Of Data In ListBox After Reorder
 description: How to get the index of an ListBox item after reorder
 type: how-to
 page_title: Get Index Of Item In ListBox After Reorder
-slug:get-index-of-item-in-listbox-after-reorder
+slug: get-index-of-item-in-listbox-after-reorder
 position: 0
-tags:listbox, datasource
+tags: listbox, datasource
 teampulseid:
 ticketid: 1112980
 pitsid:
 
+res_type: kb
 ---
 
 ## Environment

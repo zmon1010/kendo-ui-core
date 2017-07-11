@@ -3,13 +3,14 @@ title: Multi-select filter not sorting
 description: how to sort multicheck filter data source
 type: how-to
 page_title: How to Sort MultiCheck Filter DataSource in UI for ASP.NET for MVC Grid
-slug:sort-multi-check-filter-mvc-grid
+slug: sort-multi-check-filter-mvc-grid
 position: 0
-tags:grid,ASP.NET MVC,filter, multi, multi-filter, multi-checkbox, checkbox, not sorted
+tags: grid,ASP.NET MVC,filter, multi, multi-filter, multi-checkbox, checkbox, not sorted
 teampulseid:
 ticketid: 1116585
 pitsid:
 
+res_type: kb
 ---
 
 ## Environment

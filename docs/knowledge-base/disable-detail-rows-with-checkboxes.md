@@ -9,6 +9,7 @@ tags: kendo ui, grid, detail template
 teampulseid:
 ticketid: 1110784
 pitsid:
+res_type: kb
 ---
 
 ## Environment

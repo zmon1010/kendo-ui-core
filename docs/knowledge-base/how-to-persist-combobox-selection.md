@@ -9,7 +9,7 @@ tags: persisting,selected,item,combobox
 teampulseid:
 ticketid: 1116339
 pitsid:
-
+res_type: kb
 ---
 
 ## Environment
