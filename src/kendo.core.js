@@ -3721,6 +3721,9 @@ function pad(number, digits, end) {
         }
 
         function convert(date, fromOffset, toOffset) {
+            var tempToOffset = toOffset;
+            var diff;
+
             if (typeof fromOffset == STRING) {
                 fromOffset = this.offset(date, fromOffset);
             }
@@ -3735,7 +3738,13 @@ function pad(number, digits, end) {
 
             var toLocalOffset = date.getTimezoneOffset();
 
-            return new Date(date.getTime() + (toLocalOffset - fromLocalOffset) * 60000);
+            if (typeof tempToOffset == STRING) {
+                tempToOffset = this.offset(date, tempToOffset);
+            }
+
+            diff = (toLocalOffset - fromLocalOffset) + (toOffset - tempToOffset);
+
+            return new Date(date.getTime() + diff * 60000);
         }
 
         function apply(date, timezone) {

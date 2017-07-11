@@ -1097,8 +1097,138 @@
 
         var events = schedulerEvent.expand(new Date(2000, 10, 11), new Date(2000, 10, 11, 17), "Etc/UTC");
 
-        deepEqual(events[0].start, new Date(2000, 10, 11, 7));
-        deepEqual(events[0].end, new Date(2000, 10, 11, 8));
+        deepEqual(events[0].start, new Date(2000, 10, 11, 6));
+        deepEqual(events[0].end, new Date(2000, 10, 11, 7));
+    });
+
+    test("DAILY occurrences method honours before and after DST Etc/UTC scheduler and local", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2015/3/28 3:00:00"),
+            end: new Date("2015/3/28 3:30:00"),
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date(2015, 2, 28), new Date(2015, 3, 10), "Etc/UTC");
+
+        deepEqual(events[0].start, new Date(2015, 2, 28, 3));
+        deepEqual(events[0].end, new Date(2015, 2, 28, 3, 30));
+        deepEqual(events[1].start, new Date(2015, 2, 29, 2));
+        deepEqual(events[1].end, new Date(2015, 2, 29, 2, 30));
+        deepEqual(events[2].start, new Date(2015, 2, 30, 2));
+        deepEqual(events[2].end, new Date(2015, 2, 30, 2, 30));
+        deepEqual(events[3].start, new Date(2015, 2, 31, 2));
+        deepEqual(events[3].end, new Date(2015, 2, 31, 2, 30));
+    });
+
+    test("DAILY occurrences method honours before and after DST Etc/UTC scheduler and Europe/Sofia event", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2015/3/28 3:00:00"),
+            end: new Date("2015/3/28 3:30:00"),
+            startTimezone: "Europe/Sofia",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date(2015, 2, 28), new Date(2015, 3, 10), "Etc/UTC");
+
+        deepEqual(events[0].start, new Date(2015, 2, 28, 3));
+        deepEqual(events[0].end, new Date(2015, 2, 28, 3, 30));
+        deepEqual(events[1].start, new Date(2015, 2, 29, 2));
+        deepEqual(events[1].end, new Date(2015, 2, 29, 2, 30));
+        deepEqual(events[2].start, new Date(2015, 2, 30, 2));
+        deepEqual(events[2].end, new Date(2015, 2, 30, 2, 30));
+        deepEqual(events[3].start, new Date(2015, 2, 31, 2));
+        deepEqual(events[3].end, new Date(2015, 2, 31, 2, 30));
+    });
+
+    test("DAILY occurrences method honours before and after DST Europe/Sofia scheduler and Etc/UTC event", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2015/3/28 3:00:00"),
+            end: new Date("2015/3/28 3:30:00"),
+            startTimezone: "Etc/UTC",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date(2015, 2, 28), new Date(2015, 3, 10), "Europe/Sofia");
+
+        deepEqual(events[0].start, new Date(2015, 2, 28, 3));
+        deepEqual(events[0].end, new Date(2015, 2, 28, 3, 30));
+        deepEqual(events[1].start, new Date(2015, 2, 29, 2));
+        deepEqual(events[1].end, new Date(2015, 2, 29, 2, 30));
+        deepEqual(events[2].start, new Date(2015, 2, 30, 2));
+        deepEqual(events[2].end, new Date(2015, 2, 30, 2, 30));
+        deepEqual(events[3].start, new Date(2015, 2, 31, 2));
+        deepEqual(events[3].end, new Date(2015, 2, 31, 2, 30));
+    });
+
+    test("DAILY occurrences method honours before and after DST local scheduler and Etc/UTC event", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2015/3/28 3:00:00"),
+            end: new Date("2015/3/28 3:30:00"),
+            startTimezone: "Etc/UTC",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date(2015, 2, 28), new Date(2015, 3, 10));
+
+        deepEqual(events[0].start, new Date(2015, 2, 28, 3));
+        deepEqual(events[0].end, new Date(2015, 2, 28, 3, 30));
+        deepEqual(events[1].start, new Date(2015, 2, 29, 2));
+        deepEqual(events[1].end, new Date(2015, 2, 29, 2, 30));
+        deepEqual(events[2].start, new Date(2015, 2, 30, 2));
+        deepEqual(events[2].end, new Date(2015, 2, 30, 2, 30));
+        deepEqual(events[3].start, new Date(2015, 2, 31, 2));
+        deepEqual(events[3].end, new Date(2015, 2, 31, 2, 30));
+    });
+
+    test("DAILY occurrences method honours before and after DST  Australia/Sydney scheduler and local event", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2017/3/31 1:00:00"),
+            end: new Date("2017/3/31 1:30:00"),
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date("2017/3/31"), new Date("2017/4/5"),  "Australia/Sydney");
+
+        deepEqual(events[0].start, new Date(2017, 2, 31, 1));
+        deepEqual(events[0].end, new Date(2017, 2, 31, 1, 30));
+        deepEqual(events[1].start, new Date(2017, 3, 1, 1));
+        deepEqual(events[1].end, new Date(2017, 3, 1, 1, 30));
+        deepEqual(events[2].start, new Date(2017, 3, 2, 1));
+        deepEqual(events[2].end, new Date(2017, 3, 2, 1, 30));
+        deepEqual(events[3].start, new Date(2017, 3, 3));
+        deepEqual(events[3].end, new Date(2017, 3, 3, 0, 30));
+    });
+
+    test("DAILY occurrences method honours before and after DST local scheduler and Australia/Sydney event", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2017/3/31 1:00:00"),
+            end: new Date("2017/3/31 1:30:00"),
+            startTimezone: "Australia/Sydney",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=4"
+        });
+
+        var events = schedulerEvent.expand(new Date("2017/3/31"), new Date("2017/4/5"));
+
+        deepEqual(events[0].start, new Date(2017, 2, 31, 1));
+        deepEqual(events[0].end, new Date(2017, 2, 31, 1, 30));
+        deepEqual(events[1].start, new Date(2017, 3, 1, 1));
+        deepEqual(events[1].end, new Date(2017, 3, 1, 1, 30));
+        deepEqual(events[2].start, new Date(2017, 3, 2, 1));
+        deepEqual(events[2].end, new Date(2017, 3, 2, 1, 30));
+        deepEqual(events[3].start, new Date(2017, 3, 3));
+        deepEqual(events[3].end, new Date(2017, 3, 3, 0, 30));
     });
 
     tzTest("Brazil", "DAILY method honours DST", function() {

@@ -1156,6 +1156,32 @@ var __meta__ = { // jshint ignore:line
                 endTime = startTime + durationMS;
 
                 if (eventStartMS !== start.getTime() || eventStartTime !== getMilliseconds(rule._startTime)) {
+                    if(!event.isAllDay){
+                        var sign;
+                        var startZone = event.startTimezone || event.endTimezone;
+                        var endZone = event.endTimezone || event.startTimezone;
+                        var startOffsetDiff = getZoneOffset(start, zone) - getZoneOffset(event.start, zone);
+                        var endOffsetDiff = getZoneOffset(endDate, zone) - getZoneOffset(event.end, zone);
+                        var startTZOffsetDiff = getZoneOffset(start, startZone) - getZoneOffset(event.start, startZone);
+                        var endTZOffsetDiff = getZoneOffset(endDate, endZone) - getZoneOffset(event.end, endZone);
+
+                        if(startOffsetDiff !== startTZOffsetDiff){
+                            sign = startOffsetDiff < startTZOffsetDiff ? 1 : -1;
+                            var offsetTicksStart = (startOffsetDiff - startTZOffsetDiff) * 60000;
+
+                            start.setTime(start.getTime() + (sign * offsetTicksStart));
+                            startTime = startTime + (sign * offsetTicksStart);
+                        }
+
+                        if(endOffsetDiff !== endTZOffsetDiff){
+                            sign = endOffsetDiff < endTZOffsetDiff ? 1 : -1;
+                            var offsetTicks = (endOffsetDiff - endTZOffsetDiff) * 60000;
+
+                            endDate.setTime(endDate.getTime() + (sign * offsetTicks));
+                            endTime = endTime + (sign * offsetTicks);
+                        }
+                    }
+
                     events.push(event.toOccurrence({
                         start: new Date(start),
                         end: endDate,
@@ -1201,11 +1227,15 @@ var __meta__ = { // jshint ignore:line
         return events;
     }
 
+    function getZoneOffset(date, zone) {
+        return zone ? kendo.timezone.offset(date, zone): date.getTimezoneOffset();
+    }
+
     function parseUTCDate(value, zone) {
         value = kendo.parseDate(value, DATE_FORMATS); //Parse UTC to local time
 
         if (value && zone) {
-            value = timezone.convert(value, value.getTimezoneOffset(), zone);
+            value = timezone.apply(value, zone);
         }
 
         return value;
