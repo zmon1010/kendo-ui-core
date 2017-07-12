@@ -31,8 +31,6 @@ How can I select all rows on all Kendo UI Grid pages?
 >
 > The implementation of this functionality might lead to slow Grid performance.
 
-To select all the rows on all Grid pages:
-
 1. Set the [`persistSelection`](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-persistSelection) configuration of the Grid to `true`.
 1. Use a jQuery selector to subscribe for the [`click`](https://api.jquery.com/click/) event of the master checkbox.
 1. In the `click` event handler:

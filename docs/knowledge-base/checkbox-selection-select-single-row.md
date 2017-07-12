@@ -28,8 +28,6 @@ I want to remove the master checkbox of the built-in checkbox column in the Kend
 
 ## Solution
 
-To limit the selection to a single row:
-
 1. Remove the master checkbox by adding an empty [header template](http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.headerTemplate) to the column.
 1. Subscribe for the [`click`](https://api.jquery.com/click/) event of the checkboxes by using a jQuery selector.
 1. In the `click` event handler, get the row and the row classes by using the [`closest`](https://api.jquery.com/closest/) jQuery method.
