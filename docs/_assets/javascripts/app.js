@@ -136,13 +136,13 @@ function navigationTemplate(root) {
             }
             return formatNavigationTemplate(icon, root + url, text);
         } else {
-            return formatNavigationTemplate(icon, root, text);
+            return formatNavigationTemplate(icon, url, text);
         }
     };
 }
 
 function formatNavigationTemplate(icon, url, text){
-    return '<div class="navigation-item-content">' + icon + '<a href="' + url + '">' + text + "</a></div>" ;
+    return icon + '<a href="' + url + '">' + text + "</a>";
 }
 
 function preventParentSelection(e) {

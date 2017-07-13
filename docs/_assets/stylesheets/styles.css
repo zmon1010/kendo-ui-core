@@ -173,7 +173,7 @@ em {
     float: left;
     font-size: 10px;
     font-weight: bold;
-    margin: 12px 10px 12px 0;
+    margin-right: 12px;
     padding: 0px 4px;
     border-radius: 2px;
     background-color: #00b312;
