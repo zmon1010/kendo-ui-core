@@ -4560,7 +4560,13 @@ var __meta__ = { // jshint ignore:line
             var result = DataSource.fn.read.call(this, data);
 
             if(this._hierarchicalFilter){
-                this.filter(this._hierarchicalFilter);
+                if(this._data && this._data.length > 0){
+                    this.filter(this._hierarchicalFilter);
+                }else{
+                    this.options.filter = this._hierarchicalFilter;
+                    this._filter = normalizeFilter(this.options.filter);
+                    this._hierarchicalFilter = null;
+                }
             }
 
             return result;
@@ -4604,8 +4610,7 @@ var __meta__ = { // jshint ignore:line
                  return this._filter;
             }
 
-            if(!this.options.serverFiltering){
-                this._markHierarchicalQuery(val);
+            if(!this.options.serverFiltering && this._markHierarchicalQuery(val)){
                 val = { logic: "or", filters: [val, {field:'_matchFilter', operator: 'equals', value: true }]};
             }
 
@@ -4623,7 +4628,8 @@ var __meta__ = { // jshint ignore:line
             expressions = normalizeFilter(expressions);
 
             if (!expressions || expressions.filters.length === 0) {
-                return this;
+                this._updateHierarchicalFilter(function(){return true;});
+                return false;
             }
 
             compiled = Query.filterExpr(expressions);
@@ -4639,6 +4645,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             this._updateHierarchicalFilter(filter);
+            return true;
         },
 
          _updateHierarchicalFilter: function(filter){
