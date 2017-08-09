@@ -1360,8 +1360,8 @@ A list of the files that were uploaded or removed.
 Each file has:
 
 * name
-* extension - The file extension including the leading dot. For example, `".jpg"`, `".png"`, and so on.
-* size - The file size in bytes. If not available, the value is `"null"`.
+* extension - The file extension including the leading dot. For example, `.jpg`, `.png`, and so on.
+* size - The file size in bytes. If not available, the value is `null`.
 * uid - The unique identifier of the file or batch of files.
 
 ### clear
@@ -1455,8 +1455,8 @@ Lists the files that were uploaded or removed.
 Each file has:
 
 * name
-* extension - The file extension including the leading dot. For example, `".jpg"`, `".png"`, an so on.
-* size - The file size in bytes. If not available, the value is `"null"`.
+* extension - The file extension including the leading dot. For example, `.jpg`, `.png`, an so on.
+* size - The file size in bytes. If not available, the value is `null`.
 * uid - The unique identifier of the file or batch of files.
 
 ##### e.operation `String`
@@ -1537,8 +1537,8 @@ Lists the files that are in the process of upload.
 
 Each file has:
 * name
-* extension - The file extension including the leading dot. For example, `".jpg"`, `".png"`, and so on.
-* size - The file size in bytes. If not available, the value is `"null"`.
+* extension - The file extension including the leading dot. For example, `.jpg`, `.png`, and so on.
+* size - The file size in bytes. If not available, the value is `null`.
 * uid - The unique identifier of the file or batch of files.
 
 ##### percentComplete `Number`
@@ -1604,7 +1604,7 @@ Each file has:
 
 * name
 * extension - The file extension including the leading dot. For example, `.jpg`, `.png`, and so on.
-* size - The file size in bytes. If not available, the values is `null`.
+* size - The file size in bytes. If not available, the value is `null`.
 * uid - The unique identifier of the file or batch of files.
 
 ##### e.headers `Object`
