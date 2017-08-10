@@ -2788,7 +2788,7 @@ Enables or disables column filtering in the Excel file. Not to be mistaken with 
     $("#grid").kendoGrid({
         toolbar: ["excel"],
         excel: {
-            filterable: false
+            filterable: true
         },
         dataSource: {
             transport: {
